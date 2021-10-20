@@ -12,13 +12,13 @@ namespace IDAL
         public struct Station
         {
             private int id;
-            private int name;
+            private string name;
             private double longitude;
             private double lattitude;
             private int chargeSolts;
 
             public int Id { get => id; set => id = value; }
-            public int Name { get => name; set => name = value; }
+            public string Name { get => name; set => name = value; }
             public double Longitude { get => longitude; set => longitude = value; }
             public double Lattitude { get => lattitude; set => lattitude = value; }
             public int ChargeSolts { get => chargeSolts; set => chargeSolts = value; }
