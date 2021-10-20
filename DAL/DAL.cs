@@ -12,5 +12,7 @@ namespace IDAL
         public enum DroneStatuses { Available, maintenance, delivery }
         public enum Priority { Normal, fast, emergency }
         public enum DateTime { Creation, association, collection, delivery }
+        public enum ModelDrones { Cobra, Magic, Mavic_Air, DJI, Mickcara}
+
     }
 }
