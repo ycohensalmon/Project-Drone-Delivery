@@ -19,13 +19,17 @@ namespace DalObject
             internal static int IndexStation = 0;
             internal static int IndexCustomer = 0;
             internal static int IndexParcel = 0;
-         }
-        internal static void Initialize()
-        {
+            internal static Random rand = new Random();
+        }
+         internal static void Initialize()
+        { 
             for (int i = 0; i < 2; i++)
             {
-                drones[i] = new IDAL.DO.Drone {drone = Random()
-                IDAL.DO.Drone = DataSource
+                //drones[i] = new IDAL.DO.Drone { Id = Config.rand.Next(1000, 10001) };
+                drones[i].Id = Config.rand.Next(10000, 100000);
+                drones[i].MaxWeight = (IDAL.DO.WeightCategory)Config.rand.Next(4);
+                drones[i].Status = (IDAL.DO.DroneStatuses)Config.rand.Next(4);
+                drones[i].Battery = Config.rand.Next(101);
             }
         }
 
