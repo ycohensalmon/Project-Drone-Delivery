@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IDAL.DO;
 
 namespace DalObject
 {
@@ -15,6 +16,7 @@ namespace DalObject
         internal static List<IDAL.DO.Parcel> parcels = new List<IDAL.DO.Parcel>(1000);  
         internal class Config
         {
+
             internal static int IndexDrone = 0;
             internal static int IndexStation = 0;
             internal static int IndexCustomer = 0;
@@ -25,8 +27,17 @@ namespace DalObject
         { 
             for (int i = 0; i < 2; i++)
             {
-                //drones[i] = new IDAL.DO.Drone { Id = Config.rand.Next(1000, 10001) };
-                drones[i].Id = Config.rand.Next(10000, 100000);
+                drones[i] = new IDAL.DO.Drone
+                {
+                    Id = Config.rand.Next(1000, 10000),
+                    MaxWeight = (IDAL.DO.WeightCategory)Config.rand.Next(4),
+                    Status = (IDAL.DO.DroneStatuses)Config.rand.Next(4),
+                    Battery = Config.rand.Next(101)
+                };
+
+                stations=
+
+             
                 drones[i].MaxWeight = (IDAL.DO.WeightCategory)Config.rand.Next(4);
                 drones[i].Status = (IDAL.DO.DroneStatuses)Config.rand.Next(4);
                 drones[i].Battery = Config.rand.Next(101);
