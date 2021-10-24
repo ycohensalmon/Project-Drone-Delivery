@@ -9,9 +9,9 @@ namespace IDAL
     namespace DO
     {
         public enum WeightCategory { Light, Medium, Heavy }
-        public enum DroneStatuses { Available, maintenance, delivery }
-        public enum Priority { Normal, fast, emergency }
-        public enum DateTime { Creation, association, collection, delivery }
+        public enum DroneStatuses { Available, Maintenance, Delivery }
+        public enum Priority { Normal, Fast, Emergency }
+        public enum DateTime { Creation, Association, Collection, Delivery }
         public enum ModelDrones { Cobra, Magic, Mavic_Air, DJI, Mickcara}
 
     }
