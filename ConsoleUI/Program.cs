@@ -53,9 +53,6 @@ namespace ConsoleUI
                 default:
                     break;
             }
-
-            //IDAL.DO.BaseStation
-            Console.WriteLine("Hello World!");
         }
     }
 }
