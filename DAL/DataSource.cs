@@ -9,7 +9,6 @@ namespace DalObject
 {
     public class DataSource
     {
-        //internal static Drone[] drones = new Drone[10];
         internal static List<Drone> drones = new List<Drone>(10);
         internal static List<Station> stations = new List<Station>(5);
         internal static List<Customer> customers = new List<Customer>(100);
@@ -40,10 +39,10 @@ namespace DalObject
                     {
                         Battery = rand.Next(101),
                         Id = rand.Next(1000, 10001),
-                        Model = (ModelDrones)rand.Next(3),
-                        Status = (DroneStatuses)rand.Next(3),
-                        MaxWeight = (WeightCategory)rand.Next(3)
-                    }   
+                        Model = (ModelDrones)rand.Next(),
+                        Status = (DroneStatuses)rand.Next(),
+                        MaxWeight = (WeightCategory)rand.Next()
+                    }
                 };
             }
         }
@@ -67,7 +66,7 @@ namespace DalObject
                         Longitude = 35.213429,
                         ChargeSolts = rand.Next(10)
                 },
-                    new Station
+                new Station
                     {
                         Id = 1030,
                         Name = "Ramot Mall",
@@ -75,7 +74,7 @@ namespace DalObject
                         Longitude = 35.194476,
                         ChargeSolts = rand.Next(10)
                     },
-                    new Station
+                new Station
                     {
                         Id = 1040,
                         Name = "Jerusalem Central Station",
@@ -83,7 +82,7 @@ namespace DalObject
                         Longitude = 35.203100,
                         ChargeSolts = rand.Next(10)
                     },
-                    new Station
+                new Station
                     {
                         Id = 1050,
                         Name = "Mamila Mall",
@@ -93,10 +92,22 @@ namespace DalObject
                     }
             };
         }
-
         public static void InitializeCustomer()
         {
-            
+            for (int i = 0; i < 100; i++)
+            {
+                customers = new List<Customer>()
+                {
+                    new Customer
+                    {
+                        Id = rand.Next(210000000, 340000000),
+                        Phone = rand.Next(0500000000,0590000000),
+                        Name = (Names)rand.Next(),
+                        Longitude = (double)rand.Next(31737458,35174572)/(double)100000,
+                        Latittude = (double)rand.Next(31807238,35241141)/(double)100000
+                    }
+                };
+            }
         }
     }
 }
