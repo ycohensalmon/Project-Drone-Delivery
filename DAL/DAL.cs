@@ -13,6 +13,7 @@ namespace IDAL
         public enum Priority { Normal, Fast, Emergency }
         public enum ParcelStatus { Creation, Association, Collection, Delivery }
         public enum ModelDrones { Cobra, Magic, Mavic_Air, DJI, Mickcara}
+        public enum Names { Jojo, Elhanan, Meir, Moshe, Rahamim, David, Yinon, Beni}
 
     }
 }
