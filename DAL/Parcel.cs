@@ -14,10 +14,10 @@ namespace IDAL
             private int senderId;
             private int targetId;
             private int droneId;
-            private DateTime requested;
-            private DateTime scheduled;
-            private DateTime pickedUp;
-            private DateTime delivered;
+            private ParcelStatus requested;
+            private ParcelStatus scheduled;
+            private ParcelStatus pickedUp;
+            private ParcelStatus delivered;
             private WeightCategory weight;
             private Priority priorities;
 
@@ -25,10 +25,10 @@ namespace IDAL
             public int SenderId { get => senderId; set => senderId = value; }
             public int TargetId { get => targetId; set => targetId = value; }
             public int DroneId { get => droneId; set => droneId = value; }
-            public DateTime Requested { get => requested; set => requested = value; }
-            public DateTime Scheduled { get => scheduled; set => scheduled = value; }
-            public DateTime PickedUp { get => pickedUp; set => pickedUp = value; }
-            public DateTime Delivered { get => delivered; set => delivered = value; }
+            public ParcelStatus Requested { get => requested; set => requested = value; }
+            public ParcelStatus Scheduled { get => scheduled; set => scheduled = value; }
+            public ParcelStatus PickedUp { get => pickedUp; set => pickedUp = value; }
+            public ParcelStatus Delivered { get => delivered; set => delivered = value; }
             public WeightCategory Weight { get => weight; set => weight = value; }
             public Priority Priorities { get => priorities; set => priorities = value; }
             public override string ToString()
