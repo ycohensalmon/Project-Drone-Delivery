@@ -42,9 +42,9 @@ namespace DalObject
                 {
                     Battery = Config.rand.Next(101),
                     Id = Config.randDrone,
-                    Model = (ModelDrones)Config.rand.Next(),
-                    Status = (DroneStatuses)Config.rand.Next(),
-                    MaxWeight = (WeightCategory)Config.rand.Next()
+                    Model = (ModelDrones)Config.rand.Next(5),
+                    Status = (DroneStatuses)Config.rand.Next(3),
+                    MaxWeight = (WeightCategory)Config.rand.Next(3)
                 });
             }
         }
@@ -103,7 +103,7 @@ namespace DalObject
                 {
                     Id = Config.randCustomer,
                     Phone = Config.rand.Next(0500000000, 0590000000),
-                    Name = (Names)Config.rand.Next(),
+                    Name = (Names)Config.rand.Next(8),
                     Longitude = (double)Config.rand.Next(31737458, 35174572) / (double)100000,
                     Latittude = (double)Config.rand.Next(31807238, 35241141) / (double)100000
                 });
