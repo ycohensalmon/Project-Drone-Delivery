@@ -25,6 +25,8 @@ namespace ConsoleUI
                         "for adding a drone to the list- - - - press 2\n" +
                         "for absorption of a new customer- - - press 3\n" +
                         "for receiving a package for delivery- press 4\n");
+                    DalObject.DalObject dal;// = new DalObject.DalObject();
+                    DalObject.DalObject.GetDrones().ToString();
                     break;
                 case 2:
                     Console.WriteLine(
