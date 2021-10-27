@@ -14,18 +14,10 @@ namespace DalObject
         internal static List<Customer> customers = new List<Customer>(100);
         internal static List<Parcel> parcels = new List<Parcel>(1000);
 
-        
-
         internal class Config
         {
-            //internal static int IndexDrone = 0;
-            //internal static int IndexStation = 0;
-            //internal static int IndexCustomer = 0;
-            //internal static int IndexParcel = 0;
             internal static Random rand = new Random();
-            internal static int randCustomer = rand.Next(210000000, 340000000);
-            internal static int randDrone = rand.Next(1000, 10001);
-            internal static int SerialNum = 0;
+            internal static int SerialNum = 1000;
         }
         internal static void Initialize()
         {
@@ -36,12 +28,12 @@ namespace DalObject
         }
         public static void InitializeDrone()
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 5; i++)
             {
                 drones.Add(new Drone
                 {
                     Battery = Config.rand.Next(101),
-                    Id = Config.randDrone,
+                    Id = Config.rand.Next(1000, 10001),
                     Model = (ModelDrones)Config.rand.Next(5),
                     Status = (DroneStatuses)Config.rand.Next(3),
                     MaxWeight = (WeightCategory)Config.rand.Next(3)
@@ -101,7 +93,7 @@ namespace DalObject
             {
                 customers.Add( new Customer
                 {
-                    Id = Config.randCustomer,
+                    Id = Config.rand.Next(210000000, 340000000),
                     Phone = Config.rand.Next(0500000000, 0590000000),
                     Name = (Names)Config.rand.Next(8),
                     Longitude = (double)Config.rand.Next(31737458, 35174572) / (double)100000,
@@ -116,10 +108,10 @@ namespace DalObject
             {
                 new Parcel
                 {
-                    Id = Config.SerialNum,
-                    SenderId = Config.rand.Next(210000000, 340000000),
-                    TargetId = Config.randCustomer,
-                    DroneId = Config.randDrone,
+                    Id = Config.SerialNum++,
+                    SenderId = customers[Config.rand.Next(10)].Id,
+                    TargetId = customers[Config.rand.Next(10)].Id,
+                    DroneId = drones[Config.rand.Next(5)].Id,
                     Requested = newDate,
                     Scheduled = newDate.AddMinutes(Config.rand.Next(15,30)),
                     PickedUp = newDate.AddMinutes(Config.rand.Next(12,40)),
@@ -128,7 +120,6 @@ namespace DalObject
                     Priorities = (Priority)Config.rand.Next(3)
                 }
             };
-            Config.SerialNum++;
         }
     }
 }
