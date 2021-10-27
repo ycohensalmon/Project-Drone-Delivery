@@ -44,39 +44,7 @@ namespace ConsoleUI
                         break;
                     case 4:
                         PrintMenu4();
-
-                        int.TryParse(Console.ReadLine(), out choises);
-                        switch (choises)
-                        {
-                            case 1:
-                                for (int i = 0; i < DalObject.DalObject.GetStations().Count; i++)
-                                    Console.WriteLine(DalObject.DalObject.GetIndexStation(i));
-                                break;
-                            case 2:
-                                for (int i = 0; i < DalObject.DalObject.GetDrones().Count; i++)
-                                    Console.WriteLine(DalObject.DalObject.GetIndexDrone(i));
-                                break;
-                            case 3:
-                                for (int i = 0; i < DalObject.DalObject.GetCustomers().Count; i++)
-                                    Console.WriteLine(DalObject.DalObject.GetIndexCustomer(i));
-                                break;
-                            case 4:
-                                for (int i = 0; i < DalObject.DalObject.GetParcels().Count; i++)
-                                    Console.WriteLine(DalObject.DalObject.GetIndexParcel(i));
-                                break;
-                            case 5:
-                                for (int i = 0; i < DalObject.DalObject.GetParcels().Count; i++)
-                                    if (DalObject.DalObject.GetIndexParcel(i).DroneId == DalObject.DalObject.GetIndexDrone(i).Id)
-                                        Console.WriteLine(DalObject.DalObject.GetIndexParcel(i));
-                                break;
-                            case 6:
-                                for (int i = 0; i < DalObject.DalObject.GetStations().Count; i++)
-                                    if(DalObject.DalObject.GetIndexStation(i).ChargeSolts > 0)
-                                        Console.WriteLine(DalObject.DalObject.GetIndexStation(i));
-                                break;
-                            default:
-                                break;
-                        }
+                        Func4();
                         break;
                     default:
                         break;
@@ -130,6 +98,42 @@ namespace ConsoleUI
                 "Displays the list of packages- - - - - - - - - - - - - - - - - - - - - - - press 4\n" +
                 "Displays a list of packages that have not yet been assigned to the glider- press 5\n" +
                 "Display base stations with available charging stations - - - - - - - - - - press 6\n");
+        }
+        private static void Func4()
+        {
+            int choises;
+            int.TryParse(Console.ReadLine(), out choises);
+            switch (choises)
+            {
+                case 1:
+                    for (int i = 0; i < DalObject.DalObject.GetStations().Count; i++)
+                        Console.WriteLine(DalObject.DalObject.GetIndexStation(i));
+                    break;
+                case 2:
+                    for (int i = 0; i < DalObject.DalObject.GetDrones().Count; i++)
+                        Console.WriteLine(DalObject.DalObject.GetIndexDrone(i));
+                    break;
+                case 3:
+                    for (int i = 0; i < DalObject.DalObject.GetCustomers().Count; i++)
+                        Console.WriteLine(DalObject.DalObject.GetIndexCustomer(i));
+                    break;
+                case 4:
+                    for (int i = 0; i < DalObject.DalObject.GetParcels().Count; i++)
+                        Console.WriteLine(DalObject.DalObject.GetIndexParcel(i));
+                    break;
+                case 5:
+                    for (int i = 0; i < DalObject.DalObject.GetParcels().Count; i++)
+                        if (DalObject.DalObject.GetIndexParcel(i).DroneId == DalObject.DalObject.GetIndexDrone(i).Id)
+                            Console.WriteLine(DalObject.DalObject.GetIndexParcel(i));
+                    break;
+                case 6:
+                    for (int i = 0; i < DalObject.DalObject.GetStations().Count; i++)
+                        if (DalObject.DalObject.GetIndexStation(i).ChargeSolts > 0)
+                            Console.WriteLine(DalObject.DalObject.GetIndexStation(i));
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
