@@ -25,8 +25,13 @@ namespace ConsoleUI
                 {
                     case 1:
                         PrintMenu1();
+
+                        int.TryParse(Console.ReadLine(), out choises);
                         switch (choises)
                         {
+                            case 1:
+                                Console.WriteLine();
+                                break;
                             default:
                                 break;
                         }
