@@ -10,14 +10,14 @@ namespace DalObject
     public class DalObject
     {
         public DalObject() { DataSource.Initialize(); }
-        public static List<Drone> GetDrones() { return DataSource.drones; }
-        public static List<Station> GetStations() { return DataSource.stations; }
-        public static List<Customer> GetCustomers() { return DataSource.customers; }
-        public static List<Parcel> GetParcels() { return DataSource.parcels; }
-        public static Drone GetIndexDrone(int index) { return DataSource.drones[index]; }
-        public static Station GetIndexStation(int index) { return DataSource.stations[index]; }
-        public static Customer GetIndexCustomer(int index) { return DataSource.customers[index]; }
-        public static Parcel GetIndexParcel(int index) { return DataSource.parcels[index]; }
+        public static List<Drone> GetDrones() => DataSource.drones;
+        public static List<Station> GetStations() => DataSource.stations; 
+        public static List<Customer> GetCustomers() => DataSource.customers; 
+        public static List<Parcel> GetParcels() => DataSource.parcels;
+        public static Drone GetIndexDrone(int index) => DataSource.drones[index];
+        public static Station GetIndexStation(int index) => DataSource.stations[index];
+        public static Customer GetIndexCustomer(int index) => DataSource.customers[index];
+        public static Parcel GetIndexParcel(int index) => DataSource.parcels[index];
     }
     
 }
