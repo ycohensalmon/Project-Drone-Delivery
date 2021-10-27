@@ -11,14 +11,13 @@ namespace ConsoleUI
 
             DalObject.DalObject dal = new DalObject.DalObject();
 
-            int choises = 0;
-            Console.WriteLine(
-                "Hello :-)\n\nThis is a project for deliveries by drones\n\n");
+            PrintEnterToTheProject();
 
-            PrintFirstMenu();
+            int choises = 0;
 
             do
             {
+                PrintFirstMenu();
 
                 int.TryParse(Console.ReadLine(), out choises);
                 switch (choises)
@@ -50,9 +49,24 @@ namespace ConsoleUI
                         break;
                 }
 
-                PrintFirstMenu();
-                int.TryParse(Console.ReadLine(), out choises);
             } while (choises != 5);
+        }
+
+        private static void PrintEnterToTheProject()
+        {
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            int leftOffSet = (Console.WindowWidth / 2);
+            Console.SetCursorPosition(leftOffSet - 4, 0);
+            Console.WriteLine("Hello :-)\n\n");
+            Console.SetCursorPosition(leftOffSet - 21, 1);
+            Console.WriteLine("This is a project for deliveries by drones\n\n");
+            Console.SetCursorPosition(leftOffSet - 15, 2);
+            Console.WriteLine("Created by Elhanan and Yossef\n\n");
+            Console.ResetColor();
+            Console.WriteLine("press to continue habibi...\nWhat do you wait :)");
+            Console.ReadKey();
+            Console.Clear();
         }
 
         private static void PrintFirstMenu()
@@ -91,6 +105,7 @@ namespace ConsoleUI
         }
         private static void PrintMenu4()
         {
+            
             Console.WriteLine(
                 "Displays a list of base stations - - - - - - - - - - - - - - - - - - - - - press 1\n" +
                 "Displays the list of drones- - - - - - - - - - - - - - - - - - - - - - - - press 2\n" +
