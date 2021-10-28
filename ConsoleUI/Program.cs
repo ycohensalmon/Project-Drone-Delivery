@@ -23,6 +23,8 @@ namespace ConsoleUI
                 {
                     case 1:
                         PrintMenu1();
+                        Func1();
+
                         Switch1();
                         return;
                     case 2:
@@ -41,6 +43,20 @@ namespace ConsoleUI
                 }
 
             } while (choises != 5);
+        }
+
+        private static void Switch1()
+        {
+            int choises;
+            int.TryParse(Console.ReadLine(), out choises);
+            switch (choises)
+            {
+                case 1:
+                    AddStation();
+                    break;
+                default:
+                    break;
+            }
         }
 
         private static void AddStation()
