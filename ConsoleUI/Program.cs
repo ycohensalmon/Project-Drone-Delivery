@@ -7,8 +7,6 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            int length = DalObject.DalObject.GetDrones().Count;
-
             DalObject.DalObject dal = new DalObject.DalObject();
 
             PrintEnterToTheProject();
@@ -24,17 +22,10 @@ namespace ConsoleUI
                 {
                     case 1:
                         PrintMenu1();
+                        Func1();
 
-                        int.TryParse(Console.ReadLine(), out choises);
-                        switch (choises)
-                        {
-                            case 1:
-                                Console.WriteLine();
-                                break;
-                            default:
-                                break;
-                        }
-                        break;
+                        Switch1();
+                        return;
                     case 2:
                         PrintMenu2();
                         break;
@@ -50,6 +41,40 @@ namespace ConsoleUI
                 }
 
             } while (choises != 5);
+        }
+
+        private static void Switch1()
+        {
+            int choises;
+            int.TryParse(Console.ReadLine(), out choises);
+            switch (choises)
+            {
+                case 1:
+                    AddStation();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private static void AddStation()
+        {
+            int id;
+            double location;
+            Station temp = new();
+            Console.WriteLine("add Id:\n");
+            int.TryParse(Console.ReadLine(), out id);
+            temp.Id = id;
+            Console.WriteLine("add name:\n");
+            temp.Name = Console.ReadLine();
+            Console.WriteLine("add longitude:\n");
+            double.TryParse(Console.ReadLine(), out location);
+            temp.Longitude = location;
+            Console.WriteLine("add lattitude:\n");
+            double.TryParse(Console.ReadLine(), out location);
+            temp.Longitude = location;
+            temp.ChargeSolts = 10;
+            
         }
 
         private static void PrintEnterToTheProject()
@@ -114,6 +139,7 @@ namespace ConsoleUI
                 "Displays a list of packages that have not yet been assigned to the glider- press 5\n" +
                 "Display base stations with available charging stations - - - - - - - - - - press 6\n");
         }
+
         private static void Func4()
         {
             int choises;
