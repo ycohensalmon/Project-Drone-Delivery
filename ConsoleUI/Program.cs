@@ -7,9 +7,8 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            int length = DalObject.DalObject.GetDrones().Count;
-
-            DalObject.DalObject dal = new DalObject.DalObject();
+            DalObject.DataSource dal = new();
+            
 
             PrintEnterToTheProject();
 
@@ -37,13 +36,14 @@ namespace ConsoleUI
                         break;
                     case 2:
                         PrintMenu2();
+                        Switch2(dal);
                         break;
                     case 3:
                         PrintMenu3();
                         break;
                     case 4:
                         PrintMenu4();
-                        Func4();
+                        Switch4();
                         break;
                     default:
                         break;
@@ -51,6 +51,7 @@ namespace ConsoleUI
 
             } while (choises != 5);
         }
+
 
         private static void PrintEnterToTheProject()
         {
@@ -68,7 +69,6 @@ namespace ConsoleUI
             Console.ReadKey();
             Console.Clear();
         }
-
         private static void PrintFirstMenu()
         {
             Console.WriteLine(
@@ -114,7 +114,37 @@ namespace ConsoleUI
                 "Displays a list of packages that have not yet been assigned to the glider- press 5\n" +
                 "Display base stations with available charging stations - - - - - - - - - - press 6\n");
         }
-        private static void Func4()
+        private static void Switch2(ref DalObject.DalObject dal)
+        {
+            int choises;
+            int.TryParse(Console.ReadLine(), out choises);
+            switch (choises)
+            {
+                case 1:
+                    int droneId, parcelId;
+                    Console.WriteLine("Enter the Id of the drone");
+                    int.TryParse(Console.ReadLine(), out droneId);
+                    Console.WriteLine("Enter the Id of the parcel");
+                    int.TryParse(Console.ReadLine(), out parcelId);
+                    ConnectDroneToParcel(droneId, parcelId);
+
+
+
+
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                default:
+                    break;
+            }
+        }
+        private static void Switch4()
         {
             int choises;
             int.TryParse(Console.ReadLine(), out choises);

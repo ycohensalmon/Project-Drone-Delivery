@@ -18,6 +18,10 @@ namespace DalObject
         public static Station GetIndexStation(int index) => DataSource.stations[index];
         public static Customer GetIndexCustomer(int index) => DataSource.customers[index];
         public static Parcel GetIndexParcel(int index) => DataSource.parcels[index];
+        public static void ConnectDroneToParcel(int droneId, int parcelId)
+        {
+            DalObject.
+        }
     }
     
 }
