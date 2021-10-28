@@ -23,13 +23,11 @@ namespace ConsoleUI
                 {
                     case 1:
                         PrintMenu1();
-                        Func1();
-
                         Switch1();
                         return;
                     case 2:
                         PrintMenu2();
-                        Switch2(dal);
+                        Switch2();
                         break;
                     case 3:
                         PrintMenu3();
@@ -140,7 +138,7 @@ namespace ConsoleUI
                 "Displays a list of packages that have not yet been assigned to the glider- press 5\n" +
                 "Display base stations with available charging stations - - - - - - - - - - press 6\n");
         }
-        private static void Switch2(ref DalObject.DalObject dal)
+        private static void Switch2()
         {
             int choises;
             int.TryParse(Console.ReadLine(), out choises);
