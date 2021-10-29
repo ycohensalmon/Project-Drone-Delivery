@@ -3,12 +3,14 @@ using System;
 
 namespace ConsoleUI
 {
+    /*
+      
+     */
     class Program
     {
         static void Main(string[] args)
         {
             DalObject.DataSource dal = new();
-            
 
             PrintEnterToTheProject();
 
@@ -16,15 +18,14 @@ namespace ConsoleUI
 
             do
             {
+                Pause();
                 PrintFirstMenu();
-
                 int.TryParse(Console.ReadLine(), out choises);
+
                 switch (choises)
                 {
                     case 1:
                         PrintMenu1();
-                        Func1();
-
                         Switch1();
                         return;
                     case 2:
@@ -44,39 +45,43 @@ namespace ConsoleUI
 
             } while (choises != 5);
         }
-
-        private static void Switch1()
-        {
-            int choises;
-            int.TryParse(Console.ReadLine(), out choises);
-            switch (choises)
-            {
-                case 1:
-                    AddStation();
-                    break;
-                default:
-                    break;
-            }
-        }
-
         private static void AddStation()
         {
-            int id;
-            double location;
-            Station temp = new();
-            Console.WriteLine("add Id:\n");
+            int id, chargeSlots;
+            string name;
+            double longitude;
+            double lattitude;
+            Console.WriteLine("add Id: (4 digits)\n");
             int.TryParse(Console.ReadLine(), out id);
-            temp.Id = id;
             Console.WriteLine("add name:\n");
-            temp.Name = Console.ReadLine();
-            Console.WriteLine("add longitude:\n");
-            double.TryParse(Console.ReadLine(), out location);
-            temp.Longitude = location;
-            Console.WriteLine("add lattitude:\n");
-            double.TryParse(Console.ReadLine(), out location);
-            temp.Longitude = location;
-            temp.ChargeSolts = 10;
+            name = Console.ReadLine();
+            Console.WriteLine("add longitude: (example 12.123456)\n");
+            double.TryParse(Console.ReadLine(), out longitude);
+            Console.WriteLine("add lattitude: (example 12.123456)\n");
+            double.TryParse(Console.ReadLine(), out lattitude);
+            Console.WriteLine("add chargeSolts:\n");
+            int.TryParse(Console.ReadLine(), out chargeSlots);
+
+            DalObject.DalObject.NewStation(id, name, longitude, lattitude, chargeSlots);
             
+        }
+        private static void AddDrone()
+        {
+            int id;
+            double battery;
+            ModelDrones model;
+            WeightCategory maxWeight;
+
+            Console.WriteLine("add Id: (4 digits)\n");
+            int.TryParse(Console.ReadLine(), out id);
+            Console.WriteLine("chose name:\n");
+            //Console.WriteLine(ModelDrones);
+            Console.WriteLine("chose the weightCategory\n");
+            //Console.WriteLine(WeightCategory);
+            Console.WriteLine("add the battery");
+            double.TryParse(Console.ReadLine(), out battery);
+
+            DalObject.DalObject.NewDrone(id, model, maxWeight, battery);
         }
         private static void PrintEnterToTheProject()
         {
@@ -90,10 +95,15 @@ namespace ConsoleUI
             Console.SetCursorPosition(leftOffSet - 15, 2);
             Console.WriteLine("Created by Elhanan and Yossef\n\n");
             Console.ResetColor();
-            Console.WriteLine("press to continue habibi...\nWhat do you wait :)");
+        }
+
+        private static void Pause()
+        {
+            Console.WriteLine("press to continue...");
             Console.ReadKey();
             Console.Clear();
         }
+
         private static void PrintFirstMenu()
         {
             Console.WriteLine(
@@ -148,6 +158,15 @@ namespace ConsoleUI
                 case 1:
                     AddStation();
                     break;
+                case 2:
+                    AddDrone();
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
                 default:
                     break;
             }
@@ -160,14 +179,18 @@ namespace ConsoleUI
             {
                 case 1:
                     int droneId, parcelId;
+
+                    PrintDrones();
                     Console.WriteLine("Enter the Id of the drone");
                     int.TryParse(Console.ReadLine(), out droneId);
+                    Console.WriteLine("To witch parcel do you want to connect the drone ?");
+                    Console.WriteLine("press to see the list of parcels");
+                    Console.ReadKey();
+                    PrintParcels();
                     Console.WriteLine("Enter the Id of the parcel");
                     int.TryParse(Console.ReadLine(), out parcelId);
-                    ConnectDroneToParcel(droneId, parcelId);
-
-
-
+                    Parcel p = DalObject.DalObject.GetParcelById(parcelId);
+                    DalObject.DalObject.ConnectDroneToParcel(droneId, p);
 
                     break;
                 case 2:
@@ -189,24 +212,20 @@ namespace ConsoleUI
             switch (choises)
             {
                 case 1:
-                    for (int i = 0; i < DalObject.DalObject.GetStations().Count; i++)
-                        Console.WriteLine(DalObject.DalObject.GetIndexStation(i));
+                    PrintStations();
                     break;
                 case 2:
-                    for (int i = 0; i < DalObject.DalObject.GetDrones().Count; i++)
-                        Console.WriteLine(DalObject.DalObject.GetIndexDrone(i));
+                    PrintDrones();
                     break;
                 case 3:
-                    for (int i = 0; i < DalObject.DalObject.GetCustomers().Count; i++)
-                        Console.WriteLine(DalObject.DalObject.GetIndexCustomer(i));
+                    PrintCostumers();
                     break;
                 case 4:
-                    for (int i = 0; i < DalObject.DalObject.GetParcels().Count; i++)
-                        Console.WriteLine(DalObject.DalObject.GetIndexParcel(i));
+                    PrintParcels();
                     break;
                 case 5:
                     for (int i = 0; i < DalObject.DalObject.GetParcels().Count; i++)
-                        if (DalObject.DalObject.GetIndexParcel(i).DroneId == DalObject.DalObject.GetIndexDrone(i).Id)
+                        if (DalObject.DalObject.GetIndexParcel(i).DroneId != 0)
                             Console.WriteLine(DalObject.DalObject.GetIndexParcel(i));
                     break;
                 case 6:
@@ -217,6 +236,26 @@ namespace ConsoleUI
                 default:
                     break;
             }
+        }
+        private static void PrintParcels()
+        {
+            for (int i = 0; i < DalObject.DalObject.GetParcels().Count; i++)
+                Console.WriteLine(DalObject.DalObject.GetIndexParcel(i));
+        }
+        private static void PrintCostumers()
+        {
+            for (int i = 0; i < DalObject.DalObject.GetCustomers().Count; i++)
+                Console.WriteLine(DalObject.DalObject.GetIndexCustomer(i));
+        }
+        private static void PrintDrones()
+        {
+            for (int i = 0; i < DalObject.DalObject.GetDrones().Count; i++)
+                Console.WriteLine(DalObject.DalObject.GetIndexDrone(i));
+        }
+        private static void PrintStations()
+        {
+            for (int i = 0; i < DalObject.DalObject.GetStations().Count; i++)
+                Console.WriteLine(DalObject.DalObject.GetIndexStation(i));
         }
     }
 }

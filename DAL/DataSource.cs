@@ -9,6 +9,8 @@ namespace DalObject
 {
     public class DataSource
     {
+        public DataSource() => Initialize();
+
         internal static List<Drone> drones = new List<Drone>(10);
         internal static List<Station> stations = new List<Station>(5);
         internal static List<Customer> customers = new List<Customer>(100);
@@ -33,9 +35,9 @@ namespace DalObject
                 drones.Add(new Drone
                 {
                     Battery = Config.rand.Next(101),
-                    Id = Config.rand.Next(1000, 10001),
+                    Id = Config.rand.Next(1000, 10000),
                     Model = (ModelDrones)Config.rand.Next(5),
-                    Status = (DroneStatuses)Config.rand.Next(3),
+                    Status = (DroneStatuses)Config.rand.Next(2),
                     MaxWeight = (WeightCategory)Config.rand.Next(3)
                 });
             }
@@ -94,7 +96,7 @@ namespace DalObject
                 customers.Add( new Customer
                 {
                     Id = Config.rand.Next(210000000, 340000000),
-                    Phone = Config.rand.Next(0500000000, 0590000000),
+                    Phone = 0 + Config.rand.Next(500000000, 590000000),
                     Name = (Names)Config.rand.Next(8),
                     Longitude = (double)Config.rand.Next(31737458, 35174572) / (double)100000,
                     Latittude = (double)Config.rand.Next(31807238, 35241141) / (double)100000
@@ -104,22 +106,22 @@ namespace DalObject
         public static void InitializeParsel()
         {
             DateTime newDate = DateTime.Now;
-            parcels = new List<Parcel>()
+            for (int i = 0; i < 10; i++)
             {
-                new Parcel
+                parcels.Add(new Parcel
                 {
                     Id = Config.SerialNum++,
-                    SenderId = customers[Config.rand.Next(10)].Id,
-                    TargetId = customers[Config.rand.Next(10)].Id,
-                    DroneId = drones[Config.rand.Next(5)].Id,
+                    SenderId = 0,
+                    TargetId = 0,
+                    DroneId = 0,
                     Requested = newDate,
-                    Scheduled = newDate.AddMinutes(Config.rand.Next(15,30)),
-                    PickedUp = newDate.AddMinutes(Config.rand.Next(12,40)),
-                    Delivered = newDate.AddMinutes(Config.rand.Next(20,45)),
+                    Scheduled = newDate.AddMinutes(Config.rand.Next(15, 30)),
+                    PickedUp = newDate.AddMinutes(Config.rand.Next(12, 40)),
+                    Delivered = newDate.AddMinutes(Config.rand.Next(20, 45)),
                     Weight = (WeightCategory)Config.rand.Next(3),
                     Priorities = (Priority)Config.rand.Next(3)
-                }
-            };
+                });
+            }
         }
     }
 }
