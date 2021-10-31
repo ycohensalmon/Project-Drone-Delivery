@@ -33,8 +33,8 @@ namespace IDAL
             public Priority Priorities { get => priorities; set => priorities = value; }
             public override string ToString()
             {
-                return $"Id:{Id}, SenderId:{SenderId}, TargetId:{TargetId}, DroneId:{DroneId}, Requested:{Requested}," +
-                    $"Scheduled:{Scheduled}, PickedUp:{PickedUp}, Delivered:{Delivered}, Weight:{Weight}, Priorities:{Priorities}";
+                return $"Id: {Id}, SenderId: {SenderId}, TargetId: {TargetId}, DroneId: {DroneId}\nRequested: {Requested}, " +
+                    $"Scheduled: {Scheduled}\nPickedUp:  {PickedUp}, Delivered: {Delivered}\nWeight: {Weight}, Priorities:{Priorities}\n";
             }
         }
     }
