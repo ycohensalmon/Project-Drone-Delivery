@@ -298,7 +298,7 @@ namespace ConsoleUI
             Console.WriteLine("Enter the Id of the drone");
             int.TryParse(Console.ReadLine(), out droneId);
 
-            DalObject.DalObject.ConnectDroneToParcel(parcelId);
+            DalObject.DalObject.ConnectDroneToParcel(droneId, parcelId);
         }
         private static void CollectParcelBySkimmer()
         {
