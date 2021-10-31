@@ -43,24 +43,25 @@ namespace ConsoleUI
             } while (choises != 5);
         }
         private static void AddStation()
-
-        private static void Switch1()
         {
-            int choises;
-            int.TryParse(Console.ReadLine(), out choises);
-            switch (choises)
-            {
-                case 1:
-                    AddStation();
-                    break;
-                case 2:
-                    AddDrone();
-                    break;
-                default:
-                    break;
-            }
-        }
+            int id, chargeSlots;
+            string name;
+            double longitude;
+            double lattitude;
+            Console.WriteLine("add Id: (4 digits)\n");
+            int.TryParse(Console.ReadLine(), out id);
+            Console.WriteLine("add name:\n");
+            name = Console.ReadLine();
+            Console.WriteLine("add longitude: (example 12.123456)\n");
+            double.TryParse(Console.ReadLine(), out longitude);
+            Console.WriteLine("add lattitude: (example 12.123456)\n");
+            double.TryParse(Console.ReadLine(), out lattitude);
+            Console.WriteLine("add chargeSolts:\n");
+            int.TryParse(Console.ReadLine(), out chargeSlots);
 
+            DalObject.DalObject.NewStation(id, name, longitude, lattitude, chargeSlots);
+
+        }
         private static void AddCustomer()
         {
             int id, chargeSlots;
@@ -89,7 +90,6 @@ namespace ConsoleUI
         private static void AddDrone()
         {
             int id, model, maxWeight;
-            double battery;
 
             Console.WriteLine("add Id: (4 digits)\n");
             int.TryParse(Console.ReadLine(), out id);
@@ -113,14 +113,12 @@ namespace ConsoleUI
             Console.WriteLine("Created by Elhanan and Yossef\n\n");
             Console.ResetColor();
         }
-
         private static void Pause()
         {
             Console.WriteLine("press to continue...");
             Console.ReadKey();
             Console.Clear();
         }
-
         private static void PrintFirstMenu()
         {
             Console.WriteLine(

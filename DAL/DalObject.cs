@@ -9,7 +9,6 @@ namespace DalObject
 {
     public class DalObject
     {
-        //public DalObject() { DataSource.Initialize(); }
         public static List<Drone> GetDrones() => DataSource.drones;
         public static List<Station> GetStations() => DataSource.stations;
         public static List<Customer> GetCustomers() => DataSource.customers;
