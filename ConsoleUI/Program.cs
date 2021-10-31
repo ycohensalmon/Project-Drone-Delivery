@@ -64,28 +64,22 @@ namespace ConsoleUI
         }
         private static void AddCustomer()
         {
-            int id, chargeSlots;
-            string name;
-            double longitude;
-            double lattitude;
-            Console.WriteLine("add Id: (4 digits)\n");
-            int.TryParse(Console.ReadLine(), out id);
-            int num;
-            Customer temp = new();
+            int id, phone;
+            Names name;
+            double longitude, lattitude;
+
             Console.WriteLine("add Id:\n");
-            int.TryParse(Console.ReadLine(), out num);
-            temp.Id = num;
+            int.TryParse(Console.ReadLine(), out id);
             Console.WriteLine("add name:\n");
-            name = Console.ReadLine();
+            //name = Console.ReadLine();
+            Console.WriteLine("add Phone:\n");
+            int.TryParse(Console.ReadLine(), out phone);
             Console.WriteLine("add longitude: (example 12.123456)\n");
             double.TryParse(Console.ReadLine(), out longitude);
             Console.WriteLine("add lattitude: (example 12.123456)\n");
             double.TryParse(Console.ReadLine(), out lattitude);
-            Console.WriteLine("add chargeSolts:\n");
-            int.TryParse(Console.ReadLine(), out chargeSlots);
 
-            DalObject.DalObject.NewStation(id, name, longitude, lattitude, chargeSlots);
-            
+            DalObject.DalObject.NewCostumer(id, name, phone, longitude, lattitude);
         }
         private static void AddDrone()
         {
@@ -99,6 +93,19 @@ namespace ConsoleUI
             int.TryParse(Console.ReadLine(), out maxWeight);
 
             DalObject.DalObject.NewDrone(id, model, maxWeight);
+        }
+        private static void AddParcel()
+        {
+            int id, priorities, weight;
+
+            Console.WriteLine("add Id: (4 digits)\n");
+            int.TryParse(Console.ReadLine(), out id);
+            Console.WriteLine("choise the priority, for Normal press 0, Fast press 1, Emergency press 2\n");
+            int.TryParse(Console.ReadLine(), out priorities);
+            Console.WriteLine("chose the weight of the parcel, for Light press 0, Medium press 1, Heavy press 2\n");
+            int.TryParse(Console.ReadLine(), out weight);
+
+            DalObject.DalObject.NewParcel(id, priorities, weight);
         }
         private static void PrintEnterToTheProject()
         {
@@ -177,10 +184,10 @@ namespace ConsoleUI
                     AddDrone();
                     break;
                 case 3:
+                    AddCustomer();
                     break;
                 case 4:
-                    break;
-                case 5:
+                    AddParcel();
                     break;
                 default:
                     break;
@@ -204,8 +211,7 @@ namespace ConsoleUI
                     PrintParcels();
                     Console.WriteLine("Enter the Id of the parcel");
                     int.TryParse(Console.ReadLine(), out parcelId);
-                    Parcel p = DalObject.DalObject.GetParcelById(parcelId);
-                    DalObject.DalObject.ConnectDroneToParcel(droneId, p);
+                    DalObject.DalObject.ConnectDroneToParcel(droneId, parcelId);
 
                     break;
                 case 2:
