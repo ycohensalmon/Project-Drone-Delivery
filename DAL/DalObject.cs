@@ -80,22 +80,10 @@ namespace DalObject
 
 
         // get lists by id
-        public static Station GetStationById(int id)
-        {
-            return DataSource.stations.Find(x => x.Id == id);
-        }
-        public static Drone GetDroneById(int id)
-        {
-            return DataSource.drones.Find(x => x.Id == id);
-        }
-        public static Customer GetCustomerById(int id)
-        {
-            return DataSource.customers.Find(x => x.Id == id);
-        }
-        public static Parcel GetParcelById(int id)
-        {
-            return DataSource.parcels.Find(x => x.Id == id);
-        }
+        public static Station GetStationById(int id) => DataSource.stations.Find(x => x.Id == id);
+        public static Drone GetDroneById(int id) => DataSource.drones.Find(x => x.Id == id);
+        public static Customer GetCustomerById(int id) => DataSource.customers.Find(x => x.Id == id);
+        public static Parcel GetParcelById(int id) => DataSource.parcels.Find(x => x.Id == id);
 
 
         // Get Index List
