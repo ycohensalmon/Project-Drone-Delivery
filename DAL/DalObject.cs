@@ -62,24 +62,6 @@ namespace DalObject
 
 
         // uptades fonctions
-        public static Drone GetDroneById(int id)
-        {
-            int i = 0;
-            for (; i < GetDrones().Count; i++)
-                if (GetIndexDrone(i).Id == id)
-                    break;
-
-            return GetIndexDrone(i);
-        }
-        public static Parcel GetParcelById(int id)
-        {
-            int i = 0;
-            for (; i < GetParcels().Count; i++)
-                if (GetIndexParcel(i).Id == id)
-                    break;
-
-            return GetIndexParcel(i);
-        }
         public static void ConnectDroneToParcel(int droneId, int parcelId)
         {
             Parcel parcel = GetParcelById(parcelId);
@@ -98,6 +80,25 @@ namespace DalObject
         public static List<Station> GetStations() => DataSource.stations;
         public static List<Customer> GetCustomers() => DataSource.customers;
         public static List<Parcel> GetParcels() => DataSource.parcels;
+
+
+        // get lists by id
+        public static Station GetStationById(int id)
+        {
+            return DataSource.stations.Find(x => x.Id == id);
+        }
+        public static Drone GetDroneById(int id)
+        {
+            return DataSource.drones.Find(x => x.Id == id);
+        }
+        public static Customer GetCustomerById(int id)
+        {
+            return DataSource.customers.Find(x => x.Id == id);
+        }
+        public static Parcel GetParcelById(int id)
+        {
+            return DataSource.parcels.Find(x => x.Id == id);
+        }
 
 
         // Get Index List
