@@ -148,7 +148,7 @@ namespace ConsoleUI
                     AssociateDroneToParcel();
                     break;
                 case 2:
-                    CollectParcelBySkimmer();
+                    CollectParcelsByDrones();
                     break;
                 case 3:
                     break;
@@ -201,14 +201,10 @@ namespace ConsoleUI
                     PrintParcels();
                     break;
                 case 5:
-                    for (int i = 0; i < DalObject.DalObject.GetParcels().Count; i++)
-                        if (DalObject.DalObject.GetIndexParcel(i).DroneId != 0)
-                            Console.WriteLine(DalObject.DalObject.GetIndexParcel(i));
+                    PrintParcelsWithoutDrone();
                     break;
                 case 6:
-                    for (int i = 0; i < DalObject.DalObject.GetStations().Count; i++)
-                        if (DalObject.DalObject.GetIndexStation(i).ChargeSolts > 0)
-                            Console.WriteLine(DalObject.DalObject.GetIndexStation(i));
+                    PrintStationWithChargeSolts();
                     break;
                 default:
                     break;
@@ -240,13 +236,13 @@ namespace ConsoleUI
         private static void AddCustomer()
         {
             int id, phone;
-            Names name;
+            string name;
             double longitude, lattitude;
 
             Console.WriteLine("add Id:\n");
             int.TryParse(Console.ReadLine(), out id);
             Console.WriteLine("add name:\n");
-            //name = Console.ReadLine();
+            name = Console.ReadLine();
             Console.WriteLine("add Phone:\n");
             int.TryParse(Console.ReadLine(), out phone);
             Console.WriteLine("add longitude: (example 12.123456)\n");
@@ -300,9 +296,21 @@ namespace ConsoleUI
 
             DalObject.DalObject.ConnectDroneToParcel(droneId, parcelId);
         }
-        private static void CollectParcelBySkimmer()
+        private static void CollectParcelsByDrones()
         {
 
+            int parcelId, droneId;
+            List<Parcel> temp = DalObject.DalObject.GetParcels();
+            foreach (Parcel x in temp) { if (x.DroneId != 0) { Console.WriteLine(x); } }
+            Console.WriteLine("Enter the Id of the parcel");
+            int.TryParse(Console.ReadLine(), out parcelId);
+
+            List<Drone> temp2 = DalObject.DalObject.GetDrones();
+            foreach (Drone y in temp2) { if (y.Status == DroneStatuses.Available) { Console.WriteLine(y); } }
+            Console.WriteLine("Enter the Id of the drone");
+            int.TryParse(Console.ReadLine(), out droneId);
+
+            DalObject.DalObject.CollectParcelByDrone(droneId, parcelId);
         }
 
 
@@ -357,6 +365,18 @@ namespace ConsoleUI
         {
             for (int i = 0; i < DalObject.DalObject.GetStations().Count; i++)
                 Console.WriteLine(DalObject.DalObject.GetIndexStation(i));
+        }
+        private static void PrintStationWithChargeSolts()
+        {
+            for (int i = 0; i < DalObject.DalObject.GetStations().Count; i++)
+                if (DalObject.DalObject.GetIndexStation(i).ChargeSolts > 0)
+                    Console.WriteLine(DalObject.DalObject.GetIndexStation(i));
+        }
+        private static void PrintParcelsWithoutDrone()
+        {
+            for (int i = 0; i < DalObject.DalObject.GetParcels().Count; i++)
+                if (DalObject.DalObject.GetIndexParcel(i).DroneId == 0)
+                    Console.WriteLine(DalObject.DalObject.GetIndexParcel(i));
         }
     }
 }
