@@ -80,16 +80,13 @@ namespace DalObject
 
             return GetIndexParcel(i);
         }
-        public static void ConnectDroneToParcel(int droneId, int parcelId)
+        public static void ConnectDroneToParcel(int parcelId, int droneId)
         {
             Parcel parcel = GetParcelById(parcelId);
-
-            Parcel temp = parcel;
-            temp.DroneId = droneId;
-            temp.Scheduled = DateTime.Now;
-
             DataSource.parcels.Remove(parcel);
-            DataSource.parcels.Add(temp);
+            parcel.DroneId = droneId;
+            parcel.Scheduled = DateTime.Now;
+            DataSource.parcels.Add(parcel);
         }
 
 
