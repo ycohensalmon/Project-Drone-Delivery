@@ -143,7 +143,6 @@ namespace DalObject
         public static List<Station> GetStations() => DataSource.stations;
         public static List<Customer> GetCustomers() => DataSource.customers;
         public static List<Parcel> GetParcels() => DataSource.parcels;
-        public static List<DroneCharge> GetDroneCharges() => DataSource.droneCharges;
 
 
         // get lists by id

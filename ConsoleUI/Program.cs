@@ -77,7 +77,7 @@ namespace ConsoleUI
                 "for adding a base station - - - - - - press 1\n" +
                 "for adding a drone to the list- - - - press 2\n" +
                 "for absorption of a new customer- - - press 3\n" +
-                "for receiving a package for delivery- press 4\n");
+                "for receiving a package for delivery- press 4");
         }
         private static void PrintMenu2()
         {
@@ -86,7 +86,7 @@ namespace ConsoleUI
                 "Collection of a package by drone- - - - - - - - - press 2\n" +
                 "Delivery package to customer- - - - - - - - - - - press 3\n" +
                 "Sending a skimmer for charging at a base station- press 4\n" +
-                "Release skimmer from charging at base station - - press 5\n");
+                "Release skimmer from charging at base station - - press 5");
         }
         private static void PrintMenu3()
         {
@@ -94,7 +94,7 @@ namespace ConsoleUI
                 "Base station view- press 1\n" +
                 "Drone display- - - press 2\n" +
                 "Customer view- - - press 3\n" +
-                "Package view - - - press 4\n");
+                "Package view - - - press 4");
         }
         private static void PrintMenu4()
         {
@@ -105,7 +105,7 @@ namespace ConsoleUI
                 "View the customer list - - - - - - - - - - - - - - - - - - - - - - - - - - press 3\n" +
                 "Displays the list of packages- - - - - - - - - - - - - - - - - - - - - - - press 4\n" +
                 "Displays a list of packages that have not yet been assigned to the glider- press 5\n" +
-                "Display base stations with available charging stations - - - - - - - - - - press 6\n");
+                "Display base stations with available charging stations - - - - - - - - - - press 6");
         }
         private static void Pause()
         {

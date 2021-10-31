@@ -24,9 +24,8 @@ namespace IDAL
             public int ChargeSolts { get => chargeSolts; set => chargeSolts = value; }
             public override string ToString()
             {
-                return string.Format("the id is: {0}\nthe name is: {1}\nthe longitude is: {2}\n" +
-                    "the lattitude is: {3}\nthe number of available argument positions: {4}\n"
-                    ,Id,Name,Longitude,Lattitude,ChargeSolts);
+                return string.Format("Id: {0}\nName: {1}\nLongitude: {2}\nLattitude: {3}\nAvailable charging positions: {4}\n"
+                    , Id,Name,Longitude,Lattitude,ChargeSolts);
             }
         }
     }

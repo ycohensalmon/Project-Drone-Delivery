@@ -91,7 +91,7 @@ namespace DalObject
             customers.Add(new Customer
             {
                 Id = Config.rand.Next(210000000, 340000000),
-                Phone = 0 + Config.rand.Next(500000000, 590000000),
+                Phone = Config.rand.Next(0500000000, 0590000000),
                 Name = "Yossef Cohen",
                 Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)1000000,
                 Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)1000000
@@ -177,17 +177,13 @@ namespace DalObject
                 parcels.Add(new Parcel
                 {
                     Id = Config.SerialNum++,
-                    SenderId = 0,
-                    TargetId = 0,
+                    SenderId = Config.rand.Next(10000,99999),
+                    TargetId = Config.rand.Next(10000, 99999),
                     DroneId = 0,
                     Requested = DateTime.Now,
                     Scheduled = DateTime.MinValue,
                     PickedUp = DateTime.MinValue,
                     Delivered = DateTime.MinValue,
-                    //Requested = newDate,
-                    //Scheduled = newDate.AddMinutes(Config.rand.Next(15, 30)),
-                    //PickedUp = newDate.AddMinutes(Config.rand.Next(12, 40)),
-                    //Delivered = newDate.AddMinutes(Config.rand.Next(20, 45)),
                     Weight = (WeightCategory)Config.rand.Next(3),
                     Priorities = (Priority)Config.rand.Next(3)
                 });
