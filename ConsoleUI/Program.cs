@@ -52,30 +52,26 @@ namespace ConsoleUI
                 case 1:
                     AddStation();
                     break;
+                case 2:
+                    AddDrone();
+                    break;
                 default:
                     break;
             }
         }
 
-        private static void AddStation()
+        private static void AddCustomer()
         {
-            int id;
-            double location;
-            Station temp = new();
+            int num;
+            Customer temp = new();
             Console.WriteLine("add Id:\n");
-            int.TryParse(Console.ReadLine(), out id);
-            temp.Id = id;
+            int.TryParse(Console.ReadLine(), out num);
+            temp.Id = num;
             Console.WriteLine("add name:\n");
             temp.Name = Console.ReadLine();
-            Console.WriteLine("add longitude:\n");
-            double.TryParse(Console.ReadLine(), out location);
-            temp.Longitude = location;
-            Console.WriteLine("add lattitude:\n");
-            double.TryParse(Console.ReadLine(), out location);
-            temp.Longitude = location;
-            temp.ChargeSolts = 10;
-            
+
         }
+
 
         private static void PrintEnterToTheProject()
         {
