@@ -69,17 +69,71 @@ namespace DalObject
 
             parcel.DroneId = droneId;
             parcel.Scheduled = DateTime.Now;
+
             DataSource.parcels.Add(parcel);
         }
-        public static void CollectParcelByDrone(int droneId, int parcelId)
+        public static void CollectParcelByDrone(int parcelId)
         {
             Parcel parcel = GetParcelById(parcelId);
-            Drone drone = GetDroneById(droneId);
+            Drone drone = DataSource.drones.Find(x => x.Id == parcel.DroneId);
             DataSource.parcels.Remove(parcel);
             DataSource.drones.Remove(drone);
 
             drone.Status = DroneStatuses.Delivery;
             parcel.PickedUp = DateTime.Now;
+
+            DataSource.drones.Add(drone);
+            DataSource.parcels.Add(parcel);
+        }
+        public static void DeliveredParcel(int parcelId)
+        {
+            Parcel parcel = GetParcelById(parcelId);
+            Drone drone = DataSource.drones.Find(x => x.Id == parcel.DroneId);
+            DataSource.parcels.Remove(parcel);
+            DataSource.drones.Remove(drone);
+
+            drone.Status = DroneStatuses.Available;
+            parcel.Delivered = DateTime.Now;
+            parcel.DroneId = 0;
+
+            DataSource.drones.Add(drone);
+            DataSource.parcels.Add(parcel);
+        }
+        public static void SendDroneToBaseCharge(int droneId, int stationId)
+        {
+            Drone drone = GetDroneById(droneId);
+            Station station = GetStationById(stationId);
+            DataSource.stations.Remove(station);
+            DataSource.drones.Remove(drone);
+
+            DataSource.droneCharges.Add(new DroneCharge
+            {
+                DroneId = drone.Id,
+                StationId = station.Id
+            });
+            station.ChargeSolts--;
+            drone.Status = DroneStatuses.Maintenance;
+
+            DataSource.stations.Add(station);
+            DataSource.drones.Add(drone);
+        }
+        public static void ReleaseDroneFromCharging(int droneId)
+        {
+            Drone drone = GetDroneById(droneId);
+            DataSource.drones.Remove(drone);
+
+            DroneCharge droneCharge = DataSource.droneCharges.Find(x => x.DroneId == droneId);
+            int stationId = droneCharge.StationId;
+            Station station = GetStationById(droneId);
+            DataSource.stations.Remove(station);
+
+            station.ChargeSolts++;
+            drone.Status = DroneStatuses.Available;
+            drone.Battery = 100;
+
+            DataSource.stations.Add(station);
+            DataSource.drones.Add(drone);
+            DataSource.droneCharges.Remove(droneCharge);
 
         }
 
@@ -89,6 +143,7 @@ namespace DalObject
         public static List<Station> GetStations() => DataSource.stations;
         public static List<Customer> GetCustomers() => DataSource.customers;
         public static List<Parcel> GetParcels() => DataSource.parcels;
+        public static List<DroneCharge> GetDroneCharges() => DataSource.droneCharges;
 
 
         // get lists by id

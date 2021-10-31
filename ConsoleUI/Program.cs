@@ -27,7 +27,7 @@ namespace ConsoleUI
                     case 1:
                         PrintMenu1();
                         Switch1();
-                        return;
+                        break;
                     case 2:
                         PrintMenu2();
                         Switch2();
@@ -151,10 +151,13 @@ namespace ConsoleUI
                     CollectParcelsByDrones();
                     break;
                 case 3:
+                    deliveredParcelToCostumer();
                     break;
                 case 4:
+                    SendDroneToCharge();
                     break;
                 case 5:
+                    ReleaseDroneFromChargingBase();
                     break;
                 default:
                     break;
@@ -299,18 +302,50 @@ namespace ConsoleUI
         private static void CollectParcelsByDrones()
         {
 
-            int parcelId, droneId;
+            int parcelId;
             List<Parcel> temp = DalObject.DalObject.GetParcels();
             foreach (Parcel x in temp) { if (x.DroneId != 0) { Console.WriteLine(x); } }
             Console.WriteLine("Enter the Id of the parcel");
             int.TryParse(Console.ReadLine(), out parcelId);
 
-            List<Drone> temp2 = DalObject.DalObject.GetDrones();
-            foreach (Drone y in temp2) { if (y.Status == DroneStatuses.Available) { Console.WriteLine(y); } }
+            DalObject.DalObject.CollectParcelByDrone(parcelId);
+        }
+        private static void deliveredParcelToCostumer()
+        {
+            int parcelId;
+            List<Parcel> temp = DalObject.DalObject.GetParcels();
+            foreach (Parcel x in temp) { if (x.PickedUp != DateTime.MinValue && x.Delivered == DateTime.MinValue) { Console.WriteLine(x); } }
+            Console.WriteLine("Enter the Id of the parcel");
+            int.TryParse(Console.ReadLine(), out parcelId);
+
+            DalObject.DalObject.DeliveredParcel(parcelId);
+        }
+        private static void SendDroneToCharge()
+        {
+            int droneId, stationId;
+            List<Drone> temp = DalObject.DalObject.GetDrones();
+            foreach (Drone y in temp) { if (y.Status != DroneStatuses.Maintenance) { Console.WriteLine(y); } }
+            Console.WriteLine("Enter the Id of the drone to send to charge");
+            int.TryParse(Console.ReadLine(), out droneId);
+
+            PrintStationWithChargeSolts();
+            Console.WriteLine("Enter the Id of the station");
+            int.TryParse(Console.ReadLine(), out stationId);
+
+            DalObject.DalObject.SendDroneToBaseCharge(droneId, stationId);
+
+        }
+        private static void ReleaseDroneFromChargingBase()
+        {
+            int droneId;
+            List<Drone> temp = DalObject.DalObject.GetDrones();
+            foreach (Drone y in temp) { if (y.Status == DroneStatuses.Maintenance) { Console.WriteLine(y); } }
             Console.WriteLine("Enter the Id of the drone");
             int.TryParse(Console.ReadLine(), out droneId);
 
-            DalObject.DalObject.CollectParcelByDrone(droneId, parcelId);
+            DalObject.DalObject.ReleaseDroneFromCharging(droneId);
+
+
         }
 
 
