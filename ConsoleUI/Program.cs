@@ -67,21 +67,17 @@ namespace ConsoleUI
         }
         private static void AddDrone()
         {
-            int id;
+            int id, model, maxWeight;
             double battery;
-            ModelDrones model;
-            WeightCategory maxWeight;
 
             Console.WriteLine("add Id: (4 digits)\n");
             int.TryParse(Console.ReadLine(), out id);
-            Console.WriteLine("chose name:\n");
-            //Console.WriteLine(ModelDrones);
+            Console.WriteLine("add model: for Cobra press 0, Nagic press 1, Mavic_Air press 2, DJI press 3, Mickcara press 4:\n");
+            int.TryParse(Console.ReadLine(), out model);
             Console.WriteLine("chose the weightCategory\n");
-            //Console.WriteLine(WeightCategory);
-            Console.WriteLine("add the battery");
-            double.TryParse(Console.ReadLine(), out battery);
+            int.TryParse(Console.ReadLine(), out maxWeight);
 
-            DalObject.DalObject.NewDrone(id, model, maxWeight, battery);
+            DalObject.DalObject.NewDrone(id, model, maxWeight);
         }
         private static void PrintEnterToTheProject()
         {

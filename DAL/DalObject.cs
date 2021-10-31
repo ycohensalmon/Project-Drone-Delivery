@@ -56,15 +56,15 @@ namespace DalObject
                 ChargeSolts = chargeSlots
             });
         }
-        public static void NewDrone(int id, ModelDrones model, WeightCategory maxWeight, double battery)
+        public static void NewDrone(int id, int model, int maxWeight)
         {
             DataSource.drones.Add(new Drone
             {
-                Battery = battery,
                 Id = id,
-                Model = model,
+                Model = (ModelDrones)model,
+                MaxWeight = (WeightCategory)maxWeight,
                 Status = DroneStatuses.Available,
-                MaxWeight = maxWeight
+                Battery = 100
             });
         }
     }
