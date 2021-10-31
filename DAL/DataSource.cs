@@ -37,8 +37,8 @@ namespace DalObject
                     Battery = Config.rand.Next(101),
                     Id = Config.rand.Next(1000, 10000),
                     Model = (ModelDrones)Config.rand.Next(5),
-                    Status = (DroneStatuses)Config.rand.Next(2),
-                    MaxWeight = (WeightCategory)Config.rand.Next(3)
+                    MaxWeight = (WeightCategory)Config.rand.Next(3),
+                    Status = DroneStatuses.Available
                 });
             }
         }
@@ -52,7 +52,6 @@ namespace DalObject
                 Longitude = 35.187202,
                 ChargeSolts = Config.rand.Next(10)
             });
-
             stations.Add(new Station
             {
                 Id = 1020,
@@ -61,7 +60,6 @@ namespace DalObject
                 Longitude = 35.213429,
                 ChargeSolts = Config.rand.Next(10)
             });
-
             stations.Add(new Station
             {
                 Id = 1030,
@@ -70,7 +68,6 @@ namespace DalObject
                 Longitude = 35.194476,
                 ChargeSolts = Config.rand.Next(10)
             });
-
             stations.Add(new Station
             {
                 Id = 1040,
@@ -79,7 +76,6 @@ namespace DalObject
                 Longitude = 35.203100,
                 ChargeSolts = Config.rand.Next(10)
             });
-
             stations.Add(new Station
             {
                 Id = 1050,
@@ -91,17 +87,86 @@ namespace DalObject
         }
         public static void InitializeCustomer()
         {
-            for (int i = 0; i < 10; i++)
+            customers.Add(new Customer
             {
-                customers.Add( new Customer
-                {
-                    Id = Config.rand.Next(210000000, 340000000),
-                    Phone = 0 + Config.rand.Next(500000000, 590000000),
-                    Name = (Names)Config.rand.Next(8),
-                    Longitude = (double)Config.rand.Next(31737458, 35174572) / (double)100000,
-                    Latittude = (double)Config.rand.Next(31807238, 35241141) / (double)100000
-                });
-            }
+                Id = Config.rand.Next(210000000, 340000000),
+                Phone = 0 + Config.rand.Next(500000000, 590000000),
+                Name = "Yossef Cohen",
+                Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)100000,
+                Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)100000
+            });
+            customers.Add(new Customer
+            {
+                Id = Config.rand.Next(210000000, 340000000),
+                Phone = 0 + Config.rand.Next(500000000, 590000000),
+                Name = "Moshe Levi",
+                Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)100000,
+                Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)100000
+            });
+            customers.Add(new Customer
+            {
+                Id = Config.rand.Next(210000000, 340000000),
+                Phone = 0 + Config.rand.Next(500000000, 590000000),
+                Name = "Naor Ben-Lulu",
+                Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)100000,
+                Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)100000
+            });
+            customers.Add(new Customer
+            {
+                Id = Config.rand.Next(210000000, 340000000),
+                Phone = 0 + Config.rand.Next(500000000, 590000000),
+                Name = "Sarah Weill",
+                Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)100000,
+                Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)100000
+            });
+            customers.Add(new Customer
+            {
+                Id = Config.rand.Next(210000000, 340000000),
+                Phone = 0 + Config.rand.Next(500000000, 590000000),
+                Name = "Noa Botbol",
+                Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)100000,
+                Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)100000
+            });
+            customers.Add(new Customer
+            {
+                Id = Config.rand.Next(210000000, 340000000),
+                Phone = 0 + Config.rand.Next(500000000, 590000000),
+                Name = "Regev Shmoulevits",
+                Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)100000,
+                Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)100000
+            });
+            customers.Add(new Customer
+            {
+                Id = Config.rand.Next(210000000, 340000000),
+                Phone = 0 + Config.rand.Next(500000000, 590000000),
+                Name = "Yinon Barsheshet",
+                Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)100000,
+                Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)100000
+            });
+            customers.Add(new Customer
+            {
+                Id = Config.rand.Next(210000000, 340000000),
+                Phone = 0 + Config.rand.Next(500000000, 590000000),
+                Name = "Rahamim Yifrah",
+                Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)100000,
+                Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)100000
+            });
+            customers.Add(new Customer
+            {
+                Id = Config.rand.Next(210000000, 340000000),
+                Phone = 0 + Config.rand.Next(500000000, 590000000),
+                Name = "Dvora Benguigui",
+                Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)100000,
+                Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)100000
+            });
+            customers.Add(new Customer
+            {
+                Id = Config.rand.Next(210000000, 340000000),
+                Phone = 0 + Config.rand.Next(500000000, 590000000),
+                Name = "Hananel Batito",
+                Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)100000,
+                Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)100000
+            });
         }
         public static void InitializeParsel()
         {
@@ -114,10 +179,14 @@ namespace DalObject
                     SenderId = 0,
                     TargetId = 0,
                     DroneId = 0,
-                    Requested = newDate,
-                    Scheduled = newDate.AddMinutes(Config.rand.Next(15, 30)),
-                    PickedUp = newDate.AddMinutes(Config.rand.Next(12, 40)),
-                    Delivered = newDate.AddMinutes(Config.rand.Next(20, 45)),
+                    //Requested = DateTime.Now,
+                    //Scheduled = DateTime.MinValue,
+                    //PickedUp = DateTime.MinValue,
+                    //Delivered = DateTime.MinValue,
+                    //Requested = newDate,
+                    //Scheduled = newDate.AddMinutes(Config.rand.Next(15, 30)),
+                    //PickedUp = newDate.AddMinutes(Config.rand.Next(12, 40)),
+                    //Delivered = newDate.AddMinutes(Config.rand.Next(20, 45)),
                     Weight = (WeightCategory)Config.rand.Next(3),
                     Priorities = (Priority)Config.rand.Next(3)
                 });
