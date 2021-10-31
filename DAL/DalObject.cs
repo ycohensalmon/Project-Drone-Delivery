@@ -32,7 +32,7 @@ namespace DalObject
                 Battery = 100
             });
         }
-        public static void NewCostumer(int id, Names name, int phone, double longitude, double lattitude)
+        public static void NewCostumer(int id, string name, int phone, double longitude, double lattitude)
         {
             DataSource.customers.Add(new Customer
             {
@@ -51,7 +51,7 @@ namespace DalObject
                 SenderId = 0,
                 TargetId = 0,
                 DroneId = 0,
-                Requested = DateTime.MinValue,
+                Requested = DateTime.Now,
                 Scheduled = DateTime.MinValue,
                 PickedUp = DateTime.MinValue,
                 Delivered = DateTime.MinValue,
@@ -66,9 +66,21 @@ namespace DalObject
         {
             Parcel parcel = GetParcelById(parcelId);
             DataSource.parcels.Remove(parcel);
+
             parcel.DroneId = droneId;
             parcel.Scheduled = DateTime.Now;
             DataSource.parcels.Add(parcel);
+        }
+        public static void CollectParcelByDrone(int droneId, int parcelId)
+        {
+            Parcel parcel = GetParcelById(parcelId);
+            Drone drone = GetDroneById(droneId);
+            DataSource.parcels.Remove(parcel);
+            DataSource.drones.Remove(drone);
+
+            drone.Status = DroneStatuses.Delivery;
+            parcel.PickedUp = DateTime.Now;
+
         }
 
 
