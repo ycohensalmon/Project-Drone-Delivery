@@ -65,13 +65,10 @@ namespace DalObject
         public static void ConnectDroneToParcel(int droneId, int parcelId)
         {
             Parcel parcel = GetParcelById(parcelId);
-
-            Parcel temp = parcel;
-            temp.DroneId = droneId;
-            temp.Scheduled = DateTime.Now;
-
             DataSource.parcels.Remove(parcel);
-            DataSource.parcels.Add(temp);
+            parcel.DroneId = droneId;
+            parcel.Scheduled = DateTime.Now;
+            DataSource.parcels.Add(parcel);
         }
 
 

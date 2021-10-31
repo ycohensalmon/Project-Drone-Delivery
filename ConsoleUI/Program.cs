@@ -1,5 +1,8 @@
-﻿using IDAL.DO;
-using System;
+﻿using System;
+using System.ComponentModel;
+using System.Text;
+using System.Collections.Generic;
+using IDAL.DO;
 
 namespace ConsoleUI
 {
@@ -284,18 +287,18 @@ namespace ConsoleUI
         // switch 2 - Updates fonctions
         private static void AssociateDroneToParcel()
         {
-            int droneId, parcelId;
-
-            PrintDrones();
-            Console.WriteLine("Enter the Id of the drone");
-            int.TryParse(Console.ReadLine(), out droneId);
-            Console.WriteLine("To witch parcel do you want to connect the drone ?");
-            Console.WriteLine("press to see the list of parcels");
-            Console.ReadKey();
-            PrintParcels();
+            int parcelId, droneId;
+            List<Parcel> temp = DalObject.DalObject.GetParcels();
+            foreach (Parcel x in temp) { if (x.DroneId == 0){ Console.WriteLine(x); } }
             Console.WriteLine("Enter the Id of the parcel");
             int.TryParse(Console.ReadLine(), out parcelId);
-            DalObject.DalObject.ConnectDroneToParcel(droneId, parcelId);
+
+            List<Drone> temp2 = DalObject.DalObject.GetDrones();
+            foreach (Drone y in temp2) { if (y.Status == DroneStatuses.Available) { Console.WriteLine(y); } }
+            Console.WriteLine("Enter the Id of the drone");
+            int.TryParse(Console.ReadLine(), out droneId);
+
+            DalObject.DalObject.ConnectDroneToParcel(parcelId);
         }
         private static void CollectParcelBySkimmer()
         {
