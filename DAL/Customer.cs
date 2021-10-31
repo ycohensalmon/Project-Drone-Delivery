@@ -11,13 +11,13 @@ namespace IDAL
         public struct Customer
         {
             private Int32 id;
-            private Names name;
+            private string name;
             private Int32 phone;
             private double longitude;
             private double lattitude;
 
             public Int32 Id { get => id; set => id = value; }
-            public Names Name { get => name; set => name = value; }
+            public string Name { get => name; set => name = value; }
             public Int32 Phone { get => phone; set => phone = value; }
             public double Longitude { get => longitude; set => longitude = value; }
             public double Latittude { get => lattitude; set => lattitude = value; }
