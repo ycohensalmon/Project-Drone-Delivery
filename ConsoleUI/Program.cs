@@ -31,6 +31,7 @@ namespace ConsoleUI
                         break;
                     case 3:
                         PrintMenu3();
+                        Switch3();
                         break;
                     case 4:
                         PrintMenu4();
@@ -151,6 +152,28 @@ namespace ConsoleUI
                 case 4:
                     break;
                 case 5:
+                    break;
+                default:
+                    break;
+            }
+        }
+        private static void Switch3()
+        {
+            int choises;
+            int.TryParse(Console.ReadLine(), out choises);
+            switch (choises)
+            {
+                case 1:
+                    PrintStationById();
+                    break;
+                case 2:
+                    PrintDroneById();
+                    break;
+                case 3:
+                    PrintCustomerById();
+                    break;
+                case 4:
+                    PrintParcelById();
                     break;
                 default:
                     break;
@@ -277,6 +300,37 @@ namespace ConsoleUI
         private static void CollectParcelBySkimmer()
         {
 
+        }
+
+
+        // switch 3 - print index in the list (by id)
+        private static void PrintParcelById()
+        {
+            int parcelId;
+            Console.WriteLine("enter the id of the parcel");
+            int.TryParse(Console.ReadLine(), out parcelId);
+            Console.WriteLine(DalObject.DalObject.GetParcelById(parcelId));
+        }
+        private static void PrintCustomerById()
+        {
+            int customerId;
+            Console.WriteLine("enter the id of the customer");
+            int.TryParse(Console.ReadLine(), out customerId);
+            Console.WriteLine(DalObject.DalObject.GetCustomerById(customerId));
+        }
+        private static void PrintDroneById()
+        {
+            int droneId;
+            Console.WriteLine("enter the id of the drone");
+            int.TryParse(Console.ReadLine(), out droneId);
+            Console.WriteLine(DalObject.DalObject.GetDroneById(droneId));
+        }
+        private static void PrintStationById()
+        {
+            int stationId;
+            Console.WriteLine("enter the id of the station");
+            int.TryParse(Console.ReadLine(), out stationId);
+            Console.WriteLine(DalObject.DalObject.GetStationById(stationId));
         }
 
 
