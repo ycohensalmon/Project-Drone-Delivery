@@ -27,6 +27,25 @@ namespace DalObject
             InitializeCustomer();
             InitializeParsel();
         }
+
+        internal static string Sexagesimal(double decimalDegree, char c)
+        {
+            double latDegrees = decimalDegree;
+            int latSecondes = (int)Math.Round(latDegrees * 60 * 60);
+
+            double latDegreeWithFraction = decimalDegree;
+            int degrees = (int)latDegreeWithFraction;
+
+            double fractionalDegree = latDegrees - degrees;
+            double minutesWithFraction = 60 * fractionalDegree;
+            int minutes = (int)minutesWithFraction;
+
+            double fractionalMinutes = minutesWithFraction - minutes;
+            double secondesWithFraction = 60 * fractionalMinutes;
+
+            return $"{degrees}°{minutes}'{string.Format("{0:F3}", secondesWithFraction)}\"{c}";
+        }
+
         public static void InitializeDrone()
         {
             for (int i = 0; i < 5; i++)
