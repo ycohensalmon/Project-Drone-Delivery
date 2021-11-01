@@ -9,8 +9,6 @@ namespace DalObject
 {
     public class DataSource
     {
-        public DataSource() => Initialize();
-
         internal static List<Drone> drones = new List<Drone>(10);
         internal static List<Station> stations = new List<Station>(5);
         internal static List<Customer> customers = new List<Customer>(100);

@@ -10,12 +10,12 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            DalObject.DataSource dal = new();
 
             PrintEnterToTheProject();
 
             int choises = 0;
 
+            DalObject.DalObject dalObject = new DalObject.DalObject();
             do
             {
                 Pause();
@@ -26,19 +26,19 @@ namespace ConsoleUI
                 {
                     case 1:
                         PrintMenu1();
-                        Switch1();
+                        Switch1(dalObject);
                         break;
                     case 2:
                         PrintMenu2();
-                        Switch2();
+                        Switch2(dalObject);
                         break;
                     case 3:
                         PrintMenu3();
-                        Switch3();
+                        Switch3(dalObject);
                         break;
                     case 4:
                         PrintMenu4();
-                        Switch4();
+                        Switch4(dalObject);
                         break;
                     default:
                         break;
@@ -116,98 +116,98 @@ namespace ConsoleUI
 
 
         // switchs
-        private static void Switch1()
+        private static void Switch1(DalObject.DalObject dalObject)
         {
             int choises;
             int.TryParse(Console.ReadLine(), out choises);
             switch (choises)
             {
                 case 1:
-                    AddStation();
+                    AddStation(dalObject);
                     break;
                 case 2:
-                    AddDrone();
+                    AddDrone(dalObject);
                     break;
                 case 3:
-                    AddCustomer();
+                    AddCustomer(dalObject);
                     break;
                 case 4:
-                    AddParcel();
+                    AddParcel(dalObject);
                     break;
                 default:
                     break;
             }
         }
-        private static void Switch2()
+        private static void Switch2(DalObject.DalObject dalObject)
         {
             int choises;
             int.TryParse(Console.ReadLine(), out choises);
             switch (choises)
             {
                 case 1:
-                    AssociateDroneToParcel();
+                    AssociateDroneToParcel(dalObject);
                     break;
                 case 2:
-                    CollectParcelsByDrones();
+                    CollectParcelsByDrones(dalObject);
                     break;
                 case 3:
-                    deliveredParcelToCostumer();
+                    deliveredParcelToCostumer(dalObject);
                     break;
                 case 4:
-                    SendDroneToCharge();
+                    SendDroneToCharge(dalObject);
                     break;
                 case 5:
-                    ReleaseDroneFromChargingBase();
+                    ReleaseDroneFromChargingBase(dalObject);
                     break;
                 default:
                     break;
             }
         }
-        private static void Switch3()
+        private static void Switch3(DalObject.DalObject dalObject)
         {
             int choises;
             int.TryParse(Console.ReadLine(), out choises);
             switch (choises)
             {
                 case 1:
-                    PrintStationById();
+                    PrintStationById(dalObject);
                     break;
                 case 2:
-                    PrintDroneById();
+                    PrintDroneById(dalObject);
                     break;
                 case 3:
-                    PrintCustomerById();
+                    PrintCustomerById(dalObject);
                     break;
                 case 4:
-                    PrintParcelById();
+                    PrintParcelById(dalObject);
                     break;
                 default:
                     break;
             }
         }
-        private static void Switch4()
+        private static void Switch4(DalObject.DalObject dalObject)
         {
             int choises;
             int.TryParse(Console.ReadLine(), out choises);
             switch (choises)
             {
                 case 1:
-                    PrintStations();
+                    PrintStations(dalObject);
                     break;
                 case 2:
-                    PrintDrones();
+                    PrintDrones(dalObject);
                     break;
                 case 3:
-                    PrintCostumers();
+                    PrintCostumers(dalObject);
                     break;
                 case 4:
-                    PrintParcels();
+                    PrintParcels(dalObject);
                     break;
                 case 5:
-                    PrintParcelsWithoutDrone();
+                    PrintParcelsWithoutDrone(dalObject);
                     break;
                 case 6:
-                    PrintStationWithChargeSolts();
+                    PrintStationWithChargeSolts(dalObject);
                     break;
                 default:
                     break;
@@ -216,7 +216,7 @@ namespace ConsoleUI
 
 
         // switch 1 - Adds fonctions
-        private static void AddStation()
+        private static void AddStation(DalObject.DalObject dalObject)
         {
             int id, chargeSlots;
             string name;
@@ -233,10 +233,10 @@ namespace ConsoleUI
             Console.WriteLine("add chargeSolts:\n");
             int.TryParse(Console.ReadLine(), out chargeSlots);
 
-            DalObject.DalObject.NewStation(id, name, longitude, lattitude, chargeSlots);
+            dalObject.NewStation(id, name, longitude, lattitude, chargeSlots);
 
         }
-        private static void AddCustomer()
+        private static void AddCustomer(DalObject.DalObject dalObject)
         {
             int id, phone;
             string name;
@@ -253,9 +253,9 @@ namespace ConsoleUI
             Console.WriteLine("add lattitude: (example 12.123456)\n");
             double.TryParse(Console.ReadLine(), out lattitude);
 
-            DalObject.DalObject.NewCostumer(id, name, phone, longitude, lattitude);
+            dalObject.NewCostumer(id, name, phone, longitude, lattitude);
         }
-        private static void AddDrone()
+        private static void AddDrone(DalObject.DalObject dalObject)
         {
             int id, model, maxWeight;
 
@@ -266,9 +266,9 @@ namespace ConsoleUI
             Console.WriteLine("chose the weightCategory\n");
             int.TryParse(Console.ReadLine(), out maxWeight);
 
-            DalObject.DalObject.NewDrone(id, model, maxWeight);
+            dalObject.NewDrone(id, model, maxWeight);
         }
-        private static void AddParcel()
+        private static void AddParcel(DalObject.DalObject dalObject)
         {
             int id, priorities, weight;
 
@@ -279,139 +279,139 @@ namespace ConsoleUI
             Console.WriteLine("chose the weight of the parcel, for Light press 0, Medium press 1, Heavy press 2\n");
             int.TryParse(Console.ReadLine(), out weight);
 
-            DalObject.DalObject.NewParcel(id, priorities, weight);
+            dalObject.NewParcel(id, priorities, weight);
         }
 
 
         // switch 2 - Updates fonctions
-        private static void AssociateDroneToParcel()
+        private static void AssociateDroneToParcel(DalObject.DalObject dalObject)
         {
             int parcelId, droneId;
-            List<Parcel> temp = DalObject.DalObject.GetParcels();
+            List<Parcel> temp = dalObject.GetParcels();
             foreach (Parcel x in temp) { if (x.DroneId == 0){ Console.WriteLine(x); } }
             Console.WriteLine("Enter the Id of the parcel");
             int.TryParse(Console.ReadLine(), out parcelId);
 
-            List<Drone> temp2 = DalObject.DalObject.GetDrones();
+            List<Drone> temp2 = dalObject.GetDrones();
             foreach (Drone y in temp2) { if (y.Status == DroneStatuses.Available) { Console.WriteLine(y); } }
             Console.WriteLine("Enter the Id of the drone");
             int.TryParse(Console.ReadLine(), out droneId);
 
-            DalObject.DalObject.ConnectDroneToParcel(droneId, parcelId);
+            dalObject.ConnectDroneToParcel(droneId, parcelId);
         }
-        private static void CollectParcelsByDrones()
+        private static void CollectParcelsByDrones(DalObject.DalObject dalObject)
         {
 
             int parcelId;
-            List<Parcel> temp = DalObject.DalObject.GetParcels();
+            List<Parcel> temp = dalObject.GetParcels();
             foreach (Parcel x in temp) { if (x.DroneId != 0) { Console.WriteLine(x); } }
             Console.WriteLine("Enter the Id of the parcel");
             int.TryParse(Console.ReadLine(), out parcelId);
 
-            DalObject.DalObject.CollectParcelByDrone(parcelId);
+            dalObject.CollectParcelByDrone(parcelId);
         }
-        private static void deliveredParcelToCostumer()
+        private static void deliveredParcelToCostumer(DalObject.DalObject dalObject)
         {
             int parcelId;
-            List<Parcel> temp = DalObject.DalObject.GetParcels();
+            List<Parcel> temp = dalObject.GetParcels();
             foreach (Parcel x in temp) { if (x.PickedUp != DateTime.MinValue && x.Delivered == DateTime.MinValue) { Console.WriteLine(x); } }
             Console.WriteLine("Enter the Id of the parcel");
             int.TryParse(Console.ReadLine(), out parcelId);
 
-            DalObject.DalObject.DeliveredParcel(parcelId);
+            dalObject.DeliveredParcel(parcelId);
         }
-        private static void SendDroneToCharge()
+        private static void SendDroneToCharge(DalObject.DalObject dalObject)
         {
             int droneId, stationId;
-            List<Drone> temp = DalObject.DalObject.GetDrones();
+            List<Drone> temp = dalObject.GetDrones();
             foreach (Drone y in temp) { if (y.Status != DroneStatuses.Maintenance) { Console.WriteLine(y); } }
             Console.WriteLine("Enter the Id of the drone to send to charge");
             int.TryParse(Console.ReadLine(), out droneId);
 
-            PrintStationWithChargeSolts();
+            PrintStationWithChargeSolts(dalObject);
             Console.WriteLine("Enter the Id of the station");
             int.TryParse(Console.ReadLine(), out stationId);
 
-            DalObject.DalObject.SendDroneToBaseCharge(droneId, stationId);
+            dalObject.SendDroneToBaseCharge(droneId, stationId);
 
         }
-        private static void ReleaseDroneFromChargingBase()
+        private static void ReleaseDroneFromChargingBase(DalObject.DalObject dalObject)
         {
             int droneId;
-            List<Drone> temp = DalObject.DalObject.GetDrones();
+            List<Drone> temp = dalObject.GetDrones();
             foreach (Drone y in temp) { if (y.Status == DroneStatuses.Maintenance) { Console.WriteLine(y); } }
             Console.WriteLine("Enter the Id of the drone");
             int.TryParse(Console.ReadLine(), out droneId);
 
-            DalObject.DalObject.ReleaseDroneFromCharging(droneId);
+            dalObject.ReleaseDroneFromCharging(droneId);
 
 
         }
 
 
         // switch 3 - print index in the list (by id)
-        private static void PrintParcelById()
+        private static void PrintParcelById(DalObject.DalObject dalObject)
         {
             int parcelId;
             Console.WriteLine("enter the id of the parcel");
             int.TryParse(Console.ReadLine(), out parcelId);
-            Console.WriteLine(DalObject.DalObject.GetParcelById(parcelId));
+            Console.WriteLine(dalObject.GetParcelById(parcelId));
         }
-        private static void PrintCustomerById()
+        private static void PrintCustomerById(DalObject.DalObject dalObject)
         {
             int customerId;
             Console.WriteLine("enter the id of the customer");
             int.TryParse(Console.ReadLine(), out customerId);
-            Console.WriteLine(DalObject.DalObject.GetCustomerById(customerId));
+            Console.WriteLine(dalObject.GetCustomerById(customerId));
         }
-        private static void PrintDroneById()
+        private static void PrintDroneById(DalObject.DalObject dalObject)
         {
             int droneId;
             Console.WriteLine("enter the id of the drone");
             int.TryParse(Console.ReadLine(), out droneId);
-            Console.WriteLine(DalObject.DalObject.GetDroneById(droneId));
+            Console.WriteLine(dalObject.GetDroneById(droneId));
         }
-        private static void PrintStationById()
+        private static void PrintStationById(DalObject.DalObject dalObject)
         {
             int stationId;
             Console.WriteLine("enter the id of the station");
             int.TryParse(Console.ReadLine(), out stationId);
-            Console.WriteLine(DalObject.DalObject.GetStationById(stationId));
+            Console.WriteLine(dalObject.GetStationById(stationId));
         }
 
 
         // switch 4 - prints fonction
-        private static void PrintParcels()
+        private static void PrintParcels(DalObject.DalObject dalObject)
         {
-            for (int i = 0; i < DalObject.DalObject.GetParcels().Count; i++)
-                Console.WriteLine(DalObject.DalObject.GetIndexParcel(i));
+            for (int i = 0; i < dalObject.GetParcels().Count; i++)
+                Console.WriteLine(dalObject.GetIndexParcel(i));
         }
-        private static void PrintCostumers()
+        private static void PrintCostumers(DalObject.DalObject dalObject)
         {
-            for (int i = 0; i < DalObject.DalObject.GetCustomers().Count; i++)
-                Console.WriteLine(DalObject.DalObject.GetIndexCustomer(i));
+            for (int i = 0; i < dalObject.GetCustomers().Count; i++)
+                Console.WriteLine(dalObject.GetIndexCustomer(i));
         }
-        private static void PrintDrones()
+        private static void PrintDrones(DalObject.DalObject dalObject)
         {
-            for (int i = 0; i < DalObject.DalObject.GetDrones().Count; i++)
-                Console.WriteLine(DalObject.DalObject.GetIndexDrone(i));
+            for (int i = 0; i < dalObject.GetDrones().Count; i++)
+                Console.WriteLine(dalObject.GetIndexDrone(i));
         }
-        private static void PrintStations()
+        private static void PrintStations(DalObject.DalObject dalObject)
         {
-            for (int i = 0; i < DalObject.DalObject.GetStations().Count; i++)
-                Console.WriteLine(DalObject.DalObject.GetIndexStation(i));
+            for (int i = 0; i < dalObject.GetStations().Count; i++)
+                Console.WriteLine(dalObject.GetIndexStation(i));
         }
-        private static void PrintStationWithChargeSolts()
+        private static void PrintStationWithChargeSolts(DalObject.DalObject dalObject)
         {
-            for (int i = 0; i < DalObject.DalObject.GetStations().Count; i++)
-                if (DalObject.DalObject.GetIndexStation(i).ChargeSolts > 0)
-                    Console.WriteLine(DalObject.DalObject.GetIndexStation(i));
+            for (int i = 0; i < dalObject.GetStations().Count; i++)
+                if (dalObject.GetIndexStation(i).ChargeSolts > 0)
+                    Console.WriteLine(dalObject.GetIndexStation(i));
         }
-        private static void PrintParcelsWithoutDrone()
+        private static void PrintParcelsWithoutDrone(DalObject.DalObject dalObject)
         {
-            for (int i = 0; i < DalObject.DalObject.GetParcels().Count; i++)
-                if (DalObject.DalObject.GetIndexParcel(i).DroneId == 0)
-                    Console.WriteLine(DalObject.DalObject.GetIndexParcel(i));
+            for (int i = 0; i < dalObject.GetParcels().Count; i++)
+                if (dalObject.GetIndexParcel(i).DroneId == 0)
+                    Console.WriteLine(dalObject.GetIndexParcel(i));
         }
     }
 }

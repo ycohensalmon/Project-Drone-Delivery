@@ -9,8 +9,12 @@ namespace DalObject
 {
     public class DalObject
     {
+        // constractor
+        public DalObject() => DataSource.Initialize();
+
+
         // news functions
-        public static void NewStation(int id, string name, double longitude, double lattitude, int chargeSlots)
+        public void NewStation(int id, string name, double longitude, double lattitude, int chargeSlots)
         {
             DataSource.stations.Add(new Station
             {
@@ -21,7 +25,7 @@ namespace DalObject
                 ChargeSolts = chargeSlots
             });
         }
-        public static void NewDrone(int id, int model, int maxWeight)
+        public void NewDrone(int id, int model, int maxWeight)
         {
             DataSource.drones.Add(new Drone
             {
@@ -32,7 +36,7 @@ namespace DalObject
                 Battery = 100
             });
         }
-        public static void NewCostumer(int id, string name, int phone, double longitude, double lattitude)
+        public void NewCostumer(int id, string name, int phone, double longitude, double lattitude)
         {
             DataSource.customers.Add(new Customer
             {
@@ -43,7 +47,7 @@ namespace DalObject
                 Latittude = longitude
             });
         }
-        public static void NewParcel(int id, int priorities,int weight)
+        public void NewParcel(int id, int priorities, int weight)
         {
             DataSource.parcels.Add(new Parcel
             {
@@ -62,7 +66,7 @@ namespace DalObject
 
 
         // uptades fonctions
-        public static void ConnectDroneToParcel(int droneId, int parcelId)
+        public void ConnectDroneToParcel(int droneId, int parcelId)
         {
             Parcel parcel = GetParcelById(parcelId);
             DataSource.parcels.Remove(parcel);
@@ -72,7 +76,7 @@ namespace DalObject
 
             DataSource.parcels.Add(parcel);
         }
-        public static void CollectParcelByDrone(int parcelId)
+        public void CollectParcelByDrone(int parcelId)
         {
             Parcel parcel = GetParcelById(parcelId);
             Drone drone = DataSource.drones.Find(x => x.Id == parcel.DroneId);
@@ -85,7 +89,7 @@ namespace DalObject
             DataSource.drones.Add(drone);
             DataSource.parcels.Add(parcel);
         }
-        public static void DeliveredParcel(int parcelId)
+        public void DeliveredParcel(int parcelId)
         {
             Parcel parcel = GetParcelById(parcelId);
             Drone drone = DataSource.drones.Find(x => x.Id == parcel.DroneId);
@@ -99,7 +103,7 @@ namespace DalObject
             DataSource.drones.Add(drone);
             DataSource.parcels.Add(parcel);
         }
-        public static void SendDroneToBaseCharge(int droneId, int stationId)
+        public void SendDroneToBaseCharge(int droneId, int stationId)
         {
             Drone drone = GetDroneById(droneId);
             Station station = GetStationById(stationId);
@@ -117,7 +121,7 @@ namespace DalObject
             DataSource.stations.Add(station);
             DataSource.drones.Add(drone);
         }
-        public static void ReleaseDroneFromCharging(int droneId)
+        public void ReleaseDroneFromCharging(int droneId)
         {
             Drone drone = GetDroneById(droneId);
             DataSource.drones.Remove(drone);
@@ -139,23 +143,23 @@ namespace DalObject
 
 
         // Get List
-        public static List<Drone> GetDrones() => DataSource.drones;
-        public static List<Station> GetStations() => DataSource.stations;
-        public static List<Customer> GetCustomers() => DataSource.customers;
-        public static List<Parcel> GetParcels() => DataSource.parcels;
+        public List<Drone> GetDrones() => DataSource.drones;
+        public List<Station> GetStations() => DataSource.stations;
+        public List<Customer> GetCustomers() => DataSource.customers;
+        public List<Parcel> GetParcels() => DataSource.parcels;
 
 
         // get lists by id
-        public static Station GetStationById(int id) => DataSource.stations.Find(x => x.Id == id);
-        public static Drone GetDroneById(int id) => DataSource.drones.Find(x => x.Id == id);
-        public static Customer GetCustomerById(int id) => DataSource.customers.Find(x => x.Id == id);
-        public static Parcel GetParcelById(int id) => DataSource.parcels.Find(x => x.Id == id);
+        public Station GetStationById(int id) => DataSource.stations.Find(x => x.Id == id);
+        public Drone GetDroneById(int id) => DataSource.drones.Find(x => x.Id == id);
+        public Customer GetCustomerById(int id) => DataSource.customers.Find(x => x.Id == id);
+        public Parcel GetParcelById(int id) => DataSource.parcels.Find(x => x.Id == id);
 
 
         // Get Index List
-        public static Drone GetIndexDrone(int index) => DataSource.drones[index];
-        public static Station GetIndexStation(int index) => DataSource.stations[index];
-        public static Customer GetIndexCustomer(int index) => DataSource.customers[index];
-        public static Parcel GetIndexParcel(int index) => DataSource.parcels[index];
+        public Drone GetIndexDrone(int index) => DataSource.drones[index];
+        public Station GetIndexStation(int index) => DataSource.stations[index];
+        public Customer GetIndexCustomer(int index) => DataSource.customers[index];
+        public Parcel GetIndexParcel(int index) => DataSource.parcels[index];
     }
 }
