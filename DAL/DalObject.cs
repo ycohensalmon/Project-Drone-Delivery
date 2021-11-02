@@ -16,55 +16,30 @@ namespace DalObject
 
 
         // news functions
-        public void NewStation(int id, string name, double longitude, double lattitude, int chargeSlots)
-        {
-            DataSource.stations.Add(new Station
-            {
-                Id = id,
-                Name = name,
-                Longitude = DataSource.Sexagesimal(longitude,'N'),
-                Lattitude = DataSource.Sexagesimal(lattitude, 'E'),
-                ChargeSolts = chargeSlots
-            });
-        }
-        public void NewDrone(int id, int model, int maxWeight)
-        {
-            DataSource.drones.Add(new Drone
-            {
-                Id = id,
-                Model = (ModelDrones)model,
-                MaxWeight = (WeightCategory)maxWeight,
-                Status = DroneStatuses.Available,
-                Battery = 100
-            });
-        }
-        public void NewCostumer(int id, string name, int phone, double longitude, double lattitude)
-        {
-            DataSource.customers.Add(new Customer
-            {
-                Id = id,
-                Name = name,
-                Phone = phone,
-                Longitude = DataSource.Sexagesimal(longitude, 'N'),
-                Latittude = DataSource.Sexagesimal(lattitude, 'E') 
-            });
-        }
-        public void NewParcel(int id, int priorities, int weight)
-        {
-            DataSource.parcels.Add(new Parcel
-            {
-                Id = id,
-                SenderId = 0,
-                TargetId = 0,
-                DroneId = 0,
-                Requested = DateTime.Now,
-                Scheduled = DateTime.MinValue,
-                PickedUp = DateTime.MinValue,
-                Delivered = DateTime.MinValue,
-                Weight = (WeightCategory)weight,
-                Priorities = (Priority)priorities
-            });
-        }
+
+        /// <summary>
+        /// add new station to the list
+        /// </summary>
+        /// <param name="x">the paraneter to adding</param>
+        public void NewStation(Station x) => DataSource.stations.Add(x);
+
+        /// <summary>
+        /// adds a drone to the list of drones
+        /// </summary>
+        /// <param name="x">the paraneter to adding</param>
+        public void NewDrone(Drone x) => DataSource.drones.Add(x);
+
+        /// <summary>
+        /// adds a customer to list of customers
+        /// </summary>
+        /// <param name="x">the paraneter to adding</param>
+        public void NewCostumer(Customer x) => DataSource.customers.Add(x);
+
+        /// <summary>
+        /// adds a parcel to the list of parcels
+        /// </summary>
+        /// <param name="x">the paraneter to adding</param>
+        public void NewParcel(Parcel x) => DataSource.parcels.Add(x);
 
 
         // uptades fonctions
@@ -170,25 +145,55 @@ namespace DalObject
         // Get List
 
         /// <summary>
-        /// Get the Drones, Stations, Customers and the Parcels
+        /// Get the Drones
         /// </summary>
-        /// <returns>the lists of the Drones, Stations, Customers and the Parcels </returns>
+        /// <returns>the lists of the Drones </returns>
         public List<Drone> GetDrones() => DataSource.drones;
+        /// <summary>
+        /// Get the Stations
+        /// </summary>
+        /// <returns>the lists of the stations</returns>
         public List<Station> GetStations() => DataSource.stations;
+        /// <summary>
+        /// Get the customers
+        /// </summary>
+        /// <returns>the lists of the customers </returns>
         public List<Customer> GetCustomers() => DataSource.customers;
+        /// <summary>
+        /// Get the parcels
+        /// </summary>
+        /// <returns>the lists of the parcels </returns>
         public List<Parcel> GetParcels() => DataSource.parcels;
 
 
         // get objects by id
 
         /// <summary>
-        /// get 
+        /// returns the object Station that matches the id
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">the id of the Stations</param>
         /// <returns></returns>
         public Station GetStationById(int id) => DataSource.stations.Find(x => x.Id == id);
+
+        /// <summary>
+        /// returns the object Customer that matches the id
+        /// </summary>
+        /// <param name="id">the id of the drone</param>
+        /// <returns>x</returns>
         public Drone GetDroneById(int id) => DataSource.drones.Find(x => x.Id == id);
+
+        /// <summary>
+        /// returns the object Customer that matches the id
+        /// </summary>
+        /// <param name="id">the id of the Customer</param>
+        /// <returns></returns>
         public Customer GetCustomerById(int id) => DataSource.customers.Find(x => x.Id == id);
+
+        /// <summary>
+        /// returns the object Parcels that matches the id
+        /// </summary>
+        /// <param name="id">the id of the Parcels</param>
+        /// <returns></returns>
         public Parcel GetParcelById(int id) => DataSource.parcels.Find(x => x.Id == id);
 
 

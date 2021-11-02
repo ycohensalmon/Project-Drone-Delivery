@@ -10,7 +10,6 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            ///
             PrintEnterToTheProject();
 
             int choises = 0;
@@ -85,6 +84,7 @@ namespace ConsoleUI
                 "for absorption of a new customer- - - press 3\n" +
                 "for receiving a package for delivery- press 4");
         }
+
         /// <summary>
         /// Print the update menu to the user
         /// </summary>
@@ -97,6 +97,7 @@ namespace ConsoleUI
                 "Sending a skimmer for charging at a base station- press 4\n" +
                 "Release skimmer from charging at base station - - press 5");
         }
+
         /// <summary>
         /// Print the menu of display one to the user
         /// </summary>
@@ -108,6 +109,7 @@ namespace ConsoleUI
                 "Customer view- - - press 3\n" +
                 "Package view - - - press 4");
         }
+
         /// <summary>
         /// Print the menu of list displayy to user
         /// </summary>
@@ -122,6 +124,7 @@ namespace ConsoleUI
                 "Displays a list of packages that have not yet been assigned to the glider- press 5\n" +
                 "Display base stations with available charging stations - - - - - - - - - - press 6");
         }
+
         /// <summary>
         /// press to continue
         /// </summary>
@@ -133,7 +136,10 @@ namespace ConsoleUI
         }
 
 
-       
+       /// <summary>
+       /// options of switch1 
+       /// </summary>
+       /// <param name="dalObject"></param>
         private static void Switch1(DalObject.DalObject dalObject)
         {
             int choises;
@@ -156,6 +162,11 @@ namespace ConsoleUI
                     break;
             }
         }
+
+        /// <summary>
+        /// options of switch2
+        /// </summary>
+        /// <param name="dalObject"></param>
         private static void Switch2(DalObject.DalObject dalObject)
         {
             int choises;
@@ -181,6 +192,11 @@ namespace ConsoleUI
                     break;
             }
         }
+
+        /// <summary>
+        /// options of switch3
+        /// </summary>
+        /// <param name="dalObject"></param>
         private static void Switch3(DalObject.DalObject dalObject)
         {
             int choises;
@@ -203,6 +219,11 @@ namespace ConsoleUI
                     break;
             }
         }
+
+        /// <summary>
+        /// options of switch4
+        /// </summary>
+        /// <param name="dalObject"></param>
         private static void Switch4(DalObject.DalObject dalObject)
         {
             int choises;
@@ -250,9 +271,16 @@ namespace ConsoleUI
             double.TryParse(Console.ReadLine(), out lattitude);
             Console.WriteLine("add chargeSolts:\n");
             int.TryParse(Console.ReadLine(), out chargeSlots);
+            Station temp = new Station
+            {
+                Id = id,
+                Name = name,
+                Longitude = DalObject.DataSource.Sexagesimal(longitude, 'N'),
+                Lattitude = DalObject.DataSource.Sexagesimal(lattitude, 'E'),
+                ChargeSolts = chargeSlots
+            };
 
-            dalObject.NewStation(id, name, longitude, lattitude, chargeSlots);
-
+            dalObject.NewStation(temp);
         }
         private static void AddCustomer(DalObject.DalObject dalObject)
         {
@@ -271,7 +299,16 @@ namespace ConsoleUI
             Console.WriteLine("add lattitude: (example 12.123456)\n");
             double.TryParse(Console.ReadLine(), out lattitude);
 
-            dalObject.NewCostumer(id, name, phone, longitude, lattitude);
+            Customer temp = new Customer
+            {
+                Id = id,
+                Name = name,
+                Phone = phone,
+                Longitude = DalObject.DataSource.Sexagesimal(longitude, 'N'),
+                Latittude = DalObject.DataSource.Sexagesimal(lattitude, 'E')
+            };
+
+            dalObject.NewCostumer(temp);
         }
         private static void AddDrone(DalObject.DalObject dalObject)
         {
@@ -284,7 +321,16 @@ namespace ConsoleUI
             Console.WriteLine("chose the weightCategory\n");
             int.TryParse(Console.ReadLine(), out maxWeight);
 
-            dalObject.NewDrone(id, model, maxWeight);
+            Drone temp =new Drone
+            {
+                Id = id,
+                Model = (ModelDrones)model,
+                MaxWeight = (WeightCategory)maxWeight,
+                Status = DroneStatuses.Available,
+                Battery = 100
+            };
+
+            dalObject.NewDrone(temp);
         }
         private static void AddParcel(DalObject.DalObject dalObject)
         {
@@ -297,7 +343,21 @@ namespace ConsoleUI
             Console.WriteLine("chose the weight of the parcel, for Light press 0, Medium press 1, Heavy press 2\n");
             int.TryParse(Console.ReadLine(), out weight);
 
-            dalObject.NewParcel(id, priorities, weight);
+            Parcel temp = new Parcel
+            {
+                Id = id,
+                SenderId = 0,
+                TargetId = 0,
+                DroneId = 0,
+                Requested = DateTime.Now,
+                Scheduled = DateTime.MinValue,
+                PickedUp = DateTime.MinValue,
+                Delivered = DateTime.MinValue,
+                Weight = (WeightCategory)weight,
+                Priorities = (Priority)priorities
+            };
+
+            dalObject.NewParcel(temp);
         }
 
 

@@ -20,6 +20,7 @@ namespace DalObject
             internal static Random rand = new Random();
             internal static int SerialNum = 1000;
         }
+
         /// <summary>
         /// initialize the lists
         /// </summary>
@@ -32,7 +33,6 @@ namespace DalObject
         }
 
         //bonus methods to display sexasegimal coordination and find distance between ocations
-
         /// <summary>
         /// finds sexasegiamal value of latitude
         /// </summary>
@@ -74,6 +74,7 @@ namespace DalObject
                 });
             }
         }
+
         /// <summary>
         /// adds to the list of stations 5 stations
         /// </summary>
@@ -120,6 +121,7 @@ namespace DalObject
                 ChargeSolts = Config.rand.Next(10)
             });
         }
+
         /// <summary>
         /// adds 10 customers to the list of customers
         /// </summary>
@@ -137,8 +139,9 @@ namespace DalObject
                 });
             }
         }
+
         /// <summary>
-        /// 
+        /// adds 10 parcels to the list of the parcels
         /// </summary>
         public static void InitializeParsel()
         {
