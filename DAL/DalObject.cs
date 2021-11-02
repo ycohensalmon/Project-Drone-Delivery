@@ -9,7 +9,9 @@ namespace DalObject
 {
     public class DalObject
     {
-        // constractor
+        /// <summary>
+        /// constructor for DalObject class
+        /// </summary>
         public DalObject() => DataSource.Initialize();
 
 
@@ -66,6 +68,12 @@ namespace DalObject
 
 
         // uptades fonctions
+
+        /// <summary>
+        /// assign a drone to a parcel and update the scheduled time
+        /// </summary>
+        /// <param name="droneId">the id of the parcel</param>
+        /// <param name="parcelId">the id of the drone</param>
         public void ConnectDroneToParcel(int droneId, int parcelId)
         {
             Parcel parcel = GetParcelById(parcelId);
@@ -76,6 +84,10 @@ namespace DalObject
 
             DataSource.parcels.Add(parcel);
         }
+        /// <summary>
+        /// updates the drone that was assigned to a parcel to pick up the parcel
+        /// </summary>
+        /// <param name="parcelId">the id of the parcel</param>
         public void CollectParcelByDrone(int parcelId)
         {
             Parcel parcel = GetParcelById(parcelId);
@@ -83,12 +95,16 @@ namespace DalObject
             DataSource.parcels.Remove(parcel);
             DataSource.drones.Remove(drone);
 
-            drone.Status = DroneStatuses.Delivery;
             parcel.PickedUp = DateTime.Now;
+            drone.Status = DroneStatuses.Delivery;
 
             DataSource.drones.Add(drone);
             DataSource.parcels.Add(parcel);
         }
+        /// <summary>
+        /// updates that the parcel was delivered to the target
+        /// </summary>
+        /// <param name="parcelId">the id of the parcel</param>
         public void DeliveredParcel(int parcelId)
         {
             Parcel parcel = GetParcelById(parcelId);
@@ -103,6 +119,11 @@ namespace DalObject
             DataSource.drones.Add(drone);
             DataSource.parcels.Add(parcel);
         }
+        /// <summary>
+        /// send a drone to charge
+        /// </summary>
+        /// <param name="droneId">the drone to send to charge</param>
+        /// <param name="stationId">the station to send it to charge</param>
         public void SendDroneToBaseCharge(int droneId, int stationId)
         {
             Drone drone = GetDroneById(droneId);
@@ -121,13 +142,17 @@ namespace DalObject
             DataSource.stations.Add(station);
             DataSource.drones.Add(drone);
         }
+        /// <summary>
+        /// release a drone from charge
+        /// </summary>
+        /// <param name="droneId">the id of the drone to release</param>
         public void ReleaseDroneFromCharging(int droneId)
         {
             Drone drone = GetDroneById(droneId);
             DataSource.drones.Remove(drone);
 
             DroneCharge droneCharge = DataSource.droneCharges.Find(x => x.DroneId == droneId);
-            int stationId = droneCharge.StationId;
+            int stationId = droneCharge.StationId;  //?
             Station station = GetStationById(droneId);
             DataSource.stations.Remove(station);
 
@@ -143,13 +168,24 @@ namespace DalObject
 
 
         // Get List
+
+        /// <summary>
+        /// Get the Drones, Stations, Customers and the Parcels
+        /// </summary>
+        /// <returns>the lists of the Drones, Stations, Customers and the Parcels </returns>
         public List<Drone> GetDrones() => DataSource.drones;
         public List<Station> GetStations() => DataSource.stations;
         public List<Customer> GetCustomers() => DataSource.customers;
         public List<Parcel> GetParcels() => DataSource.parcels;
 
 
-        // get lists by id
+        // get objects by id
+
+        /// <summary>
+        /// get 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Station GetStationById(int id) => DataSource.stations.Find(x => x.Id == id);
         public Drone GetDroneById(int id) => DataSource.drones.Find(x => x.Id == id);
         public Customer GetCustomerById(int id) => DataSource.customers.Find(x => x.Id == id);

@@ -10,7 +10,7 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-
+            ///
             PrintEnterToTheProject();
 
             int choises = 0;
@@ -19,6 +19,7 @@ namespace ConsoleUI
             do
             {
                 Pause();
+
                 PrintFirstMenu();
                 int.TryParse(Console.ReadLine(), out choises);
 
@@ -47,8 +48,6 @@ namespace ConsoleUI
             } while (choises != 5);
         }
 
-
-        // print menus
         private static void PrintEnterToTheProject()
         {
             Console.BackgroundColor = ConsoleColor.DarkBlue;
@@ -62,6 +61,9 @@ namespace ConsoleUI
             Console.WriteLine("Created by Elhanan and Yossef\n\n");
             Console.ResetColor();
         }
+        /// <summary>
+        /// Print main menu to user
+        /// </summary>
         private static void PrintFirstMenu()
         {
             Console.WriteLine(
@@ -71,6 +73,10 @@ namespace ConsoleUI
                 "For options for displaying the lists - - - - - - - - - - - - press 4:\n" +
                 "To exit from this project- - - - - - - - - - - - - - - - - - press 5:");
         }
+
+        /// <summary>
+        /// Print add menu to user
+        /// </summary>
         private static void PrintMenu1()
         {
             Console.WriteLine(
@@ -79,6 +85,9 @@ namespace ConsoleUI
                 "for absorption of a new customer- - - press 3\n" +
                 "for receiving a package for delivery- press 4");
         }
+        /// <summary>
+        /// Print the update menu to the user
+        /// </summary>
         private static void PrintMenu2()
         {
             Console.WriteLine(
@@ -88,6 +97,9 @@ namespace ConsoleUI
                 "Sending a skimmer for charging at a base station- press 4\n" +
                 "Release skimmer from charging at base station - - press 5");
         }
+        /// <summary>
+        /// Print the menu of display one to the user
+        /// </summary>
         private static void PrintMenu3()
         {
             Console.WriteLine(
@@ -96,6 +108,9 @@ namespace ConsoleUI
                 "Customer view- - - press 3\n" +
                 "Package view - - - press 4");
         }
+        /// <summary>
+        /// Print the menu of list displayy to user
+        /// </summary>
         private static void PrintMenu4()
         {
             
@@ -107,6 +122,9 @@ namespace ConsoleUI
                 "Displays a list of packages that have not yet been assigned to the glider- press 5\n" +
                 "Display base stations with available charging stations - - - - - - - - - - press 6");
         }
+        /// <summary>
+        /// press to continue
+        /// </summary>
         private static void Pause()
         {
             Console.WriteLine("press to continue...");
@@ -115,7 +133,7 @@ namespace ConsoleUI
         }
 
 
-        // switchs
+       
         private static void Switch1(DalObject.DalObject dalObject)
         {
             int choises;
@@ -350,19 +368,12 @@ namespace ConsoleUI
 
 
         // switch 3 - print index in the list (by id)
-        private static void PrintParcelById(DalObject.DalObject dalObject)
+        private static void PrintStationById(DalObject.DalObject dalObject)
         {
-            int parcelId;
-            Console.WriteLine("enter the id of the parcel");
-            int.TryParse(Console.ReadLine(), out parcelId);
-            Console.WriteLine(dalObject.GetParcelById(parcelId));
-        }
-        private static void PrintCustomerById(DalObject.DalObject dalObject)
-        {
-            int customerId;
-            Console.WriteLine("enter the id of the customer");
-            int.TryParse(Console.ReadLine(), out customerId);
-            Console.WriteLine(dalObject.GetCustomerById(customerId));
+            int stationId;
+            Console.WriteLine("enter the id of the station");
+            int.TryParse(Console.ReadLine(), out stationId);
+            Console.WriteLine(dalObject.GetStationById(stationId));
         }
         private static void PrintDroneById(DalObject.DalObject dalObject)
         {
@@ -371,47 +382,54 @@ namespace ConsoleUI
             int.TryParse(Console.ReadLine(), out droneId);
             Console.WriteLine(dalObject.GetDroneById(droneId));
         }
-        private static void PrintStationById(DalObject.DalObject dalObject)
+        private static void PrintCustomerById(DalObject.DalObject dalObject)
         {
-            int stationId;
-            Console.WriteLine("enter the id of the station");
-            int.TryParse(Console.ReadLine(), out stationId);
-            Console.WriteLine(dalObject.GetStationById(stationId));
+            int customerId;
+            Console.WriteLine("enter the id of the customer");
+            int.TryParse(Console.ReadLine(), out customerId);
+            Console.WriteLine(dalObject.GetCustomerById(customerId));
+        }
+        private static void PrintParcelById(DalObject.DalObject dalObject)
+        {
+            int parcelId;
+            Console.WriteLine("enter the id of the parcel");
+            int.TryParse(Console.ReadLine(), out parcelId);
+            Console.WriteLine(dalObject.GetParcelById(parcelId));
         }
 
 
         // switch 4 - prints fonction
-        private static void PrintParcels(DalObject.DalObject dalObject)
+        private static void PrintStations(DalObject.DalObject dalObject)
         {
-            for (int i = 0; i < dalObject.GetParcels().Count; i++)
-                Console.WriteLine(dalObject.GetIndexParcel(i));
-        }
-        private static void PrintCostumers(DalObject.DalObject dalObject)
-        {
-            for (int i = 0; i < dalObject.GetCustomers().Count; i++)
-                Console.WriteLine(dalObject.GetIndexCustomer(i));
+            for (int i = 0; i < dalObject.GetStations().Count; i++)
+                Console.WriteLine(dalObject.GetIndexStation(i));
         }
         private static void PrintDrones(DalObject.DalObject dalObject)
         {
             for (int i = 0; i < dalObject.GetDrones().Count; i++)
                 Console.WriteLine(dalObject.GetIndexDrone(i));
         }
-        private static void PrintStations(DalObject.DalObject dalObject)
+        private static void PrintCostumers(DalObject.DalObject dalObject)
         {
-            for (int i = 0; i < dalObject.GetStations().Count; i++)
-                Console.WriteLine(dalObject.GetIndexStation(i));
+            for (int i = 0; i < dalObject.GetCustomers().Count; i++)
+                Console.WriteLine(dalObject.GetIndexCustomer(i));
         }
-        private static void PrintStationWithChargeSolts(DalObject.DalObject dalObject)
+        private static void PrintParcels(DalObject.DalObject dalObject)
         {
-            for (int i = 0; i < dalObject.GetStations().Count; i++)
-                if (dalObject.GetIndexStation(i).ChargeSolts > 0)
-                    Console.WriteLine(dalObject.GetIndexStation(i));
+            for (int i = 0; i < dalObject.GetParcels().Count; i++)
+                Console.WriteLine(dalObject.GetIndexParcel(i));
         }
         private static void PrintParcelsWithoutDrone(DalObject.DalObject dalObject)
         {
             for (int i = 0; i < dalObject.GetParcels().Count; i++)
                 if (dalObject.GetIndexParcel(i).DroneId == 0)
                     Console.WriteLine(dalObject.GetIndexParcel(i));
+        }
+        private static void PrintStationWithChargeSolts(DalObject.DalObject dalObject)
+        {
+            for (int i = 0; i < dalObject.GetStations().Count; i++)
+                if (dalObject.GetIndexStation(i).ChargeSolts > 0)
+                    Console.WriteLine(dalObject.GetIndexStation(i));
         }
     }
 }

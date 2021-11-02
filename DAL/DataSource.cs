@@ -20,6 +20,9 @@ namespace DalObject
             internal static Random rand = new Random();
             internal static int SerialNum = 1000;
         }
+        /// <summary>
+        /// initialize the lists
+        /// </summary>
         internal static void Initialize()
         {
             InitializeDrone();
@@ -28,6 +31,14 @@ namespace DalObject
             InitializeParsel();
         }
 
+        //bonus methods to display sexasegimal coordination and find distance between ocations
+
+        /// <summary>
+        /// finds sexasegiamal value of latitude
+        /// </summary>
+        /// <param name="decimalDegree"></param>
+        /// <param name="c"></param>
+        /// <returns></returns>
         internal static string Sexagesimal(double decimalDegree, char c)
         {
             double latDegrees = decimalDegree;
@@ -46,6 +57,9 @@ namespace DalObject
             return $"{degrees}°{minutes}'{string.Format("{0:F3}", secondesWithFraction)}\"{c}";
         }
 
+        /// <summary>
+        /// add to the list of drones 5 drones
+        /// </summary>
         public static void InitializeDrone()
         {
             for (int i = 0; i < 5; i++)
@@ -60,6 +74,9 @@ namespace DalObject
                 });
             }
         }
+        /// <summary>
+        /// adds to the list of stations 5 stations
+        /// </summary>
         public static void InitializeStation()
         {
             stations.Add(new Station
@@ -103,6 +120,9 @@ namespace DalObject
                 ChargeSolts = Config.rand.Next(10)
             });
         }
+        /// <summary>
+        /// adds 10 customers to the list of customers
+        /// </summary>
         public static void InitializeCustomer()
         {
             customers.Add(new Customer
@@ -186,6 +206,9 @@ namespace DalObject
                 Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)1000000
             });
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public static void InitializeParsel()
         {
             DateTime newDate = DateTime.Now;
