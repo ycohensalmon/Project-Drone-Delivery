@@ -39,7 +39,7 @@ namespace DalObject
         /// <param name="decimalDegree"></param>
         /// <param name="c"></param>
         /// <returns></returns>
-        internal static string Sexagesimal(double decimalDegree, char c)
+        public static string Sexagesimal(double decimalDegree, char c)
         {
             double latDegrees = decimalDegree;
             int latSecondes = (int)Math.Round(latDegrees * 60 * 60);
@@ -83,40 +83,40 @@ namespace DalObject
             {
                 Id = 1010,
                 Name = "Malcha Mall",
-                Lattitude = 31.751716,
-                Longitude = 35.187202,
+                Longitude = Sexagesimal(31.751716,'N'),
+                Lattitude = Sexagesimal(35.187202, 'E'),
                 ChargeSolts = Config.rand.Next(10)
             });
             stations.Add(new Station
             {
                 Id = 1020,
                 Name = "Hadar Mall",
-                Lattitude = 31.753791,
-                Longitude = 35.213429,
+                Longitude = Sexagesimal(31.753791, 'N'),
+                Lattitude = Sexagesimal(35.213429, 'E'),
                 ChargeSolts = Config.rand.Next(10)
             });
             stations.Add(new Station
             {
                 Id = 1030,
                 Name = "Ramot Mall",
-                Lattitude = 31.817627,
-                Longitude = 35.194476,
+                Longitude = Sexagesimal(31.817627, 'N'),
+                Lattitude = Sexagesimal(35.194476, 'E'),
                 ChargeSolts = Config.rand.Next(10)
             });
             stations.Add(new Station
             {
                 Id = 1040,
                 Name = "Jerusalem Central Station",
-                Lattitude = 31.789061,
-                Longitude = 35.203100,
+                Lattitude = Sexagesimal(31.789061, 'N'),
+                Longitude = Sexagesimal(35.203100, 'E'),
                 ChargeSolts = Config.rand.Next(10)
             });
             stations.Add(new Station
             {
                 Id = 1050,
                 Name = "Mamila Mall",
-                Lattitude = 31.777870,
-                Longitude = 35.224982,
+                Longitude = Sexagesimal(31.777870, 'N'),
+                Lattitude = Sexagesimal(35.224982, 'E'),
                 ChargeSolts = Config.rand.Next(10)
             });
         }
@@ -125,86 +125,17 @@ namespace DalObject
         /// </summary>
         public static void InitializeCustomer()
         {
-            customers.Add(new Customer
+            for (int i = 0; i < 10; i++)
             {
-                Id = Config.rand.Next(210000000, 340000000),
-                Phone = Config.rand.Next(0500000000, 0590000000),
-                Name = "Yossef Cohen",
-                Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)1000000,
-                Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)1000000
-            });
-            customers.Add(new Customer
-            {
-                Id = Config.rand.Next(210000000, 340000000),
-                Phone = 0 + Config.rand.Next(500000000, 590000000),
-                Name = "Moshe Levi",
-                Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)1000000,
-                Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)1000000
-            });
-            customers.Add(new Customer
-            {
-                Id = Config.rand.Next(210000000, 340000000),
-                Phone = 0 + Config.rand.Next(500000000, 590000000),
-                Name = "Naor Ben-Lulu",
-                Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)1000000,
-                Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)1000000
-            });
-            customers.Add(new Customer
-            {
-                Id = Config.rand.Next(210000000, 340000000),
-                Phone = 0 + Config.rand.Next(500000000, 590000000),
-                Name = "Sarah Weill",
-                Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)1000000,
-                Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)1000000
-            });
-            customers.Add(new Customer
-            {
-                Id = Config.rand.Next(210000000, 340000000),
-                Phone = 0 + Config.rand.Next(500000000, 590000000),
-                Name = "Noa Botbol",
-                Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)1000000,
-                Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)1000000
-            });
-            customers.Add(new Customer
-            {
-                Id = Config.rand.Next(210000000, 340000000),
-                Phone = 0 + Config.rand.Next(500000000, 590000000),
-                Name = "Regev Shmoulevits",
-                Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)1000000,
-                Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)1000000
-            });
-            customers.Add(new Customer
-            {
-                Id = Config.rand.Next(210000000, 340000000),
-                Phone = 0 + Config.rand.Next(500000000, 590000000),
-                Name = "Yinon Barsheshet",
-                Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)1000000,
-                Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)1000000
-            });
-            customers.Add(new Customer
-            {
-                Id = Config.rand.Next(210000000, 340000000),
-                Phone = 0 + Config.rand.Next(500000000, 590000000),
-                Name = "Rahamim Yifrah",
-                Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)1000000,
-                Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)1000000
-            });
-            customers.Add(new Customer
-            {
-                Id = Config.rand.Next(210000000, 340000000),
-                Phone = 0 + Config.rand.Next(500000000, 590000000),
-                Name = "Dvora Benguigui",
-                Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)1000000,
-                Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)1000000
-            });
-            customers.Add(new Customer
-            {
-                Id = Config.rand.Next(210000000, 340000000),
-                Phone = 0 + Config.rand.Next(500000000, 590000000),
-                Name = "Hananel Batito",
-                Longitude = (double)Config.rand.Next(31737458, 31807238) / (double)1000000,
-                Latittude = (double)Config.rand.Next(35174572, 35241141) / (double)1000000
-            });
+                customers.Add(new Customer
+                {
+                    Id = Config.rand.Next(210000000, 340000000),
+                    Phone = Config.rand.Next(0500000000, 0590000000),
+                    Name = Convert.ToString((Names)Config.rand.Next(10)),
+                    Longitude = Sexagesimal((double)Config.rand.Next(31737458, 31807238) / (double)1000000, 'N'),
+                    Latittude = Sexagesimal((double)Config.rand.Next(35174572, 35241141) / (double)1000000, 'E')
+                });
+            }
         }
         /// <summary>
         /// 

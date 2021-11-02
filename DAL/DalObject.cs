@@ -22,8 +22,8 @@ namespace DalObject
             {
                 Id = id,
                 Name = name,
-                Longitude = longitude,
-                Lattitude = lattitude,
+                Longitude = DataSource.Sexagesimal(longitude,'N'),
+                Lattitude = DataSource.Sexagesimal(lattitude, 'E'),
                 ChargeSolts = chargeSlots
             });
         }
@@ -45,8 +45,8 @@ namespace DalObject
                 Id = id,
                 Name = name,
                 Phone = phone,
-                Longitude = longitude,
-                Latittude = longitude
+                Longitude = DataSource.Sexagesimal(longitude, 'N'),
+                Latittude = DataSource.Sexagesimal(lattitude, 'E') 
             });
         }
         public void NewParcel(int id, int priorities, int weight)

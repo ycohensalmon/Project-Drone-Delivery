@@ -13,14 +13,14 @@ namespace IDAL
         {
             private int id;
             private string name;
-            private double longitude;
-            private double lattitude;
+            private string longitude;
+            private string lattitude;
             private int chargeSolts;
 
             public int Id { get => id; set => id = value; }
             public string Name { get => name; set => name = value; }
-            public double Longitude { get => longitude; set => longitude = value; }
-            public double Lattitude { get => lattitude; set => lattitude = value; }
+            public string Longitude { get => longitude; set => longitude = value; }
+            public string Lattitude { get => lattitude; set => lattitude = value; }
             public int ChargeSolts { get => chargeSolts; set => chargeSolts = value; }
             public override string ToString()
             {
