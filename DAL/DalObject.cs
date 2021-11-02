@@ -198,9 +198,33 @@ namespace DalObject
 
 
         // Get Index List
+
+        /// <summary>
+        /// return the object in the ondex of the list
+        /// </summary>
+        /// <param name="index">the index of each list</param>
+        /// <returns>return the object in the ondex of the list</returns>
         public Drone GetIndexDrone(int index) => DataSource.drones[index];
+
+        /// <summary>
+        /// return the object in the ondex of the list
+        /// </summary>
+        /// <param name="index">the index of each list</param>
+        /// <returns>return the object in the ondex of the list</returns>
         public Station GetIndexStation(int index) => DataSource.stations[index];
+
+        /// <summary>
+        /// return the object in the ondex of the list
+        /// </summary>
+        /// <param name="index">the index of each list</param>
+        /// <returns>return the object in the ondex of the list</returns>
         public Customer GetIndexCustomer(int index) => DataSource.customers[index];
+
+        /// <summary>
+        /// return the object in the ondex of the list
+        /// </summary>
+        /// <param name="index">the index of each list</param>
+        /// <returns>return the object in the ondex of the list</returns>
         public Parcel GetIndexParcel(int index) => DataSource.parcels[index];
     }
 }
