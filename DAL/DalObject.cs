@@ -15,7 +15,10 @@ namespace DalObject
         public DalObject() => DataSource.Initialize();
 
 
-        // news functions
+
+        //-----------------------------------------------------------------------------------------------------------//
+                                                      // news functions //
+        //-----------------------------------------------------------------------------------------------------------//
 
         /// <summary>
         /// add new station to the list
@@ -42,7 +45,9 @@ namespace DalObject
         public void NewParcel(Parcel x) => DataSource.parcels.Add(x);
 
 
-        // uptades fonctions
+        //-----------------------------------------------------------------------------------------------------------//
+                                                    // uptades fonctions //
+        //-----------------------------------------------------------------------------------------------------------//
 
         /// <summary>
         /// assign a drone to a parcel and update the scheduled time
@@ -142,23 +147,28 @@ namespace DalObject
         }
 
 
-        // Get List
+        //-----------------------------------------------------------------------------------------------------------//
+                                                      // Get List //
+        //-----------------------------------------------------------------------------------------------------------//
 
         /// <summary>
         /// Get the Drones
         /// </summary>
         /// <returns>the lists of the Drones </returns>
         public List<Drone> GetDrones() => DataSource.drones;
+
         /// <summary>
         /// Get the Stations
         /// </summary>
         /// <returns>the lists of the stations</returns>
         public List<Station> GetStations() => DataSource.stations;
+
         /// <summary>
         /// Get the customers
         /// </summary>
         /// <returns>the lists of the customers </returns>
         public List<Customer> GetCustomers() => DataSource.customers;
+
         /// <summary>
         /// Get the parcels
         /// </summary>
@@ -166,7 +176,9 @@ namespace DalObject
         public List<Parcel> GetParcels() => DataSource.parcels;
 
 
-        // get objects by id
+        //-----------------------------------------------------------------------------------------------------------//
+                                                  // get objects by id //
+        //-----------------------------------------------------------------------------------------------------------//
 
         /// <summary>
         /// returns the object Station that matches the id
@@ -195,36 +207,5 @@ namespace DalObject
         /// <param name="id">the id of the Parcels</param>
         /// <returns></returns>
         public Parcel GetParcelById(int id) => DataSource.parcels.Find(x => x.Id == id);
-
-
-        // Get Index List
-
-        /// <summary>
-        /// return the object in the ondex of the list
-        /// </summary>
-        /// <param name="index">the index of each list</param>
-        /// <returns>return the object in the ondex of the list</returns>
-        public Drone GetIndexDrone(int index) => DataSource.drones[index];
-
-        /// <summary>
-        /// return the object in the ondex of the list
-        /// </summary>
-        /// <param name="index">the index of each list</param>
-        /// <returns>return the object in the ondex of the list</returns>
-        public Station GetIndexStation(int index) => DataSource.stations[index];
-
-        /// <summary>
-        /// return the object in the ondex of the list
-        /// </summary>
-        /// <param name="index">the index of each list</param>
-        /// <returns>return the object in the ondex of the list</returns>
-        public Customer GetIndexCustomer(int index) => DataSource.customers[index];
-
-        /// <summary>
-        /// return the object in the ondex of the list
-        /// </summary>
-        /// <param name="index">the index of each list</param>
-        /// <returns>return the object in the ondex of the list</returns>
-        public Parcel GetIndexParcel(int index) => DataSource.parcels[index];
     }
 }

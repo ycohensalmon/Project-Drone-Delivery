@@ -47,6 +47,9 @@ namespace ConsoleUI
             } while (choises != 5);
         }
 
+        //-----------------------------------------------------------------------------------------------------------//
+                                                         // Print menu //
+        //-----------------------------------------------------------------------------------------------------------//
         private static void PrintEnterToTheProject()
         {
             Console.BackgroundColor = ConsoleColor.DarkBlue;
@@ -136,7 +139,9 @@ namespace ConsoleUI
             Console.Clear();
         }
 
-
+        //-----------------------------------------------------------------------------------------------------------//
+                                                           // Switchs //
+        //-----------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// options of switch1 
         /// </summary>
@@ -255,8 +260,9 @@ namespace ConsoleUI
         }
 
 
-        // switch 1 - Adds fonctions
-
+        //-----------------------------------------------------------------------------------------------------------//
+                                                // switch 1 - Adds fonctions //
+        //-----------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// add stetion to the list 
         /// </summary>
@@ -328,19 +334,19 @@ namespace ConsoleUI
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void AddDrone(DalObject.DalObject dalObject)
         {
-            int id, model, maxWeight;
-
+            int id, maxWeight;
+            string model;
             Console.WriteLine("add Id: (4 digits)\n");
             int.TryParse(Console.ReadLine(), out id);
-            Console.WriteLine("add model: for Cobra press 0, Nagic press 1, Mavic_Air press 2, DJI press 3, Mickcara press 4:\n");
-            int.TryParse(Console.ReadLine(), out model);
+            Console.WriteLine("add model:\n");
+            model = Console.ReadLine();
             Console.WriteLine("chose the weightCategory\n");
             int.TryParse(Console.ReadLine(), out maxWeight);
 
             Drone temp =new Drone
             {
                 Id = id,
-                Model = (ModelDrones)model,
+                Model = model,
                 MaxWeight = (WeightCategory)maxWeight,
                 Status = DroneStatuses.Available,
                 Battery = 100
@@ -364,12 +370,13 @@ namespace ConsoleUI
             Console.WriteLine("chose the weight of the parcel, for Light press 0, Medium press 1, Heavy press 2\n");
             int.TryParse(Console.ReadLine(), out weight);
 
+            Random rand = new Random();
             Parcel temp = new Parcel
             {
                 Id = id,
-                SenderId = 0,
-                TargetId = 0,
                 DroneId = 0,
+                SenderId =  rand.Next(10000, 99999),
+                TargetId = rand.Next(10000, 99999),
                 Requested = DateTime.Now,
                 Scheduled = DateTime.MinValue,
                 PickedUp = DateTime.MinValue,
@@ -381,8 +388,9 @@ namespace ConsoleUI
             dalObject.NewParcel(temp);
         }
 
-
-        // switch 2 - Updates fonctions
+        //-----------------------------------------------------------------------------------------------------------//
+                                                // switch 2 - Updates fonctions //
+        //-----------------------------------------------------------------------------------------------------------//
 
         /// <summary>
         /// updates the drone that was assigned to a parcel to pick up the parcel
@@ -472,8 +480,9 @@ namespace ConsoleUI
 
         }
 
-
-        // switch 3 - print index in the list (by id)
+        //-----------------------------------------------------------------------------------------------------------//
+                                   // switch 3 - print index in the list (by id) //
+        //-----------------------------------------------------------------------------------------------------------//
 
         /// <summary>
         /// returns the object Station that matches the id
@@ -523,69 +532,68 @@ namespace ConsoleUI
             Console.WriteLine(dalObject.GetParcelById(parcelId));
         }
 
-
-        // switch 4 - prints fonction
+        //-----------------------------------------------------------------------------------------------------------//
+                                             // switch 4 - prints fonction //
+        //-----------------------------------------------------------------------------------------------------------//
 
         /// <summary>
-        /// return the list of stations
+        /// print the list of stations
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void PrintStations(DalObject.DalObject dalObject)
         {
-            for (int i = 0; i < dalObject.GetStations().Count; i++)
-                Console.WriteLine(dalObject.GetIndexStation(i));
+            List<Station> temp = dalObject.GetStations();
+            foreach (Station y in temp) { Console.WriteLine(y); }
         }
 
         /// <summary>
-        /// return the list of Drones
+        /// print the list of Drones
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void PrintDrones(DalObject.DalObject dalObject)
         {
-            for (int i = 0; i < dalObject.GetDrones().Count; i++)
-                Console.WriteLine(dalObject.GetIndexDrone(i));
+            List<Drone> temp = dalObject.GetDrones();
+            foreach (Drone y in temp) { Console.WriteLine(y); }
         }
 
         /// <summary>
-        /// return the list of Costumers
+        /// print the list of Costumers
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void PrintCostumers(DalObject.DalObject dalObject)
         {
-            for (int i = 0; i < dalObject.GetCustomers().Count; i++)
-                Console.WriteLine(dalObject.GetIndexCustomer(i));
+            List<Customer> temp = dalObject.GetCustomers();
+            foreach (Customer y in temp) { Console.WriteLine(y); }
         }
 
         /// <summary>
-        /// return the list of Parcels
+        /// print the list of Parcels
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void PrintParcels(DalObject.DalObject dalObject)
         {
-            for (int i = 0; i < dalObject.GetParcels().Count; i++)
-                Console.WriteLine(dalObject.GetIndexParcel(i));
+            List<Parcel> temp = dalObject.GetParcels();
+            foreach (Parcel y in temp) { Console.WriteLine(y); }
         }
 
         /// <summary>
-        /// returns a list with all the parcels that are not associated to a drone
+        /// print a list with all the parcels that are not associated to a drone
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void PrintParcelsWithoutDrone(DalObject.DalObject dalObject)
         {
-            for (int i = 0; i < dalObject.GetParcels().Count; i++)
-                if (dalObject.GetIndexParcel(i).DroneId == 0)
-                    Console.WriteLine(dalObject.GetIndexParcel(i));
+            List<Parcel> temp = dalObject.GetParcels();
+            foreach (Parcel y in temp) { if (y.DroneId == 0) { Console.WriteLine(y); } }
         }
 
         /// <summary>
-        /// returns an array with tyhe list of stations with empty charge slots
+        /// print an array with tyhe list of stations with empty charge slots
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void PrintStationWithChargeSolts(DalObject.DalObject dalObject)
         {
-            for (int i = 0; i < dalObject.GetStations().Count; i++)
-                if (dalObject.GetIndexStation(i).ChargeSolts > 0)
-                    Console.WriteLine(dalObject.GetIndexStation(i));
+            List<Station> temp = dalObject.GetStations();
+            foreach (Station y in temp) { if (y.ChargeSolts != 0) { Console.WriteLine(y); } }
         }
     }
 }
