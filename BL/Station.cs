@@ -12,19 +12,18 @@ namespace IBL
         {
             private int id;
             private string name;
-            private string longitude;
-            private string lattitude;
+            private Location location;
             private int chargeSolts;
+            private List<DroneCharge> droneCharges;
 
             public int Id { get => id; set => id = value; }
             public string Name { get => name; set => name = value; }
-            public string Longitude { get => longitude; set => longitude = value; }
-            public string Lattitude { get => lattitude; set => lattitude = value; }
+            public Location Location { get => location; set => location = value; }
             public int ChargeSolts { get => chargeSolts; set => chargeSolts = value; }
+            public List<DroneCharge> DroneCharges { get => droneCharges; set => droneCharges = value; }
             public override string ToString()
             {
-                return string.Format("Id: {0}\nName: {1}\nLongitude: {2}\nLattitude: {3}\nAvailable charging positions: {4}\n"
-                    , Id, Name, Longitude, Lattitude, ChargeSolts);
+                return string.Format($"Id: {Id}\nName: {Name}\nLocation: {Location}\nAvailable charging positions: {ChargeSolts}\nDroneCharges: {DroneCharges}");
             }
         }
     }
