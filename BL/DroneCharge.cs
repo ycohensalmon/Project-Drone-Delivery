@@ -17,7 +17,7 @@ namespace IBL
             public int StationId { get => stationId; set => stationId = value; }
             public override string ToString()
             {
-                return string.Format("Drone Id: {0},  Station Id: {1}", DroneId, StationId);
+                return string.Format($"Drone Id: {DroneId},  Station Id: {StationId}");
             }
         }
     }
