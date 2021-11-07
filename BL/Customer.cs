@@ -13,17 +13,19 @@ namespace IBL
             private Int32 id;
             private string name;
             private Int32 phone;
-            private string longitude;
-            private string lattitude;
+            private Location location;
+            private List<ParcelAtCustomer> parcelFromCustomer;
+            private List<ParcelAtCustomer> parcelsToCustomer;
 
             public Int32 Id { get => id; set => id = value; }
             public string Name { get => name; set => name = value; }
             public Int32 Phone { get => phone; set => phone = value; }
-            public string Longitude { get => longitude; set => longitude = value; }
-            public string Latittude { get => lattitude; set => lattitude = value; }
+            public Location Location { get => location; set => location = value; }
+            public List<ParcelAtCustomer> ParcelsFromCustomer { get => parcelFromCustomer; set => parcelFromCustomer = value; }
+            public List<ParcelAtCustomer> ParcelsToCustomer { get => parcelsToCustomer; set => parcelsToCustomer = value; }
             public override string ToString()
             {
-                return $"Id: {Id}, Name:{Name}, Phone:{Phone}, Longitude:{Longitude}, Latittude:{Latittude}";
+                return $"Id: {Id}, Name:{Name}, Phone:{Phone}, Location:{Location}, ParcelsFromCustomer:{ParcelsFromCustomer}, ParcelsToCustomer:{ParcelsToCustomer}";
             }
         }
     }
