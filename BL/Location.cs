@@ -10,7 +10,13 @@ namespace IBL
     {
         class Location
         {
+            private string longitude;
+            private string lattitude;
 
+            public string Longitude { get => longitude; set => longitude = value; }
+            public string Lattitude { get => lattitude; set => lattitude = value; }
+
+            public override string ToString() => $"Longitude: {Longitude}, Lattitude:{Lattitude}";
         }
     }
 }
