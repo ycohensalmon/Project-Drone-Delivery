@@ -76,7 +76,7 @@ namespace DalObject
             DataSource.drones.Remove(drone);
 
             parcel.PickedUp = DateTime.Now;
-            drone.Status = DroneStatuses.Delivery;
+           // drone.Status = DroneStatuses.Delivery;
 
             DataSource.drones.Add(drone);
             DataSource.parcels.Add(parcel);
@@ -92,7 +92,7 @@ namespace DalObject
             DataSource.parcels.Remove(parcel);
             DataSource.drones.Remove(drone);
 
-            drone.Status = DroneStatuses.Available;
+            //drone.Status = DroneStatuses.Available;
             parcel.Delivered = DateTime.Now;
             parcel.DroneId = 0;
 
@@ -117,7 +117,7 @@ namespace DalObject
                 StationId = station.Id
             });
             station.ChargeSolts--;
-            drone.Status = DroneStatuses.Maintenance;
+            //drone.Status = DroneStatuses.Maintenance;
 
             DataSource.stations.Add(station);
             DataSource.drones.Add(drone);
@@ -137,8 +137,8 @@ namespace DalObject
             DataSource.stations.Remove(station);
 
             station.ChargeSolts++;
-            drone.Status = DroneStatuses.Available;
-            drone.Battery = 100;
+            //drone.Status = DroneStatuses.Available;
+            //drone.Battery = 100;
 
             DataSource.stations.Add(station);
             DataSource.drones.Add(drone);
