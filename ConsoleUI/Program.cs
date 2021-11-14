@@ -399,13 +399,13 @@ namespace ConsoleUI
         private static void AssociateDroneToParcel(DalObject.DalObject dalObject)
         {
             int parcelId, droneId;
-            List<Parcel> temp = dalObject.GetParcels();
+            IEnumerable<Parcel> temp = dalObject.GetParcels();
             foreach (Parcel x in temp) { if (x.DroneId == 0){ Console.WriteLine(x); } }
             Console.WriteLine("Enter the Id of the parcel");
             int.TryParse(Console.ReadLine(), out parcelId);
 
-            List<Drone> temp2 = dalObject.GetDrones();
-            foreach (Drone y in temp2) { if (y.Status == DroneStatuses.Available) { Console.WriteLine(y); } }
+            IEnumerable<Drone> temp2 = dalObject.GetDrones();
+            //foreach (Drone y in temp2) { if (y.Status == DroneStatuses.Available) { Console.WriteLine(y); } }
             Console.WriteLine("Enter the Id of the drone");
             int.TryParse(Console.ReadLine(), out droneId);
 
@@ -420,7 +420,7 @@ namespace ConsoleUI
         {
 
             int parcelId;
-            List<Parcel> temp = dalObject.GetParcels();
+            IEnumerable<Parcel> temp = dalObject.GetParcels();
             foreach (Parcel x in temp) { if (x.DroneId != 0) { Console.WriteLine(x); } }
             Console.WriteLine("Enter the Id of the parcel");
             int.TryParse(Console.ReadLine(), out parcelId);
@@ -435,7 +435,7 @@ namespace ConsoleUI
         private static void deliveredParcelToCostumer(DalObject.DalObject dalObject)
         {
             int parcelId;
-            List<Parcel> temp = dalObject.GetParcels();
+            IEnumerable<Parcel> temp = dalObject.GetParcels();
             foreach (Parcel x in temp) { if (x.PickedUp != DateTime.MinValue && x.Delivered == DateTime.MinValue) { Console.WriteLine(x); } }
             Console.WriteLine("Enter the Id of the parcel");
             int.TryParse(Console.ReadLine(), out parcelId);
@@ -451,7 +451,7 @@ namespace ConsoleUI
         {
             int droneId, stationId;
             IEnumerable<Drone> temp = dalObject.GetDrones();
-            foreach (Drone y in temp) { if (y.Status != DroneStatuses.Maintenance) { Console.WriteLine(y); } }
+            //foreach (Drone y in temp) { if (y.Status != DroneStatuses.Maintenance) { Console.WriteLine(y); } }
             Console.WriteLine("Enter the Id of the drone to send to charge");
             int.TryParse(Console.ReadLine(), out droneId);
 
@@ -470,8 +470,8 @@ namespace ConsoleUI
         private static void ReleaseDroneFromChargingBase(DalObject.DalObject dalObject)
         {
             int droneId;
-            List<Drone> temp = dalObject.GetDrones();
-            foreach (Drone y in temp) { if (y.Status == DroneStatuses.Maintenance) { Console.WriteLine(y); } }
+            IEnumerable<Drone> temp = dalObject.GetDrones();
+            //foreach (Drone y in temp) { if (y.Status == DroneStatuses.Maintenance) { Console.WriteLine(y); } }
             Console.WriteLine("Enter the Id of the drone");
             int.TryParse(Console.ReadLine(), out droneId);
 
@@ -542,7 +542,7 @@ namespace ConsoleUI
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void PrintStations(DalObject.DalObject dalObject)
         {
-            List<Station> temp = dalObject.GetStations();
+            IEnumerable<Station> temp = dalObject.GetStations();
             foreach (Station y in temp) { Console.WriteLine(y); }
         }
 
@@ -552,7 +552,7 @@ namespace ConsoleUI
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void PrintDrones(DalObject.DalObject dalObject)
         {
-            List<Drone> temp = dalObject.GetDrones();
+            IEnumerable<Drone> temp = dalObject.GetDrones();
             foreach (Drone y in temp) { Console.WriteLine(y); }
         }
 
@@ -562,7 +562,7 @@ namespace ConsoleUI
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void PrintCostumers(DalObject.DalObject dalObject)
         {
-            List<Customer> temp = dalObject.GetCustomers();
+            IEnumerable<Customer> temp = dalObject.GetCustomers();
             foreach (Customer y in temp) { Console.WriteLine(y); }
         }
 
@@ -572,7 +572,7 @@ namespace ConsoleUI
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void PrintParcels(DalObject.DalObject dalObject)
         {
-            List<Parcel> temp = dalObject.GetParcels();
+            IEnumerable<Parcel> temp = dalObject.GetParcels();
             foreach (Parcel y in temp) { Console.WriteLine(y); }
         }
 
@@ -582,7 +582,7 @@ namespace ConsoleUI
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void PrintParcelsWithoutDrone(DalObject.DalObject dalObject)
         {
-            List<Parcel> temp = dalObject.GetParcels();
+            IEnumerable<Parcel> temp = dalObject.GetParcels();
             foreach (Parcel y in temp) { if (y.DroneId == 0) { Console.WriteLine(y); } }
         }
 
@@ -592,7 +592,7 @@ namespace ConsoleUI
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void PrintStationWithChargeSolts(DalObject.DalObject dalObject)
         {
-            List<Station> temp = dalObject.GetStations();
+            IEnumerable<Station> temp = dalObject.GetStations();
             foreach (Station y in temp) { if (y.ChargeSolts != 0) { Console.WriteLine(y); } }
         }
     }
