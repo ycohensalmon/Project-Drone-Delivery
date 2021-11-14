@@ -15,6 +15,7 @@ namespace IDAL
         public void NewCostumer(Customer x);
         public void NewParcel(Parcel x);
         public void ConnectDroneToParcel(int droneId, int parcelId);
+        public void CollectParcelByDrone(int parcelId);
         public void DeliveredParcel(int parcelId);
         public void SendDroneToBaseCharge(int droneId, int stationId);
         public void ReleaseDroneFromCharging(int droneId);
