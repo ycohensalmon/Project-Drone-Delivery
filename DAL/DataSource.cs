@@ -19,8 +19,11 @@ namespace DalObject
         {
             internal static Random rand = new Random();
             internal static int SerialNum = 1000;
-            public enum StatutDrone { Available, LightParcel, MediumParcel, HeavyParcel }
-            public int LoadingRate; // % per hour
+            public double Available { get; set; }
+            public double LightParcel { get; set; }
+            public double MediumParcel { get; set; }
+            public double HeavyParcel { get; set; }
+            public double LoadingRate { get; set; } // % per hour
         }
 
         internal static void Initialize()

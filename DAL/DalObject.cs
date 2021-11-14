@@ -14,8 +14,6 @@ namespace DalObject
         /// </summary>
         public DalObject() => DataSource.Initialize();
 
-
-
         //-----------------------------------------------------------------------------------------------------------//
                                                       // news functions //
         //-----------------------------------------------------------------------------------------------------------//
@@ -207,5 +205,15 @@ namespace DalObject
         /// <param name="id">the id of the Parcels</param>
         /// <returns></returns>
         public Parcel GetParcelById(int id) => DataSource.parcels.Find(x => x.Id == id);
+
+        //-----------------------------------------------------------------------------------------------------------//
+                                                 // other //
+        //-----------------------------------------------------------------------------------------------------------//
+
+        public double[] PowerConsumptionByDrone(double Available, double LightParcel, double MediumParcel, double HeavyParcel, double LoadingRate)
+        {
+            double[] PowerConsumption = new double[5] { Available, LightParcel, MediumParcel, HeavyParcel, LoadingRate };
+            return PowerConsumption;
+        }
     }
 }

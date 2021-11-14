@@ -27,6 +27,7 @@ namespace IDAL
         public Drone GetDroneById(int id);
         public Customer GetCustomerById(int id);
         public Parcel GetParcelById(int id);
+        public double[] PowerConsumptionByDrone(double Available, double LightParcel, double MediumParcel, double HeavyParcel, double LoadingRate);
         public double ElectricityUse() {return 17.5; }
 
     }
