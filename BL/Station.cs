@@ -14,7 +14,7 @@ namespace IBL
             private string name;
             private Location location;
             private int chargeSolts;
-            private List<DroneCharge> droneCharges;
+            private List<DroneCharge> droneCharges = new();
 
             public int Id { get => id; set => id = value; }
             public string Name { get => name; set => name = value; }
