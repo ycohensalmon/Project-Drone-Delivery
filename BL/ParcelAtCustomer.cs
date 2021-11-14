@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        class ParcelAtCustomer
+        public class ParcelAtCustomer
         {
             private Int32 id;
             private DateTime requested;

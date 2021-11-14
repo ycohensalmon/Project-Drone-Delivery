@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        class StationList
+        public class StationList
         {
             private int id;
             private string name;

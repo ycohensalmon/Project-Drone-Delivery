@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        class CustomerExceptioncs
+        public class CustomerExceptioncs
         {
         }
     }

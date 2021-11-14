@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        class ParcelInList
+        public class ParcelInList
         {
             private int id;
             private string senderName;

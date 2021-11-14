@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        class IBL
+        public class IBL
         {
         }
     }

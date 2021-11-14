@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        class ParcelInTravel
+        public class ParcelInTravel
         {
             private Int32 id;
             private bool inTravel;

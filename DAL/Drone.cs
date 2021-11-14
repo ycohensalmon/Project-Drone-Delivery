@@ -19,7 +19,7 @@ namespace IDAL
             //public double Battery { get => battery; set => battery = value; }
             public override string ToString()
             {
-                return $"Id:{Id}, Model:{Model}, MaxWeight:{MaxWeight}, Status:{Status}, Battery:{Battery}";
+                return $"Id:{Id}, Model:{Model}, MaxWeight:{MaxWeight}";
             }
         }
     }

@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        class CustumerInList
+        public class CustumerInList
         {
             private Int32 id;
             private string name;

@@ -8,10 +8,9 @@ namespace IBL
 {
     namespace BO
     {
-        class CustomerInParcel
+        public class CustomerInParcel
         {
             private int id;
-
             private string name;
 
             public int Id { get => id; set => id = value; }

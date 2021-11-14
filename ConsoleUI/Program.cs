@@ -348,8 +348,8 @@ namespace ConsoleUI
                 Id = id,
                 Model = model,
                 MaxWeight = (WeightCategory)maxWeight,
-                Status = DroneStatuses.Available,
-                Battery = 100
+                //Status = DroneStatuses.Available,
+                //Battery = 100
             };
 
             dalObject.NewDrone(temp);
@@ -450,7 +450,7 @@ namespace ConsoleUI
         private static void SendDroneToCharge(DalObject.DalObject dalObject)
         {
             int droneId, stationId;
-            List<Drone> temp = dalObject.GetDrones();
+            IEnumerable<Drone> temp = dalObject.GetDrones();
             foreach (Drone y in temp) { if (y.Status != DroneStatuses.Maintenance) { Console.WriteLine(y); } }
             Console.WriteLine("Enter the Id of the drone to send to charge");
             int.TryParse(Console.ReadLine(), out droneId);

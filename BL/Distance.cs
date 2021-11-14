@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        class Distance
+        public class Distance
         {
 
         }
