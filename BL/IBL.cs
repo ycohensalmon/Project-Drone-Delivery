@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace IBL
 {
 
-    public class IBL
+    public interface IBL
     {
     }
  
