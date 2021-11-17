@@ -14,8 +14,8 @@ namespace IBL
             private string name;
             private Int32 phone;
             private Location location;
-            private List<ParcelAtCustomer> parcelFromCustomer;
-            private List<ParcelAtCustomer> parcelsToCustomer;
+            private List<ParcelAtCustomer> parcelFromCustomer = new();
+            private List<ParcelAtCustomer> parcelsToCustomer = new();
 
             public Int32 Id { get => id; set => id = value; }
             public string Name { get => name; set => name = value; }

@@ -11,7 +11,7 @@ namespace ConsoleUI_BL
 
             int choises = 0;
 
-            IBL.BO.BL = new(); 
+            IBL.IBL bl = new BL(); 
 
             DalObject.DalObject dalObject = new DalObject.DalObject();
             do
@@ -283,9 +283,11 @@ namespace ConsoleUI_BL
             Console.WriteLine("add chargeSolts:\n");
             int.TryParse(Console.ReadLine(), out chargeSlots);
 
-            Location loc = new Location 
-            {   Longitude = Location.Sexagesimal(longitude, 'N'), 
-                Lattitude = Location.Sexagesimal(lattitude, 'E') };
+            Location loc = new Location
+            {
+                Longitude = Location.Sexagesimal(longitude, 'N'),
+                Lattitude = Location.Sexagesimal(lattitude, 'E')
+            };
 
             Station temp = new Station
             {
@@ -319,13 +321,18 @@ namespace ConsoleUI_BL
             Console.WriteLine("add lattitude: (example 12.123456)\n");
             double.TryParse(Console.ReadLine(), out lattitude);
 
+            Location loc = new Location
+            {
+                Longitude = Location.Sexagesimal(longitude, 'N'),
+                Lattitude = Location.Sexagesimal(lattitude, 'E')
+            };
+
             Customer temp = new Customer
             {
                 Id = id,
                 Name = name,
                 Phone = phone,
-                Longitude = DalObject.DataSource.Sexagesimal(longitude, 'N'),
-                Latittude = DalObject.DataSource.Sexagesimal(lattitude, 'E')
+                Location = loc
             };
 
             dalObject.NewCostumer(temp);
