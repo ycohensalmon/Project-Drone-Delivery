@@ -282,13 +282,16 @@ namespace ConsoleUI_BL
             double.TryParse(Console.ReadLine(), out lattitude);
             Console.WriteLine("add chargeSolts:\n");
             int.TryParse(Console.ReadLine(), out chargeSlots);
-            Location loc = new Location { Longitude= sexagesimal(longitude, 'N'), Lattitude = lattitude }
+
+            Location loc = new Location 
+            {   Longitude = Location.Sexagesimal(longitude, 'N'), 
+                Lattitude = Location.Sexagesimal(lattitude, 'E') };
+
             Station temp = new Station
             {
                 Id = id,
                 Name = name,
-                //longitude = DalObject.DataSource.Sexagesimal(longitude, 'N'),
-                //Lattitude = DalObject.DataSource.Sexagesimal(lattitude, 'E'),
+                Location = loc,
                 ChargeSolts = chargeSlots
             };
 
