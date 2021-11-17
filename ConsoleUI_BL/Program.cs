@@ -209,16 +209,16 @@ namespace ConsoleUI_BL
             switch (choises)
             {
                 case 1:
-                    PrintStationById(IBL.IBL bl);
+                    PrintStationById(bl);
                     break;
                 case 2:
-                    PrintDroneById(IBL.IBL bl);
+                    PrintDroneById(bl);
                     break;
                 case 3:
-                    PrintCustomerById(IBL.IBL bl);
+                    PrintCustomerById(bl);
                     break;
                 case 4:
-                    PrintParcelById(IBL.IBL bl);
+                    PrintParcelById(bl);
                     break;
                 default:
                     break;
@@ -266,7 +266,7 @@ namespace ConsoleUI_BL
         /// add stetion to the list 
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists </param>
-        private static void AddStation(DalObject.DalObject dalObject)
+        private static void AddStation(IBL.IBL bl)
         {
             int id, chargeSlots;
             string name;
@@ -296,15 +296,14 @@ namespace ConsoleUI_BL
                 Location = loc,
                 ChargeSolts = chargeSlots
             };
-
-            dalObject.NewStation(temp);
+            bl.NewStation(temp);
         }
 
         /// <summary>
         /// add Customer to the list
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void AddCustomer(DalObject.DalObject dalObject)
+        private static void AddCustomer(IBL.IBL bl)
         {
             int id, phone;
             string name;
@@ -335,34 +334,34 @@ namespace ConsoleUI_BL
                 Location = loc
             };
 
-            dalObject.NewCostumer(temp);
+            bl.NewCostumer(temp);
         }
 
         /// <summary>
         /// add drone to the list
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void AddDrone(DalObject.DalObject dalObject)
+        private static void AddDrone(IBL.IBL bl)
         {
-            int id, maxWeight;
+            int id, maxWeight, numStation;
             string model;
             Console.WriteLine("add Id: (4 digits)\n");
             int.TryParse(Console.ReadLine(), out id);
             Console.WriteLine("add model:\n");
             model = Console.ReadLine();
-            Console.WriteLine("chose the weightCategory\n");
+            Console.WriteLine("add maximum weight that the drone can carry (1,2 or 3 KG)\n");
             int.TryParse(Console.ReadLine(), out maxWeight);
+            Console.WriteLine("Select a station number for initial charging\n");
+            int.TryParse(Console.ReadLine(), out numStation);
 
             Drone temp = new Drone
             {
                 Id = id,
                 Model = model,
-                MaxWeight = (WeightCategory)maxWeight,
-                //Status = DroneStatuses.Available,
-                //Battery = 100
+                MaxWeight = (WeightCategory)maxWeight-1,
             };
 
-            dalObject.NewDrone(temp);
+            bl.NewDrone(temp);
         }
 
         /// <summary>
