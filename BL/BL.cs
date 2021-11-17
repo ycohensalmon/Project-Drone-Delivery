@@ -31,9 +31,9 @@ namespace IBL
                     drones.MaxWeight = (WeightCategory)tempDrone.MaxWeight;
                     drones.Battery = rand.Next(30, 70);
 
-                    // אם הרחפן שוייך לחבילה
-                    parcel.First(parcel => parcel.DroneId == tempDrone.Id); 
-
+                    // מחזיר חבילה ששוייכה לרחפן
+                    IDAL.DO.Parcel drone2;
+                    drone2 = parcel.First(parcel => parcel.DroneId == tempDrone.Id);
                     //...
                 }
 
