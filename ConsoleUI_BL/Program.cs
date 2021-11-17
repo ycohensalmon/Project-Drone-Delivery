@@ -25,19 +25,19 @@ namespace ConsoleUI_BL
                 {
                     case 1:
                         PrintMenu1();
-                        Switch1(dalObject);
+                        Switch1(bl);
                         break;
                     case 2:
                         PrintMenu2();
-                        Switch2(dalObject);
+                        Switch2(bl);
                         break;
                     case 3:
                         PrintMenu3();
-                        Switch3(dalObject);
+                        Switch3(bl);
                         break;
                     case 4:
                         PrintMenu4();
-                        Switch4(dalObject);
+                        Switch4(bl);
                         break;
                     default:
                         break;
@@ -145,23 +145,23 @@ namespace ConsoleUI_BL
         /// options of switch1 
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void Switch1(DalObject.DalObject dalObject)
+        private static void Switch1(IBL.IBL bl)
         {
             int choises;
             int.TryParse(Console.ReadLine(), out choises);
             switch (choises)
             {
                 case 1:
-                    AddStation(dalObject);
+                    AddStation(bl);
                     break;
                 case 2:
-                    AddDrone(dalObject);
+                    AddDrone(bl);
                     break;
                 case 3:
-                    AddCustomer(dalObject);
+                    AddCustomer(bl);
                     break;
                 case 4:
-                    AddParcel(dalObject);
+                    AddParcel(bl);
                     break;
                 default:
                     break;
@@ -172,26 +172,26 @@ namespace ConsoleUI_BL
         /// options of switch2
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void Switch2(DalObject.DalObject dalObject)
+        private static void Switch2(IBL.IBL bl)
         {
             int choises;
             int.TryParse(Console.ReadLine(), out choises);
             switch (choises)
             {
                 case 1:
-                    AssociateDroneToParcel(dalObject);
+                    AssociateDroneToParcel(bl);
                     break;
                 case 2:
-                    CollectParcelsByDrones(dalObject);
+                    CollectParcelsByDrones(bl);
                     break;
                 case 3:
-                    deliveredParcelToCostumer(dalObject);
+                    deliveredParcelToCostumer(bl);
                     break;
                 case 4:
-                    SendDroneToCharge(dalObject);
+                    SendDroneToCharge(bl);
                     break;
                 case 5:
-                    ReleaseDroneFromChargingBase(dalObject);
+                    ReleaseDroneFromChargingBase(bl);
                     break;
                 default:
                     break;
@@ -202,23 +202,23 @@ namespace ConsoleUI_BL
         /// options of switch3
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void Switch3(DalObject.DalObject dalObject)
+        private static void Switch3(IBL.IBL bl)
         {
             int choises;
             int.TryParse(Console.ReadLine(), out choises);
             switch (choises)
             {
                 case 1:
-                    PrintStationById(dalObject);
+                    PrintStationById(IBL.IBL bl);
                     break;
                 case 2:
-                    PrintDroneById(dalObject);
+                    PrintDroneById(IBL.IBL bl);
                     break;
                 case 3:
-                    PrintCustomerById(dalObject);
+                    PrintCustomerById(IBL.IBL bl);
                     break;
                 case 4:
-                    PrintParcelById(dalObject);
+                    PrintParcelById(IBL.IBL bl);
                     break;
                 default:
                     break;
@@ -229,29 +229,29 @@ namespace ConsoleUI_BL
         /// options of switch4
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void Switch4(DalObject.DalObject dalObject)
+        private static void Switch4(IBL.IBL bl)
         {
             int choises;
             int.TryParse(Console.ReadLine(), out choises);
             switch (choises)
             {
                 case 1:
-                    PrintStations(dalObject);
+                    PrintStations(bl);
                     break;
                 case 2:
-                    PrintDrones(dalObject);
+                    PrintDrones(bl);
                     break;
                 case 3:
-                    PrintCostumers(dalObject);
+                    PrintCostumers(bl);
                     break;
                 case 4:
-                    PrintParcels(dalObject);
+                    PrintParcels(bl);
                     break;
                 case 5:
-                    PrintParcelsWithoutDrone(dalObject);
+                    PrintParcelsWithoutDrone(bl);
                     break;
                 case 6:
-                    PrintStationWithChargeSolts(dalObject);
+                    PrintStationWithChargeSolts(bl);
                     break;
                 default:
                     break;
@@ -285,8 +285,8 @@ namespace ConsoleUI_BL
 
             Location loc = new Location
             {
-                Longitude = Location.Sexagesimal(longitude, 'N'),
-                Lattitude = Location.Sexagesimal(lattitude, 'E')
+                Longitude = longitude,
+                Lattitude = lattitude
             };
 
             Station temp = new Station
@@ -323,8 +323,8 @@ namespace ConsoleUI_BL
 
             Location loc = new Location
             {
-                Longitude = Location.Sexagesimal(longitude, 'N'),
-                Lattitude = Location.Sexagesimal(lattitude, 'E')
+                Longitude = longitude,
+                Lattitude = lattitude
             };
 
             Customer temp = new Customer
