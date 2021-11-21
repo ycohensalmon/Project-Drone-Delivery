@@ -27,40 +27,62 @@ namespace IBL
 
                 foreach (var tempDrone in drone)
                 {
+                    DroneStatuses statuses = GetStatus(tempDrone.Id, parcel);
+
                     drones.Add(new Drone
                     {
                         Id = tempDrone.Id,
                         Model = tempDrone.Model,
                         MaxWeight = (WeightCategory)tempDrone.MaxWeight,
-                        
+                        Status = statuses,
+                        Battery = GetBattery(statuses),
+                        //ParcelInTravel =
+                        Location = GetLocation(statuses, tempDrone.Id, parcel)
                     });
                 }
+            }
 
-                // אם החבלילה לא סופקה אך שוייכה
-                foreach (var tempParcel in parcel)
+            private Location GetLocation(DroneStatuses statuses, int droneId, IEnumerable<IDAL.DO.Parcel> parcel)
+            {
+                IDAL.DO.Parcel tempParcel = GetTempParcel(droneId, parcel);
+                if (tempParcel.DroneId == droneId)
                 {
-                    if (tempParcel.DroneId == drones.Id)
+                    // החבילה שויכה ולא נאספה
+                    if (tempParcel.Scheduled != DateTime.MinValue && tempParcel.PickedUp == DateTime.MinValue)
                     {
-                        drones.Battery = rand.Next(30, 70);
-                        drones.Status = DroneStatuses.Delivery;
-                        // החבילה שויכה ולא נאספה
-                        if (tempParcel.Scheduled != DateTime.MinValue && tempParcel.PickedUp == DateTime.MinValue)
-                        {
-                            // מיקום - תחנה הקרובה לשולח
-                        }
-                        // חבילה נאספה אך לא סופקה
-                        else if (tempParcel.PickedUp != DateTime.MinValue)
-                        {
-                            // מיקום - מיקום השולח
-                        }
+                        // מיקום - תחנה הקרובה לשולח
                     }
-                    else // כאשר הרחפן לא במשלוח
+                    // חבילה נאספה אך לא סופקה
+                    else if (tempParcel.PickedUp != DateTime.MinValue && tempParcel.Delivered == DateTime.MinValue)
                     {
-                        drones.Status = (DroneStatuses)rand.Next(2); // מגריל בין תחזוקה לפנוי
-
+                        // מיקום - מיקום השולח
                     }
-
                 }
+
+                if (statuses == DroneStatuses.Available)
+                {
+                    List<IDAL.DO.Parcel> parcelDelivered = new();
+                    foreach (var item in parcel) if(item.Delivered != DateTime.MinValue){parcelDelivered.Add(item);}
+                }
+            }
+
+            private double GetBattery(DroneStatuses status)
+            {
+                if (status != DroneStatuses.Maintenance) return rand.Next(30, 100);
+                else return rand.Next(0, 20);
+            }
+
+            private DroneStatuses GetStatus(int droneId, IEnumerable<IDAL.DO.Parcel> parcel)
+            {
+                if (GetTempParcel(droneId, parcel).DroneId == droneId) 
+                    return DroneStatuses.Delivery;
+                else
+                    return (DroneStatuses)rand.Next(2);
+            }
+
+            private IDAL.DO.Parcel GetTempParcel(int droneId, IEnumerable<IDAL.DO.Parcel> parcel)
+            {
+                return parcel.First(parcel => parcel.DroneId == droneId);
             }
         }
     }
