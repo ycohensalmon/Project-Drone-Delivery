@@ -280,20 +280,16 @@ namespace ConsoleUI_BL
         /// <param name="dalObject">the parameter that include all the lists </param>
         private static void AddStation(IBL.IBL bl)
         {
-            int id, chargeSlots;
-            string name;
-            double longitude;
-            double lattitude;
             Console.WriteLine("add Id: (4 digits)\n");
-            int.TryParse(Console.ReadLine(), out id);
+            int.TryParse(Console.ReadLine(), out int id);
             Console.WriteLine("add name:\n");
-            name = Console.ReadLine();
+            string name = Console.ReadLine();
             Console.WriteLine("add longitude: (example 12.123456)\n");
-            double.TryParse(Console.ReadLine(), out longitude);
+            double.TryParse(Console.ReadLine(), out double longitude);
             Console.WriteLine("add lattitude: (example 12.123456)\n");
-            double.TryParse(Console.ReadLine(), out lattitude);
+            double.TryParse(Console.ReadLine(), out double lattitude);
             Console.WriteLine("add chargeSolts:\n");
-            int.TryParse(Console.ReadLine(), out chargeSlots);
+            int.TryParse(Console.ReadLine(), out int chargeSlots);
 
             Location loc = new Location
             {
@@ -437,9 +433,8 @@ namespace ConsoleUI_BL
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void CollectParcelsByDrones(IBL.IBL bl)
         {
-            int droneId;
             Console.WriteLine("Enter the Id of the drone\n");
-            int.TryParse(Console.ReadLine(), out droneId);
+            int.TryParse(Console.ReadLine(), out int droneId);
 
             //int parcelId;
             //List<Parcel> temp = dalObject.GetParcels();
@@ -457,9 +452,8 @@ namespace ConsoleUI_BL
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void deliveredParcelToCostumer(IBL.IBL bl)
         {
-            int droneId;
             Console.WriteLine("Enter the Id of the drone\n");
-            int.TryParse(Console.ReadLine(), out droneId);
+            int.TryParse(Console.ReadLine(), out int droneId);
 
             //int parcelId;
             //List<Parcel> temp = dalObject.GetParcels();
@@ -477,9 +471,8 @@ namespace ConsoleUI_BL
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void SendDroneToCharge(IBL.IBL bl)
         {
-            int droneId;
             Console.WriteLine("Enter the Id of the drone\n");
-            int.TryParse(Console.ReadLine(), out droneId);
+            int.TryParse(Console.ReadLine(), out int droneId);
 
             //int droneId, stationId;
             //IEnumerable<Drone> temp = dalObject.GetDrones();
@@ -501,11 +494,9 @@ namespace ConsoleUI_BL
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void ReleaseDroneFromChargingBase(IBL.IBL bl)
         {
-            int droneId;
-            double timeCharge;
             Console.WriteLine("Enter the Id of the drone and charge time (in minute)\n");
-            int.TryParse(Console.ReadLine(), out droneId);
-            double.TryParse(Console.ReadLine(), out timeCharge);
+            int.TryParse(Console.ReadLine(), out int droneId);
+            double.TryParse(Console.ReadLine(), out double timeCharge);
 
             //int droneId;
             //List<Drone> temp = dalObject.GetDrones();
@@ -520,27 +511,23 @@ namespace ConsoleUI_BL
 
         private static void updatDrone(IBL.IBL bl)
         {
-            int droneId;
-            string model;
             Console.WriteLine("Enter the Id of the drone and the new name\n");
-            int.TryParse(Console.ReadLine(), out droneId);
-            model = Console.ReadLine();
+            int.TryParse(Console.ReadLine(), out int droneId);
+            string model = Console.ReadLine();
             bl.updatDrone(droneId, model);
         }
 
         private static void updateBase(IBL.IBL bl)
         {
-            int num;
             Console.WriteLine("Enter the number of the base\n");
-            int.TryParse(Console.ReadLine(), out num);
+            int.TryParse(Console.ReadLine(), out int num);
             //isnt finished
         }
 
         private static void updateCustomer(IBL.IBL bl)
         {
-            int id;
             Console.WriteLine("Enter the number of the base\n");
-            int.TryParse(Console.ReadLine(), out id);
+            int.TryParse(Console.ReadLine(), out int id);
             //isnt finished
         }
 
