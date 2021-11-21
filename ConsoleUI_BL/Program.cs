@@ -298,7 +298,7 @@ namespace ConsoleUI_BL
             Location loc = new Location
             {
                 Longitude = longitude,
-                Lattitude = lattitude
+                Latitude = lattitude
             };
 
             Station temp = new Station
@@ -335,7 +335,7 @@ namespace ConsoleUI_BL
             Location loc = new Location
             {
                 Longitude = longitude,
-                Lattitude = lattitude
+                Latitude = lattitude
             };
 
             Customer temp = new Customer
