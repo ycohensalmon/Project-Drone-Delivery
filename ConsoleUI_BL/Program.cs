@@ -94,11 +94,14 @@ namespace ConsoleUI_BL
         private static void PrintMenu2()
         {
             Console.WriteLine(
-                "Assigning a package to a skimmer- - - - - - - - - press 1\n" +
+                "Assigning a package to a drone- - - - - - - - - press 1\n" +
                 "Collection of a package by drone- - - - - - - - - press 2\n" +
                 "Delivery package to customer- - - - - - - - - - - press 3\n" +
-                "Sending a skimmer for charging at a base station- press 4\n" +
-                "Release skimmer from charging at base station - - press 5");
+                "Sending a drone for charging at a base station- press 4\n" +
+                "Release drone from charging at base station - - press 5\n" +
+                "to update drone data (name only)- - - - - - - - press 6\n" +
+                "to update base station data- - - - - - - - - -  press 7\n" +
+                "to update customer data- - - - - - - - - - - -  press 8\n");
         }
 
         /// <summary>
@@ -192,6 +195,15 @@ namespace ConsoleUI_BL
                     break;
                 case 5:
                     ReleaseDroneFromChargingBase(bl);
+                    break;
+                case 6:
+                    updatDrone(bl);
+                    break;
+                case 7:
+                    updateBase(bl);
+                    break;
+                case 8:
+                    updateCustomer(bl);
                     break;
                 default:
                     break;
@@ -361,40 +373,33 @@ namespace ConsoleUI_BL
                 MaxWeight = (WeightCategory)maxWeight-1,
             };
 
-            bl.NewDrone(temp);
+            bl.NewDrone(temp, numStation);
         }
 
         /// <summary>
         /// add parcel to the list
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void AddParcel(DalObject.DalObject dalObject)
+        private static void AddParcel(IBL.IBL bl)
         {
-            int id, priorities, weight;
+            int senderID, receiveID, priorities, weight;
 
-            Console.WriteLine("add Id: (4 digits)\n");
-            int.TryParse(Console.ReadLine(), out id);
+            Console.WriteLine("add Id of the sending customer: (9 digits)\n");
+            int.TryParse(Console.ReadLine(), out senderID);
+            Console.WriteLine("add Id of the receiving customer: (9 digits)\n");
+            int.TryParse(Console.ReadLine(), out receiveID);
             Console.WriteLine("choise the priority, for Normal press 0, Fast press 1, Emergency press 2\n");
             int.TryParse(Console.ReadLine(), out priorities);
             Console.WriteLine("chose the weight of the parcel, for Light press 0, Medium press 1, Heavy press 2\n");
             int.TryParse(Console.ReadLine(), out weight);
 
-            Random rand = new Random();
             Parcel temp = new Parcel
             {
-                Id = id,
-                DroneId = 0,
-                SenderId = rand.Next(10000, 99999),
-                TargetId = rand.Next(10000, 99999),
-                Requested = DateTime.Now,
-                Scheduled = DateTime.MinValue,
-                PickedUp = DateTime.MinValue,
-                Delivered = DateTime.MinValue,
                 Weight = (WeightCategory)weight,
                 Priorities = (Priority)priorities
             };
 
-            dalObject.NewParcel(temp);
+            bl.NewParcel(temp, senderID, receiveID);
         }
 
         //-----------------------------------------------------------------------------------------------------------//
@@ -405,89 +410,142 @@ namespace ConsoleUI_BL
         /// updates the drone that was assigned to a parcel to pick up the parcel
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void AssociateDroneToParcel(DalObject.DalObject dalObject)
+        private static void AssociateDroneToParcel(IBL.IBL bl)
         {
-            int parcelId, droneId;
-            List<Parcel> temp = dalObject.GetParcels();
-            foreach (Parcel x in temp) { if (x.DroneId == 0) { Console.WriteLine(x); } }
-            Console.WriteLine("Enter the Id of the parcel");
-            int.TryParse(Console.ReadLine(), out parcelId);
-
-            List<Drone> temp2 = dalObject.GetDrones();
-            foreach (Drone y in temp2) { if (y.Status == DroneStatuses.Available) { Console.WriteLine(y); } }
-            Console.WriteLine("Enter the Id of the drone");
+            int droneId;
+            Console.WriteLine("Enter the Id of the drone\n");
             int.TryParse(Console.ReadLine(), out droneId);
 
-            dalObject.ConnectDroneToParcel(droneId, parcelId);
+            //int parcelId, droneId;
+            //List<Parcel> temp = dalObject.GetParcels();
+            //foreach (Parcel x in temp) { if (x.DroneId == 0) { Console.WriteLine(x); } }
+            //Console.WriteLine("Enter the Id of the parcel");
+            //int.TryParse(Console.ReadLine(), out parcelId);
+
+            //List<Drone> temp2 = dalObject.GetDrones();
+            //foreach (Drone y in temp2) { if (y.Status == DroneStatuses.Available) { Console.WriteLine(y); } }
+            //Console.WriteLine("Enter the Id of the drone");
+            //int.TryParse(Console.ReadLine(), out droneId);
+
+            //dalObject.ConnectDroneToParcel(droneId, parcelId);
+            bl.connectDroneToParcel(droneId);
         }
 
         /// <summary>
         /// updates the drone that was assigned to a parcel to pick up the parcel
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void CollectParcelsByDrones(DalObject.DalObject dalObject)
+        private static void CollectParcelsByDrones(IBL.IBL bl)
         {
+            int droneId;
+            Console.WriteLine("Enter the Id of the drone\n");
+            int.TryParse(Console.ReadLine(), out droneId);
 
-            int parcelId;
-            List<Parcel> temp = dalObject.GetParcels();
-            foreach (Parcel x in temp) { if (x.DroneId != 0) { Console.WriteLine(x); } }
-            Console.WriteLine("Enter the Id of the parcel");
-            int.TryParse(Console.ReadLine(), out parcelId);
+            //int parcelId;
+            //List<Parcel> temp = dalObject.GetParcels();
+            //foreach (Parcel x in temp) { if (x.DroneId != 0) { Console.WriteLine(x); } }
+            //Console.WriteLine("Enter the Id of the parcel");
+            //int.TryParse(Console.ReadLine(), out parcelId);
 
-            dalObject.CollectParcelByDrone(parcelId);
+            //dalObject.CollectParcelByDrone(parcelId);
+            bl.CollectParcelsByDrone(droneId);
         }
 
         /// <summary>
         /// updates that the parcel was delivered to the target
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void deliveredParcelToCostumer(DalObject.DalObject dalObject)
+        private static void deliveredParcelToCostumer(IBL.IBL bl)
         {
-            int parcelId;
-            List<Parcel> temp = dalObject.GetParcels();
-            foreach (Parcel x in temp) { if (x.PickedUp != DateTime.MinValue && x.Delivered == DateTime.MinValue) { Console.WriteLine(x); } }
-            Console.WriteLine("Enter the Id of the parcel");
-            int.TryParse(Console.ReadLine(), out parcelId);
+            int droneId;
+            Console.WriteLine("Enter the Id of the drone\n");
+            int.TryParse(Console.ReadLine(), out droneId);
 
-            dalObject.DeliveredParcel(parcelId);
+            //int parcelId;
+            //List<Parcel> temp = dalObject.GetParcels();
+            //foreach (Parcel x in temp) { if (x.PickedUp != DateTime.MinValue && x.Delivered == DateTime.MinValue) { Console.WriteLine(x); } }
+            //Console.WriteLine("Enter the Id of the parcel");
+            //int.TryParse(Console.ReadLine(), out parcelId);
+
+            //dalObject.DeliveredParcel(parcelId);
+            bl.deliveredParcel(droneId);
         }
 
         /// <summary>
         /// send a drone to charge
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void SendDroneToCharge(DalObject.DalObject dalObject)
+        private static void SendDroneToCharge(IBL.IBL bl)
         {
-            int droneId, stationId;
-            IEnumerable<Drone> temp = dalObject.GetDrones();
-            foreach (Drone y in temp) { if (y.Status != DroneStatuses.Maintenance) { Console.WriteLine(y); } }
-            Console.WriteLine("Enter the Id of the drone to send to charge");
+            int droneId;
+            Console.WriteLine("Enter the Id of the drone\n");
             int.TryParse(Console.ReadLine(), out droneId);
 
-            PrintStationWithChargeSolts(dalObject);
-            Console.WriteLine("Enter the Id of the station");
-            int.TryParse(Console.ReadLine(), out stationId);
+            //int droneId, stationId;
+            //IEnumerable<Drone> temp = dalObject.GetDrones();
+            //foreach (Drone y in temp) { if (y.Status != DroneStatuses.Maintenance) { Console.WriteLine(y); } }
+            //Console.WriteLine("Enter the Id of the drone to send to charge");
+            //int.TryParse(Console.ReadLine(), out droneId);
 
-            dalObject.SendDroneToBaseCharge(droneId, stationId);
+            //PrintStationWithChargeSolts(dalObject);
+            //Console.WriteLine("Enter the Id of the station");
+            //int.TryParse(Console.ReadLine(), out stationId);
 
+            //dalObject.SendDroneToBaseCharge(droneId, stationId);
+            bl.SendDroneToCharge(droneId);
         }
 
         /// <summary>
         /// release a drone from charge
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void ReleaseDroneFromChargingBase(DalObject.DalObject dalObject)
+        private static void ReleaseDroneFromChargingBase(IBL.IBL bl)
         {
             int droneId;
-            List<Drone> temp = dalObject.GetDrones();
-            foreach (Drone y in temp) { if (y.Status == DroneStatuses.Maintenance) { Console.WriteLine(y); } }
-            Console.WriteLine("Enter the Id of the drone");
+            double timeCharge;
+            Console.WriteLine("Enter the Id of the drone and charge time (in minute)\n");
             int.TryParse(Console.ReadLine(), out droneId);
+            double.TryParse(Console.ReadLine(), out timeCharge);
 
-            dalObject.ReleaseDroneFromCharging(droneId);
+            //int droneId;
+            //List<Drone> temp = dalObject.GetDrones();
+            //foreach (Drone y in temp) { if (y.Status == DroneStatuses.Maintenance) { Console.WriteLine(y); } }
+            //Console.WriteLine("Enter the Id of the drone");
+            //int.TryParse(Console.ReadLine(), out droneId);
 
+            //dalObject.ReleaseDroneFromCharging(droneId);
 
+            bl.ReleaseDroneFromCharging(droneId, timeCharge);
         }
+
+        private static void updatDrone(IBL.IBL bl)
+        {
+            int droneId;
+            string model;
+            Console.WriteLine("Enter the Id of the drone and the new name\n");
+            int.TryParse(Console.ReadLine(), out droneId);
+            model = Console.ReadLine();
+            bl.updatDrone(droneId, model);
+        }
+
+        private static void updateBase(IBL.IBL bl)
+        {
+            int num;
+            Console.WriteLine("Enter the number of the base\n");
+            int.TryParse(Console.ReadLine(), out num);
+            //isnt finished
+        }
+
+        private static void updateCustomer(IBL.IBL bl)
+        {
+            int id;
+            Console.WriteLine("Enter the number of the base\n");
+            int.TryParse(Console.ReadLine(), out id);
+            //isnt finished
+        }
+
+
+
 
         //-----------------------------------------------------------------------------------------------------------//
         // switch 3 - print index in the list (by id) //
