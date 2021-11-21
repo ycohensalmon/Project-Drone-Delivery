@@ -10,12 +10,11 @@ namespace IBL
 
     public interface IBL 
     {
-        public void NewStation(Station x) { }
-        public void NewCostumer(Customer x) { }
-        public void NewDrone(Drone x, int numStation) { }
-        public void NewParcel(Parcel x, int senderID, int receiveID) { }
-
-        public void sendDroneToCharge(int droneID, int baseStatiunID) { }
+        public void NewStation(Station x);
+        public void NewCostumer(Customer x);
+        public void NewDrone(Drone x, int numStation);
+        public void NewParcel(Parcel x, int senderID, int receiveID);
+        public void sendDroneToCharge(int droneID, int baseStatiunID);
     }
  
 }

@@ -13,19 +13,19 @@ namespace IDAL
         {
             private int id;
             private string name;
-            private string longitude;
-            private string lattitude;
+            private double latitude;  // 'N'
+            private double longitude; // 'E'
             private int chargeSolts;
 
             public int Id { get => id; set => id = value; }
             public string Name { get => name; set => name = value; }
-            public string Longitude { get => longitude; set => longitude = value; }
-            public string Lattitude { get => lattitude; set => lattitude = value; }
+            public double Latitude { get => latitude; set => latitude = value; }
+            public double Longitude { get => longitude; set => longitude = value; }
             public int ChargeSolts { get => chargeSolts; set => chargeSolts = value; }
             public override string ToString()
             {
-                return string.Format("Id: {0}\nName: {1}\nLongitude: {2}\nLattitude: {3}\nAvailable charging positions: {4}\n"
-                    , Id,Name,Longitude,Lattitude,ChargeSolts);
+                return string.Format("Id: {0}\nName: {1}\nLattitude: {2}\nLongitude: {3}\nAvailable charging positions: {4}\n"
+                    , Id,Name,DalObject.DataSource.Sexagesimal(Latitude, 'N'), DalObject.DataSource.Sexagesimal(Longitude, 'E'),ChargeSolts);
             }
         }
     }
