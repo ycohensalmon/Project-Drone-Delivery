@@ -154,6 +154,12 @@ namespace DalObject
         /// </summary>
         /// <returns>the lists of the Drones </returns>
         public IEnumerable<Drone> GetDrones() => DataSource.drones;
+        
+        /// <summary>
+        /// Get the Drones charge
+        /// </summary>
+        /// <returns>the lists of the Drones </returns>
+        public IEnumerable<DroneCharge> GetDroneCharges() => DataSource.droneCharges;
 
         /// <summary>
         /// Get the Stations

@@ -16,39 +16,49 @@ namespace IBL
             Random rand = new Random();
             public IDal dalObj = new DalObject.DalObject();
             public ParcelInList ParcelList;// = IDAL.DO.Parcel;
+            List<Drone> drones = new();
             public BL()
             {
                 IEnumerable<IDAL.DO.Drone> drone = dalObj.GetDrones();
                 IEnumerable<IDAL.DO.Station> station = dalObj.GetStations();
                 IEnumerable<IDAL.DO.Customer> customer = dalObj.GetCustomers();
                 IEnumerable<IDAL.DO.Parcel> parcel = dalObj.GetParcels();
+                IEnumerable<IDAL.DO.DroneCharge> droneCharges = dalObj.GetDroneCharges();
 
-                Drone drones = new();
                 foreach (var tempDrone in drone)
                 {
-                    drones.Id = tempDrone.Id;
-                    drones.Model = tempDrone.Model;
-                    drones.MaxWeight = (WeightCategory)tempDrone.MaxWeight;
-                    drones.Battery = rand.Next(30, 70);
-
-                    // מחזיר חבילה ששוייכה לרחפן
-                    IDAL.DO.Parcel drone2;
-                    drone2 = parcel.First(parcel => parcel.DroneId == tempDrone.Id);
-                    //...
+                    drones.Add(new Drone
+                    {
+                        Id = tempDrone.Id,
+                        Model = tempDrone.Model,
+                        MaxWeight = (WeightCategory)tempDrone.MaxWeight,
+                        
+                    });
                 }
 
-                DateTime nulValue = DateTime.MinValue;
-                foreach (var x in parcel) if (x.Delivered == nulValue && x.DroneId != 0) // חבילה לא סופקה והרחפן משוייך
+                // אם החבלילה לא סופקה אך שוייכה
+                foreach (var tempParcel in parcel)
                 {
-                        // סטטוס רחפן כמבצע משלוח
-                        if (x.Scheduled != nulValue && x.PickedUp == nulValue) // החבילה שויכה ולא נאספה
+                    if (tempParcel.DroneId == drones.Id)
+                    {
+                        drones.Battery = rand.Next(30, 70);
+                        drones.Status = DroneStatuses.Delivery;
+                        // החבילה שויכה ולא נאספה
+                        if (tempParcel.Scheduled != DateTime.MinValue && tempParcel.PickedUp == DateTime.MinValue)
                         {
                             // מיקום - תחנה הקרובה לשולח
                         }
-                        if (x.PickedUp != nulValue && x.Delivered == nulValue) // חבילה נאספה אך לא סופקה
+                        // חבילה נאספה אך לא סופקה
+                        else if (tempParcel.PickedUp != DateTime.MinValue)
                         {
                             // מיקום - מיקום השולח
                         }
+                    }
+                    else // כאשר הרחפן לא במשלוח
+                    {
+                        drones.Status = (DroneStatuses)rand.Next(2); // מגריל בין תחזוקה לפנוי
+
+                    }
 
                 }
             }
