@@ -95,13 +95,13 @@ namespace ConsoleUI_BL
         {
             Console.WriteLine(
                 "Assigning a package to a drone- - - - - - - - - press 1\n" +
-                "Collection of a package by drone- - - - - - - - - press 2\n" +
-                "Delivery package to customer- - - - - - - - - - - press 3\n" +
+                "Collection of a package by drone- - - - - - - - press 2\n" +
+                "Delivery package to customer- - - - - - - - - - press 3\n" +
                 "Sending a drone for charging at a base station- press 4\n" +
                 "Release drone from charging at base station - - press 5\n" +
                 "to update drone data (name only)- - - - - - - - press 6\n" +
-                "to update base station data- - - - - - - - - -  press 7\n" +
-                "to update customer data- - - - - - - - - - - -  press 8\n");
+                "to update base station data - - - - - - - - - - press 7\n" +
+                "to update customer data - - - - - - - - - - - - press 8\n");
         }
 
         /// <summary>
@@ -351,16 +351,14 @@ namespace ConsoleUI_BL
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void AddDrone(IBL.IBL bl)
         {
-            int id, maxWeight, numStation;
-            string model;
             Console.WriteLine("add Id: (4 digits)\n");
-            int.TryParse(Console.ReadLine(), out id);
+            int.TryParse(Console.ReadLine(), out int id);
             Console.WriteLine("add model:\n");
-            model = Console.ReadLine();
+            string model = Console.ReadLine();
             Console.WriteLine("add maximum weight that the drone can carry (1,2 or 3 KG)\n");
-            int.TryParse(Console.ReadLine(), out maxWeight);
+            int.TryParse(Console.ReadLine(), out int maxWeight);
             Console.WriteLine("Select a station number for initial charging\n");
-            int.TryParse(Console.ReadLine(), out numStation);
+            int.TryParse(Console.ReadLine(), out int numStation);
 
             Drone temp = new Drone
             {
