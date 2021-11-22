@@ -95,13 +95,13 @@ namespace ConsoleUI_BL
         {
             Console.WriteLine(
                 "Assigning a package to a drone- - - - - - - - - press 1\n" +
-                "Collection of a package by drone- - - - - - - - - press 2\n" +
-                "Delivery package to customer- - - - - - - - - - - press 3\n" +
+                "Collection of a package by drone- - - - - - - - press 2\n" +
+                "Delivery package to customer- - - - - - - - - - press 3\n" +
                 "Sending a drone for charging at a base station- press 4\n" +
                 "Release drone from charging at base station - - press 5\n" +
                 "to update drone data (name only)- - - - - - - - press 6\n" +
-                "to update base station data- - - - - - - - - -  press 7\n" +
-                "to update customer data- - - - - - - - - - - -  press 8\n");
+                "to update base station data - - - - - - - - - - press 7\n" +
+                "to update customer data - - - - - - - - - - - - press 8\n");
         }
 
         /// <summary>
