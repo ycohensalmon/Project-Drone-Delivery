@@ -107,7 +107,6 @@ namespace DalObject
             Drone drone = GetDroneById(droneId);
             Station station = GetStationById(stationId);
             DataSource.Stations.Remove(station);
-            DataSource.Drones.Remove(drone);
 
             DataSource.DroneCharges.Add(new DroneCharge
             {
@@ -115,10 +114,8 @@ namespace DalObject
                 StationId = station.Id
             });
             station.ChargeSolts--;
-            //drone.Status = DroneStatuses.Maintenance;
 
             DataSource.Stations.Add(station);
-            DataSource.Drones.Add(drone);
         }
         /// <summary>
         /// release a drone from charge
