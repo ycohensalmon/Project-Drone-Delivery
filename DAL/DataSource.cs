@@ -125,11 +125,13 @@ namespace DalObject
             DateTime newDate = DateTime.Now;
             for (int i = 0; i < 10; i++)
             {
+                int senderID = Config.rand.Next(Customers[Customers.Count].Id - 1);
+
                 Parcels.Add(new Parcel
                 {
                     Id = Config.SerialNum++,
-                    SenderId = Config.rand.Next(10000,99999),
-                    TargetId = Config.rand.Next(10000, 99999),
+                    SenderId = senderID,
+                    TargetId = GetTargetId(senderID),
                     DroneId = 0,
                     Requested = DateTime.Now,
                     Scheduled = DateTime.MinValue,
@@ -139,6 +141,15 @@ namespace DalObject
                     Priorities = (Priority)Config.rand.Next(3)
                 });
             }
+        }
+
+        private static int GetTargetId(int senderID)
+        {
+            int targetID = Config.rand.Next(Customers[Customers.Count].Id - 1);
+            while (targetID == senderID)
+                targetID = Config.rand.Next(Customers[Customers.Count].Id - 1);
+
+            return targetID;
         }
 
         //bonus methods to display sexasegimal coordination and find distance between ocations
