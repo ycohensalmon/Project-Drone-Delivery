@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using IDAL;
 using IDAL.DO;
 
-
 namespace IBL
 {
     namespace BO
@@ -52,11 +51,12 @@ namespace IBL
                 }
             }
 
-            public void NewDrone(Drone x, int numStation)
+            public void NewDroneInList(DroneInList x, int numStation)
             {
                 x.Battery = rand.Next(20,40);
                 x.Battery += rand.NextDouble();
                 x.Status = (DroneStatuses)1;
+                x.NumParcel = 0;
                 x.Location = new Location
                 {
                     Latitude = dalObj.GetStationById(numStation).Latitude,
@@ -76,13 +76,40 @@ namespace IBL
 
             public void NewParcel(Parcel x, int senderID, int receiveID)
             {
-                
+                dalObj.NewParcel(new IDAL.DO.Parcel
+                {
+                    Id = DalObject.DataSource.SerialNum++,
+                    SenderId = senderID,
+                    TargetId = receiveID,
+                    DroneId = 0,
+                    Requested = DateTime.Now,
+                    Scheduled = DateTime.MinValue,
+                    PickedUp = DateTime.MinValue,
+                    Delivered = DateTime.MinValue,
+                    Weight = (IDAL.DO.WeightCategory)x.Weight,
+                    Priorities = (IDAL.DO.Priority)x.Priorities
+                });
+            }
 
+            public void connectDroneToParcel(int droneId)
+            {
+                int Priority = 3;
+                IEnumerable<IDAL.DO.Parcel> tempList;
+                do
+                {
+                    tempList = dalObj.GetParcels();
+                    Priority--;
+                    tempList = tempList.Where(tempList => tempList.Priorities == (IDAL.DO.Priority)Priority);
+                    if (tempList.Any())
+                    {
+                        
+                    }
+                } while (!tempList.Any() || Priority == 0);
             }
 
             public void sendDroneToCharge(int droneID, int baseStatiunID)
             {
-                throw new NotImplementedException();
+
             }
         }
     }
