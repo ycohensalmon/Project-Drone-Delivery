@@ -22,7 +22,18 @@ namespace DalObject
         /// add new station to the list
         /// </summary>
         /// <param name="x">the paraneter to adding</param>
-        public void NewStation(Station x) => DataSource.Stations.Add(x);
+        public void NewStation(Station x)
+        {
+            foreach (var item in collection)
+            {
+
+            }
+            if (x.Id == )
+            {
+
+            }
+            DataSource.Stations.Add(x);
+        }
 
         /// <summary>
         /// adds a drone to the list of Drones
@@ -213,10 +224,13 @@ namespace DalObject
                                                  // other //
         //-----------------------------------------------------------------------------------------------------------//
 
-        public double[] PowerConsumptionByDrone(double Available, double LightParcel, double MediumParcel, double HeavyParcel, double LoadingRate)
+        public IEnumerable<double> PowerConsumptionByDrone()
         {
-            double[] PowerConsumption = new double[5] { Available, LightParcel, MediumParcel, HeavyParcel, LoadingRate };
-            return PowerConsumption;
+            yield return DataSource.Config.Available;
+            yield return DataSource.Config.LightParcel;
+            yield return DataSource.Config.MediumParcel;
+            yield return DataSource.Config.HeavyParcel;
+            yield return DataSource.Config.LoadingRate;
         }
     }
 }

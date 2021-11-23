@@ -13,10 +13,11 @@ namespace IBL
         public partial class BL : IBL
         {
             Random rand = new Random();
-            public IDal dalObj = new DalObject.DalObject();
+            public IDal dalObj;
             public List<DroneInList> drones = new();
             public BL()
             {
+                dalObj = new DalObject.DalObject();
                 IEnumerable<IDAL.DO.Drone> drone = dalObj.GetDrones();
                 IEnumerable<IDAL.DO.Station> station = dalObj.GetStations();
                 IEnumerable<IDAL.DO.Customer> customer = dalObj.GetCustomers();

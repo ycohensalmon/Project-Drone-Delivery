@@ -15,15 +15,15 @@ namespace DalObject
         internal static List<Parcel> Parcels = new();
         internal static List<DroneCharge> DroneCharges = new();
 
+        public static int SerialNum = 1000;
         internal class Config
         {
             internal static Random rand = new Random();
-            internal static int SerialNum = 1000;
-            public double Available { get; set; }
-            public double LightParcel { get; set; }
-            public double MediumParcel { get; set; }
-            public double HeavyParcel { get; set; }
-            public double LoadingRate { get; set; } // % per hour
+            public static double Available { get; set; }
+            public static double LightParcel { get; set; }
+            public static double MediumParcel { get; set; }
+            public static double HeavyParcel { get; set; }
+            public static double LoadingRate { get; set; } // % per hour
         }
 
         internal static void Initialize()
@@ -129,7 +129,7 @@ namespace DalObject
 
                 Parcels.Add(new Parcel
                 {
-                    Id = Config.SerialNum++,
+                    Id = SerialNum++,
                     SenderId = senderID,
                     TargetId = GetTargetId(senderID),
                     DroneId = 0,

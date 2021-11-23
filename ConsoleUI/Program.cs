@@ -289,8 +289,8 @@ namespace ConsoleUI
             {
                 Id = id,
                 Name = name,
-                Longitude = DalObject.DataSource.Sexagesimal(longitude, 'N'),
-                Lattitude = DalObject.DataSource.Sexagesimal(lattitude, 'E'),
+                Latitude = lattitude,
+                Longitude = longitude,
                 ChargeSolts = chargeSlots
             };
 
@@ -323,8 +323,8 @@ namespace ConsoleUI
                 Id = id,
                 Name = name,
                 Phone = phone,
-                Longitude = DalObject.DataSource.Sexagesimal(longitude, 'N'),
-                Latittude = DalObject.DataSource.Sexagesimal(lattitude, 'E')
+                Latitude = lattitude,
+                Longitude = longitude
             };
 
             dalObject.NewCostumer(temp);
@@ -336,22 +336,18 @@ namespace ConsoleUI
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void AddDrone(IDal dalObject)
         {
-            int id, maxWeight;
-            string model;
             Console.WriteLine("add Id: (4 digits)\n");
-            int.TryParse(Console.ReadLine(), out id);
+            int.TryParse(Console.ReadLine(), out int id);
             Console.WriteLine("add model:\n");
-            model = Console.ReadLine();
+            string model = Console.ReadLine();
             Console.WriteLine("chose the weightCategory\n");
-            int.TryParse(Console.ReadLine(), out maxWeight);
+            int.TryParse(Console.ReadLine(), out int maxWeight);
 
             Drone temp =new Drone
             {
                 Id = id,
                 Model = model,
-                MaxWeight = (WeightCategory)maxWeight,
-                //Status = DroneStatuses.Available,
-                //Battery = 100
+                MaxWeight = (WeightCategory)maxWeight
             };
 
             dalObject.NewDrone(temp);
@@ -363,10 +359,8 @@ namespace ConsoleUI
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void AddParcel(IDal dalObject)
         {
-            int id, priorities, weight;
+            int priorities, weight;
 
-            Console.WriteLine("add Id: (4 digits)\n");
-            int.TryParse(Console.ReadLine(), out id);
             Console.WriteLine("choise the priority, for Normal press 0, Fast press 1, Emergency press 2\n");
             int.TryParse(Console.ReadLine(), out priorities);
             Console.WriteLine("chose the weight of the parcel, for Light press 0, Medium press 1, Heavy press 2\n");
@@ -375,7 +369,7 @@ namespace ConsoleUI
             Random rand = new Random();
             Parcel temp = new Parcel
             {
-                Id = id,
+                Id = DalObject.DataSource.SerialNum++,
                 DroneId = 0,
                 SenderId =  rand.Next(10000, 99999),
                 TargetId = rand.Next(10000, 99999),
