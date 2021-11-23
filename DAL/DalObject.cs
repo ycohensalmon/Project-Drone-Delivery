@@ -15,7 +15,7 @@ namespace DalObject
         public DalObject() => DataSource.Initialize();
 
         //-----------------------------------------------------------------------------------------------------------//
-                                                      // news functions //
+        // news functions //
         //-----------------------------------------------------------------------------------------------------------//
 
         /// <summary>
@@ -24,28 +24,42 @@ namespace DalObject
         /// <param name="x">the paraneter to adding</param>
         public void NewStation(Station x)
         {
-            foreach (var item in collection)
+            foreach (var item in GetStations())
             {
-
-            }
-            if (x.Id == )
-            {
-
+                if (item.Id == x.Id)
+                    throw new IdAlreadyExistException(item.Id,"Station");
             }
             DataSource.Stations.Add(x);
+
         }
 
         /// <summary>
         /// adds a drone to the list of Drones
         /// </summary>
         /// <param name="x">the paraneter to adding</param>
-        public void NewDrone(Drone x) => DataSource.Drones.Add(x);
+        public void NewDrone(Drone x)
+        {
+            foreach (var item in GetDrones())
+            {
+                if (item.Id == x.Id)
+                    throw new IdAlreadyExistException(item.Id, "Drone");
+            }
+            DataSource.Drones.Add(x);
+        }
 
         /// <summary>
         /// adds a customer to list of Customers
         /// </summary>
         /// <param name="x">the paraneter to adding</param>
-        public void NewCostumer(Customer x) => DataSource.Customers.Add(x);
+        public void NewCostumer(Customer x)
+        {
+            foreach (var item in GetCustomers())
+            {
+                if (item.Id == x.Id)
+                    throw new IdAlreadyExistException(item.Id, "Customer");
+            }
+            DataSource.Customers.Add(x);
+        }
 
         /// <summary>
         /// adds a parcel to the list of Parcels
@@ -55,7 +69,7 @@ namespace DalObject
 
 
         //-----------------------------------------------------------------------------------------------------------//
-                                                    // uptades fonctions //
+        // uptades fonctions //
         //-----------------------------------------------------------------------------------------------------------//
 
         /// <summary>
@@ -65,6 +79,18 @@ namespace DalObject
         /// <param name="parcelId">the id of the drone</param>
         public void ConnectDroneToParcel(int droneId, int parcelId)
         {
+            bool isTrue = false;
+            foreach (var item in GetDrones())
+            {
+                if (item.Id == droneId)
+                {
+                    isTrue = true;
+                    break;
+                }
+            }
+            if (isTrue == false)
+                throw new IdNotFoundException(droneId, "Drone");
+
             Parcel parcel = GetParcelById(parcelId);
             DataSource.Parcels.Remove(parcel);
 
@@ -85,7 +111,7 @@ namespace DalObject
             DataSource.Drones.Remove(drone);
 
             parcel.PickedUp = DateTime.Now;
-           // drone.Status = DroneStatuses.Delivery;
+            // drone.Status = DroneStatuses.Delivery;
 
             DataSource.Drones.Add(drone);
             DataSource.Parcels.Add(parcel);
@@ -154,7 +180,7 @@ namespace DalObject
 
 
         //-----------------------------------------------------------------------------------------------------------//
-                                                      // Get List //
+        // Get List //
         //-----------------------------------------------------------------------------------------------------------//
 
         /// <summary>
@@ -162,7 +188,7 @@ namespace DalObject
         /// </summary>
         /// <returns>the lists of the Drones </returns>
         public IEnumerable<Drone> GetDrones() => DataSource.Drones;
-        
+
         /// <summary>
         /// Get the Drones charge
         /// </summary>
@@ -189,7 +215,7 @@ namespace DalObject
 
 
         //-----------------------------------------------------------------------------------------------------------//
-                                                  // get objects by id //
+        // get objects by id //
         //-----------------------------------------------------------------------------------------------------------//
 
         /// <summary>
@@ -197,33 +223,56 @@ namespace DalObject
         /// </summary>
         /// <param name="id">the id of the Stations</param>
         /// <returns></returns>
-        public Station GetStationById(int id) => DataSource.Stations.Find(x => x.Id == id);
+        public Station GetStationById(int id)
+        {
+            Station station = DataSource.Stations.Find(x => x.Id == id);
+            if (station.Id != id)
+                throw new IdNotFoundException(id, "Station");
+            return station;
+        }
 
         /// <summary>
         /// returns the object Customer that matches the id
         /// </summary>
         /// <param name="id">the id of the drone</param>
         /// <returns>x</returns>
-        public Drone GetDroneById(int id) => DataSource.Drones.Find(x => x.Id == id);
+        public Drone GetDroneById(int id)
+        {
+            Drone drone = DataSource.Drones.Find(x => x.Id == id);
+            if (drone.Id != id)
+                throw new IdNotFoundException(id, "Drone");
+            return drone;
+        }
 
         /// <summary>
         /// returns the object Customer that matches the id
         /// </summary>
         /// <param name="id">the id of the Customer</param>
         /// <returns></returns>
-        public Customer GetCustomerById(int id) => DataSource.Customers.Find(x => x.Id == id);
+        public Customer GetCustomerById(int id)
+        {
+            Customer customer = DataSource.Customers.Find(x => x.Id == id);
+            if (customer.Id != id)
+                throw new IdNotFoundException(id, "Customer");
+            return customer;
+        }
 
         /// <summary>
         /// returns the object Parcels that matches the id
         /// </summary>
         /// <param name="id">the id of the Parcels</param>
         /// <returns></returns>
-        public Parcel GetParcelById(int id) => DataSource.Parcels.Find(x => x.Id == id);
+        public Parcel GetParcelById(int id)
+        {
+            Parcel parcel = DataSource.Parcels.Find(x => x.Id == id);
+            if (parcel.Id != id)
+                throw new IdNotFoundException(id, "parcel");
+            return parcel;
+        }
 
         //-----------------------------------------------------------------------------------------------------------//
-                                                 // other //
+        // other //
         //-----------------------------------------------------------------------------------------------------------//
-
         public IEnumerable<double> PowerConsumptionByDrone()
         {
             yield return DataSource.Config.Available;

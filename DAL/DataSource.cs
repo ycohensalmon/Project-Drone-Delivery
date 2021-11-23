@@ -125,8 +125,7 @@ namespace DalObject
             DateTime newDate = DateTime.Now;
             for (int i = 0; i < 10; i++)
             {
-                int senderID = Config.rand.Next(Customers[Customers.Count].Id - 1);
-
+                int senderID = Customers[Config.rand.Next(0, Customers.Count)].Id;
                 Parcels.Add(new Parcel
                 {
                     Id = SerialNum++,
@@ -145,9 +144,9 @@ namespace DalObject
 
         private static int GetTargetId(int senderID)
         {
-            int targetID = Config.rand.Next(Customers[Customers.Count].Id - 1);
+            int targetID = Customers[Config.rand.Next(0, Customers.Count)].Id;
             while (targetID == senderID)
-                targetID = Config.rand.Next(Customers[Customers.Count].Id - 1);
+                targetID = Customers[Config.rand.Next(0, Customers.Count)].Id;
 
             return targetID;
         }

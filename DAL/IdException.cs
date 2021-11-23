@@ -5,26 +5,50 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace IDAL
 {
-    public class IdException : Exception
+    namespace DO
     {
-        public int Id;
-
-        public IdException()
+        [Serializable]
+        internal class IdAlreadyExistException : Exception
         {
+            private int id;
+
+            public IdAlreadyExistException(int id, string message) : base(message)
+            {
+                this.id = id;
+            }
+
+            public override string ToString()
+            {
+                return $"ERROR: {Message} with id - {id} already exsist !";
+            }
         }
 
-        public IdException(string message) : base(message)
+        [Serializable]
+        internal class IdNotFoundException : Exception
         {
-        }
+            private int id;
+            public IdNotFoundException()
+            {
+            }
 
-        public IdException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
+            public IdNotFoundException(int id, string message) : base(message)
+            {
+            }
 
-        protected IdException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
+            public IdNotFoundException(string message, Exception innerException) : base(message, innerException)
+            {
+            }
+
+            protected IdNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
+            {
+            }
+
+            public override string ToString()
+            {
+                return $"ERROR: {Message} with id - {id} not found !";
+            }
         }
     }
 }

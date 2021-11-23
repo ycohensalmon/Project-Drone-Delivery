@@ -4,6 +4,7 @@ using System.Text;
 using System.Collections.Generic;
 using IDAL.DO;
 using IDAL;
+using System.Runtime.Serialization;
 
 namespace ConsoleUI
 {
@@ -50,7 +51,7 @@ namespace ConsoleUI
         }
 
         //-----------------------------------------------------------------------------------------------------------//
-                                                         // Print menu //
+        // Print menu //
         //-----------------------------------------------------------------------------------------------------------//
         private static void PrintEnterToTheProject()
         {
@@ -65,6 +66,14 @@ namespace ConsoleUI
             Console.WriteLine("Created by Elhanan and Yossef\n\n");
             Console.ResetColor();
         }
+
+        private static void PrintException(Exception e)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(e.ToString());
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
 
         /// <summary>
         /// Print main menu to user
@@ -121,7 +130,7 @@ namespace ConsoleUI
         /// </summary>
         private static void PrintMenu4()
         {
-            
+
             Console.WriteLine(
                 "Displays a list of base stations - - - - - - - - - - - - - - - - - - - - - press 1\n" +
                 "Displays the list of drones- - - - - - - - - - - - - - - - - - - - - - - - press 2\n" +
@@ -142,7 +151,7 @@ namespace ConsoleUI
         }
 
         //-----------------------------------------------------------------------------------------------------------//
-                                                           // Switchs //
+        // Switchs //
         //-----------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// options of switch1 
@@ -263,7 +272,7 @@ namespace ConsoleUI
 
 
         //-----------------------------------------------------------------------------------------------------------//
-                                                // switch 1 - Adds fonctions //
+        // switch 1 - Adds fonctions //
         //-----------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// add stetion to the list 
@@ -293,8 +302,14 @@ namespace ConsoleUI
                 Longitude = longitude,
                 ChargeSolts = chargeSlots
             };
-
-            dalObject.NewStation(temp);
+            try
+            {
+                dalObject.NewStation(temp);
+            }
+            catch (Exception e)
+            {
+                PrintException(e);
+            }
         }
 
         /// <summary>
@@ -327,7 +342,14 @@ namespace ConsoleUI
                 Longitude = longitude
             };
 
-            dalObject.NewCostumer(temp);
+            try
+            {
+                dalObject.NewCostumer(temp);
+            }
+            catch (Exception e)
+            {
+                PrintException(e);
+            }
         }
 
         /// <summary>
@@ -338,21 +360,27 @@ namespace ConsoleUI
         {
             Console.WriteLine("add Id: (4 digits)\n");
             int.TryParse(Console.ReadLine(), out int id);
-            Console.WriteLine("add model:\n");
+            Console.WriteLine("add mùodel:\n");
             string model = Console.ReadLine();
             Console.WriteLine("chose the weightCategory\n");
             int.TryParse(Console.ReadLine(), out int maxWeight);
 
-            Drone temp =new Drone
+            Drone temp = new Drone
             {
                 Id = id,
                 Model = model,
                 MaxWeight = (WeightCategory)maxWeight
             };
 
-            dalObject.NewDrone(temp);
+            try
+            {
+                dalObject.NewDrone(temp);
+            }
+            catch (Exception e)
+            {
+                PrintException(e);
+            }
         }
-
         /// <summary>
         /// add parcel to the list
         /// </summary>
@@ -371,7 +399,7 @@ namespace ConsoleUI
             {
                 Id = DalObject.DataSource.SerialNum++,
                 DroneId = 0,
-                SenderId =  rand.Next(10000, 99999),
+                SenderId = rand.Next(10000, 99999),
                 TargetId = rand.Next(10000, 99999),
                 Requested = DateTime.Now,
                 Scheduled = DateTime.MinValue,
@@ -385,7 +413,7 @@ namespace ConsoleUI
         }
 
         //-----------------------------------------------------------------------------------------------------------//
-                                                // switch 2 - Updates fonctions //
+        // switch 2 - Updates fonctions //
         //-----------------------------------------------------------------------------------------------------------//
 
         /// <summary>
@@ -394,16 +422,15 @@ namespace ConsoleUI
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void AssociateDroneToParcel(IDal dalObject)
         {
-            int parcelId, droneId;
             IEnumerable<Parcel> temp = dalObject.GetParcels();
-            foreach (Parcel x in temp) { if (x.DroneId == 0){ Console.WriteLine(x); } }
+            foreach (Parcel x in temp) { if (x.DroneId == 0) { Console.WriteLine(x); } }
             Console.WriteLine("Enter the Id of the parcel");
-            int.TryParse(Console.ReadLine(), out parcelId);
+            int.TryParse(Console.ReadLine(), out int parcelId);
 
             IEnumerable<Drone> temp2 = dalObject.GetDrones();
             //foreach (Drone y in temp2) { if (y.Status == DroneStatuses.Available) { Console.WriteLine(y); } }
             Console.WriteLine("Enter the Id of the drone");
-            int.TryParse(Console.ReadLine(), out droneId);
+            int.TryParse(Console.ReadLine(), out int droneId);
 
             dalObject.ConnectDroneToParcel(droneId, parcelId);
         }
@@ -477,7 +504,7 @@ namespace ConsoleUI
         }
 
         //-----------------------------------------------------------------------------------------------------------//
-                                   // switch 3 - print index in the list (by id) //
+        // switch 3 - print index in the list (by id) //
         //-----------------------------------------------------------------------------------------------------------//
 
         /// <summary>
@@ -529,7 +556,7 @@ namespace ConsoleUI
         }
 
         //-----------------------------------------------------------------------------------------------------------//
-                                             // switch 4 - prints fonction //
+        // switch 4 - prints fonction //
         //-----------------------------------------------------------------------------------------------------------//
 
         /// <summary>
