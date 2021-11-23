@@ -359,15 +359,15 @@ namespace ConsoleUI_BL
             int.TryParse(Console.ReadLine(), out int maxWeight);
             Console.WriteLine("Select a station number for initial charging\n");
             int.TryParse(Console.ReadLine(), out int numStation);
-
-            Drone temp = new Drone
+            
+            DroneInList temp = new DroneInList
             {
                 Id = id,
                 Model = model,
                 MaxWeight = (WeightCategory)maxWeight-1,
             };
 
-            bl.NewDrone(temp, numStation);
+            bl.NewDroneInList(temp, numStation);
         }
 
         /// <summary>
