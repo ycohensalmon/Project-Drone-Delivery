@@ -63,8 +63,6 @@ namespace IBL
                     Longitude = dalObj.GetStationById(numStation).Longitude
                 };
 
-                //do we need update the Drone charge list naw?
-
                 drones.Add(x);
 
                 dalObj.NewDrone(new IDAL.DO.Drone
@@ -73,11 +71,13 @@ namespace IBL
                     Model = x.Model,
                     MaxWeight = (IDAL.DO.WeightCategory)x.MaxWeight
                 });                                                                        
+                dalObj.SendDroneToBaseCharge(x.Id, numStation);
             }
 
             public void NewParcel(Parcel x, int senderID, int receiveID)
             {
-                throw new NotImplementedException();
+                
+
             }
 
             public void sendDroneToCharge(int droneID, int baseStatiunID)
