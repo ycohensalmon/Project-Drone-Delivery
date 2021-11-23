@@ -406,22 +406,16 @@ namespace ConsoleUI_BL
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void AssociateDroneToParcel(IBL.IBL bl)
         {
-            int droneId;
             Console.WriteLine("Enter the Id of the drone\n");
-            int.TryParse(Console.ReadLine(), out droneId);
+            int.TryParse(Console.ReadLine(), out int droneId);
 
             //int parcelId, droneId;
             //List<Parcel> temp = dalObject.GetParcels();
             //foreach (Parcel x in temp) { if (x.DroneId == 0) { Console.WriteLine(x); } }
-            //Console.WriteLine("Enter the Id of the parcel");
-            //int.TryParse(Console.ReadLine(), out parcelId);
-
+         
             //List<Drone> temp2 = dalObject.GetDrones();
             //foreach (Drone y in temp2) { if (y.Status == DroneStatuses.Available) { Console.WriteLine(y); } }
-            //Console.WriteLine("Enter the Id of the drone");
-            //int.TryParse(Console.ReadLine(), out droneId);
 
-            //dalObject.ConnectDroneToParcel(droneId, parcelId);
             bl.connectDroneToParcel(droneId);
         }
 

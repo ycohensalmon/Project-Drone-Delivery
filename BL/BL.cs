@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using IDAL;
 using IDAL.DO;
 
-
 namespace IBL
 {
     namespace BO
@@ -90,6 +89,22 @@ namespace IBL
                     Weight = (IDAL.DO.WeightCategory)x.Weight,
                     Priorities = (IDAL.DO.Priority)x.Priorities
                 });
+            }
+
+            public void connectDroneToParcel(int droneId)
+            {
+                int Priority = 3;
+                IEnumerable<IDAL.DO.Parcel> tempList;
+                do
+                {
+                    tempList = dalObj.GetParcels();
+                    Priority--;
+                    tempList = tempList.Where(tempList => tempList.Priorities == (IDAL.DO.Priority)Priority);
+                    if (tempList.Any())
+                    {
+                        
+                    }
+                } while (!tempList.Any() || Priority == 0);
             }
 
             public void sendDroneToCharge(int droneID, int baseStatiunID)
