@@ -10,11 +10,8 @@ namespace IBL
     {
         public class Location
         {
-            private double latitude;
-            private double longitude;
-
-            public double Latitude { get => latitude; set => latitude = value; }
-            public double Longitude { get => longitude; set => longitude = value; }
+            public double Latitude { get; set; }
+            public double Longitude { get; set; }
 
             public override string ToString() => $"Latitude: {Distance.Sexagesimal(Latitude, 'N')}, Longitude:{Distance.Sexagesimal(Longitude, 'E')}";
         }

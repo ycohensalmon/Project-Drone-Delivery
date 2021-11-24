@@ -20,7 +20,7 @@ namespace IBL
                 var d = R * c; // Distance in km
                 return d;
             }
-            public static double Deg2rad(double deg) => deg * (Math.PI / 180);
+            static double Deg2rad(double deg) => deg * (Math.PI / 180);
 
             /// <summary>
             /// finds sexasegiamal value of latitude

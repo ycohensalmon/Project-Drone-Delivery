@@ -10,15 +10,12 @@ namespace IBL
     {
         public class Station
         {
-            private int id;
-            private string name;
-            private Location location;
             private int chargeSolts;
             private List<DroneCharge> droneCharges = new();
 
-            public int Id { get => id; set => id = value; }
-            public string Name { get => name; set => name = value; }
-            public Location Location { get => location; set => location = value; }
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public Location Location { get; set; }
             public int ChargeSolts { get => chargeSolts; set => chargeSolts = value; }
             public List<DroneCharge> DroneCharges { get => droneCharges; set => droneCharges = value; }
             public override string ToString()

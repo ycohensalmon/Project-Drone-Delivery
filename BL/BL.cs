@@ -93,16 +93,35 @@ namespace IBL
 
             public void connectDroneToParcel(int droneId)
             {
+                IDAL.DO.Drone drone = dalObj.GetDroneById(droneId);
                 int Priority = 3;
                 IEnumerable<IDAL.DO.Parcel> tempList;
                 do
                 {
                     tempList = dalObj.GetParcels();
                     Priority--;
-                    tempList = tempList.Where(tempList => tempList.Priorities == (IDAL.DO.Priority)Priority);
+                    tempList = tempList.Where(
+                        tempList => tempList.Priorities == (IDAL.DO.Priority)Priority
+                        && tempList.Scheduled == DateTime.MinValue);
                     if (tempList.Any())
                     {
-                        
+                        int carryWeight = (int)drone.MaxWeight;
+                        do
+                        {
+                            tempList = tempList.Where(
+                                tempList => tempList.Weight == (IDAL.DO.WeightCategory)carryWeight);
+                            if (tempList.Any())
+                            {
+                                double min;
+                                IDAL.DO.Customer temp;
+                                foreach (var item in tempList)
+                                {
+                                    temp = dalObj.GetCustomerById(item.SenderId);
+                                    min = Distance.GetDistanceFromLatLonInKm(temp.Latitude, temp.Longitude, drone.)
+                                } 
+                            }
+                            carryWeight--; //continue
+                        } while (!tempList.Any()); 
                     }
                 } while (!tempList.Any() || Priority == 0);
             }
