@@ -19,11 +19,11 @@ namespace DalObject
         internal class Config
         {
             internal static Random rand = new Random();
-            public static double Available { get; set; }
-            public static double LightParcel { get; set; }
-            public static double MediumParcel { get; set; }
-            public static double HeavyParcel { get; set; }
-            public static double LoadingRate { get; set; } // % per hour
+            public static double Available { get => 0.2; }    // 0.2% per hour
+            public static double LightParcel { get => 1.0; }  // 1%   per hour
+            public static double MediumParcel { get => 1.5; } // 1.5% per hour
+            public static double HeavyParcel { get => 2; }    // 2%   per hour
+            public static double LoadingRate { get => 40; }   // 40%  per hour
         }
 
         internal static void Initialize()

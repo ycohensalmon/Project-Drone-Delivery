@@ -24,27 +24,34 @@ namespace ConsoleUI
 
                 PrintFirstMenu();
                 int.TryParse(Console.ReadLine(), out choises);
-
-                switch (choises)
+                try
                 {
-                    case 1:
-                        PrintMenu1();
-                        Switch1(dalObject);
-                        break;
-                    case 2:
-                        PrintMenu2();
-                        Switch2(dalObject);
-                        break;
-                    case 3:
-                        PrintMenu3();
-                        Switch3(dalObject);
-                        break;
-                    case 4:
-                        PrintMenu4();
-                        Switch4(dalObject);
-                        break;
-                    default:
-                        break;
+                    switch (choises)
+                    {
+                        case 1:
+                            PrintMenu1();
+                            Switch1(dalObject);
+                            break;
+                        case 2:
+                            PrintMenu2();
+                            Switch2(dalObject);
+                            break;
+                        case 3:
+                            PrintMenu3();
+                            Switch3(dalObject);
+                            break;
+                        case 4:
+                            PrintMenu4();
+                            Switch4(dalObject);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                catch (Exception e)
+                {
+
+                    PrintException(e);
                 }
 
             } while (choises != 5);
@@ -218,6 +225,7 @@ namespace ConsoleUI
         {
             int choises;
             int.TryParse(Console.ReadLine(), out choises);
+
             switch (choises)
             {
                 case 1:
@@ -245,6 +253,7 @@ namespace ConsoleUI
         {
             int choises;
             int.TryParse(Console.ReadLine(), out choises);
+
             switch (choises)
             {
                 case 1:
@@ -302,14 +311,7 @@ namespace ConsoleUI
                 Longitude = longitude,
                 ChargeSolts = chargeSlots
             };
-            try
-            {
-                dalObject.NewStation(temp);
-            }
-            catch (Exception e)
-            {
-                PrintException(e);
-            }
+            dalObject.NewStation(temp);
         }
 
         /// <summary>
@@ -342,14 +344,7 @@ namespace ConsoleUI
                 Longitude = longitude
             };
 
-            try
-            {
-                dalObject.NewCostumer(temp);
-            }
-            catch (Exception e)
-            {
-                PrintException(e);
-            }
+            dalObject.NewCostumer(temp);
         }
 
         /// <summary>
@@ -372,14 +367,7 @@ namespace ConsoleUI
                 MaxWeight = (WeightCategory)maxWeight
             };
 
-            try
-            {
-                dalObject.NewDrone(temp);
-            }
-            catch (Exception e)
-            {
-                PrintException(e);
-            }
+            dalObject.NewDrone(temp);
         }
         /// <summary>
         /// add parcel to the list
@@ -499,8 +487,6 @@ namespace ConsoleUI
             int.TryParse(Console.ReadLine(), out droneId);
 
             dalObject.ReleaseDroneFromCharging(droneId);
-
-
         }
 
         //-----------------------------------------------------------------------------------------------------------//
@@ -516,6 +502,7 @@ namespace ConsoleUI
             int stationId;
             Console.WriteLine("enter the id of the station");
             int.TryParse(Console.ReadLine(), out stationId);
+
             Console.WriteLine(dalObject.GetStationById(stationId));
         }
 
@@ -528,6 +515,7 @@ namespace ConsoleUI
             int droneId;
             Console.WriteLine("enter the id of the drone");
             int.TryParse(Console.ReadLine(), out droneId);
+
             Console.WriteLine(dalObject.GetDroneById(droneId));
         }
 
@@ -540,6 +528,7 @@ namespace ConsoleUI
             int customerId;
             Console.WriteLine("enter the id of the customer");
             int.TryParse(Console.ReadLine(), out customerId);
+
             Console.WriteLine(dalObject.GetCustomerById(customerId));
         }
 
@@ -552,6 +541,7 @@ namespace ConsoleUI
             int parcelId;
             Console.WriteLine("enter the id of the parcel");
             int.TryParse(Console.ReadLine(), out parcelId);
+
             Console.WriteLine(dalObject.GetParcelById(parcelId));
         }
 

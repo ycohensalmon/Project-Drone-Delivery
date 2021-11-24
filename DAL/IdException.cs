@@ -29,20 +29,15 @@ namespace IDAL
         internal class IdNotFoundException : Exception
         {
             private int id;
-            public IdNotFoundException()
+
+            public IdNotFoundException(int id)
             {
+                this.id = id;
             }
 
             public IdNotFoundException(int id, string message) : base(message)
             {
-            }
-
-            public IdNotFoundException(string message, Exception innerException) : base(message, innerException)
-            {
-            }
-
-            protected IdNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
-            {
+                this.id = id;
             }
 
             public override string ToString()
@@ -50,5 +45,30 @@ namespace IDAL
                 return $"ERROR: {Message} with id - {id} not found !";
             }
         }
+
+        [Serializable]
+        internal class IdNotValidException : Exception
+        {
+            private int id;
+            private int digits;
+
+            public IdNotValidException(int id, int digits)
+            {
+                this.digits = digits;
+                this.id = id;
+            }
+
+            public IdNotValidException(int id, int digits, string message) : base(message)
+            {
+                this.digits = digits;
+                this.id = id;
+            }
+
+            public override string ToString()
+            {
+                return $"ERROR: {Message} with ID - {id} is not valid, the ID must be with {digits} digits";
+            }
+        }
+
     }
 }

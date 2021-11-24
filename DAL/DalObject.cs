@@ -24,10 +24,13 @@ namespace DalObject
         /// <param name="x">the paraneter to adding</param>
         public void NewStation(Station x)
         {
+            if (x.Id < 1000 || x.Id > 9999)
+                throw new IdNotValidException(x.Id, 4, "Station");
+
             foreach (var item in GetStations())
             {
                 if (item.Id == x.Id)
-                    throw new IdAlreadyExistException(item.Id,"Station");
+                    throw new IdAlreadyExistException(x.Id,"Station");
             }
             DataSource.Stations.Add(x);
 
@@ -39,6 +42,9 @@ namespace DalObject
         /// <param name="x">the paraneter to adding</param>
         public void NewDrone(Drone x)
         {
+            if (x.Id < 1000 || x.Id > 9999)
+                throw new IdNotValidException(x.Id, 4, "Drone");
+
             foreach (var item in GetDrones())
             {
                 if (item.Id == x.Id)
@@ -53,6 +59,8 @@ namespace DalObject
         /// <param name="x">the paraneter to adding</param>
         public void NewCostumer(Customer x)
         {
+            if (x.Id < 1000)
+                throw new IdNotValidException(x.Id, 8, "Customer");
             foreach (var item in GetCustomers())
             {
                 if (item.Id == x.Id)
@@ -164,8 +172,11 @@ namespace DalObject
             DataSource.Drones.Remove(drone);
 
             DroneCharge droneCharge = DataSource.DroneCharges.Find(x => x.DroneId == droneId);
+            if (droneCharge.DroneId != droneId)
+                throw new IdNotFoundException(droneId, "Station charge");
+
             int stationId = droneCharge.StationId;  //?
-            Station station = GetStationById(droneId);
+            Station station = GetStationById(stationId);
             DataSource.Stations.Remove(station);
 
             station.ChargeSolts++;
