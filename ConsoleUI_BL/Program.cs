@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using IBL.BO;
 
 namespace ConsoleUI_BL
@@ -11,9 +12,8 @@ namespace ConsoleUI_BL
 
             int choises = 0;
 
-            IBL.IBL bl = new BL(); 
+            IBL.IBL bl = new BL();
 
-            DalObject.DalObject dalObject = new DalObject.DalObject();
             do
             {
                 Pause();
@@ -21,28 +21,34 @@ namespace ConsoleUI_BL
                 PrintFirstMenu();
                 int.TryParse(Console.ReadLine(), out choises);
 
-                switch (choises)
+                try
                 {
-                    case 1:
-                        PrintMenu1();
-                        Switch1(bl);
-                        break;
-                    case 2:
-                        PrintMenu2();
-                        Switch2(bl);
-                        break;
-                    case 3:
-                        PrintMenu3();
-                        Switch3(bl);
-                        break;
-                    case 4:
-                        PrintMenu4();
-                        Switch4(bl);
-                        break;
-                    default:
-                        break;
+                    switch (choises)
+                    {
+                        case 1:
+                            PrintMenu1();
+                            Switch1(bl);
+                            break;
+                        case 2:
+                            PrintMenu2();
+                            Switch2(bl);
+                            break;
+                        case 3:
+                            PrintMenu3();
+                            Switch3(bl);
+                            break;
+                        case 4:
+                            PrintMenu4();
+                            Switch4(bl);
+                            break;
+                        default:
+                            break;
+                    }
                 }
-
+                catch (Exception e)
+                {
+                    PrintException(e);
+                }
             } while (choises != 5);
         }
 
@@ -62,6 +68,14 @@ namespace ConsoleUI_BL
             Console.WriteLine("Created by Elhanan and Yossef\n\n");
             Console.ResetColor();
         }
+
+        private static void PrintException(Exception e)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(e.ToString());
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
 
         /// <summary>
         /// Print main menu to user
@@ -280,21 +294,16 @@ namespace ConsoleUI_BL
         /// <param name="dalObject">the parameter that include all the lists </param>
         private static void AddStation(IBL.IBL bl)
         {
-            Console.WriteLine("add Id: (4 digits)\n");
-            int.TryParse(Console.ReadLine(), out int id);
-            Console.WriteLine("add name:\n");
-            string name = Console.ReadLine();
-            Console.WriteLine("add longitude: (example 12.123456)\n");
-            double.TryParse(Console.ReadLine(), out double longitude);
-            Console.WriteLine("add lattitude: (example 12.123456)\n");
-            double.TryParse(Console.ReadLine(), out double lattitude);
-            Console.WriteLine("add chargeSolts:\n");
-            int.TryParse(Console.ReadLine(), out int chargeSlots);
+            int id = AddId();
+            string name = AddName();
+            double latitude = Addlatitude();
+            double longitude = AddLongitude();
+            int chargeSlots  =AddChargeSlot();
 
             Location loc = new Location
             {
-                Longitude = longitude,
-                Latitude = lattitude
+                Latitude = latitude,
+                Longitude = longitude
             };
 
             Station temp = new Station
@@ -307,31 +316,89 @@ namespace ConsoleUI_BL
             bl.NewStation(temp);
         }
 
+        private static int AddChargeSlot()
+        {
+            int chargeSlots;
+            do
+            {
+                Console.WriteLine("add chargeSolts:\n");
+                if (int.TryParse(Console.ReadLine(), out chargeSlots) == false)
+                    throw new OnlyDigitsException("ChargeSlots");
+                if (chargeSlots < 0)
+                    throw new NegetiveValueException("Charge Slots");
+            } while (chargeSlots < 0);
+
+            return chargeSlots;
+        }
+        private static double Addlatitude()
+        {
+            double latitude;
+            do
+            {
+                Console.WriteLine("add lattitude: (example 12.123456)\n");
+                if (double.TryParse(Console.ReadLine(), out latitude) == false)
+                    throw new OnlyDigitsException("Lattitude");
+                if (latitude < 0)
+                    throw new NegetiveValueException("Lattitude", 8, 12.123456);
+
+            } while (latitude < 0);
+            return latitude;
+        }
+        private static string AddName()
+        {
+            Console.WriteLine("add name:\n");
+            string name = Console.ReadLine();
+            return name;
+        }
+        private static double AddLongitude()
+        {
+            double longitude;
+            do
+            {
+                Console.WriteLine("add longitude: (example 12.123456)\n");
+                if (double.TryParse(Console.ReadLine(), out longitude) == false)
+                    throw new OnlyDigitsException("Longitude");
+                if (longitude < 0)
+                    throw new NegetiveValueException("Longitude", 8, 12.123456);
+
+            } while (longitude < 0);
+            return longitude;
+        }
+        private static int AddId()
+        {
+            int id;
+            do
+            {
+                Console.WriteLine("add Id: (4 digits)\n");
+                if (int.TryParse(Console.ReadLine(), out id) == false)
+                    throw new OnlyDigitsException("ID");
+                if (id < 0)
+                    throw new NegetiveValueException("ID", 4);
+
+            } while (id < 0);
+            return id;
+        }
+
         /// <summary>
         /// add Customer to the list
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void AddCustomer(IBL.IBL bl)
         {
-            int id, phone;
-            string name;
-            double longitude, lattitude;
+            int id = AddId();
+            string name = AddName();
 
-            Console.WriteLine("add Id:\n");
-            int.TryParse(Console.ReadLine(), out id);
-            Console.WriteLine("add name:\n");
-            name = Console.ReadLine();
+            int phone;
             Console.WriteLine("add Phone:\n");
             int.TryParse(Console.ReadLine(), out phone);
-            Console.WriteLine("add longitude: (example 12.123456)\n");
-            double.TryParse(Console.ReadLine(), out longitude);
-            Console.WriteLine("add lattitude: (example 12.123456)\n");
-            double.TryParse(Console.ReadLine(), out lattitude);
+
+            double latitude = Addlatitude();
+            double longitude = AddLongitude();
 
             Location loc = new Location
             {
-                Longitude = longitude,
-                Latitude = lattitude
+                Latitude = latitude,
+                Longitude = longitude
             };
 
             Customer temp = new Customer
@@ -359,12 +426,12 @@ namespace ConsoleUI_BL
             int.TryParse(Console.ReadLine(), out int maxWeight);
             Console.WriteLine("Select a station number for initial charging\n");
             int.TryParse(Console.ReadLine(), out int numStation);
-            
+
             DroneInList temp = new DroneInList
             {
                 Id = id,
                 Model = model,
-                MaxWeight = (WeightCategory)maxWeight-1,
+                MaxWeight = (WeightCategory)maxWeight - 1,
             };
 
             bl.NewDroneInList(temp, numStation);
@@ -412,7 +479,7 @@ namespace ConsoleUI_BL
             //int parcelId, droneId;
             //List<Parcel> temp = dalObject.GetParcels();
             //foreach (Parcel x in temp) { if (x.DroneId == 0) { Console.WriteLine(x); } }
-         
+
             //List<Drone> temp2 = dalObject.GetDrones();
             //foreach (Drone y in temp2) { if (y.Status == DroneStatuses.Available) { Console.WriteLine(y); } }
 
@@ -534,48 +601,48 @@ namespace ConsoleUI_BL
         /// returns the object Station that matches the id
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void PrintStationById(DalObject.DalObject dalObject)
+        private static void PrintStationById(IBL.IBL bl)
         {
             int stationId;
             Console.WriteLine("enter the id of the station");
             int.TryParse(Console.ReadLine(), out stationId);
-            Console.WriteLine(dalObject.GetStationById(stationId));
+            Console.WriteLine(bl.GetStationById(stationId));
         }
 
         /// <summary>
         /// returns the object drone that matches the id
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void PrintDroneById(DalObject.DalObject dalObject)
+        private static void PrintDroneById(IBL.IBL bl)
         {
             int droneId;
             Console.WriteLine("enter the id of the drone");
             int.TryParse(Console.ReadLine(), out droneId);
-            Console.WriteLine(dalObject.GetDroneById(droneId));
+            Console.WriteLine(bl.GetDroneById(droneId));
         }
 
         /// <summary>
         /// returns the object customer that matches the id
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void PrintCustomerById(DalObject.DalObject dalObject)
+        private static void PrintCustomerById(IBL.IBL bl)
         {
             int customerId;
             Console.WriteLine("enter the id of the customer");
             int.TryParse(Console.ReadLine(), out customerId);
-            Console.WriteLine(dalObject.GetCustomerById(customerId));
+            Console.WriteLine(bl.GetCustomerById(customerId));
         }
 
         /// <summary>
         /// returns the object parcel that matches the id
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void PrintParcelById(DalObject.DalObject dalObject)
+        private static void PrintParcelById(IBL.IBL bl)
         {
             int parcelId;
             Console.WriteLine("enter the id of the parcel");
             int.TryParse(Console.ReadLine(), out parcelId);
-            Console.WriteLine(dalObject.GetParcelById(parcelId));
+            Console.WriteLine(bl.GetParcelById(parcelId));
         }
 
         //-----------------------------------------------------------------------------------------------------------//
@@ -586,9 +653,9 @@ namespace ConsoleUI_BL
         /// print the list of stations
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void PrintStations(DalObject.DalObject dalObject)
+        private static void PrintStations(IBL.IBL bl)
         {
-            List<Station> temp = dalObject.GetStations();
+            List<Station> temp = bl.GetStations();
             foreach (Station y in temp) { Console.WriteLine(y); }
         }
 
@@ -596,7 +663,7 @@ namespace ConsoleUI_BL
         /// print the list of Drones
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void PrintDrones(DalObject.DalObject dalObject)
+        private static void PrintDrones(IBL.IBL bl)
         {
             List<Drone> temp = dalObject.GetDrones();
             foreach (Drone y in temp) { Console.WriteLine(y); }
@@ -606,7 +673,7 @@ namespace ConsoleUI_BL
         /// print the list of Costumers
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void PrintCostumers(DalObject.DalObject dalObject)
+        private static void PrintCostumers(IBL.IBL bl)
         {
             List<Customer> temp = dalObject.GetCustomers();
             foreach (Customer y in temp) { Console.WriteLine(y); }
@@ -616,7 +683,7 @@ namespace ConsoleUI_BL
         /// print the list of Parcels
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void PrintParcels(DalObject.DalObject dalObject)
+        private static void PrintParcels(IBL.IBL bl)
         {
             List<Parcel> temp = dalObject.GetParcels();
             foreach (Parcel y in temp) { Console.WriteLine(y); }
@@ -626,7 +693,7 @@ namespace ConsoleUI_BL
         /// print a list with all the parcels that are not associated to a drone
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void PrintParcelsWithoutDrone(DalObject.DalObject dalObject)
+        private static void PrintParcelsWithoutDrone(IBL.IBL bl)
         {
             List<Parcel> temp = dalObject.GetParcels();
             foreach (Parcel y in temp) { if (y.DroneId == 0) { Console.WriteLine(y); } }
@@ -636,7 +703,7 @@ namespace ConsoleUI_BL
         /// print an array with tyhe list of stations with empty charge slots
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void PrintStationWithChargeSolts(DalObject.DalObject dalObject)
+        private static void PrintStationWithChargeSolts(IBL.IBL bl)
         {
             List<Station> temp = dalObject.GetStations();
             foreach (Station y in temp) { if (y.ChargeSolts != 0) { Console.WriteLine(y); } }

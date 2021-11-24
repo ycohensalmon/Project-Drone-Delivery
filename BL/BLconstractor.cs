@@ -18,6 +18,14 @@ namespace IBL
             public BL()
             {
                 dalObj = new DalObject.DalObject();
+
+                IEnumerable<double> enumerable = dalObj.PowerConsumptionByDrone();
+                var Available = enumerable;
+                var LightParcel = enumerable;
+                var MediumParcel = enumerable;
+                var HeavyParcel = enumerable;
+                var LoadingRate = enumerable;
+
                 IEnumerable<IDAL.DO.Drone> drone = dalObj.GetDrones();
                 IEnumerable<IDAL.DO.Station> station = dalObj.GetStations();
                 IEnumerable<IDAL.DO.Customer> customer = dalObj.GetCustomers();
@@ -38,8 +46,6 @@ namespace IBL
                         NumParcel = GetNumParcel(statuses, tempDrone.Id, parcel)
                     });
                 }
-
-                //dalObj.PowerConsumptionByDrone()
             }
 
             private int GetNumParcel(DroneStatuses statuses, int droneId, IEnumerable<IDAL.DO.Parcel> parcel)

@@ -9,23 +9,21 @@ namespace IBL
 {
     namespace BO
     {
-        public class IdNotFoundException : Exception
+        [Serializable]
+        public class NegetiveValueException : Exception
         {
-            public IdNotFoundException()
-            {
-            }
+            public NegetiveValueException(string item)
+                : base($"ERROR: {item} must be positive.") { }
+            public NegetiveValueException(string item, int digits)
+                : base($"ERROR: {item} must be positive, The {item} must be content {digits} digits.") { }
+            public NegetiveValueException(string item, int digits, double v)
+                : base($"ERROR: {item} must be positive, The {item} must be content at least {digits} digits (example:{v})") { }
+        }
 
-            public IdNotFoundException(string message) : base(message)
-            {
-            }
-
-            public IdNotFoundException(string message, Exception innerException) : base(message, innerException)
-            {
-            }
-
-            protected IdNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
-            {
-            }
+        [Serializable]
+        public class OnlyDigitsException : Exception
+        {
+            public OnlyDigitsException(string item) : base($"ERROR: {item} must be only with digits.") { }
         }
 
     }
