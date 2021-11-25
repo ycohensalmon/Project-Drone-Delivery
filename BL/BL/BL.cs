@@ -112,7 +112,7 @@ namespace IBL
             {
                 DroneInList drone = GetDroneById(droneId);
                 if (drone.Status != DroneStatuses.Available)
-                    throw new OnlyAvailableDroneException(drone.Status);
+                    throw new StatusDroneException("connect drone to parcel",drone.Status, DroneStatuses.Available);
 
                 List<IDAL.DO.Parcel> parcels = dalObj.GetParcels().ToList();
                 parcels = parcels.Where(t => t.Scheduled == DateTime.MinValue).ToList();
@@ -147,7 +147,7 @@ namespace IBL
                         parcels.Remove(x);
                 }
                 if (parcels.Count == 0)
-                    throw new NotEnoughBatteryException(drone.Battery);
+                    throw new NotEnoughBatteryException("make a delivery",drone.Battery);
 
                 parcels.OrderBy(parcels => Distance.GetDistanceFromLatLonInKm(dalObj.GetCustomerById(parcels.SenderId).Latitude,
                     dalObj.GetCustomerById(parcels.SenderId).Longitude, drone.Location.Latitude, drone.Location.Longitude));
@@ -173,7 +173,7 @@ namespace IBL
             {
                 DroneInList drone = GetDroneById(droneId);
                 if (drone.Status != DroneStatuses.Delivery)
-                    throw new OnlyDeliveryDroneException(drone.Status);
+                    throw new StatusDroneException("collect parcel by drone", drone.Status, DroneStatuses.Delivery);
 
                 IDAL.DO.Parcel myParcel = dalObj.GetParcelById(drone.NumParcel);
                 if (myParcel.Scheduled == DateTime.MinValue || myParcel.PickedUp != DateTime.MinValue)
@@ -207,7 +207,7 @@ namespace IBL
             {
                 DroneInList drone = GetDroneById(droneId);
                 if (drone.Status != DroneStatuses.Delivery)
-                    throw new OnlyDeliveryDroneException(drone.Status);
+                    throw new StatusDroneException("delivered parcel to costumer",drone.Status, DroneStatuses.Delivery);
 
                 IDAL.DO.Parcel myParcel = dalObj.GetParcelById(drone.NumParcel);
                 if (myParcel.PickedUp == DateTime.MinValue || myParcel.Delivered == DateTime.MinValue)
@@ -244,18 +244,21 @@ namespace IBL
             public void SendDroneToCharge(int droneId)
             {
                 DroneInList drone = GetDroneById(droneId);
-                //רק רחפן פנוי יוכל להישלח לטעינה
+                if (drone.Status != DroneStatuses.Available)
+                    throw new StatusDroneException("send drone to charge", drone.Status, DroneStatuses.Available);
+
                 List<IDAL.DO.Station> station = dalObj.GetStations().ToList();
                 station.RemoveAll(s => s.ChargeSolts == 0);
-                //if station.count==0 "threw;
+                if (station.Count == 0)
+                    throw new NoChargeSlotException();
 
                 station.OrderBy(s => Distance.GetDistanceFromLatLonInKm(s.Latitude, s.Longitude, drone.Location.Latitude, drone.Location.Longitude));
 
 
                 double battryLoss = BatteryIossAvailable(drone.Location.Latitude, drone.Location.Longitude,
                     station.First().Latitude, station.First().Longitude);
-                //if (drone.Battery - battryLoss < 0)
-                //threw.....
+                if (drone.Battery - battryLoss < 0)
+                    throw new NotEnoughBatteryException("go to the base charge");
 
                 //update drone
                 drone.Battery -= battryLoss;
@@ -263,14 +266,23 @@ namespace IBL
                 drone.Location.Longitude = station.First().Longitude;
                 drone.Status = DroneStatuses.Maintenance;
 
-                //update Base charge and list of drone charge
-                dalObj.SendDroneToBaseCharge(droneId, station.First().Id);
+                try
+                {
+                    //update Base charge and list of drone charge
+                    dalObj.SendDroneToBaseCharge(droneId, station.First().Id);
+                }
+                catch (Exception ex)
+                {
+                    throw new DalException(ex);
+                }
+
             }
 
             public void ReleaseDroneFromCharging(int droneId, double timeCharge)
             {
                 DroneInList drone = GetDroneById(droneId);
-                //רק רחפן בתחזוקה יוכל להשתחרר מטעינה
+                if (drone.Status != DroneStatuses.Maintenance)
+                    throw new StatusDroneException("release drone from charging", drone.Status, DroneStatuses.Maintenance);
 
                 if (drone.Battery + timeCharge * (LoadingRate / 60) < 100) 
                     drone.Battery += timeCharge * (LoadingRate / 60);

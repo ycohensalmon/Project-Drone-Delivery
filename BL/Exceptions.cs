@@ -45,14 +45,9 @@ namespace IBL
             public NoParcelException(string message1, string message2) : base($"ERROR: there are no parcel that are {message1} and not {message2} !") { }
         }
 
-        public class OnlyAvailableDroneException : Exception
+        public class StatusDroneException : Exception
         {
-            public OnlyAvailableDroneException(DroneStatuses status) : base($"ERROR: To connect drone to parcel the drone must be available, this drone is in {status}") { }
-        }
-        
-        public class OnlyDeliveryDroneException : Exception
-        {
-            public OnlyDeliveryDroneException(DroneStatuses status) : base($"ERROR: To collect parcel by drone the drone must be in delivery, this drone is in {status}") { }
+            public StatusDroneException(string message, DroneStatuses actual, DroneStatuses mustBe) : base($"ERROR: To {message} the drone must be {mustBe}, this drone is in {actual}") { }
         }
 
         public class ParcelTooHeavyException : Exception
@@ -62,7 +57,8 @@ namespace IBL
 
         public class NotEnoughBatteryException : Exception
         {
-            public NotEnoughBatteryException(double battery) : base($"ERROR: This drone does not have enough battery to make a delivery, the charge level in this drone is {battery}.") { }
+            public NotEnoughBatteryException(string message, double battery) : base($"ERROR: This drone does not have enough battery to {message}, the charge level in this drone is {battery}.") { }
+            public NotEnoughBatteryException(string message) : base($"ERROR: This drone does not have enough battery to {message}, The drone should be taken manually from the station !!!") { }
         }
 
         public class NotConnectException : Exception
@@ -71,6 +67,12 @@ namespace IBL
                 : base($"ERROR in ctor: This drone (ID - {firstDroneID}) does not belong to parcel with ID" +
                       $" - {parcelID}, this package belongs to drone with ID - {secondeDroneID}") { }
         }
-        
+
+        public class NoChargeSlotException : Exception
+        {
+            public NoChargeSlotException() : base($"ERROR: there are no stations with available charge slot") { }
+        }
+
+
     }
 }
