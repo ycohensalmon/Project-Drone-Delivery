@@ -256,7 +256,7 @@ namespace ConsoleUI_BL
             if (newModel == false)
                 Console.WriteLine("add model:\n");
             if(newModel == true)
-                Console.WriteLine("add new model:\n");
+                Console.WriteLine("add a new model:\n");
             string model = Console.ReadLine();
             return model;
         }

@@ -9,6 +9,7 @@ namespace IBL
 {
     namespace BO
     {
+        #region in the main
         [Serializable]
         public class NegetiveValueException : Exception
         {
@@ -25,17 +26,53 @@ namespace IBL
         {
             public OnlyDigitsException(string message) : base($"ERROR: {message} must be only with digits.") { }
         }
-
+        #endregion
+        #region dal exception
         [Serializable]
         public class DalException : Exception
         {
             public DalException(Exception item) { }
         }
+        #endregion
 
         public class ItemNotFoundException : Exception
         {
             public ItemNotFoundException(int item, string message) : base($"ERROR: {message} with id - {item} not exsist") { }
         }
+
+        public class NoParcelException : Exception
+        {
+            public NoParcelException(string message1, string message2) : base($"ERROR: there are no parcel that are {message1} and not {message2} !") { }
+        }
+
+        public class StatusDroneException : Exception
+        {
+            public StatusDroneException(string message, DroneStatuses actual, DroneStatuses mustBe) : base($"ERROR: To {message} the drone must be {mustBe}, this drone is in {actual}") { }
+        }
+
+        public class ParcelTooHeavyException : Exception
+        {
+            public ParcelTooHeavyException(WeightCategory weight) : base($"ERROR: This drone can carry a maximum of a {weight} parcel , all parcels are heavier") { }
+        }
+
+        public class NotEnoughBatteryException : Exception
+        {
+            public NotEnoughBatteryException(string message, double battery) : base($"ERROR: This drone does not have enough battery to {message}, the charge level in this drone is {battery}.") { }
+            public NotEnoughBatteryException(string message) : base($"ERROR: This drone does not have enough battery to {message}, The drone should be taken manually from the station !!!") { }
+        }
+
+        public class NotConnectException : Exception
+        {
+            public NotConnectException(int firstDroneID, int secondeDroneID, int parcelID)
+                : base($"ERROR in ctor: This drone (ID - {firstDroneID}) does not belong to parcel with ID" +
+                      $" - {parcelID}, this package belongs to drone with ID - {secondeDroneID}") { }
+        }
+
+        public class NoChargeSlotException : Exception
+        {
+            public NoChargeSlotException() : base($"ERROR: there are no stations with available charge slot") { }
+        }
+
 
     }
 }
