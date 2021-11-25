@@ -23,7 +23,7 @@ namespace DalObject
             public static double LightParcel { get => 1.0; }  // 1%   per KM
             public static double MediumParcel { get => 1.5; } // 1.5% per KM
             public static double HeavyParcel { get => 2; }    // 2%   per KM
-            public static double LoadingRate { get => 40; }   // 40%  per hour
+            public static double LoadingRate { get => 60; }   // 40%  per hour
         }
 
         internal static void Initialize()

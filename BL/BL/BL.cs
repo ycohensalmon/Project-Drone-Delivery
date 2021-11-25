@@ -203,9 +203,44 @@ namespace IBL
                 }
             }
 
-            void SendDroneToCharge(int droneId)
+            public void SendDroneToCharge(int droneId)
             {
+                DroneInList drone = GetDroneById(droneId);
+                //רק רחפן פנוי יוכל להישלח לטעינה
+                List<IDAL.DO.Station> station = dalObj.GetStations().ToList();
+                station.RemoveAll(s => s.ChargeSolts == 0);
+                //if station.count==0 "threw;
 
+                station.OrderBy(s => Distance.GetDistanceFromLatLonInKm(s.Latitude, s.Longitude, drone.Location.Latitude, drone.Location.Longitude));
+
+
+                double battryLoss = BatteryIossAvailable(drone.Location.Latitude, drone.Location.Longitude,
+                    station.First().Latitude, station.First().Longitude);
+                //if (drone.Battery - battryLoss < 0)
+                //threw.....
+
+                //update drone
+                drone.Battery -= battryLoss;
+                drone.Location.Latitude = station.First().Latitude;
+                drone.Location.Longitude = station.First().Longitude;
+                drone.Status = DroneStatuses.Maintenance;
+
+                //update Base charge and list of drone charge
+                dalObj.SendDroneToBaseCharge(droneId, station.First().Id);
+            }
+
+            public void ReleaseDroneFromCharging(int droneId, double timeCharge)
+            {
+                DroneInList drone = GetDroneById(droneId);
+                //רק רחפן בתחזוקה יוכל להשתחרר מטעינה
+
+                if (drone.Battery + timeCharge * (LoadingRate / 60) < 100) 
+                    drone.Battery += timeCharge * (LoadingRate / 60);
+                else
+                    drone.Battery = 100;
+                drone.Status = DroneStatuses.Available;
+
+                dalObj.ReleaseDroneFromCharging(droneId);
             }
 
 
@@ -213,11 +248,6 @@ namespace IBL
             {
                 DroneInList drone = drones.Find(x => x.Id == droneId);
                 return drone;
-            }
-
-            public void SendDroneToCharge(int droneID, int baseStatiunID)
-            {
-
             }
 
             double BatteryIossAvailable(double lat1, double lon1, double lat2, double lon2)

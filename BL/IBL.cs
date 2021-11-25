@@ -18,9 +18,10 @@ namespace IBL
         public void ConnectDroneToParcel(int droneId);
         public void CollectParcelsByDrone(int droneId);
         public void DeliveredParcel(int droneId);
-        void SendDroneToCharge(int droneId);
+        public void SendDroneToCharge(int droneId);
+        public void UpdateDrone(int droneId, string model);
+        public void ReleaseDroneFromCharging(int droneId, double timeCharge);
         public DroneInList GetDroneById(int droneId);
-        void UpdateDrone(int droneId, string model);
     }
 
 }
