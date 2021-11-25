@@ -36,6 +36,31 @@ namespace ConsoleUI_BL
         }
 
         /// <summary>
+        /// send a drone to charge
+        /// </summary>
+        /// <param name="dalObject">the parameter that include all the lists</param>
+        private static void SendDroneToCharge(IBL.IBL bl)
+        {
+            int droneId = AddId4(true);
+
+            bl.SendDroneToCharge(droneId);
+        }
+
+        /// <summary>
+        /// release a drone from charge
+        /// </summary>
+        /// <param name="dalObject">the parameter that include all the lists</param>
+        private static void ReleaseDroneFromChargingBase(IBL.IBL bl)
+        {
+            int droneId = AddId4(true);
+
+            Console.WriteLine("Enter the charge time (in minute)\n");
+            double.TryParse(Console.ReadLine(), out double timeCharge);
+
+            bl.ReleaseDroneFromCharging(droneId, timeCharge);
+        }
+
+        /// <summary>
         /// updates the drone that was assigned to a parcel to pick up the parcel
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
@@ -68,29 +93,5 @@ namespace ConsoleUI_BL
             bl.DeliveredParcel(droneId);
         }
 
-        /// <summary>
-        /// send a drone to charge
-        /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void SendDroneToCharge(IBL.IBL bl)
-        {
-            int droneId = AddId4(true);
-
-            bl.SendDroneToCharge(droneId);
-        }
-
-        /// <summary>
-        /// release a drone from charge
-        /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void ReleaseDroneFromChargingBase(IBL.IBL bl)
-        {
-            int droneId = AddId4(true);
-
-            Console.WriteLine("Enter the charge time (in minute)\n");
-            double.TryParse(Console.ReadLine(), out double timeCharge);
-
-            bl.ReleaseDroneFromCharging(droneId, timeCharge);
-        }
     }
 }
