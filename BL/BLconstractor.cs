@@ -15,17 +15,18 @@ namespace IBL
             Random rand = new Random();
             public IDal dalObj;
             public List<DroneInList> drones = new();
+            public double Available, LightParcel, MediumParcel, HeavyParcel, LoadingRate;
+
             public BL()
             {
                 dalObj = new DalObject.DalObject();
+                Available = dalObj.PowerConsumptionByDrone()[0];
+                LightParcel = dalObj.PowerConsumptionByDrone()[1];
+                MediumParcel = dalObj.PowerConsumptionByDrone()[2];
+                HeavyParcel = dalObj.PowerConsumptionByDrone()[3];
+                LoadingRate = dalObj.PowerConsumptionByDrone()[4];
 
-                IEnumerable<double> enumerable = dalObj.PowerConsumptionByDrone();
-                IEnumerable<double> Available = enumerable;
-                IEnumerable<double> LightParcel = enumerable;
-                IEnumerable<double> MediumParcel = enumerable;
-                IEnumerable<double> HeavyParcel = enumerable;
-                IEnumerable<double> LoadingRate = enumerable;
-
+                
                 IEnumerable<IDAL.DO.Drone> drone = dalObj.GetDrones();
                 IEnumerable<IDAL.DO.Station> station = dalObj.GetStations();
                 IEnumerable<IDAL.DO.Customer> customer = dalObj.GetCustomers();

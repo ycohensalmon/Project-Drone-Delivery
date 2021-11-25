@@ -28,6 +28,6 @@ namespace IDAL
         public Drone GetDroneById(int id);
         public Customer GetCustomerById(int id);
         public Parcel GetParcelById(int id);
-        public IEnumerable<double> PowerConsumptionByDrone();
+        public double[] PowerConsumptionByDrone();
     }
 }

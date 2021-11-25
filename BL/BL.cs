@@ -104,45 +104,50 @@ namespace IBL
                 tempList.OrderByDescending(t => (int)t.Weight);
                 tempList.OrderByDescending(t => (int)t.Priorities);
 
-                double batteryIoss;
+                double batteryIossAvailable, batteryIossWithParcel, allBatteryLoss;
                 foreach (IDAL.DO.Parcel x in tempList)
                 {
                     //KM from his location to sender
-                    batteryIoss = Distance.GetDistanceFromLatLonInKm(drone.Location.Latitude, drone.Location.Longitude,
+                    batteryIossAvailable = Distance.GetDistanceFromLatLonInKm(drone.Location.Latitude, drone.Location.Longitude,
                         dalObj.GetCustomerById(x.SenderId).Latitude, dalObj.GetCustomerById(x.SenderId).Longitude);
-
-                    //KM from sender lo target
-                    batteryIoss += Distance.GetDistanceFromLatLonInKm(dalObj.GetCustomerById(x.SenderId).Latitude,
-                    dalObj.GetCustomerById(x.SenderId).Longitude, dalObj.GetCustomerById(x.TargetId).Latitude,
-                    dalObj.GetCustomerById(x.TargetId).Longitude);
 
                     //base station closest to target
                     Location temp = GetLocationWithMinDistance(dalObj.GetStations(), dalObj.GetCustomerById(x.TargetId));
 
                     //KM from target to base station
-                    batteryIoss += Distance.GetDistanceFromLatLonInKm(dalObj.GetCustomerById(x.TargetId).Latitude,
+                    batteryIossAvailable += Distance.GetDistanceFromLatLonInKm(dalObj.GetCustomerById(x.TargetId).Latitude,
                     dalObj.GetCustomerById(x.TargetId).Longitude, temp.Latitude, temp.Longitude);
+                    batteryIossAvailable *= Available;  //KM * %loss in state "Available"
+
+                    //KM from sender lo target
+                    batteryIossWithParcel = Distance.GetDistanceFromLatLonInKm(dalObj.GetCustomerById(x.SenderId).Latitude,
+                    dalObj.GetCustomerById(x.SenderId).Longitude, dalObj.GetCustomerById(x.TargetId).Latitude,
+                    dalObj.GetCustomerById(x.TargetId).Longitude);
                     
                     int Weight = (int)x.Weight;
                     switch (Weight)
                     {
                         case 0:
-                            batteryIoss *= LightParcel;
+                            batteryIossWithParcel *= LightParcel;
                             break;
                         case 1:
-                            batteryIoss *= MediumParcel;
+                            batteryIossWithParcel *= MediumParcel;
                             break;
                         case 2:
-                            batteryIoss *= HeavyParcel;
+                            batteryIossWithParcel *= HeavyParcel;
                             break;
                     }
 
-                    if (drone.Battery - batteryIoss < 0)
+                    allBatteryLoss = batteryIossAvailable + batteryIossWithParcel;
+                    if (drone.Battery - allBatteryLoss < 0)
                         tempList.Remove(x);
                 }
-
                 //if(tempList.count == 0) there is no parcels, than  "threw;
 
+                drone.Status = DroneStatuses.Delivery;
+
+                IDAL.DO.Parcel myParcel= tempList.First();
+                dalObj.ConnectDroneToParcel(droneId, myParcel.Id);
             }
 
             public DroneInList GetDroneById(int droneId)

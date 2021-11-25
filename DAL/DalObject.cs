@@ -76,6 +76,7 @@ namespace DalObject
         public void NewParcel(Parcel x) => DataSource.Parcels.Add(x);
 
 
+
         //-----------------------------------------------------------------------------------------------------------//
         // uptades fonctions //
         //-----------------------------------------------------------------------------------------------------------//
@@ -284,13 +285,15 @@ namespace DalObject
         //-----------------------------------------------------------------------------------------------------------//
         // other //
         //-----------------------------------------------------------------------------------------------------------//
-        public IEnumerable<double> PowerConsumptionByDrone()
+        public double[] PowerConsumptionByDrone()
         {
-            yield return DataSource.Config.Available;
-            yield return DataSource.Config.LightParcel;
-            yield return DataSource.Config.MediumParcel;
-            yield return DataSource.Config.HeavyParcel;
-            yield return DataSource.Config.LoadingRate;
+            double[] battery = new double[5];
+            battery[0] = DataSource.Config.Available;
+            battery[1] = DataSource.Config.LightParcel;
+            battery[2] = DataSource.Config.MediumParcel;
+            battery[3] = DataSource.Config.HeavyParcel;
+            battery[4] = DataSource.Config.LoadingRate;
+            return battery;
         }
     }
 }
