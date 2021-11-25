@@ -64,7 +64,7 @@ namespace DalObject
         /// <summary>
         /// adds a parcel to the list of Parcels
         /// </summary>
-        /// <param name="x">the paraneter to adding</param>
+        /// <param name="parcel">the paraneter to adding</param>
         public void NewParcel(Parcel parcel) => DataSource.Parcels.Add(parcel);
 
 
@@ -161,6 +161,9 @@ namespace DalObject
         public void UpdateDrone(int droneId, string model)
         {
             Drone drone = GetDroneById(droneId);
+            if (drone.Id != droneId)
+                throw new IdNotFoundException(droneId, "Drone");
+
             DataSource.Drones.Remove(drone);
 
             drone.Model = model;
@@ -168,9 +171,11 @@ namespace DalObject
             DataSource.Drones.Add(drone);
         }
 
-        public void UpdateBase(int num, string newName, string newChargeSolts, int result)
+        public void UpdateBase(int stationId, string newName, string newChargeSolts, int result)
         {
-            Station station = GetStationById(num);
+            Station station = GetStationById(stationId);
+            if (station.Id != stationId)
+                throw new IdNotFoundException(stationId, "Station");
 
             if (newName != "") 
             {

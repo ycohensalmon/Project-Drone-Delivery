@@ -305,16 +305,24 @@ namespace IBL
                 DroneInList drone = GetDroneById(droneId);
                 drone.Model = model;
 
-                dalObj.UpdateDrone(droneId, model);
+                try
+                {
+                    dalObj.UpdateDrone(droneId, model);
+                }
+                catch (Exception ex)
+                {
+                    throw new DalException(ex);
+                }
             }
 
-            public void UpdateBase(int num, string newName, string newChargeSolts)
+            public void UpdateBase(int stationId, string newName, string newChargeSolts)
             {
                 int result = 0;
                 if (newChargeSolts != "")
                 {
-                    IDAL.DO.Station station = dalObj.GetStationById(num);
+                    IDAL.DO.Station station = dalObj.GetStationById(stationId);
                     result = Int32.Parse(newChargeSolts);
+                    // אם ההמרה לא עבדה ונכנס רק אותיות
                     List<IDAL.DO.DroneCharge> droneCharge = dalObj.GetDroneCharges().ToList();
                     foreach (var item in droneCharge)
                     {
@@ -322,7 +330,14 @@ namespace IBL
                             result--;
                     }
                 }
-                dalObj.UpdateBase(num, newName, newChargeSolts, result);
+                try
+                {
+                    dalObj.UpdateBase(stationId, newName, newChargeSolts, result);
+                }
+                catch (Exception ex)
+                {
+                    throw new DalException(ex);
+                }
             }
 
             public DroneInList GetDroneById(int droneId)

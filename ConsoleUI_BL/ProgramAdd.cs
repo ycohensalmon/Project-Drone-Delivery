@@ -19,7 +19,7 @@ namespace ConsoleUI_BL
         /// <param name="dalObject">the parameter that include all the lists </param>
         private static void AddStation(IBL.IBL bl)
         {
-            int id = AddId4(false);
+            int id = AddId4(false,false);
             string name = AddName();
             double latitude = Addlatitude();
             double longitude = AddLongitude();
@@ -48,7 +48,7 @@ namespace ConsoleUI_BL
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void AddDrone(IBL.IBL bl)
         {
-            int id = AddId4(false);
+            int id = AddId4(false,false);
             string model = AddModel(false);
             int maxWeight = AddMaxWeight();
             int stationId = AddNumStation();
@@ -160,15 +160,17 @@ namespace ConsoleUI_BL
             } while (longitude < 0);
             return longitude;
         }
-        private static int AddId4(bool drone)
+        private static int AddId4(bool drone, bool station)
         {
             int id;
             do
             {
-                if (drone == false)
+                if (drone == false && station == false)
                     Console.WriteLine("add Id: (4 digits)\n");
-                if (drone == true)
+                if (drone == true && station == false)
                     Console.WriteLine("Enter the Id of the drone\n");
+                if(drone == false && station == true)
+                    Console.WriteLine("Enter the Id of the station\n");
                 if (int.TryParse(Console.ReadLine(), out id) == false)
                     throw new OnlyDigitsException("ID");
                 if (id < 0)

@@ -73,6 +73,38 @@ namespace IBL
             public NoChargeSlotException() : base($"ERROR: there are no stations with available charge slot") { }
         }
 
+        #region end
+        public class WrongEnumValuesRange : Exception
+        {
+            public WrongEnumValuesRange(string item, string start, string end) : base("ERROR: " + item +
+                "(type: Enumorator) have only " + start + "-" + end + " values.\n")
+            {
+            }
+        }
 
+        public class SelfDelivery : Exception
+        {
+            public SelfDelivery() : base("ERROR: It's imposible to send parcel to yourself.\n")
+            {
+            }
+        }
+
+
+
+        public class NoParcelsForAssign : Exception
+        {
+            public NoParcelsForAssign() : base("ERROR: There is no any parcel in waiting list.\n")
+            {
+            }
+        }
+
+        public class NoSuitableParcelForDrone : Exception
+        {
+            public NoSuitableParcelForDrone(int droneId) : base("ERROR: there is no suitable parcel for drone(id: " +
+                                                                droneId + ").\n")
+            {
+            }
+        }
+        #endregion
     }
 }

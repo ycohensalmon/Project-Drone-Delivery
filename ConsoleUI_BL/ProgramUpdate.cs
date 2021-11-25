@@ -15,7 +15,7 @@ namespace ConsoleUI_BL
 
         private static void UpdateDrone(IBL.IBL bl)
         {
-            int droneId = AddId4(true);
+            int droneId = AddId4(true,false);
             string model = AddModel(true);
 
             bl.UpdateDrone(droneId, model);
@@ -23,14 +23,13 @@ namespace ConsoleUI_BL
 
         private static void UpdateBase(IBL.IBL bl)
         {
-            Console.WriteLine("Enter the number of the base\n");
-            int.TryParse(Console.ReadLine(), out int num);
-            Console.WriteLine("Enter the new name of the base (if you dont want change name press Enter) \n");
+            int stationID = AddId4(false,true);
+            Console.WriteLine("Enter the new name of the base (if you dont want change the name press Enter)");
             string newName = Console.ReadLine();
-            Console.WriteLine("Enter the new ChargeSolts of the base (if you dont want change name press Enter) \n");
+            Console.WriteLine("Enter the new ChargeSolts of the base (if you dont want change the name press Enter)");
             string newChargeSolts = Console.ReadLine();
 
-            bl.UpdateBase(num, newName, newChargeSolts);
+            bl.UpdateBase(stationID, newName, newChargeSolts);
         }
 
         private static void UpdateCustomer(IBL.IBL bl)
@@ -46,7 +45,7 @@ namespace ConsoleUI_BL
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void SendDroneToCharge(IBL.IBL bl)
         {
-            int droneId = AddId4(true);
+            int droneId = AddId4(true,false);
 
             bl.SendDroneToCharge(droneId);
         }
@@ -57,7 +56,7 @@ namespace ConsoleUI_BL
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void ReleaseDroneFromChargingBase(IBL.IBL bl)
         {
-            int droneId = AddId4(true);
+            int droneId = AddId4(true,false);
 
             Console.WriteLine("Enter the charge time (in minute)\n");
             double.TryParse(Console.ReadLine(), out double timeCharge);
@@ -71,7 +70,7 @@ namespace ConsoleUI_BL
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void AssociateDroneToParcel(IBL.IBL bl)
         {
-            int droneId = AddId4(true);
+            int droneId = AddId4(true,false);
 
             bl.ConnectDroneToParcel(droneId);
         }
@@ -82,7 +81,7 @@ namespace ConsoleUI_BL
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void CollectParcelsByDrones(IBL.IBL bl)
         {
-            int droneId = AddId4(true);
+            int droneId = AddId4(true,false);
 
             bl.CollectParcelsByDrone(droneId);
         }
@@ -93,10 +92,9 @@ namespace ConsoleUI_BL
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void DeliveredParcelToCostumer(IBL.IBL bl)
         {
-            int droneId = AddId4(true);
+            int droneId = AddId4(true,false);
 
             bl.DeliveredParcel(droneId);
         }
-
     }
 }
