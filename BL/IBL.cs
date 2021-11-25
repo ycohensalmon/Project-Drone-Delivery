@@ -20,6 +20,7 @@ namespace IBL
         public void DeliveredParcel(int droneId);
         void SendDroneToCharge(int droneId);
         public DroneInList GetDroneById(int droneId);
+        void UpdateDrone(int droneId, string model);
     }
 
 }

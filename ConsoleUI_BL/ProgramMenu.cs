@@ -65,14 +65,14 @@ namespace ConsoleUI_BL
         private static void PrintMenu2()
         {
             Console.WriteLine(
-                "Assigning a package to a drone- - - - - - - - - press 1\n" +
-                "Collection of a package by drone- - - - - - - - press 2\n" +
-                "Delivery package to customer- - - - - - - - - - press 3\n" +
-                "Sending a drone for charging at a base station- press 4\n" +
-                "Release drone from charging at base station - - press 5\n" +
-                "to update drone data (name only)- - - - - - - - press 6\n" +
-                "to update base station data - - - - - - - - - - press 7\n" +
-                "to update customer data - - - - - - - - - - - - press 8\n");
+                "to update drone data (name only)- - - - - - - - press 1\n" +
+                "to update base station data - - - - - - - - - - press 2\n" +
+                "to update customer data - - - - - - - - - - - - press 3\n" +
+                "Assigning a package to a drone- - - - - - - - - press 4\n" +
+                "Collection of a package by drone- - - - - - - - press 5\n" +
+                "Delivery package to customer- - - - - - - - - - press 6\n" +
+                "Sending a drone for charging at a base station- press 7\n" +
+                "Release drone from charging at base station - - press 8\n");
         }
 
         /// <summary>

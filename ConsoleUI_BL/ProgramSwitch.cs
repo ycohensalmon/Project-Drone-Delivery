@@ -49,28 +49,28 @@ namespace ConsoleUI_BL
             switch (choises)
             {
                 case 1:
-                    AssociateDroneToParcel(bl);
+                    UpdateDrone(bl);
                     break;
                 case 2:
-                    CollectParcelsByDrones(bl);
+                    UpdateBase(bl);
                     break;
                 case 3:
-                    deliveredParcelToCostumer(bl);
+                    UpdateCustomer(bl);
                     break;
                 case 4:
-                    SendDroneToCharge(bl);
+                    AssociateDroneToParcel(bl);
                     break;
                 case 5:
-                    ReleaseDroneFromChargingBase(bl);
+                    CollectParcelsByDrones(bl);
                     break;
                 case 6:
-                    updatDrone(bl);
+                    DeliveredParcelToCostumer(bl);
                     break;
                 case 7:
-                    updateBase(bl);
+                    SendDroneToCharge(bl);
                     break;
                 case 8:
-                    updateCustomer(bl);
+                    ReleaseDroneFromChargingBase(bl);
                     break;
                 default:
                     break;
