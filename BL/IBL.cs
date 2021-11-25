@@ -19,6 +19,7 @@ namespace IBL
         public void CollectParcelsByDrone(int droneId);
         public void deliveredParcel(int droneId);
         public DroneInList GetDroneById(int droneId);
+        void UpdateDrone(int droneId, string model);
     }
 
 }

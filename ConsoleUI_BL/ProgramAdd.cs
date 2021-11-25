@@ -49,7 +49,7 @@ namespace ConsoleUI_BL
         private static void AddDrone(IBL.IBL bl)
         {
             int id = AddId4(false);
-            string model = AddModel();
+            string model = AddModel(false);
             int maxWeight = AddMaxWeight();
             int stationId = AddNumStation();
 
@@ -251,9 +251,12 @@ namespace ConsoleUI_BL
 
             return priorities;
         }
-        private static string AddModel()
+        private static string AddModel(bool newModel)
         {
-            Console.WriteLine("add model:\n");
+            if (newModel == false)
+                Console.WriteLine("add model:\n");
+            if(newModel == true)
+                Console.WriteLine("add new model:\n");
             string model = Console.ReadLine();
             return model;
         }

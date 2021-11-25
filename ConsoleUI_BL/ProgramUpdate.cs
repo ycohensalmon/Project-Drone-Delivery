@@ -13,6 +13,28 @@ namespace ConsoleUI_BL
         // switch 2 - Updates fonctions //
         //-----------------------------------------------------------------------------------------------------------//
 
+        private static void UpdateDrone(IBL.IBL bl)
+        {
+            int droneId = AddId4(true);
+            string model = AddModel(true);
+
+            bl.UpdateDrone(droneId, model);
+        }
+
+        private static void UpdateBase(IBL.IBL bl)
+        {
+            Console.WriteLine("Enter the number of the base\n");
+            int.TryParse(Console.ReadLine(), out int num);
+            //isnt finished
+        }
+
+        private static void UpdateCustomer(IBL.IBL bl)
+        {
+            Console.WriteLine("Enter the number of the base\n");
+            int.TryParse(Console.ReadLine(), out int id);
+            //isnt finished
+        }
+
         /// <summary>
         /// updates the drone that was assigned to a parcel to pick up the parcel
         /// </summary>
@@ -21,7 +43,7 @@ namespace ConsoleUI_BL
         {
             int droneId = AddId4(true);
 
-            bl.connectDroneToParcel(droneId);
+            bl.ConnectDroneToParcel(droneId);
         }
 
         /// <summary>
@@ -39,11 +61,11 @@ namespace ConsoleUI_BL
         /// updates that the parcel was delivered to the target
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void deliveredParcelToCostumer(IBL.IBL bl)
+        private static void DeliveredParcelToCostumer(IBL.IBL bl)
         {
             int droneId = AddId4(true);
 
-            bl.deliveredParcel(droneId);
+            bl.DeliveredParcel(droneId);
         }
 
         /// <summary>
@@ -69,28 +91,6 @@ namespace ConsoleUI_BL
             double.TryParse(Console.ReadLine(), out double timeCharge);
 
             bl.ReleaseDroneFromCharging(droneId, timeCharge);
-        }
-
-        private static void updatDrone(IBL.IBL bl)
-        {
-            int droneId = AddId4(true);
-            string model = AddModel();
-
-            bl.updatDrone(droneId, model);
-        }
-
-        private static void updateBase(IBL.IBL bl)
-        {
-            Console.WriteLine("Enter the number of the base\n");
-            int.TryParse(Console.ReadLine(), out int num);
-            //isnt finished
-        }
-
-        private static void updateCustomer(IBL.IBL bl)
-        {
-            Console.WriteLine("Enter the number of the base\n");
-            int.TryParse(Console.ReadLine(), out int id);
-            //isnt finished
         }
     }
 }
