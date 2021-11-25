@@ -21,60 +21,51 @@ namespace DalObject
         /// <summary>
         /// add new station to the list
         /// </summary>
-        /// <param name="x">the paraneter to adding</param>
-        public void NewStation(Station x)
+        /// <param name="station">the paraneter to adding</param>
+        public void NewStation(Station station)
         {
-            if (x.Id < 1000 || x.Id > 9999)
-                throw new IdNotValidException(x.Id, 4, "Station");
-
             foreach (var item in GetStations())
             {
-                if (item.Id == x.Id)
-                    throw new IdAlreadyExistException(x.Id,"Station");
+                if (item.Id == station.Id)
+                    throw new IdAlreadyExistException(station.Id,"Station");
             }
-            DataSource.Stations.Add(x);
+            DataSource.Stations.Add(station);
 
         }
 
         /// <summary>
         /// adds a drone to the list of Drones
         /// </summary>
-        /// <param name="x">the paraneter to adding</param>
-        public void NewDrone(Drone x)
+        /// <param name="drone">the paraneter to adding</param>
+        public void NewDrone(Drone drone)
         {
-            if (x.Id < 1000 || x.Id > 9999)
-                throw new IdNotValidException(x.Id, 4, "Drone");
-
             foreach (var item in GetDrones())
             {
-                if (item.Id == x.Id)
-                    throw new IdAlreadyExistException(item.Id, "Drone");
+                if (item.Id == drone.Id)
+                    throw new IdAlreadyExistException(drone.Id, "Drone");
             }
-            DataSource.Drones.Add(x);
+            DataSource.Drones.Add(drone);
         }
 
         /// <summary>
         /// adds a customer to list of Customers
         /// </summary>
-        /// <param name="x">the paraneter to adding</param>
-        public void NewCostumer(Customer x)
+        /// <param name="customer">the paraneter to adding</param>
+        public void NewCostumer(Customer customer)
         {
-            if (x.Id < 1000)
-                throw new IdNotValidException(x.Id, 8, "Customer");
             foreach (var item in GetCustomers())
             {
-                if (item.Id == x.Id)
-                    throw new IdAlreadyExistException(item.Id, "Customer");
+                if (item.Id == customer.Id)
+                    throw new IdAlreadyExistException(customer.Id, "Customer");
             }
-            DataSource.Customers.Add(x);
+            DataSource.Customers.Add(customer);
         }
 
         /// <summary>
         /// adds a parcel to the list of Parcels
         /// </summary>
         /// <param name="x">the paraneter to adding</param>
-        public void NewParcel(Parcel x) => DataSource.Parcels.Add(x);
-
+        public void NewParcel(Parcel parcel) => DataSource.Parcels.Add(parcel);
 
 
         //-----------------------------------------------------------------------------------------------------------//
@@ -88,16 +79,7 @@ namespace DalObject
         /// <param name="parcelId">the id of the drone</param>
         public void ConnectDroneToParcel(int droneId, int parcelId)
         {
-            bool isTrue = false;
-            foreach (var item in GetDrones())
-            {
-                if (item.Id == droneId)
-                {
-                    isTrue = true;
-                    break;
-                }
-            }
-            if (isTrue == false)
+            if (GetDrones().First(drone=> drone.Id == droneId).Id != droneId)
                 throw new IdNotFoundException(droneId, "Drone");
 
             Parcel parcel = GetParcelById(parcelId);
@@ -172,17 +154,15 @@ namespace DalObject
             Drone drone = GetDroneById(droneId);
             DataSource.Drones.Remove(drone);
 
-            DroneCharge droneCharge = DataSource.DroneCharges.Find(x => x.DroneId == droneId);
+            DroneCharge droneCharge = DataSource.DroneCharges.First(x => x.DroneId == droneId);
             if (droneCharge.DroneId != droneId)
                 throw new IdNotFoundException(droneId, "Station charge");
 
-            int stationId = droneCharge.StationId;  //?
+            int stationId = droneCharge.StationId;
             Station station = GetStationById(stationId);
             DataSource.Stations.Remove(station);
 
             station.ChargeSolts++;
-            //drone.Status = DroneStatuses.Available;
-            //drone.Battery = 100;
 
             DataSource.Stations.Add(station);
             DataSource.Drones.Add(drone);
