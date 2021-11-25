@@ -93,37 +93,62 @@ namespace IBL
 
             public void connectDroneToParcel(int droneId)
             {
-                IDAL.DO.Drone drone = dalObj.GetDroneById(droneId);
-                int Priority = 3;
-                IEnumerable<IDAL.DO.Parcel> tempList;
-                do
+                DroneInList drone = GetDroneById(droneId);
+                List<IDAL.DO.Parcel> tempList = dalObj.GetParcels().ToList();
+                tempList = tempList.Where(t => t.Scheduled == DateTime.MinValue).ToList();
+                //if(tempList.count == 0) there is no parcels, than  "threw"
+                tempList.RemoveAll(p => (int)p.Weight > (int)drone.MaxWeight);
+                //if(tempList.count == 0) there is no parcels, than  "threw;
+                tempList.OrderBy(t => Distance.GetDistanceFromLatLonInKm(dalObj.GetCustomerById(t.SenderId).Latitude,
+                    dalObj.GetCustomerById(t.SenderId).Longitude, drone.Location.Latitude, drone.Location.Longitude));
+                tempList.OrderByDescending(t => (int)t.Weight);
+                tempList.OrderByDescending(t => (int)t.Priorities);
+
+                double batteryIoss;
+                foreach (IDAL.DO.Parcel x in tempList)
                 {
-                    tempList = dalObj.GetParcels();
-                    Priority--;
-                    tempList = tempList.Where(
-                        tempList => tempList.Priorities == (IDAL.DO.Priority)Priority
-                        && tempList.Scheduled == DateTime.MinValue);
-                    if (tempList.Any())
+                    //KM from his location to sender
+                    batteryIoss = Distance.GetDistanceFromLatLonInKm(drone.Location.Latitude, drone.Location.Longitude,
+                        dalObj.GetCustomerById(x.SenderId).Latitude, dalObj.GetCustomerById(x.SenderId).Longitude);
+
+                    //KM from sender lo target
+                    batteryIoss += Distance.GetDistanceFromLatLonInKm(dalObj.GetCustomerById(x.SenderId).Latitude,
+                    dalObj.GetCustomerById(x.SenderId).Longitude, dalObj.GetCustomerById(x.TargetId).Latitude,
+                    dalObj.GetCustomerById(x.TargetId).Longitude);
+
+                    //base station closest to target
+                    Location temp = GetLocationWithMinDistance(dalObj.GetStations(), dalObj.GetCustomerById(x.TargetId));
+
+                    //KM from target to base station
+                    batteryIoss += Distance.GetDistanceFromLatLonInKm(dalObj.GetCustomerById(x.TargetId).Latitude,
+                    dalObj.GetCustomerById(x.TargetId).Longitude, temp.Latitude, temp.Longitude);
+                    
+                    int Weight = (int)x.Weight;
+                    switch (Weight)
                     {
-                        int carryWeight = (int)drone.MaxWeight;
-                        do
-                        {
-                            tempList = tempList.Where(
-                                tempList => tempList.Weight == (IDAL.DO.WeightCategory)carryWeight);
-                            if (tempList.Any())
-                            {
-                                double min;
-                                IDAL.DO.Customer temp;
-                                foreach (var item in tempList)
-                                {
-                                    temp = dalObj.GetCustomerById(item.SenderId);
-                                    min = Distance.GetDistanceFromLatLonInKm(temp.Latitude, temp.Longitude, drone.)
-                                } 
-                            }
-                            carryWeight--; //continue
-                        } while (!tempList.Any()); 
+                        case 0:
+                            batteryIoss *= LightParcel;
+                            break;
+                        case 1:
+                            batteryIoss *= MediumParcel;
+                            break;
+                        case 2:
+                            batteryIoss *= HeavyParcel;
+                            break;
                     }
-                } while (!tempList.Any() || Priority == 0);
+
+                    if (drone.Battery - batteryIoss < 0)
+                        tempList.Remove(x);
+                }
+
+                //if(tempList.count == 0) there is no parcels, than  "threw;
+
+            }
+
+            public DroneInList GetDroneById(int droneId)
+            {
+                DroneInList drone = drones.Find(x => x.Id == droneId);
+                return drone;
             }
 
             public void sendDroneToCharge(int droneID, int baseStatiunID)

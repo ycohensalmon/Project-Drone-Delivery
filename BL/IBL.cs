@@ -17,7 +17,8 @@ namespace IBL
         public void sendDroneToCharge(int droneID, int baseStatiunID);
         void NewDroneInList(DroneInList temp, int numStation);
         void connectDroneToParcel(int droneId);
-        bool GetStationById(int stationId);
+        public DroneInList GetDroneById(int droneId);
+
     }
- 
+
 }
