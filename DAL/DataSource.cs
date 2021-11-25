@@ -43,11 +43,9 @@ namespace DalObject
             {
                 Drones.Add(new Drone
                 {
-                    //Battery = Config.rand.Next(101),
                     Id = Config.rand.Next(1000, 10000),
                     Model = Convert.ToString((ModelDrones)Config.rand.Next(5)),
                     MaxWeight = (WeightCategory)Config.rand.Next(3),
-                    //Status = DroneStatuses.Available
                 });
             }
         }

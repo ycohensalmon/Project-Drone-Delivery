@@ -23,7 +23,18 @@ namespace IBL
         [Serializable]
         public class OnlyDigitsException : Exception
         {
-            public OnlyDigitsException(string item) : base($"ERROR: {item} must be only with digits.") { }
+            public OnlyDigitsException(string message) : base($"ERROR: {message} must be only with digits.") { }
+        }
+
+        [Serializable]
+        public class DalException : Exception
+        {
+            public DalException(Exception item) { }
+        }
+
+        public class ItemNotFoundException : Exception
+        {
+            public ItemNotFoundException(int item, string message) : base($"ERROR: {message} with id - {item} not exsist") { }
         }
 
     }

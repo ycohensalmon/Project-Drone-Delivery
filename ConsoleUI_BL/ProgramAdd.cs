@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IBL.BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,106 @@ namespace ConsoleUI_BL
         //-----------------------------------------------------------------------------------------------------------//
         // switch 1 - Adds fonctions //
         //-----------------------------------------------------------------------------------------------------------//
+
+        /// <summary>
+        /// add stetion to the list 
+        /// </summary>
+        /// <param name="dalObject">the parameter that include all the lists </param>
+        private static void AddStation(IBL.IBL bl)
+        {
+            int id = AddId4(false);
+            string name = AddName();
+            double latitude = Addlatitude();
+            double longitude = AddLongitude();
+            int chargeSlots = AddChargeSlot();
+
+            Location loc = new Location
+            {
+                Latitude = latitude,
+                Longitude = longitude
+            };
+
+            Station temp = new Station
+            {
+                Id = id,
+                Name = name,
+                Location = loc,
+                ChargeSolts = chargeSlots,
+                DroneCharges = null
+            };
+            bl.NewStation(temp);
+        }
+
+        /// <summary>
+        /// add drone to the list
+        /// </summary>
+        /// <param name="dalObject">the parameter that include all the lists</param>
+        private static void AddDrone(IBL.IBL bl)
+        {
+            int id = AddId4(false);
+            string model = AddModel();
+            int maxWeight = AddMaxWeight();
+            int stationId = AddNumStation();
+
+            DroneInList temp = new DroneInList
+            {
+                Id = id,
+                Model = model,
+                MaxWeight = (WeightCategory)maxWeight - 1,
+            };
+
+            bl.NewDroneInList(temp, stationId);
+        }
+
+        /// <summary>
+        /// add Customer to the list
+        /// </summary>
+        /// <param name="dalObject">the parameter that include all the lists</param>
+        private static void AddCustomer(IBL.IBL bl)
+        {
+            int id = AddId9(false, false);
+            string name = AddName();
+            int phone = AddPhone();
+            double latitude = Addlatitude();
+            double longitude = AddLongitude();
+
+            Location loc = new Location
+            {
+                Latitude = latitude,
+                Longitude = longitude
+            };
+
+            Customer temp = new Customer
+            {
+                Id = id,
+                Name = name,
+                Phone = phone,
+                Location = loc
+            };
+
+            bl.NewCostumer(temp);
+        }
+
+        /// <summary>
+        /// add parcel to the list
+        /// </summary>
+        /// <param name="dalObject">the parameter that include all the lists</param>
+        private static void AddParcel(IBL.IBL bl)
+        {
+            int senderID = AddId9(true, false);
+            int receiveID = AddId9(false, true);
+            int priorities = AddPriorities();
+            int weight = AddWeigth();
+
+            Parcel temp = new Parcel
+            {
+                Weight = (WeightCategory)weight,
+                Priorities = (Priority)priorities
+            };
+
+            bl.NewParcel(temp, senderID, receiveID);
+        }
+
         private static int AddChargeSlot()
         {
             int chargeSlots;
@@ -125,16 +226,16 @@ namespace ConsoleUI_BL
         }
         private static int AddNumStation()
         {
-            int numStation;
+            int stationID;
             do
             {
                 Console.WriteLine("Select a station number for initial charging\n");
-                if (int.TryParse(Console.ReadLine(), out numStation) == false)
+                if (int.TryParse(Console.ReadLine(), out stationID) == false)
                     throw new OnlyDigitsException("Num Station");
-                if (numStation < 0)
+                if (stationID < 0)
                     throw new NegetiveValueException("Num Station");
-            } while (numStation < 0);
-            return numStation;
+            } while (stationID < 0);
+            return stationID;
         }
         private static int AddPriorities()
         {
@@ -170,104 +271,6 @@ namespace ConsoleUI_BL
             } while (weight < 0);
 
             return weight;
-        }
-
-        /// <summary>
-        /// add stetion to the list 
-        /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists </param>
-        private static void AddStation(IBL.IBL bl)
-        {
-            int id = AddId4(false);
-            string name = AddName();
-            double latitude = Addlatitude();
-            double longitude = AddLongitude();
-            int chargeSlots = AddChargeSlot();
-
-            Location loc = new Location
-            {
-                Latitude = latitude,
-                Longitude = longitude
-            };
-
-            Station temp = new Station
-            {
-                Id = id,
-                Name = name,
-                Location = loc,
-                ChargeSolts = chargeSlots
-            };
-            bl.NewStation(temp);
-        }
-
-        /// <summary>
-        /// add Customer to the list
-        /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void AddCustomer(IBL.IBL bl)
-        {
-            int id = AddId9(false, false);
-            string name = AddName();
-            int phone = AddPhone();
-            double latitude = Addlatitude();
-            double longitude = AddLongitude();
-
-            Location loc = new Location
-            {
-                Latitude = latitude,
-                Longitude = longitude
-            };
-
-            Customer temp = new Customer
-            {
-                Id = id,
-                Name = name,
-                Phone = phone,
-                Location = loc
-            };
-
-            bl.NewCostumer(temp);
-        }
-
-        /// <summary>
-        /// add drone to the list
-        /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void AddDrone(IBL.IBL bl)
-        {
-            int id = AddId4(false);
-            string model = AddModel();
-            int maxWeight = AddMaxWeight();
-            int numStation = AddNumStation();
-
-            DroneInList temp = new DroneInList
-            {
-                Id = id,
-                Model = model,
-                MaxWeight = (WeightCategory)maxWeight - 1,
-            };
-
-            bl.NewDroneInList(temp, numStation);
-        }
-
-        /// <summary>
-        /// add parcel to the list
-        /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void AddParcel(IBL.IBL bl)
-        {
-            int senderID = AddId9(true, false);
-            int receiveID = AddId9(false, true);
-            int priorities = AddPriorities();
-            int weight = AddWeigth();
-
-            Parcel temp = new Parcel
-            {
-                Weight = (WeightCategory)weight,
-                Priorities = (Priority)priorities
-            };
-
-            bl.NewParcel(temp, senderID, receiveID);
         }
     }
 }
