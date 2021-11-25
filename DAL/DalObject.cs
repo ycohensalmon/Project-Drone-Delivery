@@ -137,15 +137,13 @@ namespace DalObject
 
             DataSource.Stations.Add(station);
         }
+
         /// <summary>
         /// release a drone from charge
         /// </summary>
         /// <param name="droneId">the id of the drone to release</param>
         public void ReleaseDroneFromCharging(int droneId)
         {
-            Drone drone = GetDroneById(droneId);
-            DataSource.Drones.Remove(drone);
-
             DroneCharge droneCharge = DataSource.DroneCharges.First(x => x.DroneId == droneId);
             if (droneCharge.DroneId != droneId)
                 throw new IdNotFoundException(droneId, "Station charge");
@@ -157,11 +155,18 @@ namespace DalObject
             station.ChargeSolts++;
 
             DataSource.Stations.Add(station);
-            DataSource.Drones.Add(drone);
             DataSource.DroneCharges.Remove(droneCharge);
-
         }
 
+        public void UpdateDrone(int droneId, string model)
+        {
+            Drone drone = GetDroneById(droneId);
+            DataSource.Drones.Remove(drone);
+
+            drone.Model = model;
+
+            DataSource.Drones.Add(drone);
+        }
 
         //-----------------------------------------------------------------------------------------------------------//
         // Get List //
