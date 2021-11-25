@@ -251,6 +251,23 @@ namespace IBL
                 dalObj.UpdateDrone(droneId, model);
             }
 
+            public void UpdateBase(int num, string newName, string newChargeSolts)
+            {
+                int result = 0;
+                if (newChargeSolts != "")
+                {
+                    IDAL.DO.Station station = dalObj.GetStationById(num);
+                    result = Int32.Parse(newChargeSolts);
+                    List<IDAL.DO.DroneCharge> droneCharge = dalObj.GetDroneCharges().ToList();
+                    foreach (var item in droneCharge)
+                    {
+                        if (item.StationId == station.Id)
+                            result--;
+                    }
+                }
+                dalObj.UpdateBase(num, newName, newChargeSolts, result);
+            }
+
             public DroneInList GetDroneById(int droneId)
             {
                 DroneInList drone = drones.Find(x => x.Id == droneId);

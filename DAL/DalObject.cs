@@ -168,6 +168,25 @@ namespace DalObject
             DataSource.Drones.Add(drone);
         }
 
+        public void UpdateBase(int num, string newName, string newChargeSolts, int result)
+        {
+            Station station = GetStationById(num);
+
+            if (newName != "") 
+            {
+                DataSource.Stations.Remove(station);
+                station.Name = newName;
+                DataSource.Stations.Add(station);
+            }
+
+            if (newChargeSolts != "") 
+            {
+                DataSource.Stations.Remove(station);
+                station.ChargeSolts = result;
+                DataSource.Stations.Add(station);
+            }
+        }
+
         //-----------------------------------------------------------------------------------------------------------//
         // Get List //
         //-----------------------------------------------------------------------------------------------------------//

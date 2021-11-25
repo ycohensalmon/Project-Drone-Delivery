@@ -25,8 +25,12 @@ namespace ConsoleUI_BL
         {
             Console.WriteLine("Enter the number of the base\n");
             int.TryParse(Console.ReadLine(), out int num);
-            //isnt finished
+            Console.WriteLine("Enter the new name of the base (if you dont want change name press Enter) \n");
+            string newName = Console.ReadLine();
+            Console.WriteLine("Enter the new ChargeSolts of the base (if you dont want change name press Enter) \n");
+            string newChargeSolts = Console.ReadLine();
 
+            bl.UpdateBase(num, newName, newChargeSolts);
         }
 
         private static void UpdateCustomer(IBL.IBL bl)

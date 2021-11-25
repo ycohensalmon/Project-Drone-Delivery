@@ -22,6 +22,7 @@ namespace IBL
         public void UpdateDrone(int droneId, string model);
         public void ReleaseDroneFromCharging(int droneId, double timeCharge);
         public DroneInList GetDroneById(int droneId);
+        public void UpdateBase(int num, string newName, string newChargeSolts);
     }
 
 }

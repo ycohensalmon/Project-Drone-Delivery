@@ -30,5 +30,7 @@ namespace IDAL
         public Parcel GetParcelById(int id);
         public double[] PowerConsumptionByDrone();
         public void UpdateDrone(int droneId, string model);
+        public void UpdateBase(int num, string newName, string newChargeSolts, int result);
+
     }
 }
