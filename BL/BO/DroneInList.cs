@@ -10,10 +10,6 @@ namespace IBL
     {
         public class DroneInList
         {
-            public DroneInList(string model)
-            {
-                this.Model = model;
-            }
 
             public int Id { get; set; }
             public string Model { get; set; }

@@ -107,36 +107,21 @@ namespace IBL
                 double batteryIossAvailable, batteryIossWithParcel, allBatteryLoss;
                 foreach (IDAL.DO.Parcel x in tempList)
                 {
-                    //KM from his location to sender
-                    batteryIossAvailable = Distance.GetDistanceFromLatLonInKm(drone.Location.Latitude, drone.Location.Longitude,
+                    //loss from his location to sender
+                    batteryIossAvailable = BatteryIossAvailable(drone.Location.Latitude, drone.Location.Longitude,
                         dalObj.GetCustomerById(x.SenderId).Latitude, dalObj.GetCustomerById(x.SenderId).Longitude);
 
                     //base station closest to target
                     Location temp = GetLocationWithMinDistance(dalObj.GetStations(), dalObj.GetCustomerById(x.TargetId));
 
-                    //KM from target to base station
-                    batteryIossAvailable += Distance.GetDistanceFromLatLonInKm(dalObj.GetCustomerById(x.TargetId).Latitude,
+                    //loss from target to base station
+                    batteryIossAvailable += BatteryIossAvailable(dalObj.GetCustomerById(x.TargetId).Latitude,
                     dalObj.GetCustomerById(x.TargetId).Longitude, temp.Latitude, temp.Longitude);
-                    batteryIossAvailable *= Available;  //KM * %loss in state "Available"
 
                     //KM from sender lo target
-                    batteryIossWithParcel = Distance.GetDistanceFromLatLonInKm(dalObj.GetCustomerById(x.SenderId).Latitude,
+                    batteryIossWithParcel = BatteryIossWithParcel(dalObj.GetCustomerById(x.SenderId).Latitude,
                     dalObj.GetCustomerById(x.SenderId).Longitude, dalObj.GetCustomerById(x.TargetId).Latitude,
-                    dalObj.GetCustomerById(x.TargetId).Longitude);
-                    
-                    int Weight = (int)x.Weight;
-                    switch (Weight)
-                    {
-                        case 0:
-                            batteryIossWithParcel *= LightParcel;
-                            break;
-                        case 1:
-                            batteryIossWithParcel *= MediumParcel;
-                            break;
-                        case 2:
-                            batteryIossWithParcel *= HeavyParcel;
-                            break;
-                    }
+                    dalObj.GetCustomerById(x.TargetId).Longitude, (int)x.Weight);
 
                     allBatteryLoss = batteryIossAvailable + batteryIossWithParcel;
                     if (drone.Battery - allBatteryLoss < 0)
@@ -144,11 +129,56 @@ namespace IBL
                 }
                 //if(tempList.count == 0) there is no parcels, than  "threw;
 
-                drone.Status = DroneStatuses.Delivery;
-
                 IDAL.DO.Parcel myParcel= tempList.First();
+
+                drone.Status = DroneStatuses.Delivery;
+                drone.NumParcel = myParcel.Id;
+
                 dalObj.ConnectDroneToParcel(droneId, myParcel.Id);
             }
+
+
+            public void CollectParcelsByDrone(int droneId)
+            {
+                DroneInList drone = GetDroneById(droneId);
+                IDAL.DO.Parcel myParcel = dalObj.GetParcelById(drone.NumParcel);
+
+                if (myParcel.Scheduled != DateTime.MinValue && myParcel.PickedUp == DateTime.MinValue && myParcel.DroneId == droneId)
+                {
+                    IDAL.DO.Customer myCustomer = dalObj.GetCustomerById(myParcel.SenderId);
+
+                    //loss from his location to sender
+                    double batteryIossAvailable = BatteryIossAvailable(drone.Location.Latitude, drone.Location.Longitude,
+                        myCustomer.Latitude, myCustomer.Longitude);
+                    drone.Battery -= batteryIossAvailable;
+
+                    //update location of the drone
+                    drone.Location.Latitude = myCustomer.Latitude;
+                    drone.Location.Longitude = myCustomer.Longitude;
+
+                    //update parsel
+                    dalObj.CollectParcelByDrone(myParcel.Id);
+                }
+                //במקרה שאי אפשר לאסוף את החבילה תיזרק חריגה 
+            }
+
+            public void deliveredParcel(int droneId)
+            {
+                DroneInList drone = GetDroneById(droneId);
+                IDAL.DO.Parcel myParcel = dalObj.GetParcelById(drone.NumParcel);
+                if (myParcel.PickedUp != DateTime.MinValue && myParcel.Delivered == DateTime.MinValue && myParcel.DroneId == droneId)
+                {
+                    IDAL.DO.Customer myCustomer = dalObj.GetCustomerById(myParcel.TargetId);
+
+                    //KM from sender lo target
+                    double batteryIossAvailable = BatteryIossWithParcel(drone.Location.Latitude, drone.Location.Longitude,
+                        myCustomer.Latitude, myCustomer.Longitude, (int)myParcel.Weight);
+
+
+                }
+            }
+
+
 
             public DroneInList GetDroneById(int droneId)
             {
@@ -159,6 +189,29 @@ namespace IBL
             public void sendDroneToCharge(int droneID, int baseStatiunID)
             {
 
+            }
+
+            double BatteryIossAvailable(double lat1, double lon1, double lat2, double lon2)
+            {
+                return (Distance.GetDistanceFromLatLonInKm(lat1, lon1, lat2, lon2)) * Available;
+            }
+
+            double BatteryIossWithParcel(double lat1, double lon1, double lat2, double lon2, int Weight)
+            {
+                double batteryIoss = Distance.GetDistanceFromLatLonInKm(lat1, lon1, lat2, lon2);
+                switch (Weight)
+                {
+                    case 0:
+                        batteryIoss *= LightParcel;
+                        break;
+                    case 1:
+                        batteryIoss *= MediumParcel;
+                        break;
+                    case 2:
+                        batteryIoss *= HeavyParcel;
+                        break;
+                }
+                return batteryIoss;
             }
         }
     }
