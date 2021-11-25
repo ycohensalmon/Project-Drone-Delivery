@@ -97,14 +97,10 @@ namespace DalObject
         public void CollectParcelByDrone(int parcelId)
         {
             Parcel parcel = GetParcelById(parcelId);
-            Drone drone = DataSource.Drones.Find(x => x.Id == parcel.DroneId);
             DataSource.Parcels.Remove(parcel);
-            DataSource.Drones.Remove(drone);
 
             parcel.PickedUp = DateTime.Now;
-            // drone.Status = DroneStatuses.Delivery;
 
-            DataSource.Drones.Add(drone);
             DataSource.Parcels.Add(parcel);
         }
         /// <summary>
