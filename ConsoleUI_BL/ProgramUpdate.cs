@@ -26,6 +26,7 @@ namespace ConsoleUI_BL
             Console.WriteLine("Enter the number of the base\n");
             int.TryParse(Console.ReadLine(), out int num);
             //isnt finished
+
         }
 
         private static void UpdateCustomer(IBL.IBL bl)

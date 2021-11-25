@@ -29,5 +29,6 @@ namespace IDAL
         public Customer GetCustomerById(int id);
         public Parcel GetParcelById(int id);
         public double[] PowerConsumptionByDrone();
+        public void UpdateDrone(int droneId, string model);
     }
 }

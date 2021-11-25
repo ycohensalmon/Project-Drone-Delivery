@@ -158,6 +158,15 @@ namespace DalObject
             DataSource.DroneCharges.Remove(droneCharge);
         }
 
+        public void UpdateDrone(int droneId, string model)
+        {
+            Drone drone = GetDroneById(droneId);
+            DataSource.Drones.Remove(drone);
+
+            drone.Model = model;
+
+            DataSource.Drones.Add(drone);
+        }
 
         //-----------------------------------------------------------------------------------------------------------//
         // Get List //

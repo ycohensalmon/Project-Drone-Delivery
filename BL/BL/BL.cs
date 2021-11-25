@@ -243,6 +243,13 @@ namespace IBL
                 dalObj.ReleaseDroneFromCharging(droneId);
             }
 
+            public void UpdateDrone(int droneId, string model)
+            {
+                DroneInList drone = GetDroneById(droneId);
+                drone.Model = model;
+
+                dalObj.UpdateDrone(droneId, model);
+            }
 
             public DroneInList GetDroneById(int droneId)
             {
