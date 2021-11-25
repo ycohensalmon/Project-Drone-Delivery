@@ -20,11 +20,11 @@ namespace IBL
                 dalObj = new DalObject.DalObject();
 
                 IEnumerable<double> enumerable = dalObj.PowerConsumptionByDrone();
-                var Available = enumerable;
-                var LightParcel = enumerable;
-                var MediumParcel = enumerable;
-                var HeavyParcel = enumerable;
-                var LoadingRate = enumerable;
+                IEnumerable<double> Available = enumerable;
+                IEnumerable<double> LightParcel = enumerable;
+                IEnumerable<double> MediumParcel = enumerable;
+                IEnumerable<double> HeavyParcel = enumerable;
+                IEnumerable<double> LoadingRate = enumerable;
 
                 IEnumerable<IDAL.DO.Drone> drone = dalObj.GetDrones();
                 IEnumerable<IDAL.DO.Station> station = dalObj.GetStations();
@@ -141,7 +141,7 @@ namespace IBL
 
             private double GetBattery(DroneStatuses status)
             {
-                if (status != DroneStatuses.Maintenance) return rand.Next(30, 100);
+                if (status != DroneStatuses.Maintenance) return rand.Next(30, 101);
                 else return rand.Next(0, 20);
             }
 
