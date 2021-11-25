@@ -290,7 +290,14 @@ namespace IBL
                     drone.Battery = 100;
                 drone.Status = DroneStatuses.Available;
 
-                dalObj.ReleaseDroneFromCharging(droneId);
+                try
+                {
+                    dalObj.ReleaseDroneFromCharging(droneId);
+                }
+                catch (Exception ex)
+                {
+                    throw new DalException(ex);
+                }
             }
 
             public void UpdateDrone(int droneId, string model)
