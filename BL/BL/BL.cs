@@ -108,7 +108,7 @@ namespace IBL
                 }
             }
 
-            public void connectDroneToParcel(int droneId)
+            public void ConnectDroneToParcel(int droneId)
             {
                 DroneInList drone = GetDroneById(droneId);
                 List<IDAL.DO.Parcel> tempList = dalObj.GetParcels().ToList();
@@ -179,7 +179,7 @@ namespace IBL
                 //במקרה שאי אפשר לאסוף את החבילה תיזרק חריגה 
             }
 
-            public void deliveredParcel(int droneId)
+            public void DeliveredParcel(int droneId)
             {
                 DroneInList drone = GetDroneById(droneId);
                 IDAL.DO.Parcel myParcel = dalObj.GetParcelById(drone.NumParcel);
@@ -203,7 +203,10 @@ namespace IBL
                 }
             }
 
+            void SendDroneToCharge(int droneId)
+            {
 
+            }
 
 
             public DroneInList GetDroneById(int droneId)
@@ -212,7 +215,7 @@ namespace IBL
                 return drone;
             }
 
-            public void sendDroneToCharge(int droneID, int baseStatiunID)
+            public void SendDroneToCharge(int droneID, int baseStatiunID)
             {
 
             }
