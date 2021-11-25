@@ -110,15 +110,11 @@ namespace DalObject
         public void DeliveredParcel(int parcelId)
         {
             Parcel parcel = GetParcelById(parcelId);
-            Drone drone = DataSource.Drones.Find(x => x.Id == parcel.DroneId);
             DataSource.Parcels.Remove(parcel);
-            DataSource.Drones.Remove(drone);
 
-            //drone.Status = DroneStatuses.Available;
             parcel.Delivered = DateTime.Now;
             parcel.DroneId = 0;
 
-            DataSource.Drones.Add(drone);
             DataSource.Parcels.Add(parcel);
         }
         /// <summary>

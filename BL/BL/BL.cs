@@ -187,13 +187,22 @@ namespace IBL
                 {
                     IDAL.DO.Customer myCustomer = dalObj.GetCustomerById(myParcel.TargetId);
 
-                    //KM from sender lo target
-                    double batteryIossAvailable = BatteryIossWithParcel(drone.Location.Latitude, drone.Location.Longitude,
+                    //loss from sender lo target
+                    double batteryIossWithParcel = BatteryIossWithParcel(drone.Location.Latitude, drone.Location.Longitude,
                         myCustomer.Latitude, myCustomer.Longitude, (int)myParcel.Weight);
+                    drone.Battery -= batteryIossWithParcel;
 
+                    //update location of the drone
+                    drone.Location.Latitude = myCustomer.Latitude;
+                    drone.Location.Longitude = myCustomer.Longitude;
 
+                    drone.Status = DroneStatuses.Available;
+                    drone.NumParcel = 0;
+
+                    dalObj.DeliveredParcel(myParcel.Id);
                 }
             }
+
 
 
 
