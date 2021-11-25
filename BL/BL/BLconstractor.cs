@@ -14,11 +14,12 @@ namespace IBL
         {
             Random rand = new Random();
             public IDal dalObj;
-            public List<DroneInList> drones = new();
+            public List<DroneInList> drones;
             public double Available, LightParcel, MediumParcel, HeavyParcel, LoadingRate;
 
             public BL()
             {
+                drones = new();
                 dalObj = new DalObject.DalObject();
                 Available = dalObj.PowerConsumptionByDrone()[0];
                 LightParcel = dalObj.PowerConsumptionByDrone()[1];
