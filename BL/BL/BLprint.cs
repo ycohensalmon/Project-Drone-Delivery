@@ -17,6 +17,11 @@ namespace IBL
                     throw new ItemNotFoundException(droneId, "DroneInList");
                 return drone;
             }
+
+            public void PrintStations() { dalObj.GetStations(); }
+            public void PrintCustomers() { dalObj.GetCustomers(); }
+            public void PrintParcels() { dalObj.GetParcels(); }
+            public void PrintDrones() { dalObj.GetDrones(); }
         }
     }
 }

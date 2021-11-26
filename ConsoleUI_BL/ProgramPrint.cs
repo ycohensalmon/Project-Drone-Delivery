@@ -71,8 +71,8 @@ namespace ConsoleUI_BL
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void PrintStations(IBL.IBL bl)
         {
-            List<Station> temp = bl.GetStations();
-            foreach (Station y in temp) { Console.WriteLine(y); }
+            bl.PrintStations();
+            foreach (Station y in bl.PrintStations()) { Console.WriteLine(y); }
         }
 
         /// <summary>
