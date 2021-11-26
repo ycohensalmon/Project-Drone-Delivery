@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL;
-using IDAL.DO;
 
 namespace IBL
 {
@@ -12,18 +10,14 @@ namespace IBL
     {
         public partial class BL : IBL
         {
-            public void NewStation(Station station)
+            public void UpdateDrone(int droneId, string model)
             {
+                DroneInList drone = GetDroneById(droneId);
+                drone.Model = model;
+
                 try
                 {
-                    dalObj.NewStation(new IDAL.DO.Station
-                    {
-                        Id = station.Id,
-                        Name = station.Name,
-                        Latitude = station.Location.Latitude,
-                        Longitude = station.Location.Longitude,
-                        ChargeSolts = station.ChargeSolts
-                    });
+                    dalObj.UpdateDrone(droneId, model);
                 }
                 catch (Exception ex)
                 {
@@ -31,76 +25,24 @@ namespace IBL
                 }
             }
 
-            public void NewDroneInList(DroneInList drone, int stationId)
+            public void UpdateBase(int stationId, string newName, string newChargeSolts)
             {
-                if (dalObj.GetStations().First(station => station.Id == stationId).Id != stationId)
-                    throw new ItemNotFoundException(stationId, "Station");
-
+                int result = 0;
+                if (newChargeSolts != "")
+                {
+                    IDAL.DO.Station station = dalObj.GetStationById(stationId);
+                    result = Int32.Parse(newChargeSolts);
+                    // אם ההמרה לא עבדה ונכנס רק אותיות
+                    List<IDAL.DO.DroneCharge> droneCharge = dalObj.GetDroneCharges().ToList();
+                    foreach (var item in droneCharge)
+                    {
+                        if (item.StationId == station.Id)
+                            result--;
+                    }
+                }
                 try
                 {
-                    drone.Battery = rand.Next(20, 40);
-                    drone.Battery += rand.NextDouble();
-                    drone.Status = (DroneStatuses)1;
-                    drone.NumParcel = 0;
-                    drone.Location = new Location
-                    {
-                        Latitude = dalObj.GetStationById(stationId).Latitude,
-                        Longitude = dalObj.GetStationById(stationId).Longitude
-                    };
-
-                    drones.Add(drone);
-
-                    dalObj.NewDrone(new IDAL.DO.Drone
-                    {
-                        Id = drone.Id,
-                        Model = drone.Model,
-                        MaxWeight = (IDAL.DO.WeightCategory)drone.MaxWeight
-                    });
-                    dalObj.SendDroneToBaseCharge(drone.Id, stationId);
-                }
-                catch (Exception ex)
-                {
-                    throw new DalException(ex);
-                }
-                
-            }
-
-            public void NewCostumer(Customer customer)
-            {
-                try
-                {
-                    dalObj.NewCostumer(new IDAL.DO.Customer
-                    {
-                        Id = customer.Id,
-                        Name = customer.Name,
-                        Phone = customer.Phone,
-                        Latitude = customer.Location.Latitude,
-                        Longitude = customer.Location.Longitude
-                    });
-                }
-                catch (Exception ex)
-                {
-                    throw new DalException(ex);
-                }
-            }
-
-            public void NewParcel(Parcel parcel, int senderID, int receiveID)
-            {
-                try
-                {
-                    dalObj.NewParcel(new IDAL.DO.Parcel
-                    {
-                        Id = DalObject.DataSource.SerialNum++,
-                        SenderId = senderID,
-                        TargetId = receiveID,
-                        DroneId = 0,
-                        Requested = DateTime.Now,
-                        Scheduled = DateTime.MinValue,
-                        PickedUp = DateTime.MinValue,
-                        Delivered = DateTime.MinValue,
-                        Weight = (IDAL.DO.WeightCategory)parcel.Weight,
-                        Priorities = (IDAL.DO.Priority)parcel.Priorities
-                    });
+                    dalObj.UpdateBase(stationId, newName, newChargeSolts, result);
                 }
                 catch (Exception ex)
                 {
@@ -112,7 +54,7 @@ namespace IBL
             {
                 DroneInList drone = GetDroneById(droneId);
                 if (drone.Status != DroneStatuses.Available)
-                    throw new StatusDroneException("connect drone to parcel",drone.Status, DroneStatuses.Available);
+                    throw new StatusDroneException("connect drone to parcel", drone.Status, DroneStatuses.Available);
 
                 List<IDAL.DO.Parcel> parcels = dalObj.GetParcels().ToList();
                 parcels = parcels.Where(t => t.Scheduled == DateTime.MinValue).ToList();
@@ -147,7 +89,7 @@ namespace IBL
                         parcels.Remove(x);
                 }
                 if (parcels.Count == 0)
-                    throw new NotEnoughBatteryException("make a delivery",drone.Battery);
+                    throw new NotEnoughBatteryException("make a delivery", drone.Battery);
 
                 parcels.OrderBy(parcels => Distance.GetDistanceFromLatLonInKm(dalObj.GetCustomerById(parcels.SenderId).Latitude,
                     dalObj.GetCustomerById(parcels.SenderId).Longitude, drone.Location.Latitude, drone.Location.Longitude));
@@ -207,7 +149,7 @@ namespace IBL
             {
                 DroneInList drone = GetDroneById(droneId);
                 if (drone.Status != DroneStatuses.Delivery)
-                    throw new StatusDroneException("delivered parcel to costumer",drone.Status, DroneStatuses.Delivery);
+                    throw new StatusDroneException("delivered parcel to costumer", drone.Status, DroneStatuses.Delivery);
 
                 IDAL.DO.Parcel myParcel = dalObj.GetParcelById(drone.NumParcel);
                 if (myParcel.PickedUp == DateTime.MinValue || myParcel.Delivered == DateTime.MinValue)
@@ -284,7 +226,7 @@ namespace IBL
                 if (drone.Status != DroneStatuses.Maintenance)
                     throw new StatusDroneException("release drone from charging", drone.Status, DroneStatuses.Maintenance);
 
-                if (drone.Battery + timeCharge * (LoadingRate / 60) < 100) 
+                if (drone.Battery + timeCharge * (LoadingRate / 60) < 100)
                     drone.Battery += timeCharge * (LoadingRate / 60);
                 else
                     drone.Battery = 100;
@@ -299,77 +241,7 @@ namespace IBL
                     throw new DalException(ex);
                 }
             }
-
-            public void UpdateDrone(int droneId, string model)
-            {
-                DroneInList drone = GetDroneById(droneId);
-                drone.Model = model;
-
-                try
-                {
-                    dalObj.UpdateDrone(droneId, model);
-                }
-                catch (Exception ex)
-                {
-                    throw new DalException(ex);
-                }
-            }
-
-            public void UpdateBase(int stationId, string newName, string newChargeSolts)
-            {
-                int result = 0;
-                if (newChargeSolts != "")
-                {
-                    IDAL.DO.Station station = dalObj.GetStationById(stationId);
-                    result = Int32.Parse(newChargeSolts);
-                    // אם ההמרה לא עבדה ונכנס רק אותיות
-                    List<IDAL.DO.DroneCharge> droneCharge = dalObj.GetDroneCharges().ToList();
-                    foreach (var item in droneCharge)
-                    {
-                        if (item.StationId == station.Id)
-                            result--;
-                    }
-                }
-                try
-                {
-                    dalObj.UpdateBase(stationId, newName, newChargeSolts, result);
-                }
-                catch (Exception ex)
-                {
-                    throw new DalException(ex);
-                }
-            }
-
-            public DroneInList GetDroneById(int droneId)
-            {
-                DroneInList drone = drones.Find(x => x.Id == droneId);
-                if (drone.Id != droneId)
-                    throw new ItemNotFoundException(droneId, "DroneInList");
-                return drone;
-            }
-
-            double BatteryIossAvailable(double lat1, double lon1, double lat2, double lon2)
-            {
-                return (Distance.GetDistanceFromLatLonInKm(lat1, lon1, lat2, lon2)) * Available;
-            }
-
-            double BatteryIossWithParcel(double lat1, double lon1, double lat2, double lon2, int Weight)
-            {
-                double batteryIoss = Distance.GetDistanceFromLatLonInKm(lat1, lon1, lat2, lon2);
-                switch (Weight)
-                {
-                    case 0:
-                        batteryIoss *= LightParcel;
-                        break;
-                    case 1:
-                        batteryIoss *= MediumParcel;
-                        break;
-                    case 2:
-                        batteryIoss *= HeavyParcel;
-                        break;
-                }
-                return batteryIoss;
-            }
         }
     }
+
 }
