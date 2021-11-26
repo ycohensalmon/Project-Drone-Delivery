@@ -8,7 +8,7 @@ namespace Targil0
 {
     partial class Program
     {
-        static partial void Welcome5588()
+        static partial void welcome5588()
         {
             Console.WriteLine("I am also here!");
         }
