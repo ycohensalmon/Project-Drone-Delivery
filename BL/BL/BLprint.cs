@@ -46,8 +46,8 @@ namespace IBL
             public DroneInList GetDroneById(int droneId)
             {
                 DroneInList drone = drones.Find(x => x.Id == droneId);
-                if (drone.Id != droneId)
-                    throw new ItemNotFoundException(droneId, "DroneInList");
+                if (drone == null)
+                    throw new ItemNotFoundException(droneId, "Drone");
                 return drone;
             }
 

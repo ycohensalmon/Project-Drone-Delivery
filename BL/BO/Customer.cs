@@ -18,7 +18,17 @@ namespace IBL
             public List<ParcelAtCustomer> ParcelsToCustomer { get; set; } = new();
             public override string ToString()
             {
-                return $"Id: {Id}, Name:{Name}, Phone:{Phone}, Location:{Location}, ParcelsFromCustomer:{ParcelsFromCustomer}, ParcelsToCustomer:{ParcelsToCustomer}";
+                string from = "\n", to = "\n";
+                int i = 1;
+                foreach (var item in ParcelsFromCustomer){from += $"{i++}: {item}\n";}
+                i = 1;
+                foreach (var item in ParcelsToCustomer) {to += $"{i++}: {item}\n";}
+                if (from == "\n")
+                    from = "0";
+                if (to == "\n")
+                    to = "0";
+
+                return $"Id: {Id}\nName:{Name}\nPhone:{Phone}\nLocation:{Location}\nParcelsFromCustomer:{from}\nParcelsToCustomer:{to}--------------";
             }
         }
     }

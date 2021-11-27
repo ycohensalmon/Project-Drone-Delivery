@@ -24,7 +24,7 @@ namespace IBL
                 int i = 1;
                 foreach (var item in DroneCharges){ droneCharges += $"{i++}: {item}\n"; }
 
-                return string.Format($"Id: {Id}\nName: {Name}\nLocation:\n{Location}\nAvailable charging positions: {ChargeSolts}\nDroneCharges:\n{droneCharges}\n--------------");
+                return string.Format($"Id: {Id}\nName: {Name}\nLocation:\n{Location}\nAvailable charging positions: {ChargeSolts}\nDroneCharges:\n{droneCharges}--------------");
             }
         }
     }
