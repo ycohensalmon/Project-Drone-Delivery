@@ -68,13 +68,16 @@ namespace IBL
 
                 if (statuses == DroneStatuses.Maintenance)
                 {
-                    int randIndexStation = 0;
-                    while (station.ElementAt(randIndexStation).ChargeSolts == 0)
+                    int randIndexStation;
+                    do
+                    {
                         randIndexStation = rand.Next(station.Count());
+                    } while (station.ElementAt(randIndexStation).ChargeSolts == 0);
 
-                    dalObj.SendDroneToBaseCharge(droneId, station.ElementAt(randIndexStation).Id);
+                    int stasionID = station.ElementAt(randIndexStation).Id;
+                    dalObj.SendDroneToBaseCharge(droneId, stasionID);
 
-                    return GetStationById(dalObj.GetStationById(station.ElementAt(randIndexStation).Id).Id).Location;
+                    return GetLocationStation(station, stasionID);
                 }
 
                 if (statuses == DroneStatuses.Available)
@@ -92,12 +95,12 @@ namespace IBL
                 return location;
             }
 
-            private Location GetLocationStation(IEnumerable<IDAL.DO.Station> station, int randIndexStation)
+            private Location GetLocationStation(IEnumerable<IDAL.DO.Station> station, int stationID)
             {
                 return new Location
                 {
-                    Latitude = station.ElementAt(randIndexStation).Latitude,
-                    Longitude = station.ElementAt(randIndexStation).Longitude
+                    Latitude = dalObj.GetStationById(stationID).Latitude,
+                    Longitude = dalObj.GetStationById(stationID).Longitude
                 };
             }
 
