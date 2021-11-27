@@ -15,7 +15,8 @@ namespace IBL
 
             public override string ToString()
             {
-                return ($"Id: {Id}, Name: {Name}");
+                string sp = "     ";
+                return ($"{sp}Id: {Id}\n{sp}Name: {Name}\n");
             }
         }
     }
