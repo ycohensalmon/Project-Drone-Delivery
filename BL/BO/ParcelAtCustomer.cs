@@ -10,23 +10,14 @@ namespace IBL
     {
         public class ParcelAtCustomer
         {
-            private Int32 id;
-            private DateTime requested;
-            private DateTime scheduled;
-            private DateTime pickedUp;
-            private DateTime delivered;
-            private WeightCategory weight;
-            private Priority priorities;
-            private CustomerInParcel customerInParcel;
-
-            public Int32 Id { get => id; set => id = value; }
-            public DateTime Requested { get => requested; set => requested = value; }
-            public DateTime Scheduled { get => scheduled; set => scheduled = value; }
-            public DateTime PickedUp { get => pickedUp; set => pickedUp = value; }
-            public DateTime Delivered { get => delivered; set => delivered = value; }
-            public WeightCategory Weight { get => weight; set => weight = value; }
-            public Priority Priorities { get => priorities; set => priorities = value; }
-            public CustomerInParcel CustomerInParcel { get => customerInParcel; set => customerInParcel = value; }
+            public Int32 Id { get; set; }
+            public DateTime Requested { get; set; }
+            public DateTime Scheduled { get; set; }
+            public DateTime PickedUp { get; set; }
+            public DateTime Delivered { get; set; }
+            public WeightCategory Weight { get; set; }
+            public Priority Priorities { get; set; }
+            public CustomerInParcel CustomerInParcel { get; set; }
         }
     }
 }

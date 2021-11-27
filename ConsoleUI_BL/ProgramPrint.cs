@@ -16,7 +16,7 @@ namespace ConsoleUI_BL
         /// <summary>
         /// returns the object Station that matches the id
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
+        /// <param name="bl">the parameter that include all the lists</param>
         private static void PrintStationById(IBL.IBL bl)
         {
             int stationId;
