@@ -68,7 +68,10 @@ namespace IBL
 
                 if (statuses == DroneStatuses.Maintenance)
                 {
-                    int randIndexStation = rand.Next(station.Count());
+                    int randIndexStation = 0;
+                    while (station.ElementAt(randIndexStation).ChargeSolts == 0)
+                        randIndexStation = rand.Next(station.Count());
+
                     dalObj.SendDroneToBaseCharge(droneId, station.ElementAt(randIndexStation).Id);
 
                     return GetLocationStation(station, randIndexStation);
