@@ -89,18 +89,18 @@ namespace ConsoleUI_BL
             int.TryParse(Console.ReadLine(), out choises);
             switch (choises)
             {
-                //case 1:
-                //    PrintStationById(bl);
-                //    break;
-                //case 2:
-                //    PrintDroneById(bl);
-                //    break;
-                //case 3:
-                //    PrintCustomerById(bl);
-                //    break;
-                //case 4:
-                //    PrintParcelById(bl);
-                //    break;
+                case 1:
+                    PrintStationById(bl);
+                    break;
+                case 2:
+                    PrintDroneById(bl);
+                    break;
+                case 3:
+                    PrintCustomerById(bl);
+                    break;
+                case 4:
+                    PrintParcelById(bl);
+                    break;
                 default:
                     break;
             }
@@ -116,24 +116,24 @@ namespace ConsoleUI_BL
             int.TryParse(Console.ReadLine(), out choises);
             switch (choises)
             {
-                //case 1:
-                //    PrintStations(bl);
-                //    break;
-                //case 2:
-                //    PrintDrones(bl);
-                //    break;
-                //case 3:
-                //    PrintCostumers(bl);
-                //    break;
-                //case 4:
-                //    PrintParcels(bl);
-                //    break;
-                //case 5:
-                //    PrintParcelsWithoutDrone(bl);
-                //    break;
-                //case 6:
-                //    PrintStationWithChargeSolts(bl);
-                //    break;
+                case 1:
+                    PrintStations(bl);
+                    break;
+                case 2:
+                    PrintDrones(bl);
+                    break;
+                case 3:
+                    PrintCostumers(bl);
+                    break;
+                case 4:
+                    PrintParcels(bl);
+                    break;
+                case 5:
+                    PrintParcelsWithoutDrone(bl);
+                    break;
+                case 6:
+                    PrintStationWithChargeSolts(bl);
+                    break;
                 default:
                     break;
             }

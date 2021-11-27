@@ -30,6 +30,8 @@ namespace IBL
         public void PrintDrones();
         public void PrintCustomers();
         public void PrintParcels();
+        public void PrintParcelsWithoutDrone();
+        public void PrintStationWithChargeSolts();
     }
 
 }

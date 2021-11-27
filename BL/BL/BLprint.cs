@@ -159,10 +159,59 @@ namespace IBL
                 };
             }
 
-            public void PrintStations() { dalObj.GetStations(); }
-            public void PrintCustomers() { dalObj.GetCustomers(); }
-            public void PrintParcels() { dalObj.GetParcels(); }
-            public void PrintDrones() { dalObj.GetDrones(); }
+            public void PrintStations()
+            {
+                foreach (var item in dalObj.GetStations())
+                {
+                    Console.WriteLine(GetStationById(item.Id));
+                }
+            }
+
+            public void PrintCustomers()
+            {
+                foreach (var item in dalObj.GetCustomers())
+                {
+                    Console.WriteLine(GetCustomerById(item.Id));
+                }
+            }
+
+            public void PrintParcels()
+            {
+                foreach (var item in dalObj.GetParcels())
+                {
+                    Console.WriteLine(GetParcelById(item.Id));
+                }
+            }
+
+            public void PrintDrones()
+            {
+                foreach (var item in dalObj.GetDrones())
+                {
+                    Console.WriteLine(GetDroneById(item.Id));
+                }
+            }
+
+            public void PrintParcelsWithoutDrone()
+            {
+                foreach (var item in dalObj.GetParcels())
+                {
+                    if (item.DroneId == 0)
+                    {
+                        Console.WriteLine(GetParcelById(item.Id));
+                    }
+                }
+            }
+
+            public void PrintStationWithChargeSolts()
+            {
+                foreach (var item in dalObj.GetStations())
+                {
+                    if (item.ChargeSolts > 0)
+                    {
+                        Console.WriteLine(GetStationById(item.Id));
+                    }
+                }
+            }
         }
     }
 }
