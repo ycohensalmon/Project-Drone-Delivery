@@ -25,6 +25,7 @@ namespace IBL
         public Station GetStationById(int stationId);
         public DroneInList GetDroneById(int droneId);
         public Customer GetCustomerById(int customerId);
+        public Parcel GetParcelById(int parcelid);
         public void PrintStations();
         public void PrintDrones();
         public void PrintCustomers();

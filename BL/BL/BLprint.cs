@@ -121,10 +121,43 @@ namespace IBL
                     ParcelsFromCustomer = FromCustomer,
                     ParcelsToCustomer = ToCustomer
                 };
-
             }
-        
 
+            public Parcel GetParcelById(int parcelid)
+            {
+                IDAL.DO.Parcel parcel = dalObj.GetParcelById(parcelid);
+                CustomerInParcel senderOfParcel = new();
+                CustomerInParcel targelOfParcel = new();
+
+                senderOfParcel.Id = dalObj.GetCustomerById(parcel.SenderId).Id; ;
+                senderOfParcel.Name = dalObj.GetCustomerById(parcel.SenderId).Name;
+
+                targelOfParcel.Id = dalObj.GetCustomerById(parcel.TargetId).Id;
+                targelOfParcel.Name = dalObj.GetCustomerById(parcel.TargetId).Name;
+
+                DroneInParcel droneInParcel = new();
+                if (parcel.DroneId != 0)
+                {
+                    DroneInList droneInList = GetDroneById(parcel.DroneId);
+                    droneInParcel.Id = droneInList.Id;
+                    droneInParcel.Battery = droneInList.Battery;
+                    droneInParcel.Location = droneInList.Location;
+                }
+
+                return new Parcel
+                {
+                    Id = parcel.Id,
+                    Sender = senderOfParcel,
+                    Target =targelOfParcel,
+                    Drone = droneInParcel,
+                    Requested = parcel.Requested,
+                    Scheduled = parcel.Scheduled,
+                    PickedUp = parcel.PickedUp,
+                    Delivered = parcel.Delivered,
+                    Weight = (WeightCategory)parcel.Weight,
+                    Priorities = (Priority)parcel.Priorities
+                };
+            }
 
             public void PrintStations() { dalObj.GetStations(); }
             public void PrintCustomers() { dalObj.GetCustomers(); }
