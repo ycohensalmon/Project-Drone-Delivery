@@ -48,7 +48,7 @@ namespace IBL
             {
                 IDAL.DO.Parcel tempParcel = GetTempParcel(droneId, parcel);
 
-                if (tempParcel.DroneId == droneId)
+                if (statuses == DroneStatuses.Delivery)
                 {
                     // החבילה שויכה ולא נאספה
                     if (tempParcel.Scheduled != DateTime.MinValue && tempParcel.PickedUp == DateTime.MinValue)
@@ -71,7 +71,7 @@ namespace IBL
                     int randIndexStation = rand.Next(station.Count());
                     dalObj.SendDroneToBaseCharge(droneId, station.ElementAt(randIndexStation).Id);
 
-                    return GetLocationStation(station, randIndexStation);
+                    return GetStationById(dalObj.GetStationById(station.ElementAt(randIndexStation).Id).Id).Location;
                 }
 
                 if (statuses == DroneStatuses.Available)

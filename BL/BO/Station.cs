@@ -17,10 +17,13 @@ namespace IBL
             public List<DroneCharge> DroneCharges { get; set; } = new();
             public override string ToString()
             {
-                if(DroneCharges == null)
-                    return string.Format($"Id: {Id}\nName: {Name}\nLocation: {Location}\nAvailable charging positions: {ChargeSolts}\nDroneCharges: 0");
+                if (DroneCharges.Count == 0)
+                    return string.Format($"Id: {Id}\nName: {Name}\nLocation:\n{Location}\nAvailable charging positions: {ChargeSolts}\nDroneCharges: 0\n--------------");
 
-                return string.Format($"Id: {Id}\nName: {Name}\nLocation: {Location}\nAvailable charging positions: {ChargeSolts}\nDroneCharges: {DroneCharges}");
+                string droneCharges = "";
+                int i = 1;
+                foreach (var item in DroneCharges) { droneCharges += $"{i++}: {item}\n"; }
+                return string.Format($"Id: {Id}\nName: {Name}\nLocation:\n{Location}\nAvailable charging positions: {ChargeSolts}\nDroneCharges:\n{droneCharges}\n--------------");
             }
         }
     }
