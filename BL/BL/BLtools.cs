@@ -79,9 +79,11 @@ namespace IBL
                     List<IDAL.DO.Parcel> parcelDelivered = new();
                     foreach (var item in parcel) if (item.Delivered != DateTime.MinValue) { parcelDelivered.Add(item); }
                     int randIndexStation = rand.Next(parcelDelivered.Count());
-                    IDAL.DO.Customer tempCustomer = customer.First(customer => customer.Id == parcelDelivered[randIndexStation].TargetId);
-
-                    return GetLocationCustomer(tempCustomer);
+                    if (parcelDelivered.Count != 0)
+                    {
+                        IDAL.DO.Customer tempCustomer = customer.FirstOrDefault(customer => customer.Id == parcelDelivered[randIndexStation].TargetId);
+                        return GetLocationCustomer(tempCustomer);
+                    }
                 }
                 Location location = new();
                 return location;
@@ -140,12 +142,12 @@ namespace IBL
 
             private IDAL.DO.Customer GetTempCustomer(IEnumerable<IDAL.DO.Customer> customer, IDAL.DO.Parcel tempParcel)
             {
-                return customer.First(customer => customer.Id == tempParcel.SenderId);
+                return customer.FirstOrDefault(customer => customer.Id == tempParcel.SenderId);
             }
 
             private IDAL.DO.Parcel GetTempParcel(int droneId, IEnumerable<IDAL.DO.Parcel> parcel)
             {
-                return parcel.First(parcel => parcel.DroneId == droneId);
+                return parcel.FirstOrDefault(parcel => parcel.DroneId == droneId);
             }
         }
     }

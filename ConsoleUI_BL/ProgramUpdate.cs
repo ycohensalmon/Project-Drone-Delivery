@@ -26,8 +26,7 @@ namespace ConsoleUI_BL
             int stationID = AddId4(false,true);
             Console.WriteLine("Enter the new name of the base (if you dont want change the name press Enter)");
             string newName = Console.ReadLine();
-            Console.WriteLine("Enter the new ChargeSolts of the base (if you dont want change the name press Enter)");
-            string newChargeSolts = Console.ReadLine();
+            string newChargeSolts = AddStringChargeSlot();
 
             bl.UpdateBase(stationID, newName, newChargeSolts);
         }

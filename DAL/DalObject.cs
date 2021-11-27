@@ -79,7 +79,7 @@ namespace DalObject
         /// <param name="parcelId">the id of the drone</param>
         public void ConnectDroneToParcel(int droneId, int parcelId)
         {
-            if (GetDrones().First(drone=> drone.Id == droneId).Id != droneId)
+            if (GetDrones().FirstOrDefault(drone=> drone.Id == droneId).Id != droneId)
                 throw new IdNotFoundException(droneId, "Drone");
 
             Parcel parcel = GetParcelById(parcelId);
@@ -144,7 +144,7 @@ namespace DalObject
         /// <param name="droneId">the id of the drone to release</param>
         public void ReleaseDroneFromCharging(int droneId)
         {
-            DroneCharge droneCharge = DataSource.DroneCharges.First(x => x.DroneId == droneId);
+            DroneCharge droneCharge = DataSource.DroneCharges.FirstOrDefault(x => x.DroneId == droneId);
             if (droneCharge.DroneId != droneId)
                 throw new IdNotFoundException(droneId, "Station charge");
 
