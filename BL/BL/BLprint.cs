@@ -19,16 +19,17 @@ namespace IBL
 
                 List<IDAL.DO.DroneCharge> droneChargeIDAL = dalObj.GetDroneCharges().ToList();
                 List<DroneCharge> droneChargesBL = new();
-                DroneCharge droneCharge = new();
 
                 //fill the List droneChargesBL
                 foreach (var item in droneChargeIDAL)
                 {
                     if (item.StationId == station.Id)
                     {
-                        droneCharge.DroneId = item.DroneId;
-                        droneCharge.StationId = item.StationId;
-                        droneChargesBL.Add(droneCharge);
+                        droneChargesBL.Add(new DroneCharge
+                        {
+                            DroneId = item.DroneId,
+                            StationId = item.StationId
+                        });
                     }
                 }
 
