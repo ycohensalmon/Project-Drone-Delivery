@@ -19,7 +19,7 @@ namespace ConsoleUI_BL
         /// <param name="dalObject">the parameter that include all the lists </param>
         private static void AddStation(IBL.IBL bl)
         {
-            int id = AddId4(false,false);
+            int id = AddId4(false, false);
             string name = AddName();
             double latitude = Addlatitude();
             double longitude = AddLongitude();
@@ -40,6 +40,7 @@ namespace ConsoleUI_BL
                 DroneCharges = null
             };
             bl.NewStation(temp);
+
         }
 
         /// <summary>
@@ -48,7 +49,7 @@ namespace ConsoleUI_BL
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void AddDrone(IBL.IBL bl)
         {
-            int id = AddId4(false,false);
+            int id = AddId4(false, false);
             string model = AddModel(false);
             int maxWeight = AddMaxWeight();
             int stationId = AddNumStation();
@@ -126,6 +127,19 @@ namespace ConsoleUI_BL
 
             return chargeSlots;
         }
+
+        private static string AddStringChargeSlot()
+        {
+            string newChargeSolts;
+            do
+            {
+                Console.WriteLine("Enter the new ChargeSolts of the base (if you dont want change the name press Enter)");
+                newChargeSolts = Console.ReadLine();
+            } while (newChargeSolts == null);
+
+            return newChargeSolts;
+        }
+
         private static string AddName()
         {
             Console.WriteLine("add name:\n");
@@ -169,7 +183,7 @@ namespace ConsoleUI_BL
                     Console.WriteLine("add Id: (4 digits)\n");
                 if (drone == true && station == false)
                     Console.WriteLine("Enter the Id of the drone\n");
-                if(drone == false && station == true)
+                if (drone == false && station == true)
                     Console.WriteLine("Enter the Id of the station\n");
                 if (int.TryParse(Console.ReadLine(), out id) == false)
                     throw new OnlyDigitsException("ID");
@@ -178,6 +192,7 @@ namespace ConsoleUI_BL
 
             } while (id < 0);
             return id;
+
         }
         private static int AddId9(bool sender, bool target)
         {
@@ -222,7 +237,9 @@ namespace ConsoleUI_BL
                     throw new OnlyDigitsException("Max Weight");
                 if (maxWeight < 0)
                     throw new NegetiveValueException("Max Weight");
-            } while (maxWeight < 0);
+                if (maxWeight > 3)
+                    throw new WrongEnumValuesException("Max Weight", 1, 3);
+            } while (maxWeight < 0 || maxWeight > 3);
 
             return maxWeight;
         }
@@ -249,7 +266,9 @@ namespace ConsoleUI_BL
                     throw new OnlyDigitsException("Max Weight");
                 if (priorities < 0)
                     throw new NegetiveValueException("Max Weight");
-            } while (priorities < 0);
+                if (priorities > 2)
+                    throw new WrongEnumValuesException("Priorities", 0, 2);
+            } while (priorities < 0 || priorities > 2);
 
             return priorities;
         }
@@ -257,7 +276,7 @@ namespace ConsoleUI_BL
         {
             if (newModel == false)
                 Console.WriteLine("add model:\n");
-            if(newModel == true)
+            if (newModel == true)
                 Console.WriteLine("add a new model:\n");
             string model = Console.ReadLine();
             return model;
@@ -273,7 +292,9 @@ namespace ConsoleUI_BL
                     throw new OnlyDigitsException("Weight");
                 if (weight < 0)
                     throw new NegetiveValueException("Weight");
-            } while (weight < 0);
+                if (weight > 2)
+                    throw new WrongEnumValuesException("Weight", 0, 2);
+            } while (weight < 0 || weight > 2);
 
             return weight;
         }

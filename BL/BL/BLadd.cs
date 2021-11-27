@@ -33,7 +33,7 @@ namespace IBL
 
             public void NewDroneInList(DroneInList drone, int stationId)
             {
-                if (dalObj.GetStations().First(station => station.Id == stationId).Id != stationId)
+                if (dalObj.GetStations().FirstOrDefault(station => station.Id == stationId).Id != stationId)
                     throw new ItemNotFoundException(stationId, "Station");
 
                 try
@@ -86,6 +86,8 @@ namespace IBL
 
             public void NewParcel(Parcel parcel, int senderID, int receiveID)
             {
+                if (senderID == receiveID)
+                    throw new SelfDeliveryException();
                 try
                 {
                     dalObj.NewParcel(new IDAL.DO.Parcel

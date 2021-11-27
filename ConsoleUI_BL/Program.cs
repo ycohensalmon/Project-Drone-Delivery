@@ -45,9 +45,9 @@ namespace ConsoleUI_BL
                             break;
                     }
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    PrintException(e);
+                    PrintException(ex);
                 }
             } while (choises != 5);
         }
