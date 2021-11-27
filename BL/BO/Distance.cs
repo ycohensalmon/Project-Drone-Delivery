@@ -44,7 +44,7 @@ namespace IBL
                 double fractionalMinutes = minutesWithFraction - minutes;
                 double secondesWithFraction = 60 * fractionalMinutes;
 
-                return $"{degrees}°{minutes}'{string.Format("{0:F3}", secondesWithFraction)} {c}";
+                return $"{degrees}°{minutes}'{string.Format("{0:F3}", secondesWithFraction)}\" {c}";
             }
         }
     }

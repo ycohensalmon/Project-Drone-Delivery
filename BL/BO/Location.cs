@@ -13,7 +13,7 @@ namespace IBL
             public double Latitude { get; set; }
             public double Longitude { get; set; }
 
-            public override string ToString() => $"Latitude: {Distance.Sexagesimal(Latitude, 'N')}, Longitude:{Distance.Sexagesimal(Longitude, 'E')}";
+            public override string ToString() => $"Latitude: {Distance.Sexagesimal(Latitude, 'N')}\nLongitude:{Distance.Sexagesimal(Longitude, 'E')}";
         }
     }
 }

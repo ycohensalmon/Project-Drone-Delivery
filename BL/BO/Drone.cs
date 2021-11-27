@@ -27,7 +27,7 @@ namespace IBL
             public Location Location { get => location; set => location = value; }
             public override string ToString()
             {
-                return $"Id:{Id}, Model:{Model}, MaxWeight:{MaxWeight}, Status:{Status}, Battery:{Battery}, ParcelInTravel:{ParcelInTravel}, Location:{Location}";
+                return $"Id:{Id}\nModel:{Model}\nMaxWeight:{MaxWeight}\nStatus:{Status}\nBattery:{Battery}\nParcelInTravel:{ParcelInTravel}\nLocation:{Location}";
             }
         }
     }
