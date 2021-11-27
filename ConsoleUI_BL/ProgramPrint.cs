@@ -13,17 +13,17 @@
 //        // switch 3 - print index in the list (by id) //
 //        //-----------------------------------------------------------------------------------------------------------//
 
-//        /// <summary>
-//        /// returns the object Station that matches the id
-//        /// </summary>
-//        /// <param name="dalObject">the parameter that include all the lists</param>
-//        private static void PrintStationById(IBL.IBL bl)
-//        {
-//            int stationId;
-//            Console.WriteLine("enter the id of the station");
-//            int.TryParse(Console.ReadLine(), out stationId);
-//            Console.WriteLine(bl.GetStationById(stationId));
-//        }
+        /// <summary>
+        /// returns the object Station that matches the id
+        /// </summary>
+        /// <param name="bl">the parameter that include all the lists</param>
+        private static void PrintStationById(IBL.IBL bl)
+        {
+            int stationId;
+            Console.WriteLine("enter the id of the station");
+            int.TryParse(Console.ReadLine(), out stationId);
+            Console.WriteLine(bl.GetStationById(stationId));
+        }
 
 //        /// <summary>
 //        /// returns the object drone that matches the id

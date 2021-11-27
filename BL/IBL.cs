@@ -20,9 +20,11 @@ namespace IBL
         public void SendDroneToCharge(int droneId);
         public void UpdateDrone(int droneId, string model);
         public void ReleaseDroneFromCharging(int droneId, double timeCharge);
-        public DroneInList GetDroneById(int droneId);
         public void UpdateBase(int num, string newName, string newChargeSolts);
         public void UpdateCustomer(int customerID, string newName, string newPhone);
+        public Station GetStationById(int stationId);
+        public DroneInList GetDroneById(int droneId);
+        public Customer GetCustomerById(int customerId);
         public void PrintStations();
         public void PrintDrones();
         public void PrintCustomers();

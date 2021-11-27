@@ -10,17 +10,11 @@ namespace IDAL
     {
         public struct Customer
         {
-            private Int32 id;
-            private string name;
-            private Int32 phone;
-            private double latitude;  // 'N'
-            private double longitude; // 'E'
-
-            public Int32 Id { get => id; set => id = value; }
-            public string Name { get => name; set => name = value; }
-            public Int32 Phone { get => phone; set => phone = value; }
-            public double Latitude { get => latitude; set => latitude = value; }
-            public double Longitude { get => longitude; set => longitude = value; }
+            public Int32 Id { get; set; }
+            public string Name { get; set; }
+            public Int32 Phone { get; set; }
+            public double Latitude { get; set; }
+            public double Longitude { get; set; }
             public override string ToString()
             {
                 return $"Id: {Id}, Name:{Name}, Phone:{Phone},Latittude:{DalObject.DataSource.Sexagesimal(Latitude, 'N')}," +
