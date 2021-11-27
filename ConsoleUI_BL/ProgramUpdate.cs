@@ -34,9 +34,14 @@ namespace ConsoleUI_BL
 
         private static void UpdateCustomer(IBL.IBL bl)
         {
-            Console.WriteLine("Enter the number of the base\n");
-            int.TryParse(Console.ReadLine(), out int id);
-            //isnt finished
+            Console.WriteLine("Enter the ID of the Customer\n");
+            int.TryParse(Console.ReadLine(), out int CustomerID);
+            Console.WriteLine("Enter the new name of the Customer (if you dont want change the name press Enter)");
+            string newName = Console.ReadLine();
+            Console.WriteLine("Enter the new phone of the Customer (if you dont want change the name press Enter)");
+            string newPhone = Console.ReadLine();
+
+            bl.UpdateCustomer(CustomerID, newName, newPhone);
         }
 
         /// <summary>

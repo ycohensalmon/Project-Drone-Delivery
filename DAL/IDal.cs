@@ -31,6 +31,6 @@ namespace IDAL
         public double[] PowerConsumptionByDrone();
         public void UpdateDrone(int droneId, string model);
         public void UpdateBase(int num, string newName, string newChargeSolts, int result);
-
+        public void UpdateCustomer(int customerID, string newName, string newPhone);
     }
 }

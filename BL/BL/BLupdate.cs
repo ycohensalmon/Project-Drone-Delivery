@@ -50,6 +50,11 @@ namespace IBL
                 }
             }
 
+            public void UpdateCustomer(int customerID, string newName, string newPhone)
+            {
+                dalObj.UpdateCustomer(customerID, newName, newPhone);
+            }
+
             public void ConnectDroneToParcel(int droneId)
             {
                 DroneInList drone = GetDroneById(droneId);

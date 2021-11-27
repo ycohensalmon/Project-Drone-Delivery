@@ -192,6 +192,27 @@ namespace DalObject
             }
         }
 
+        public void UpdateCustomer(int customerID, string newName, string newPhone)
+        {
+            Customer customer = GetCustomerById(customerID);
+            //if (station.Id != stationId)
+            //    throw new IdNotFoundException(stationId, "Station");
+
+            if (newName != "")
+            {
+                DataSource.Customers.Remove(customer);
+                customer.Name = newName;
+                DataSource.Customers.Add(customer);
+            }
+
+            if (newPhone != "")
+            {
+                DataSource.Customers.Remove(customer);
+                customer.Phone = Int32.Parse(newPhone);
+                DataSource.Customers.Add(customer);
+            }
+        }
+
         //-----------------------------------------------------------------------------------------------------------//
         // Get List //
         //-----------------------------------------------------------------------------------------------------------//
