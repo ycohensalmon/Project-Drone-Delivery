@@ -34,7 +34,7 @@ namespace IBL
         [Serializable]
         public class DalException : Exception
         {
-            public DalException(Exception item) { }
+            public DalException(Exception item) : base(item.Message) { }
         }
 
         public class BlException : Exception

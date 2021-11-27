@@ -29,7 +29,7 @@ namespace ConsoleUI_BL
         private static void PrintException(Exception e)
         {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(e.Message);
                 Console.ForegroundColor = ConsoleColor.White;
         }
 
