@@ -18,6 +18,39 @@ namespace IBL
                 return drone;
             }
 
+            public Station GetStationById(int stationId)
+            {
+                IDAL.DO.Station station = dalObj.GetStationById(stationId);
+
+                Location temp = new Location { Latitude = station.Latitude, Longitude = station.Longitude };
+               
+                List<IDAL.DO.DroneCharge> droneChargeIDAL = dalObj.GetDroneCharges().ToList();
+                List<DroneCharge> droneChargesBL = new();
+                DroneCharge droneCharge = new();
+
+                //fill the List droneChargesBL
+                foreach (var item in droneChargeIDAL)
+                {
+                    if (item.StationId == station.Id)
+                    {
+                        droneCharge.DroneId = item.DroneId;
+                        droneCharge.StationId = item.StationId;
+                        droneChargesBL.Add(droneCharge);
+                    }
+                }
+
+                Station printStstion = new Station
+                {
+                    Id = station.Id,
+                    Name = station.Name,
+                    Location = temp,
+                    ChargeSolts = station.ChargeSolts,
+                    DroneCharges = droneChargesBL
+                };
+
+                return printStstion;
+            }
+
             public void PrintStations() { dalObj.GetStations(); }
             public void PrintCustomers() { dalObj.GetCustomers(); }
             public void PrintParcels() { dalObj.GetParcels(); }

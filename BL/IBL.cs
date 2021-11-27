@@ -23,6 +23,7 @@ namespace IBL
         public DroneInList GetDroneById(int droneId);
         public void UpdateBase(int num, string newName, string newChargeSolts);
         public void UpdateCustomer(int customerID, string newName, string newPhone);
+        public Station GetStationById(int stationId);
         public void PrintStations();
         public void PrintDrones();
         public void PrintCustomers();
