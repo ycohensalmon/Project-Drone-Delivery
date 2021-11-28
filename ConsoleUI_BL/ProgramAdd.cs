@@ -142,7 +142,7 @@ namespace ConsoleUI_BL
 
         private static string AddName()
         {
-            Console.WriteLine("add name:\n");
+            Console.WriteLine("add name:");
             string name = Console.ReadLine();
             return name;
         }
@@ -151,7 +151,7 @@ namespace ConsoleUI_BL
             double latitude;
             do
             {
-                Console.WriteLine("add lattitude: (example 12.123456)\n");
+                Console.WriteLine("add lattitude: (example 12,123456)");
                 if (double.TryParse(Console.ReadLine(), out latitude) == false)
                     throw new OnlyDigitsException("Lattitude");
                 if (latitude < 0)
@@ -165,7 +165,7 @@ namespace ConsoleUI_BL
             double longitude;
             do
             {
-                Console.WriteLine("add longitude: (example 12.123456)\n");
+                Console.WriteLine("add longitude: (example 12,123456)");
                 if (double.TryParse(Console.ReadLine(), out longitude) == false)
                     throw new OnlyDigitsException("Longitude");
                 if (longitude < 0)
@@ -180,11 +180,11 @@ namespace ConsoleUI_BL
             do
             {
                 if (drone == false && station == false)
-                    Console.WriteLine("add Id: (4 digits)\n");
+                    Console.WriteLine("add Id: (4 digits)");
                 if (drone == true && station == false)
-                    Console.WriteLine("Enter the Id of the drone\n");
+                    Console.WriteLine("Enter the Id of the drone");
                 if (drone == false && station == true)
-                    Console.WriteLine("Enter the Id of the station\n");
+                    Console.WriteLine("Enter the Id of the station");
                 if (int.TryParse(Console.ReadLine(), out id) == false)
                     throw new OnlyDigitsException("ID");
                 if (id < 0)
@@ -202,9 +202,9 @@ namespace ConsoleUI_BL
                 if (sender == true && target == false)
                     Console.WriteLine("add Id of the sending customer: (9 digits)");
                 if (sender == false && target == true)
-                    Console.WriteLine("add Id of the receiving customer: (9 digits)\n");
+                    Console.WriteLine("add Id of the receiving customer: (9 digits)");
                 if (sender == false && target == false)
-                    Console.WriteLine("add Id: (9 digits)\n");
+                    Console.WriteLine("add Id: (9 digits)");
                 if (int.TryParse(Console.ReadLine(), out id) == false)
                     throw new OnlyDigitsException("ID");
                 if (id < 0)
@@ -218,7 +218,7 @@ namespace ConsoleUI_BL
             int phone;
             do
             {
-                Console.WriteLine("add Phone:\n");
+                Console.WriteLine("add Phone:");
                 if (int.TryParse(Console.ReadLine(), out phone) == false)
                     throw new OnlyDigitsException("Phone");
                 if (phone < 0)
@@ -232,7 +232,7 @@ namespace ConsoleUI_BL
             int maxWeight;
             do
             {
-                Console.WriteLine("add maximum weight that the drone can carry (1,2 or 3 KG)\n");
+                Console.WriteLine("add maximum weight that the drone can carry (1,2 or 3 KG)");
                 if (int.TryParse(Console.ReadLine(), out maxWeight) == false)
                     throw new OnlyDigitsException("Max Weight");
                 if (maxWeight < 0)
@@ -248,7 +248,7 @@ namespace ConsoleUI_BL
             int stationID;
             do
             {
-                Console.WriteLine("Select a station number for initial charging\n");
+                Console.WriteLine("Select a station number for initial charging");
                 if (int.TryParse(Console.ReadLine(), out stationID) == false)
                     throw new OnlyDigitsException("Num Station");
                 if (stationID < 0)
@@ -261,7 +261,7 @@ namespace ConsoleUI_BL
             int priorities;
             do
             {
-                Console.WriteLine("choise the priority, for Normal press 0, Fast press 1, Emergency press 2\n");
+                Console.WriteLine("choise the priority, for Normal press 0, Fast press 1, Emergency press 2");
                 if (int.TryParse(Console.ReadLine(), out priorities) == false)
                     throw new OnlyDigitsException("Max Weight");
                 if (priorities < 0)
@@ -275,9 +275,9 @@ namespace ConsoleUI_BL
         private static string AddModel(bool newModel)
         {
             if (newModel == false)
-                Console.WriteLine("add model:\n");
+                Console.WriteLine("add model:");
             if (newModel == true)
-                Console.WriteLine("add a new model:\n");
+                Console.WriteLine("add a new model:");
             string model = Console.ReadLine();
             return model;
         }
@@ -287,7 +287,7 @@ namespace ConsoleUI_BL
 
             do
             {
-                Console.WriteLine("chose the weight of the parcel, for Light press 0, Medium press 1, Heavy press 2\n");
+                Console.WriteLine("chose the weight of the parcel, for Light press 0, Medium press 1, Heavy press 2");
                 if (int.TryParse(Console.ReadLine(), out weight) == false)
                     throw new OnlyDigitsException("Weight");
                 if (weight < 0)

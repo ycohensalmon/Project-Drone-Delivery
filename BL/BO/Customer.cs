@@ -28,7 +28,7 @@ namespace IBL
                 if (to == "\n")
                     to = "0";
 
-                return $"Id: {Id}\nName:{Name}\nPhone:{Phone}\nLocation:\n{Location}\nParcelsFromCustomer:{from}\nParcelsToCustomer:{to}\n--------------";
+                return $"Id:{Id}\nName:{Name}\nPhone:{Phone}\nLocation:\n{Location}\nParcelsFromCustomer:{from}\nParcelsToCustomer:{to}\n--------------";
             }
         }
     }

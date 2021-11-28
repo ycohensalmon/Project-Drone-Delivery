@@ -19,7 +19,7 @@ namespace IBL
 
             public override string ToString()
             {
-                return $"Id:{Id}, Battery:{Battery}, Location:{Location}";
+                return $"Id:{Id}\nBattery:{Battery}\nLocation:{Location}\n";
             }
         }
     }

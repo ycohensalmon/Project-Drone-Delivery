@@ -20,7 +20,7 @@ namespace IBL
             public int NumParcel { get; set; }
             public override string ToString()
             {
-                return $"Id:{Id}, Model:{Model}, MaxWeight:{MaxWeight}, Status:{Status}, Battery:{Battery}, Location:{Location}, numParcel:{NumParcel}";
+                return $"Id:{Id}\nModel:{Model}\nMaxWeight:{MaxWeight}\nStatus:{Status}\nBattery:{Battery}\nLocation:\n{Location}\nnumParcel:{NumParcel}\n";
             }
         }
     }
