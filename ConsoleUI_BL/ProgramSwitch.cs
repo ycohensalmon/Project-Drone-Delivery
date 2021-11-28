@@ -36,7 +36,7 @@ namespace ConsoleUI_BL
                     AddParcel(bl);
                     break;
                 default:
-                    break;
+                    throw new WrongEnumValuesException("Menu", 1, 4);
             }
         }
 
@@ -75,7 +75,7 @@ namespace ConsoleUI_BL
                     ReleaseDroneFromChargingBase(bl);
                     break;
                 default:
-                    break;
+                    throw new WrongEnumValuesException("Menu", 1, 8);
             }
         }
 
@@ -102,7 +102,7 @@ namespace ConsoleUI_BL
                     PrintParcelById(bl);
                     break;
                 default:
-                    break;
+                    throw new WrongEnumValuesException("Menu", 1, 4);
             }
         }
 
@@ -135,7 +135,7 @@ namespace ConsoleUI_BL
                     PrintStationWithChargeSolts(bl);
                     break;
                 default:
-                    break;
+                    throw new WrongEnumValuesException("Menu", 1, 6);
             }
         }
     }
