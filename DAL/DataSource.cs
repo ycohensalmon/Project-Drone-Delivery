@@ -121,7 +121,8 @@ namespace DalObject
         public static void InitializeParsel()
         {
             DateTime newDate = DateTime.Now;
-            for (int i = 0; i < 10; i++)
+            int i = 0;
+            for (; i < 5; i++)
             {
                 int senderID = Customers[Config.rand.Next(0, Customers.Count)].Id;
                 Parcels.Add(new Parcel
@@ -134,6 +135,24 @@ namespace DalObject
                     Scheduled = DateTime.MinValue,
                     PickedUp = DateTime.MinValue,
                     Delivered = DateTime.MinValue,
+                    Weight = (WeightCategory)Config.rand.Next(3),
+                    Priorities = (Priority)Config.rand.Next(3)
+                });
+            }
+
+            for (; i < 10; i++)
+            {
+                int senderID = Customers[Config.rand.Next(0, Customers.Count)].Id;
+                Parcels.Add(new Parcel
+                {
+                    Id = SerialNum++,
+                    SenderId = senderID,
+                    TargetId = GetTargetId(senderID),
+                    DroneId = Drones[Config.rand.Next(Drones.Count())].Id,
+                    Requested = DateTime.Now,
+                    Scheduled = DateTime.Now,
+                    PickedUp = DateTime.Now,
+                    Delivered = DateTime.Now,
                     Weight = (WeightCategory)Config.rand.Next(3),
                     Priorities = (Priority)Config.rand.Next(3)
                 });

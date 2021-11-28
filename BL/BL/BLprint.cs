@@ -53,6 +53,7 @@ namespace IBL
 
             public Customer GetCustomerById(int customerId)
             {
+                //find the Customer and his parcels fron DL
                 IDAL.DO.Customer customer = dalObj.GetCustomerById(customerId);
                 List<IDAL.DO.Parcel> parcels = dalObj.GetParcels().ToList();
 
