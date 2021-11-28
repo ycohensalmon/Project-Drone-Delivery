@@ -61,6 +61,7 @@ namespace IBL
 
                 //build to the ParcelsFromCustomer list
                 List<ParcelAtCustomer> FromCustomer = new();
+                List<ParcelAtCustomer> ToCustomer = new();
                 CustomerInParcel customerInParcel = new();
                 foreach (var item in parcels)
                 {
@@ -85,30 +86,27 @@ namespace IBL
                             CustomerInParcel = customerInParcel
                         });
                     }
-                }
 
-                //build to the ParcelsToCustomer list
-                List<ParcelAtCustomer> ToCustomer = new();
-                foreach (var parcel in parcels)
-                {
+                    //build to the ParcelsToCustomer list
+
                     //if this parsel was sent to this customer
-                    if (parcel.TargetId == customer.Id)
+                    if (item.TargetId == customer.Id)
                     {
                         //build the CustomerInParcel method
-                        customerInParcel.Id = parcel.SenderId;
-                        IDAL.DO.Customer senderCustomer = dalObj.GetCustomerById(parcel.SenderId);
+                        customerInParcel.Id = item.SenderId;
+                        IDAL.DO.Customer senderCustomer = dalObj.GetCustomerById(item.SenderId);
                         customerInParcel.Name = senderCustomer.Name;
 
                         //add to the ParcelAtCustomer list
                         ToCustomer.Add(new ParcelAtCustomer
                         {
-                            Id = parcel.Id,
-                            Requested = parcel.Requested,
-                            Scheduled = parcel.Scheduled,
-                            PickedUp = parcel.PickedUp,
-                            Delivered = parcel.Delivered,
-                            Weight = (WeightCategory)parcel.Weight,
-                            Priorities = (Priority)parcel.Priorities,
+                            Id = item.Id,
+                            Requested = item.Requested,
+                            Scheduled = item.Scheduled,
+                            PickedUp = item.PickedUp,
+                            Delivered = item.Delivered,
+                            Weight = (WeightCategory)item.Weight,
+                            Priorities = (Priority)item.Priorities,
                             CustomerInParcel = customerInParcel
                         });
                     }
