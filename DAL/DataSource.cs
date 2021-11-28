@@ -108,7 +108,7 @@ namespace DalObject
                 {
                     Id = Config.rand.Next(210000000, 340000000),
                     Phone = Config.rand.Next(0500000000, 0590000000),
-                    Name = Convert.ToString((Names)Config.rand.Next(10)),
+                    Name = Convert.ToString((Names)i),
                     Latitude = (double)Config.rand.Next(31737458, 31807238) / (double)1000000,
                     Longitude = (double)Config.rand.Next(35174572, 35241141) / (double)1000000
                 });
@@ -124,7 +124,7 @@ namespace DalObject
             int i = 0;
             for (; i < 5; i++)
             {
-                int senderID = Customers[Config.rand.Next(0, Customers.Count)].Id;
+                int senderID = Customers.ElementAt(Config.rand.Next(Customers.Count)).Id;
                 Parcels.Add(new Parcel
                 {
                     Id = SerialNum++,
@@ -142,7 +142,7 @@ namespace DalObject
 
             for (; i < 10; i++)
             {
-                int senderID = Customers[Config.rand.Next(0, Customers.Count)].Id;
+                int senderID = Customers.ElementAt(Config.rand.Next(Customers.Count)).Id;
                 Parcels.Add(new Parcel
                 {
                     Id = SerialNum++,

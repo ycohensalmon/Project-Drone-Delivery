@@ -55,57 +55,47 @@ namespace IBL
                 dalObj.UpdateCustomer(customerID, newName, newPhone);
             }
 
+            /// <summary>
+            /// the function receives drone and connect it to the most importent parcel
+            /// </summary>
+            /// <param name="droneId">the drone to connect</param>
             public void ConnectDroneToParcel(int droneId)
             {
+                //getting the drone and check if it available
                 DroneInList drone = GetDroneById(droneId);
                 if (drone.Status != DroneStatuses.Available)
                     throw new StatusDroneException("connect drone to parcel", drone.Status, DroneStatuses.Available);
 
+                //getting the list of parcels and remove all the parcel that was Scheduled 
                 List<IDAL.DO.Parcel> parcels = dalObj.GetParcels().ToList();
-                parcels = parcels.Where(t => t.Scheduled == DateTime.MinValue).ToList();
+                parcels.RemoveAll(parcels => parcels.Scheduled != DateTime.MinValue);
                 if (parcels.Count == 0)
                     throw new NoParcelException("requested", "scheduled");
 
+                //remove all the parcel that the drone can`t carry
                 parcels.RemoveAll(parcels => (int)parcels.Weight > (int)drone.MaxWeight);
                 if (parcels.Count == 0)
                     throw new ParcelTooHeavyException(drone.MaxWeight);
 
-                double batteryIossAvailable, batteryIossWithParcel, allBatteryLoss;
-                foreach (IDAL.DO.Parcel x in parcels)
-                {
-                    //loss from his location to sender
-                    batteryIossAvailable = BatteryIossAvailable(drone.Location.Latitude, drone.Location.Longitude,
-                        dalObj.GetCustomerById(x.SenderId).Latitude, dalObj.GetCustomerById(x.SenderId).Longitude);
-
-                    //base station closest to target
-                    Location temp = GetLocationWithMinDistance(dalObj.GetStations(), dalObj.GetCustomerById(x.TargetId));
-
-                    //loss from target to base station
-                    batteryIossAvailable += BatteryIossAvailable(dalObj.GetCustomerById(x.TargetId).Latitude,
-                    dalObj.GetCustomerById(x.TargetId).Longitude, temp.Latitude, temp.Longitude);
-
-                    //KM from sender lo target
-                    batteryIossWithParcel = BatteryIossWithParcel(dalObj.GetCustomerById(x.SenderId).Latitude,
-                    dalObj.GetCustomerById(x.SenderId).Longitude, dalObj.GetCustomerById(x.TargetId).Latitude,
-                    dalObj.GetCustomerById(x.TargetId).Longitude, (int)x.Weight);
-
-                    allBatteryLoss = batteryIossAvailable + batteryIossWithParcel;
-                    if (drone.Battery - allBatteryLoss < 0)
-                        parcels.Remove(x);
-                }
+                //remove all the parcel that there is no enough battrey in the drone to take them
+                parcels.RemoveAll(parcels => CheckEnoughBattery(parcels, drone) < 0);
                 if (parcels.Count == 0)
                     throw new NotEnoughBatteryException("make a delivery", drone.Battery);
 
+                //ordering the list to get the most importent parcel in the first plase on the list
                 parcels.OrderBy(parcels => Distance.GetDistanceFromLatLonInKm(dalObj.GetCustomerById(parcels.SenderId).Latitude,
                     dalObj.GetCustomerById(parcels.SenderId).Longitude, drone.Location.Latitude, drone.Location.Longitude));
                 parcels.OrderByDescending(t => (int)t.Weight);
                 parcels.OrderByDescending(t => (int)t.Priorities);
 
+                //getting the must importent parcel
                 IDAL.DO.Parcel myParcel = parcels.First();
 
+                //update the drone in BL
                 drone.Status = DroneStatuses.Delivery;
                 drone.NumParcel = myParcel.Id;
 
+                //update the drone in DL
                 try
                 {
                     dalObj.ConnectDroneToParcel(droneId, myParcel.Id);
@@ -114,6 +104,37 @@ namespace IBL
                 {
                     throw new DalException(ex);
                 }
+            }
+
+
+            /// <summary>
+            /// the functaion checks if thre is enough battrey to take this parcel
+            /// </summary>
+            /// <param name="parcel">the parcel</param>
+            /// <param name="drone">the drone</param>
+            /// <returns>if there is enough battrey to take this parcel the function will return number>0 if there is no return num<0</returns>
+            private double CheckEnoughBattery(IDAL.DO.Parcel parcel, DroneInList drone)
+            {
+                double batteryIossAvailable, batteryIossWithParcel, allBatteryLoss;
+
+                //loss from his location to sender
+                batteryIossAvailable = BatteryIossAvailable(drone.Location.Latitude, drone.Location.Longitude,
+                    dalObj.GetCustomerById(parcel.SenderId).Latitude, dalObj.GetCustomerById(parcel.SenderId).Longitude);
+
+                //base station closest to target
+                Location temp = GetLocationWithMinDistance(dalObj.GetStations(), dalObj.GetCustomerById(parcel.TargetId));
+
+                //loss from target to base station
+                batteryIossAvailable += BatteryIossAvailable(dalObj.GetCustomerById(parcel.TargetId).Latitude,
+                dalObj.GetCustomerById(parcel.TargetId).Longitude, temp.Latitude, temp.Longitude);
+
+                //KM from sender lo target
+                batteryIossWithParcel = BatteryIossWithParcel(dalObj.GetCustomerById(parcel.SenderId).Latitude,
+                dalObj.GetCustomerById(parcel.SenderId).Longitude, dalObj.GetCustomerById(parcel.TargetId).Latitude,
+                dalObj.GetCustomerById(parcel.TargetId).Longitude, (int)parcel.Weight);
+
+                allBatteryLoss = batteryIossAvailable + batteryIossWithParcel;
+                return (drone.Battery - allBatteryLoss);
             }
 
             public void CollectParcelsByDrone(int droneId)
