@@ -155,58 +155,71 @@ namespace IBL
                 };
             }
 
-            public void PrintStations()
+            public IEnumerable<IDAL.DO.Station> GetStations()
             {
-                foreach (var item in dalObj.GetStations())
-                {
-                    Console.WriteLine(GetStationById(item.Id));
-                }
+                IEnumerable<IDAL.DO.Station> stations = dalObj.GetStations();
+                if (stations.Count() == 0)
+                    throw new EmptyListException("stations");
+
+                return stations;
             }
 
-            public void PrintCustomers()
+            public IEnumerable<IDAL.DO.Drone> GetDrones()
             {
-                foreach (var item in dalObj.GetCustomers())
-                {
-                    Console.WriteLine(GetCustomerById(item.Id));
-                }
+                IEnumerable<IDAL.DO.Drone> drones = dalObj.GetDrones();
+                if (drones.Count() == 0)
+                    throw new EmptyListException("drones");
+
+                return drones;
             }
 
-            public void PrintParcels()
+            public IEnumerable<IDAL.DO.Customer> GetCustomers()
             {
-                foreach (var item in dalObj.GetParcels())
-                {
-                    Console.WriteLine(GetParcelById(item.Id));
-                }
+                IEnumerable<IDAL.DO.Customer> customers = dalObj.GetCustomers();
+                if (customers.Count() == 0)
+                    throw new EmptyListException("customers");
+
+                return customers;
             }
 
-            public void PrintDrones()
+            public IEnumerable<IDAL.DO.Parcel> GetParcels()
             {
-                foreach (var item in dalObj.GetDrones())
-                {
-                    Console.WriteLine(GetDroneById(item.Id));
-                }
+                IEnumerable<IDAL.DO.Parcel> parcels = dalObj.GetParcels();
+                if (parcels.Count() == 0)
+                    throw new EmptyListException("parcels");
+
+                return parcels;
             }
 
-            public void PrintParcelsWithoutDrone()
+            public IEnumerable<IDAL.DO.Parcel> GetParcelsWithoutDrone()
             {
-                foreach (var item in dalObj.GetParcels())
+                List<IDAL.DO.Parcel> parcels = new();
+                foreach (var item in GetParcels())
                 {
                     if (item.DroneId == 0)
-                    {
-                        Console.WriteLine(GetParcelById(item.Id));
-                    }
+                        parcels.Add(item);
                 }
+
+                if (parcels.Count() == 0)
+                    throw new EmptyListException("parcels without drone");
+
+                return parcels;
             }
 
-            public void PrintStationWithChargeSolts()
+            public IEnumerable<IDAL.DO.Station> GetStationWithChargeSolts()
             {
-                foreach (var item in dalObj.GetStations())
+                List<IDAL.DO.Station> stations = new();
+                foreach (var item in GetStations())
                 {
                     if (item.ChargeSolts > 0)
-                    {
-                        Console.WriteLine(GetStationById(item.Id));
-                    }
+                        stations.Add(item);
                 }
+
+                if (stations.Count() == 0)
+                    throw new EmptyListException("station with charge solts available");
+
+                return stations;
+
             }
         }
     }

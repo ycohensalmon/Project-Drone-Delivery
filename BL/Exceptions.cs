@@ -9,7 +9,6 @@ namespace IBL
 {
     namespace BO
     {
-        [Serializable]
         public class NegetiveValueException : Exception
         {
             public NegetiveValueException(string item)
@@ -20,7 +19,6 @@ namespace IBL
                 : base($"ERROR: {item} must be positive, The {item} must be content at least {digits} digits (example:{v})") { }
         }
 
-        [Serializable]
         public class OnlyDigitsException : Exception
         {
             public OnlyDigitsException(string message) : base($"ERROR: {message} must be only with digits.") { }
@@ -31,7 +29,6 @@ namespace IBL
             public WrongEnumValuesException(string item, int first, int last) : base($"ERROR: {item} have only {first} - {last} values.") { }
         }
 
-        [Serializable]
         public class DalException : Exception
         {
             public DalException(Exception item) : base(item.Message) { }
@@ -83,6 +80,11 @@ namespace IBL
         public class SelfDeliveryException : Exception
         {
             public SelfDeliveryException() : base("ERROR: It's imposible to send parcel to yourself.\n") { }
+        }
+
+        public class EmptyListException : Exception
+        {
+            public EmptyListException(string message) : base($"ERROR: The list of {message} is empty") { }
         }
     }
 }

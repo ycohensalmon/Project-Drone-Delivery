@@ -26,12 +26,12 @@ namespace IBL
         public DroneInList GetDroneById(int droneId);
         public Customer GetCustomerById(int customerId);
         public Parcel GetParcelById(int parcelid);
-        public void PrintStations();
-        public void PrintDrones();
-        public void PrintCustomers();
-        public void PrintParcels();
-        public void PrintParcelsWithoutDrone();
-        public void PrintStationWithChargeSolts();
+        public IEnumerable<IDAL.DO.Station> GetStations();
+        public IEnumerable<IDAL.DO.Drone> GetDrones();
+        public IEnumerable<IDAL.DO.Customer> GetCustomers();
+        public IEnumerable<IDAL.DO.Parcel> GetParcels();
+        public IEnumerable<IDAL.DO.Parcel> GetParcelsWithoutDrone();
+        public IEnumerable<IDAL.DO.Station> GetStationWithChargeSolts();
     }
 
 }

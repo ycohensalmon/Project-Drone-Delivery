@@ -28,7 +28,7 @@ namespace ConsoleUI_BL
         /// <summary>
         /// returns the object drone that matches the id
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
+        /// <param name="bl">the parameter that include all the lists</param>
         private static void PrintDroneById(IBL.IBL bl)
         {
             int droneId;
@@ -40,7 +40,7 @@ namespace ConsoleUI_BL
         /// <summary>
         /// returns the object customer that matches the id
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
+        /// <param name="bl">the parameter that include all the lists</param>
         private static void PrintCustomerById(IBL.IBL bl)
         {
             int customerId;
@@ -52,7 +52,7 @@ namespace ConsoleUI_BL
         /// <summary>
         /// returns the object parcel that matches the id
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
+        /// <param name="bl">the parameter that include all the lists</param>
         private static void PrintParcelById(IBL.IBL bl)
         {
             int parcelId;
@@ -68,55 +68,82 @@ namespace ConsoleUI_BL
         /// <summary>
         /// print the list of stations
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
+        /// <param name="bl">the parameter that include all the lists</param>
         private static void PrintStations(IBL.IBL bl)
         {
-            bl.PrintStations();
+            IEnumerable<IDAL.DO.Station> stations = bl.GetStations();
+
+            foreach (var item in stations){ Console.WriteLine(bl.GetStationById(item.Id)); }
         }
 
         /// <summary>
         /// print the list of Drones
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
+        /// <param name="bl">the parameter that include all the lists</param>
         private static void PrintDrones(IBL.IBL bl)
         {
-            bl.PrintDrones();
+            IEnumerable<IDAL.DO.Drone> drones = bl.GetDrones();
+
+            foreach (var item in drones)
+            {
+                Console.WriteLine(bl.GetDroneById(item.Id));
+            }
         }
 
         /// <summary>
         /// print the list of Costumers
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
+        /// <param name="bl">the parameter that include all the lists</param>
         private static void PrintCostumers(IBL.IBL bl)
         {
-            bl.PrintCustomers();
+            IEnumerable<IDAL.DO.Customer> customers = bl.GetCustomers();
+            
+            foreach (var item in customers)
+            {
+                Console.WriteLine(bl.GetCustomerById(item.Id));
+            }
         }
 
         /// <summary>
         /// print the list of Parcels
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
+        /// <param name="bl">the parameter that include all the lists</param>
         private static void PrintParcels(IBL.IBL bl)
         {
-            bl.PrintParcels();
+            IEnumerable<IDAL.DO.Parcel> parcels = bl.GetParcels();
+            
+            foreach (var item in parcels)
+            {
+                Console.WriteLine(bl.GetParcelById(item.Id));
+            }
         }
 
         /// <summary>
         /// print a list with all the parcels that are not associated to a drone
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
+        /// <param name="bl">the parameter that include all the lists</param>
         private static void PrintParcelsWithoutDrone(IBL.IBL bl)
         {
-            bl.PrintParcelsWithoutDrone();
+            IEnumerable<IDAL.DO.Parcel> parcels = bl.GetParcelsWithoutDrone();
+
+            foreach (var item in parcels)
+            {
+                Console.WriteLine(bl.GetParcelById(item.Id));
+            }
         }
 
         /// <summary>
         /// print an array with tyhe list of stations with empty charge slots
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
+        /// <param name="bl">the parameter that include all the lists</param>
         private static void PrintStationWithChargeSolts(IBL.IBL bl)
         {
-            bl.PrintStationWithChargeSolts();
+            IEnumerable<IDAL.DO.Station> stations = bl.GetStationWithChargeSolts();
+
+            foreach (var item in stations)
+            {
+                Console.WriteLine(bl.GetStationById(item.Id));
+            }
         }
     }
 }

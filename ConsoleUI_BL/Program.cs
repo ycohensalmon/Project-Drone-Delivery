@@ -41,8 +41,10 @@ namespace ConsoleUI_BL
                             PrintMenu4();
                             Switch4(bl);
                             break;
-                        default:
+                        case 5:
                             break;
+                        default:
+                            throw new WrongEnumValuesException("Menu", 1, 5);
                     }
                 }
                 catch (Exception ex)
