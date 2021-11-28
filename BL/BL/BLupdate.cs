@@ -157,7 +157,7 @@ namespace IBL
                     throw new StatusDroneException("delivered parcel to costumer", drone.Status, DroneStatuses.Delivery);
 
                 IDAL.DO.Parcel myParcel = dalObj.GetParcelById(drone.NumParcel);
-                if (myParcel.PickedUp == DateTime.MinValue || myParcel.Delivered == DateTime.MinValue)
+                if (myParcel.PickedUp == DateTime.MinValue || myParcel.Delivered != DateTime.MinValue)
                     throw new NoParcelException("picked up", "delivered");
                 if (myParcel.DroneId != droneId)
                     throw new NotConnectException(droneId, myParcel.DroneId, myParcel.Id);
