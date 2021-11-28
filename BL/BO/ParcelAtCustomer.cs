@@ -22,7 +22,7 @@ namespace IBL
             public override string ToString()
             {
                 string sp = "   ";
-                return $" Id: {Id}\n{sp}Requested: {Requested}\n{sp}Scheduled: {Scheduled}\n{sp}PickedUp: {PickedUp}\n{sp}Delivered: {Delivered}\n{sp}Weight: {Weight}\n{sp}Priorities:{Priorities}\n{sp}CustomerInParcel:\n";
+                return $" Id: {Id}\n{sp}Requested: {Requested}\n{sp}Scheduled: {Scheduled}\n{sp}PickedUp: {PickedUp}\n{sp}Delivered: {Delivered}\n{sp}Weight: {Weight}\n{sp}Priorities:{Priorities}\n{sp}CustomerInParcel:{CustomerInParcel}\n";
             }
         }
     }

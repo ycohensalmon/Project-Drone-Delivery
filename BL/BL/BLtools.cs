@@ -82,13 +82,14 @@ namespace IBL
 
                 if (statuses == DroneStatuses.Available)
                 {
-                    List<IDAL.DO.Parcel> parcelDelivered = new();
-                    foreach (var item in parcel) if (item.Delivered != DateTime.MinValue) { parcelDelivered.Add(item); }
-                    int randIndexStation = rand.Next(parcelDelivered.Count());
-                    if (parcelDelivered.Count != 0)
+                    List<Location> locations = new();
+                    foreach (var item in parcel) if (item.Delivered != DateTime.MinValue)
+                        {
+                            locations.Add(GetCustomerById(item.TargetId).Location);
+                        }
+                    if (locations.Count != 0)
                     {
-                        IDAL.DO.Customer tempCustomer = customer.FirstOrDefault(customer => customer.Id == parcelDelivered[randIndexStation].TargetId);
-                        return GetLocationCustomer(tempCustomer);
+                        return locations[rand.Next(locations.Count())];
                     }
                 }
                 Location location = new();
@@ -140,7 +141,7 @@ namespace IBL
 
             private DroneStatuses GetStatus(int droneId, IEnumerable<IDAL.DO.Parcel> parcel)
             {
-                if (GetTempParcel(droneId, parcel).DroneId == droneId)
+                if (GetTempParcel(droneId, parcel).DroneId == droneId && GetTempParcel(droneId, parcel).Delivered == DateTime.MinValue)
                     return DroneStatuses.Delivery;
                 else
                     return (DroneStatuses)rand.Next(2);
