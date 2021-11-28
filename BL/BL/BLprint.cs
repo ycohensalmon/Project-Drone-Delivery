@@ -59,7 +59,7 @@ namespace IBL
 
                 Location temp = new Location { Latitude = customer.Latitude, Longitude = customer.Longitude };
 
-                //build to the ParcelsFromCustomer list
+                //build to the Parcels **From** Customer list
                 List<ParcelAtCustomer> FromCustomer = new();
                 List<ParcelAtCustomer> ToCustomer = new();
                 CustomerInParcel customerInParcel = new();
@@ -68,10 +68,8 @@ namespace IBL
                     //if this parsel was sent by this customer
                     if (item.SenderId == customer.Id)
                     {
-                        //build the CustomerInParcel method
-                        customerInParcel.Id = item.TargetId;
+                        //for build the CustomerInParcel method
                         IDAL.DO.Customer targetCustomer = dalObj.GetCustomerById(item.TargetId);
-                        customerInParcel.Name = targetCustomer.Name;
 
                         //add to the ParcelAtCustomer list
                         FromCustomer.Add(new ParcelAtCustomer
@@ -83,19 +81,17 @@ namespace IBL
                             Delivered = item.Delivered,
                             Weight = (WeightCategory)item.Weight,
                             Priorities = (Priority)item.Priorities,
-                            CustomerInParcel = customerInParcel
+                            CustomerInParcel = new CustomerInParcel{ Id = item.TargetId, Name = targetCustomer.Name }
                         });
                     }
 
-                    //build to the ParcelsToCustomer list
+                    //build to the Parcels **To** Customer list
 
                     //if this parsel was sent to this customer
                     if (item.TargetId == customer.Id)
                     {
-                        //build the CustomerInParcel method
-                        customerInParcel.Id = item.SenderId;
+                        //for build the CustomerInParcel method
                         IDAL.DO.Customer senderCustomer = dalObj.GetCustomerById(item.SenderId);
-                        customerInParcel.Name = senderCustomer.Name;
 
                         //add to the ParcelAtCustomer list
                         ToCustomer.Add(new ParcelAtCustomer
@@ -107,7 +103,7 @@ namespace IBL
                             Delivered = item.Delivered,
                             Weight = (WeightCategory)item.Weight,
                             Priorities = (Priority)item.Priorities,
-                            CustomerInParcel = customerInParcel
+                            CustomerInParcel = new CustomerInParcel { Id = item.SenderId, Name = senderCustomer.Name }
                         });
                     }
                 }
