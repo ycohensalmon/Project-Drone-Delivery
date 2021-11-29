@@ -111,7 +111,7 @@ namespace DalObject
                     Name = Convert.ToString((Names)i),
                     Latitude = (double)Config.rand.Next(31737458, 31807238) / (double)1000000,
                     Longitude = (double)Config.rand.Next(35174572, 35241141) / (double)1000000
-                });
+                }); 
             }
         }
 
