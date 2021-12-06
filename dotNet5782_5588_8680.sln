@@ -5,12 +5,12 @@ VisualStudioVersion = 16.0.31727.386
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Targil0", "Targil0\Targil0.csproj", "{CB97E17D-159A-4400-A2A1-E912701D866C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D29D8A78-91A2-4B85-B19F-DC32ADA2A613}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Solution Items", ".Solution Items", "{D29D8A78-91A2-4B85-B19F-DC32ADA2A613}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items (2)", "Solution Items (2)", "{509541A8-5ECD-4005-ABCC-66E74E4C4054}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Solution Items (2)", ".Solution Items (2)", "{509541A8-5ECD-4005-ABCC-66E74E4C4054}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
@@ -22,6 +22,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{36716709-A177-4014-A425-B2386DFD62C2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI_BL", "ConsoleUI_BL\ConsoleUI_BL.csproj", "{06BC7933-CF9B-4175-8B83-7FC876787C8D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Data Layer", "1. Data Layer", "{649F22CE-3DF8-4409-8516-1CF099939248}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Business Layer", "2. Business Layer", "{582CEF75-4BAA-4E63-BC68-370CDE4CFFA5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Presentation Layer", "3. Presentation Layer", "{9D2ED901-E0DE-4642-ABA1-18C91E2E1CFE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0. Targil 0", "0. Targil 0", "{B75F73D9-3D77-468F-BE94-C31EF4AC1B6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +60,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CB97E17D-159A-4400-A2A1-E912701D866C} = {B75F73D9-3D77-468F-BE94-C31EF4AC1B6A}
+		{9C388440-742F-45D5-8250-23A325BB452E} = {649F22CE-3DF8-4409-8516-1CF099939248}
+		{2F7AD28B-8C50-403D-93FB-F7FBA5DF1925} = {649F22CE-3DF8-4409-8516-1CF099939248}
+		{36716709-A177-4014-A425-B2386DFD62C2} = {582CEF75-4BAA-4E63-BC68-370CDE4CFFA5}
+		{06BC7933-CF9B-4175-8B83-7FC876787C8D} = {582CEF75-4BAA-4E63-BC68-370CDE4CFFA5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D961A06C-6FDE-4CA7-804A-BF4FFEC36708}
