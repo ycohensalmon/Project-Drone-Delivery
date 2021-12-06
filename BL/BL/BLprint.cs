@@ -10,7 +10,6 @@ namespace IBL
     {
         public partial class BL : IBL
         {
-
             public Station GetStationById(int stationId)
             {
                 IDAL.DO.Station station = dalObj.GetStationById(stationId);
@@ -158,7 +157,7 @@ namespace IBL
             public IEnumerable<IDAL.DO.Station> GetStations()
             {
                 IEnumerable<IDAL.DO.Station> stations = dalObj.GetStations();
-                if (stations.Count() == 0)
+                if (!stations.Any())
                     throw new EmptyListException("stations");
 
                 return stations;
@@ -167,7 +166,7 @@ namespace IBL
             public IEnumerable<IDAL.DO.Drone> GetDrones()
             {
                 IEnumerable<IDAL.DO.Drone> drones = dalObj.GetDrones();
-                if (drones.Count() == 0)
+                if (!drones.Any())
                     throw new EmptyListException("drones");
 
                 return drones;
@@ -176,7 +175,7 @@ namespace IBL
             public IEnumerable<IDAL.DO.Customer> GetCustomers()
             {
                 IEnumerable<IDAL.DO.Customer> customers = dalObj.GetCustomers();
-                if (customers.Count() == 0)
+                if (!customers.Any())
                     throw new EmptyListException("customers");
 
                 return customers;
@@ -185,7 +184,7 @@ namespace IBL
             public IEnumerable<IDAL.DO.Parcel> GetParcels()
             {
                 IEnumerable<IDAL.DO.Parcel> parcels = dalObj.GetParcels();
-                if (parcels.Count() == 0)
+                if (!parcels.Any())
                     throw new EmptyListException("parcels");
 
                 return parcels;
@@ -193,14 +192,9 @@ namespace IBL
 
             public IEnumerable<IDAL.DO.Parcel> GetParcelsWithoutDrone()
             {
-                List<IDAL.DO.Parcel> parcels = new();
-                foreach (var item in GetParcels())
-                {
-                    if (item.DroneId == 0)
-                        parcels.Add(item);
-                }
+                IEnumerable<IDAL.DO.Parcel> parcels = dalObj.GetParcels(x => x.DroneId == 0);
 
-                if (parcels.Count() == 0)
+                if (!parcels.Any())
                     throw new EmptyListException("parcels without drone");
 
                 return parcels;
@@ -208,14 +202,9 @@ namespace IBL
 
             public IEnumerable<IDAL.DO.Station> GetStationWithChargeSolts()
             {
-                List<IDAL.DO.Station> stations = new();
-                foreach (var item in GetStations())
-                {
-                    if (item.ChargeSolts > 0)
-                        stations.Add(item);
-                }
+                IEnumerable<IDAL.DO.Station> stations = dalObj.GetStations(x => x.ChargeSolts != 0);
 
-                if (stations.Count() == 0)
+                if (!stations.Any())
                     throw new EmptyListException("station with charge solts available");
 
                 return stations;

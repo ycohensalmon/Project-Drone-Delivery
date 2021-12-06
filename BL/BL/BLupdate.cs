@@ -66,10 +66,9 @@ namespace IBL
                 if (drone.Status != DroneStatuses.Available)
                     throw new StatusDroneException("connect drone to parcel", drone.Status, DroneStatuses.Available);
 
-                //getting the list of parcels and remove all the parcel that was Scheduled 
-                List<IDAL.DO.Parcel> parcels = dalObj.GetParcels().ToList();
-                parcels.RemoveAll(parcels => parcels.Scheduled != null);
-                if (parcels.Count == 0)
+                //getting the list of parcels that are not Scheduled 
+                List<IDAL.DO.Parcel> parcels = dalObj.GetParcels(x => x.Scheduled == null).ToList();
+                if (!parcels.Any())
                     throw new NoParcelException("requested", "scheduled");
 
                 //remove all the parcel that the drone can`t carry
@@ -215,9 +214,8 @@ namespace IBL
                 if (drone.Status != DroneStatuses.Available)
                     throw new StatusDroneException("send drone to charge", drone.Status, DroneStatuses.Available);
 
-                List<IDAL.DO.Station> station = dalObj.GetStations().ToList();
-                station.RemoveAll(s => s.ChargeSolts == 0);
-                if (station.Count == 0)
+                List<IDAL.DO.Station> station = dalObj.GetStations(x => x.ChargeSolts != 0).ToList();
+                if (!station.Any())
                     throw new NoChargeSlotException();
 
                 station.OrderBy(s => Distance.GetDistanceFromLatLonInKm(s.Latitude, s.Longitude, drone.Location.Latitude, drone.Location.Longitude));

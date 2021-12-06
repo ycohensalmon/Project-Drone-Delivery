@@ -11,9 +11,7 @@ namespace IBL
         public partial class BL : IBL
         {
             private double BatteryIossAvailable(double lat1, double lon1, double lat2, double lon2)
-            {
-                return (Distance.GetDistanceFromLatLonInKm(lat1, lon1, lat2, lon2)) * Available;
-            }
+                => (Distance.GetDistanceFromLatLonInKm(lat1, lon1, lat2, lon2)) * Available;
 
             private double BatteryIossWithParcel(double lat1, double lon1, double lat2, double lon2, int Weight)
             {

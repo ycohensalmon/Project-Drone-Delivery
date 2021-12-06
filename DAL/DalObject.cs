@@ -18,10 +18,6 @@ namespace DalObject
         // news functions //
         //-----------------------------------------------------------------------------------------------------------//
 
-        /// <summary>
-        /// add new station to the list
-        /// </summary>
-        /// <param name="station">the paraneter to adding</param>
         public void NewStation(Station station)
         {
             foreach (var item in GetStations())
@@ -33,10 +29,6 @@ namespace DalObject
 
         }
 
-        /// <summary>
-        /// adds a drone to the list of Drones
-        /// </summary>
-        /// <param name="drone">the paraneter to adding</param>
         public void NewDrone(Drone drone)
         {
             foreach (var item in GetDrones())
@@ -47,10 +39,6 @@ namespace DalObject
             DataSource.Drones.Add(drone);
         }
 
-        /// <summary>
-        /// adds a customer to list of Customers
-        /// </summary>
-        /// <param name="customer">the paraneter to adding</param>
         public void NewCostumer(Customer customer)
         {
             foreach (var item in GetCustomers())
@@ -61,10 +49,6 @@ namespace DalObject
             DataSource.Customers.Add(customer);
         }
 
-        /// <summary>
-        /// adds a parcel to the list of Parcels
-        /// </summary>
-        /// <param name="parcel">the paraneter to adding</param>
         public void NewParcel(Parcel parcel) => DataSource.Parcels.Add(parcel);
 
 
@@ -72,11 +56,6 @@ namespace DalObject
         // uptades fonctions //
         //-----------------------------------------------------------------------------------------------------------//
 
-        /// <summary>
-        /// assign a drone to a parcel and update the scheduled time
-        /// </summary>
-        /// <param name="droneId">the id of the parcel</param>
-        /// <param name="parcelId">the id of the drone</param>
         public void ConnectDroneToParcel(int droneId, int parcelId)
         {
             if (GetDrones().FirstOrDefault(drone=> drone.Id == droneId).Id != droneId)
@@ -90,10 +69,7 @@ namespace DalObject
 
             DataSource.Parcels.Add(parcel);
         }
-        /// <summary>
-        /// updates the drone that was assigned to a parcel to pick up the parcel
-        /// </summary>
-        /// <param name="parcelId">the id of the parcel</param>
+        
         public void CollectParcelByDrone(int parcelId)
         {
             Parcel parcel = GetParcelById(parcelId);
@@ -103,10 +79,7 @@ namespace DalObject
 
             DataSource.Parcels.Add(parcel);
         }
-        /// <summary>
-        /// updates that the parcel was delivered to the target
-        /// </summary>
-        /// <param name="parcelId">the id of the parcel</param>
+        
         public void DeliveredParcel(int parcelId)
         {
             Parcel parcel = GetParcelById(parcelId);
@@ -117,11 +90,7 @@ namespace DalObject
 
             DataSource.Parcels.Add(parcel);
         }
-        /// <summary>
-        /// send a drone to charge
-        /// </summary>
-        /// <param name="droneId">the drone to send to charge</param>
-        /// <param name="stationId">the station to send it to charge</param>
+        
         public void SendDroneToBaseCharge(int droneId, int stationId)
         {
             Drone drone = GetDroneById(droneId);
@@ -138,10 +107,6 @@ namespace DalObject
             DataSource.Stations.Add(station);
         }
 
-        /// <summary>
-        /// release a drone from charge
-        /// </summary>
-        /// <param name="droneId">the id of the drone to release</param>
         public void ReleaseDroneFromCharging(int droneId)
         {
             DroneCharge droneCharge = DataSource.DroneCharges.FirstOrDefault(x => x.DroneId == droneId);
@@ -195,8 +160,6 @@ namespace DalObject
         public void UpdateCustomer(int customerID, string newName, string newPhone)
         {
             Customer customer = GetCustomerById(customerID);
-            //if (station.Id != stationId)
-            //    throw new IdNotFoundException(stationId, "Station");
 
             if (newName != "")
             {
@@ -217,46 +180,25 @@ namespace DalObject
         // Get List //
         //-----------------------------------------------------------------------------------------------------------//
 
-        /// <summary>
-        /// Get the Drones
-        /// </summary>
-        /// <returns>the lists of the Drones </returns>
-        public IEnumerable<Drone> GetDrones() => DataSource.Drones;
+        public IEnumerable<Drone> GetDrones(Func<Drone, bool> predicate = null)
+            => predicate == null ? DataSource.Drones : DataSource.Drones.Where(predicate);
 
-        /// <summary>
-        /// Get the Drones charge
-        /// </summary>
-        /// <returns>the lists of the Drones </returns>
-        public IEnumerable<DroneCharge> GetDroneCharges() => DataSource.DroneCharges;
+        public IEnumerable<Station> GetStations(Func<Station, bool> predicate = null)
+            => predicate == null ? DataSource.Stations : DataSource.Stations.Where(predicate);
 
-        /// <summary>
-        /// Get the Stations
-        /// </summary>
-        /// <returns>the lists of the Stations</returns>
-        public IEnumerable<Station> GetStations() => DataSource.Stations;
+        public IEnumerable<Customer> GetCustomers(Func<Customer, bool> predicate = null)
+            => predicate == null ? DataSource.Customers : DataSource.Customers.Where(predicate);
 
-        /// <summary>
-        /// Get the Customers
-        /// </summary>
-        /// <returns>the lists of the Customers </returns>
-        public IEnumerable<Customer> GetCustomers() => DataSource.Customers;
+        public IEnumerable<Parcel> GetParcels(Func<Parcel, bool> predicate = null)
+            => predicate == null ? DataSource.Parcels : DataSource.Parcels.Where(predicate);
 
-        /// <summary>
-        /// Get the Parcels
-        /// </summary>
-        /// <returns>the lists of the Parcels </returns>
-        public IEnumerable<Parcel> GetParcels() => DataSource.Parcels;
-
+        public IEnumerable<DroneCharge> GetDroneCharges(Func<DroneCharge, bool> predicate = null)
+            => predicate == null ? DataSource.DroneCharges : DataSource.DroneCharges.Where(predicate);
 
         //-----------------------------------------------------------------------------------------------------------//
         // get objects by id //
         //-----------------------------------------------------------------------------------------------------------//
 
-        /// <summary>
-        /// returns the object Station that matches the id
-        /// </summary>
-        /// <param name="id">the id of the Stations</param>
-        /// <returns></returns>
         public Station GetStationById(int id)
         {
             Station station = DataSource.Stations.Find(x => x.Id == id);
@@ -265,11 +207,6 @@ namespace DalObject
             return station;
         }
 
-        /// <summary>
-        /// returns the object Customer that matches the id
-        /// </summary>
-        /// <param name="id">the id of the drone</param>
-        /// <returns>x</returns>
         public Drone GetDroneById(int id)
         {
             Drone drone = DataSource.Drones.Find(x => x.Id == id);
@@ -278,11 +215,6 @@ namespace DalObject
             return drone;
         }
 
-        /// <summary>
-        /// returns the object Customer that matches the id
-        /// </summary>
-        /// <param name="id">the id of the Customer</param>
-        /// <returns></returns>
         public Customer GetCustomerById(int id)
         {
             Customer customer = DataSource.Customers.Find(x => x.Id == id);
@@ -291,11 +223,6 @@ namespace DalObject
             return customer;
         }
 
-        /// <summary>
-        /// returns the object Parcels that matches the id
-        /// </summary>
-        /// <param name="id">the id of the Parcels</param>
-        /// <returns></returns>
         public Parcel GetParcelById(int id)
         {
             Parcel parcel = DataSource.Parcels.Find(x => x.Id == id);

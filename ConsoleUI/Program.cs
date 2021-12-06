@@ -595,8 +595,8 @@ namespace ConsoleUI
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void PrintParcelsWithoutDrone(IDal dalObject)
         {
-            IEnumerable<Parcel> temp = dalObject.GetParcels();
-            foreach (Parcel y in temp) { if (y.DroneId == 0) { Console.WriteLine(y); } }
+            IEnumerable<Parcel> temp = dalObject.GetParcels(x => x.DroneId == 0);
+            foreach (Parcel y in temp) {Console.WriteLine(y); }
         }
 
         /// <summary>
@@ -605,8 +605,8 @@ namespace ConsoleUI
         /// <param name="dalObject">the parameter that include all the lists</param>
         private static void PrintStationWithChargeSolts(IDal dalObject)
         {
-            IEnumerable<Station> temp = dalObject.GetStations();
-            foreach (Station y in temp) { if (y.ChargeSolts != 0) { Console.WriteLine(y); } }
+            IEnumerable<Station> temp = dalObject.GetStations(x => x.ChargeSolts != 0);
+            foreach (Station y in temp) { Console.WriteLine(y); }
         }
     }
 }
