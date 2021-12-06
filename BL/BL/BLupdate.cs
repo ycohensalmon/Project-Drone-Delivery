@@ -68,7 +68,7 @@ namespace IBL
 
                 //getting the list of parcels and remove all the parcel that was Scheduled 
                 List<IDAL.DO.Parcel> parcels = dalObj.GetParcels().ToList();
-                parcels.RemoveAll(parcels => parcels.Scheduled != DateTime.MinValue);
+                parcels.RemoveAll(parcels => parcels.Scheduled != null);
                 if (parcels.Count == 0)
                     throw new NoParcelException("requested", "scheduled");
 
@@ -144,7 +144,7 @@ namespace IBL
                     throw new StatusDroneException("collect parcel by drone", drone.Status, DroneStatuses.Delivery);
 
                 IDAL.DO.Parcel myParcel = dalObj.GetParcelById(drone.NumParcel);
-                if (myParcel.Scheduled == DateTime.MinValue || myParcel.PickedUp != DateTime.MinValue)
+                if (myParcel.Scheduled == null || myParcel.PickedUp != null)
                     throw new NoParcelException("scheduled", "picked up");
                 if (myParcel.DroneId != droneId)
                     throw new NotConnectException(droneId, myParcel.DroneId, myParcel.Id);
@@ -178,7 +178,7 @@ namespace IBL
                     throw new StatusDroneException("delivered parcel to costumer", drone.Status, DroneStatuses.Delivery);
 
                 IDAL.DO.Parcel myParcel = dalObj.GetParcelById(drone.NumParcel);
-                if (myParcel.PickedUp == DateTime.MinValue || myParcel.Delivered != DateTime.MinValue)
+                if (myParcel.PickedUp == null || myParcel.Delivered != null)
                     throw new NoParcelException("picked up", "delivered");
                 if (myParcel.DroneId != droneId)
                     throw new NotConnectException(droneId, myParcel.DroneId, myParcel.Id);

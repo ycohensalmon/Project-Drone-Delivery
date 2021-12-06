@@ -390,9 +390,9 @@ namespace ConsoleUI
                 SenderId = rand.Next(10000, 99999),
                 TargetId = rand.Next(10000, 99999),
                 Requested = DateTime.Now,
-                Scheduled = DateTime.MinValue,
-                PickedUp = DateTime.MinValue,
-                Delivered = DateTime.MinValue,
+                Scheduled = null,
+                PickedUp = null,
+                Delivered = null,
                 Weight = (WeightCategory)weight,
                 Priorities = (Priority)priorities
             };
@@ -447,7 +447,7 @@ namespace ConsoleUI
         {
             int parcelId;
             IEnumerable<Parcel> temp = dalObject.GetParcels();
-            foreach (Parcel x in temp) { if (x.PickedUp != DateTime.MinValue && x.Delivered == DateTime.MinValue) { Console.WriteLine(x); } }
+            foreach (Parcel x in temp) { if (x.PickedUp != null && x.Delivered == null) { Console.WriteLine(x); } }
             Console.WriteLine("Enter the Id of the parcel");
             int.TryParse(Console.ReadLine(), out parcelId);
 

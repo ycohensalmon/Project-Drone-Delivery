@@ -97,9 +97,9 @@ namespace IBL
                         TargetId = receiveID,
                         DroneId = 0,
                         Requested = DateTime.Now,
-                        Scheduled = DateTime.MinValue,
-                        PickedUp = DateTime.MinValue,
-                        Delivered = DateTime.MinValue,
+                        Scheduled = null,
+                        PickedUp = null,
+                        Delivered = null,
                         Weight = (IDAL.DO.WeightCategory)parcel.Weight,
                         Priorities = (IDAL.DO.Priority)parcel.Priorities
                     });

@@ -10,25 +10,15 @@ namespace IBL
     {
         public class ParcelInList
         {
-            private int id;
-            private string senderName;
-            private string targetName;
-            private DateTime requested;
-            private DateTime scheduled;
-            private DateTime pickedUp;
-            private DateTime delivered;
-            private WeightCategory weight;
-            private Priority priorities;
-
-            public int Id { get => id; set => id = value; }
-            public string SenderName { get => senderName; set => senderName = value; }
-            public string TargetName { get => targetName; set => targetName = value; }
-            public DateTime Requested { get => requested; set => requested = value; }
-            public DateTime Scheduled { get => scheduled; set => scheduled = value; }
-            public DateTime PickedUp { get => pickedUp; set => pickedUp = value; }
-            public DateTime Delivered { get => delivered; set => delivered = value; }
-            public WeightCategory Weight { get => weight; set => weight = value; }
-            public Priority Priorities { get => priorities; set => priorities = value; }
+            public Int32 Id { get; set; }
+            public string SenderName { get; set; }
+            public string TargetName { get; set; }
+            public DateTime? Requested { get; set; }
+            public DateTime? Scheduled { get; set; }
+            public DateTime? PickedUp { get; set; }
+            public DateTime? Delivered { get; set; }
+            public WeightCategory Weight { get; set; }
+            public Priority Priorities { get; set; }
             public override string ToString()
             {
                 return $"Id: {Id}, SenderName: {SenderName}, TargetName: {TargetName},S\nRequested: {Requested}, " +

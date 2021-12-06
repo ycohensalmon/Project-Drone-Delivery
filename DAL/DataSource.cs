@@ -132,9 +132,9 @@ namespace DalObject
                     TargetId = GetTargetId(senderID),
                     DroneId = 0,
                     Requested = DateTime.Now,
-                    Scheduled = DateTime.MinValue,
-                    PickedUp = DateTime.MinValue,
-                    Delivered = DateTime.MinValue,
+                    Scheduled = null,
+                    PickedUp = null,
+                    Delivered = null,
                     Weight = (WeightCategory)Config.rand.Next(3),
                     Priorities = (Priority)Config.rand.Next(3)
                 });

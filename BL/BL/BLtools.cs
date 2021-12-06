@@ -51,14 +51,14 @@ namespace IBL
                 if (statuses == DroneStatuses.Delivery)
                 {
                     // החבילה שויכה ולא נאספה
-                    if (tempParcel.Scheduled != DateTime.MinValue && tempParcel.PickedUp == DateTime.MinValue)
+                    if (tempParcel.Scheduled != null && tempParcel.PickedUp == null)
                     {
                         // מיקום - תחנה הקרובה לשולח
                         IDAL.DO.Customer tempCustomer = GetTempCustomer(customer, tempParcel);
                         return GetLocationWithMinDistance(station, tempCustomer);
                     }
                     // חבילה נאספה אך לא סופקה
-                    else if (tempParcel.PickedUp != DateTime.MinValue && tempParcel.Delivered == DateTime.MinValue)
+                    else if (tempParcel.PickedUp != null && tempParcel.Delivered == null)
                     {
                         // מיקום - מיקום השולח
                         IDAL.DO.Customer tempCustomer = GetTempCustomer(customer, tempParcel);
@@ -83,7 +83,7 @@ namespace IBL
                 if (statuses == DroneStatuses.Available)
                 {
                     List<Location> locations = new();
-                    foreach (var item in parcel) if (item.Delivered != DateTime.MinValue)
+                    foreach (var item in parcel) if (item.Delivered != null)
                         {
                             locations.Add(GetCustomerById(item.TargetId).Location);
                         }
@@ -141,7 +141,7 @@ namespace IBL
 
             private DroneStatuses GetStatus(int droneId, IEnumerable<IDAL.DO.Parcel> parcel)
             {
-                if (GetTempParcel(droneId, parcel).DroneId == droneId && GetTempParcel(droneId, parcel).Delivered == DateTime.MinValue)
+                if (GetTempParcel(droneId, parcel).DroneId == droneId && GetTempParcel(droneId, parcel).Delivered == null)
                     return DroneStatuses.Delivery;
                 else
                     return (DroneStatuses)rand.Next(2);

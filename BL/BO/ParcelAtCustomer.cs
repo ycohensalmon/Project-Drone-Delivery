@@ -11,10 +11,10 @@ namespace IBL
         public class ParcelAtCustomer
         {
             public Int32 Id { get; set; }
-            public DateTime Requested { get; set; }
-            public DateTime Scheduled { get; set; }
-            public DateTime PickedUp { get; set; }
-            public DateTime Delivered { get; set; }
+            public DateTime? Requested { get; set; }
+            public DateTime? Scheduled { get; set; }
+            public DateTime? PickedUp { get; set; }
+            public DateTime? Delivered { get; set; }
             public WeightCategory Weight { get; set; }
             public Priority Priorities { get; set; }
             public CustomerInParcel CustomerInParcel { get; set; }
