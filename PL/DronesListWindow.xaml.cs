@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IBL.BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,14 +20,35 @@ namespace PL
     /// </summary>
     public partial class DronesListWindow : Window
     {
-        IBL.IBL Bl;
+        IBL.IBL myBl;
         public DronesListWindow(IBL.IBL bl)
         {
-            this.Bl = bl; 
+            this.myBl = bl; 
             InitializeComponent();
             this.StatusSelector1.ItemsSource = Enum.GetValues(typeof(IBL.BO.DroneStatuses));
             this.StatusSelector2.ItemsSource = Enum.GetValues(typeof(IBL.BO.Priority));
-            DronesListView.ItemsSource = bl.GetDroness();
+            this.DronesListView.ItemsSource = bl.GetDroness();
+        }
+
+        private void DronesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void StatusSelector1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DroneStatuses status = (DroneStatuses)StatusSelector1.SelectedItem;
+            this.DronesListView.ItemsSource = myBl.GetDroness().Where(x => x.Status == status);
+        }
+
+        private void botton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void BottonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            new DroneWindow(myBl).ShowDialog();
         }
     }
 }

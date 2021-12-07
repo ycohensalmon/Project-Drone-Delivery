@@ -13,18 +13,23 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
+        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            
-        <ComboBox Name="StatusSelector1" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" Background="#FFE5DB87" BorderBrush="#892E72C8" Foreground="#FFC81D1D" />
-        <ComboBox Name="StatusSelector2" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="2"/>
+
+            <ComboBox Name="StatusSelector1" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch"
+                      Grid.Column="1" ToolTip="choose a status"
+                      Background="#FFE5DB87" BorderBrush="#892E72C8" Foreground="#FFC81D1D" SelectionChanged="StatusSelector1_SelectionChanged" />
+            <ComboBox Name="StatusSelector2" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="2"/>
+            <Label Content="Status drone"           HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="0"/>
+            <Button x:Name="BottonAdd" Content="add a drone" Grid.Column="3" HorizontalAlignment="Left" Margin="10,35,0,2" Width="190" Click="BottonAdd_Click"/>
+            <Grid Grid.Column="3"/>
         </Grid>
-        <ListView Grid.Row="1" x:Name="DronesListView">
+        <ListView x:Name="DronesListView" SelectionChanged="DronesListView_SelectionChanged" Grid.ColumnSpan="2" Margin="0,69,0,0" Grid.RowSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
