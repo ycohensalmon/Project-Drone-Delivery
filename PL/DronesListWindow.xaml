@@ -24,17 +24,17 @@
             <ComboBox Name="StatusSelector1" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch"
                       Grid.Column="1" ToolTip="choose a status"
                       Background="#FFE5DB87" BorderBrush="#892E72C8" Foreground="#FFC81D1D" SelectionChanged="StatusSelector1_SelectionChanged" />
-            <ComboBox Name="StatusSelector2" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="2"/>
+            <ComboBox Name="StatusSelector2" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="2" SelectionChanged="StatusSelector2_SelectionChanged"/>
             <Label Content="Status drone"           HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="0"/>
             <Button x:Name="BottonAdd" Content="add a drone" Grid.Column="3" HorizontalAlignment="Left" Margin="10,35,0,2" Width="190" Click="BottonAdd_Click"/>
-            <Grid Grid.Column="3"/>
         </Grid>
-        <ListView x:Name="DronesListView" SelectionChanged="DronesListView_SelectionChanged" Grid.ColumnSpan="2" Margin="0,69,0,0" Grid.RowSpan="2">
+        <ListView x:Name="DronesListView" SelectionChanged="DronesListView_SelectionChanged" Grid.ColumnSpan="2" Margin="0,69,0,0" Grid.RowSpan="2" MouseDoubleClick="DroneView">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button x:Name="bottonExit" Content="exit" HorizontalAlignment="Left" Margin="734,56,0,0" Grid.Row="1" VerticalAlignment="Top" Click="bottonExit_Click"/>
     </Grid>
 </Window>

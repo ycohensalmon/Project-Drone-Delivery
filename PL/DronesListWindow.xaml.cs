@@ -26,8 +26,8 @@ namespace PL
             this.myBl = bl; 
             InitializeComponent();
             this.StatusSelector1.ItemsSource = Enum.GetValues(typeof(IBL.BO.DroneStatuses));
-            this.StatusSelector2.ItemsSource = Enum.GetValues(typeof(IBL.BO.Priority));
-            this.DronesListView.ItemsSource = bl.GetDroness();
+            this.StatusSelector2.ItemsSource = Enum.GetValues(typeof(IBL.BO.WeightCategory));
+            this.DronesListView.ItemsSource = bl.GetDrones();
         }
 
         private void DronesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -38,17 +38,30 @@ namespace PL
         private void StatusSelector1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DroneStatuses status = (DroneStatuses)StatusSelector1.SelectedItem;
-            this.DronesListView.ItemsSource = myBl.GetDroness().Where(x => x.Status == status);
-        }
-
-        private void botton_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
+            this.DronesListView.ItemsSource = myBl.GetDrones().Where(x => x.Status == status);
         }
 
         private void BottonAdd_Click(object sender, RoutedEventArgs e)
         {
             new DroneWindow(myBl).ShowDialog();
+        }
+
+        private void StatusSelector2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            WeightCategory Weight = (WeightCategory)StatusSelector2.SelectedItem;
+            this.DronesListView.ItemsSource = myBl.GetDrones().Where(x => x.MaxWeight == Weight);
+        }
+
+        private void bottonExit_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void DroneView(object sender, MouseButtonEventArgs e)
+        {
+            DroneInList drone = (DroneInList)DronesListView.SelectedItem;
+            new DroneWindow(myBl, drone).ShowDialog();
         }
     }
 }
