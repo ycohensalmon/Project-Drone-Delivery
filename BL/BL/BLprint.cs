@@ -166,10 +166,13 @@ namespace IBL
             public IEnumerable<IDAL.DO.Drone> GetDrones()
             {
                 IEnumerable<IDAL.DO.Drone> drones = dalObj.GetDrones();
-                if (!drones.Any())
-                    throw new EmptyListException("drones");
+                return !drones.Any() ? throw new EmptyListException("drones") : drones;
+            }
 
-                return drones;
+            public IEnumerable<DroneInList> GetDroness()
+            {
+                //IEnumerable<IDAL.DO.Drone> drones = dalObj.GetDrones();
+                return !drones.Any() ? throw new EmptyListException("drones") : drones;
             }
 
             public IEnumerable<IDAL.DO.Customer> GetCustomers()

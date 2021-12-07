@@ -19,9 +19,14 @@ namespace PL
     /// </summary>
     public partial class DronesListWindow : Window
     {
-        public DronesListWindow()
+        IBL.IBL Bl;
+        public DronesListWindow(IBL.IBL bl)
         {
+            this.Bl = bl; 
             InitializeComponent();
+            this.StatusSelector1.ItemsSource = Enum.GetValues(typeof(IBL.BO.DroneStatuses));
+            this.StatusSelector2.ItemsSource = Enum.GetValues(typeof(IBL.BO.Priority));
+            DronesListView.ItemsSource = bl.GetDroness();
         }
     }
 }

@@ -28,6 +28,7 @@ namespace IBL
         public Parcel GetParcelById(int parcelid);
         public IEnumerable<IDAL.DO.Station> GetStations();
         public IEnumerable<IDAL.DO.Drone> GetDrones();
+        public IEnumerable<DroneInList> GetDroness();
         public IEnumerable<IDAL.DO.Customer> GetCustomers();
         public IEnumerable<IDAL.DO.Parcel> GetParcels();
         public IEnumerable<IDAL.DO.Parcel> GetParcelsWithoutDrone();
