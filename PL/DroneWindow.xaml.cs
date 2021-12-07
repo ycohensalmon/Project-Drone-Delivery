@@ -19,9 +19,19 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
-        public DroneWindow()
+        private IBL.IBL myBl;
+
+        public DroneWindow(IBL.IBL myBl)
         {
+            this.myBl = myBl;
             InitializeComponent();
+        }
+
+        public DroneWindow(IBL.IBL myBl, IBL.BO.DroneInList drone)
+        {
+            this.myBl = myBl;
+            InitializeComponent();
+            DroneView.ItemsSource = (System.Collections.IEnumerable)myBl.GetDrones().First(x=> x.Id == drone.Id);
         }
     }
 }
