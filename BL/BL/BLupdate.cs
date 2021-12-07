@@ -12,9 +12,9 @@ namespace IBL
         {
             public void UpdateDrone(int droneId, string model)
             {
-                DroneInList drone = GetDroneById(droneId);
+                DroneInList drone = drones.FirstOrDefault(x => x.Id == droneId);
                 drone.Model = model;
-
+                
                 try
                 {
                     dalObj.UpdateDrone(droneId, model);
@@ -62,7 +62,7 @@ namespace IBL
             public void ConnectDroneToParcel(int droneId)
             {
                 //getting the drone and check if it available
-                DroneInList drone = GetDroneById(droneId);
+                DroneInList drone = drones.FirstOrDefault(x => x.Id == droneId);
                 if (drone.Status != DroneStatuses.Available)
                     throw new StatusDroneException("connect drone to parcel", drone.Status, DroneStatuses.Available);
 
@@ -138,7 +138,7 @@ namespace IBL
 
             public void CollectParcelsByDrone(int droneId)
             {
-                DroneInList drone = GetDroneById(droneId);
+                DroneInList drone = drones.FirstOrDefault(x => x.Id == droneId);
                 if (drone.Status != DroneStatuses.Delivery)
                     throw new StatusDroneException("collect parcel by drone", drone.Status, DroneStatuses.Delivery);
 
@@ -172,7 +172,7 @@ namespace IBL
 
             public void DeliveredParcel(int droneId)
             {
-                DroneInList drone = GetDroneById(droneId);
+                DroneInList drone = drones.FirstOrDefault(x => x.Id == droneId);
                 if (drone.Status != DroneStatuses.Delivery)
                     throw new StatusDroneException("delivered parcel to costumer", drone.Status, DroneStatuses.Delivery);
 
@@ -210,7 +210,7 @@ namespace IBL
 
             public void SendDroneToCharge(int droneId)
             {
-                DroneInList drone = GetDroneById(droneId);
+                DroneInList drone = drones.FirstOrDefault(x => x.Id == droneId);
                 if (drone.Status != DroneStatuses.Available)
                     throw new StatusDroneException("send drone to charge", drone.Status, DroneStatuses.Available);
 
@@ -246,7 +246,7 @@ namespace IBL
 
             public void ReleaseDroneFromCharging(int droneId, double timeCharge)
             {
-                DroneInList drone = GetDroneById(droneId);
+                DroneInList drone = drones.FirstOrDefault(x => x.Id == droneId);
                 if (drone.Status != DroneStatuses.Maintenance)
                     throw new StatusDroneException("release drone from charging", drone.Status, DroneStatuses.Maintenance);
 

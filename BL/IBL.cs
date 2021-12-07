@@ -23,7 +23,7 @@ namespace IBL
         public void UpdateBase(int num, string newName, string newChargeSolts);
         public void UpdateCustomer(int customerID, string newName, string newPhone);
         public Station GetStationById(int stationId);
-        public DroneInList GetDroneById(int droneId);
+        public Drone GetDroneById(int droneId);
         public Customer GetCustomerById(int customerId);
         public Parcel GetParcelById(int parcelid);
         public IEnumerable<StationList> GetStations();
