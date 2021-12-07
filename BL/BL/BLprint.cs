@@ -154,48 +154,105 @@ namespace IBL
                 };
             }
 
-            public IEnumerable<IDAL.DO.Station> GetStations()
+            public IEnumerable<StationList> GetStations()
             {
-                IEnumerable<IDAL.DO.Station> stations = dalObj.GetStations();
+                List<StationList> stations = new();
+
+                foreach (var item in dalObj.GetStations())
+                {
+                    Station station = GetStationById(item.Id);
+                    stations.Add(new StationList
+                    { 
+                        Id = station.Id,
+                        Name = station.Name,
+                        ChargeSoltsAvailable = station.ChargeSolts,
+                        ChargeSoltsBusy = station.DroneCharges.Count()
+                    });
+                }
+
                 if (!stations.Any())
                     throw new EmptyListException("stations");
-
                 return stations;
             }
 
-            public IEnumerable<IDAL.DO.Drone> GetDrones()
+            public IEnumerable<DroneInList> GetDrones()
             {
-                IEnumerable<IDAL.DO.Drone> drones = dalObj.GetDrones();
                 return !drones.Any() ? throw new EmptyListException("drones") : drones;
             }
 
-            public IEnumerable<DroneInList> GetDroness()
+            public IEnumerable<CustumerInList> GetCustomers()
             {
-                //IEnumerable<IDAL.DO.Drone> drones = dalObj.GetDrones();
-                return !drones.Any() ? throw new EmptyListException("drones") : drones;
-            }
+                List<CustumerInList> customers = new();
 
-            public IEnumerable<IDAL.DO.Customer> GetCustomers()
-            {
-                IEnumerable<IDAL.DO.Customer> customers = dalObj.GetCustomers();
+                foreach (var item in dalObj.GetCustomers())
+                {
+                    Customer customer = GetCustomerById(item.Id);
+
+                    customers.Add(new CustumerInList
+                    {
+                        Id = customer.Id,
+                        Name = customer.Name,
+                        Phone = customer.Phone,
+                        ParcelsShippedAndDelivered = customer.ParcelsFromCustomer.Count(x => x.Delivered != null),
+                        ParcelsShippedAndNotDelivered = customer.ParcelsFromCustomer.Count(x => x.Delivered == null),
+                        ParcelsHeRecieved = customer.ParcelsToCustomer.Count(x => x.Delivered != null),
+                        ParcelsOnTheWay = customer.ParcelsToCustomer.Count(x => x.Delivered == null)
+                    });
+                }
+
                 if (!customers.Any())
                     throw new EmptyListException("customers");
 
                 return customers;
             }
 
-            public IEnumerable<IDAL.DO.Parcel> GetParcels()
+            public IEnumerable<ParcelInList> GetParcels()
             {
-                IEnumerable<IDAL.DO.Parcel> parcels = dalObj.GetParcels();
+                List<ParcelInList> parcels = new();
+
+                foreach (var item in dalObj.GetParcels())
+                {
+                    Parcel parcel = GetParcelById(item.Id);
+
+                    parcels.Add(new ParcelInList
+                    {
+                        Id = parcel.Id,
+                        SenderName = parcel.Sender.Name,
+                        TargetName = parcel.Target.Name,
+                        Requested = parcel.Requested,
+                        Scheduled = parcel.Scheduled,
+                        Delivered = parcel.Delivered,
+                        Weight = parcel.Weight,
+                        Priorities =parcel.Priorities
+                    });
+                }
+
                 if (!parcels.Any())
                     throw new EmptyListException("parcels");
 
                 return parcels;
             }
 
-            public IEnumerable<IDAL.DO.Parcel> GetParcelsWithoutDrone()
+            public IEnumerable<ParcelInList> GetParcelsWithoutDrone()
             {
-                IEnumerable<IDAL.DO.Parcel> parcels = dalObj.GetParcels(x => x.DroneId == 0);
+                List<ParcelInList> parcels = new();
+
+                foreach (var item in dalObj.GetParcels(x => x.DroneId == 0))
+                {
+                    Parcel parcel = GetParcelById(item.Id);
+
+                    parcels.Add(new ParcelInList
+                    {
+                        Id = parcel.Id,
+                        SenderName = parcel.Sender.Name,
+                        TargetName = parcel.Target.Name,
+                        Requested = parcel.Requested,
+                        Scheduled = parcel.Scheduled,
+                        Delivered = parcel.Delivered,
+                        Weight = parcel.Weight,
+                        Priorities = parcel.Priorities
+                    });
+                }
 
                 if (!parcels.Any())
                     throw new EmptyListException("parcels without drone");
@@ -203,9 +260,21 @@ namespace IBL
                 return parcels;
             }
 
-            public IEnumerable<IDAL.DO.Station> GetStationWithChargeSolts()
+            public IEnumerable<StationList> GetStationWithChargeSolts()
             {
-                IEnumerable<IDAL.DO.Station> stations = dalObj.GetStations(x => x.ChargeSolts != 0);
+                List<StationList> stations = new();
+
+                foreach (var item in dalObj.GetStations(x => x.ChargeSolts != 0))
+                {
+                    Station station = GetStationById(item.Id);
+                    stations.Add(new StationList
+                    {
+                        Id = station.Id,
+                        Name = station.Name,
+                        ChargeSoltsAvailable = station.ChargeSolts,
+                        ChargeSoltsBusy = station.DroneCharges.Count()
+                    });
+                }
 
                 if (!stations.Any())
                     throw new EmptyListException("station with charge solts available");

@@ -71,9 +71,7 @@ namespace ConsoleUI_BL
         /// <param name="bl">the parameter that include all the lists</param>
         private static void PrintStations(IBL.IBL bl)
         {
-            IEnumerable<IDAL.DO.Station> stations = bl.GetStations();
-
-            foreach (var item in stations){ Console.WriteLine(bl.GetStationById(item.Id)); }
+            foreach (var item in bl.GetStations()) { Console.WriteLine(item); }
         }
 
         /// <summary>
@@ -82,12 +80,7 @@ namespace ConsoleUI_BL
         /// <param name="bl">the parameter that include all the lists</param>
         private static void PrintDrones(IBL.IBL bl)
         {
-            IEnumerable<IDAL.DO.Drone> drones = bl.GetDrones();
-
-            foreach (var item in drones)
-            {
-                Console.WriteLine(bl.GetDroneById(item.Id));
-            }
+            foreach (var item in bl.GetDrones()) { Console.WriteLine(item); }
         }
 
         /// <summary>
@@ -96,12 +89,7 @@ namespace ConsoleUI_BL
         /// <param name="bl">the parameter that include all the lists</param>
         private static void PrintCostumers(IBL.IBL bl)
         {
-            IEnumerable<IDAL.DO.Customer> customers = bl.GetCustomers();
-            
-            foreach (var item in customers)
-            {
-                Console.WriteLine(bl.GetCustomerById(item.Id));
-            }
+            foreach (var item in bl.GetCustomers()) { Console.WriteLine(item); }
         }
 
         /// <summary>
@@ -110,12 +98,7 @@ namespace ConsoleUI_BL
         /// <param name="bl">the parameter that include all the lists</param>
         private static void PrintParcels(IBL.IBL bl)
         {
-            IEnumerable<IDAL.DO.Parcel> parcels = bl.GetParcels();
-            
-            foreach (var item in parcels)
-            {
-                Console.WriteLine(bl.GetParcelById(item.Id));
-            }
+            foreach (var item in bl.GetParcels()) { Console.WriteLine(item); }
         }
 
         /// <summary>
@@ -124,12 +107,7 @@ namespace ConsoleUI_BL
         /// <param name="bl">the parameter that include all the lists</param>
         private static void PrintParcelsWithoutDrone(IBL.IBL bl)
         {
-            IEnumerable<IDAL.DO.Parcel> parcels = bl.GetParcelsWithoutDrone();
-
-            foreach (var item in parcels)
-            {
-                Console.WriteLine(bl.GetParcelById(item.Id));
-            }
+            foreach (var item in bl.GetParcelsWithoutDrone()) { Console.WriteLine(item); }
         }
 
         /// <summary>
@@ -138,12 +116,7 @@ namespace ConsoleUI_BL
         /// <param name="bl">the parameter that include all the lists</param>
         private static void PrintStationWithChargeSolts(IBL.IBL bl)
         {
-            IEnumerable<IDAL.DO.Station> stations = bl.GetStationWithChargeSolts();
-
-            foreach (var item in stations)
-            {
-                Console.WriteLine(bl.GetStationById(item.Id));
-            }
+            foreach (var item in bl.GetStationWithChargeSolts()) { Console.WriteLine(item); }
         }
     }
 }

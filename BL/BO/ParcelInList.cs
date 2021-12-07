@@ -10,7 +10,7 @@ namespace IBL
     {
         public class ParcelInList
         {
-            public Int32 Id { get; set; }
+            public int Id { get; set; }
             public string SenderName { get; set; }
             public string TargetName { get; set; }
             public DateTime? Requested { get; set; }
@@ -21,8 +21,8 @@ namespace IBL
             public Priority Priorities { get; set; }
             public override string ToString()
             {
-                return $"Id: {Id}, SenderName: {SenderName}, TargetName: {TargetName},S\nRequested: {Requested}, " +
-                    $"Scheduled: {Scheduled}\nPickedUp:  {PickedUp}, Delivered: {Delivered}\nWeight: {Weight}, Priorities:{Priorities}\n";
+                return $"Id: {Id} \nSenderName: {SenderName} \nTargetName: {TargetName}S\nRequested: {Requested} " +
+                    $"\nScheduled: {Scheduled}\nPickedUp:  {PickedUp} \nDelivered: {Delivered}\nWeight: {Weight} \nPriorities:{Priorities}\n";
             }
         }
     }
