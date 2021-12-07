@@ -181,19 +181,19 @@ namespace DalObject
         //-----------------------------------------------------------------------------------------------------------//
 
         public IEnumerable<Drone> GetDrones(Func<Drone, bool> predicate = null)
-            => predicate == null ? DataSource.Drones : DataSource.Drones.Where(predicate);
+            => predicate == null ? DataSource.Drones.Select(item => item) : DataSource.Drones.Where(predicate).Select(item => item);
 
         public IEnumerable<Station> GetStations(Func<Station, bool> predicate = null)
-            => predicate == null ? DataSource.Stations : DataSource.Stations.Where(predicate);
+            => predicate == null ? DataSource.Stations.Select(item => item) : DataSource.Stations.Where(predicate).Select(item => item);
 
         public IEnumerable<Customer> GetCustomers(Func<Customer, bool> predicate = null)
-            => predicate == null ? DataSource.Customers : DataSource.Customers.Where(predicate);
+            => predicate == null ? DataSource.Customers.Select(item => item) : DataSource.Customers.Where(predicate).Select(item => item);
 
         public IEnumerable<Parcel> GetParcels(Func<Parcel, bool> predicate = null)
-            => predicate == null ? DataSource.Parcels : DataSource.Parcels.Where(predicate);
+            => predicate == null ? DataSource.Parcels.Select(item => item) : DataSource.Parcels.Where(predicate).Select(item => item);
 
         public IEnumerable<DroneCharge> GetDroneCharges(Func<DroneCharge, bool> predicate = null)
-            => predicate == null ? DataSource.DroneCharges : DataSource.DroneCharges.Where(predicate);
+            => predicate == null ? DataSource.DroneCharges.Select(item => item) : DataSource.DroneCharges.Where(predicate).Select(item => item);
 
         //-----------------------------------------------------------------------------------------------------------//
         // get objects by id //
