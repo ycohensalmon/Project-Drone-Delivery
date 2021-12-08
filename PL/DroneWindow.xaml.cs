@@ -22,18 +22,19 @@ namespace PL
     {
         private IBL.IBL myBl;
         private DroneInList drone;
- 
-        public DroneWindow(IBL.IBL myBl)
+        DronesListWindow droneslistWindow;
+
+
+        public DroneWindow(IBL.IBL myBl, DronesListWindow listWindow)
         {
+            droneslistWindow = listWindow;
             this.myBl = myBl;
             InitializeComponent();
             this.Title = "Add drone";
             UpdateGrid.Visibility = Visibility.Hidden;
             AddGrid.Visibility = Visibility.Visible;
             this.maxWeight.ItemsSource = Enum.GetValues(typeof(IBL.BO.WeightCategory));
-            this.status.ItemsSource = Enum.GetValues(typeof(IBL.BO.DroneStatuses));
-
-
+            this.station.ItemsSource = myBl.GetStations();
         }
 
         public DroneWindow(IBL.IBL myBl, object selectedItem, ListView dronesListView)
@@ -45,7 +46,14 @@ namespace PL
             UpdateGrid.Visibility = Visibility.Visible;
             this.Title = "Update drone";
             this.DroneView.Content = myBl.GetDroneById(drone.Id);
+            DroneStatuses status = drone.Status;
 
+            if (status == DroneStatuses.Maintenance)
+                bottonUpdate.Content = "Release from charge";
+            if (status == DroneStatuses.Available)
+                bottonUpdate.Content = "Send to charge";
+            if (status == DroneStatuses.Delivery)
+                bottonUpdate.Content = "Collect delivery";
 
         }
 
@@ -54,16 +62,34 @@ namespace PL
 
         }
 
-        private void status_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-        }
-
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            //myBl.NewDroneInList
+            int droneID = int.Parse(id.Text);
+            WeightCategory  MaxWeight = (WeightCategory)maxWeight.SelectedItem;
+            string Model = model.Text;
+            StationList Station = (StationList)station.SelectedItem;
+
+            int StationId = Station.Id;
+            DroneInList drone = new() {Id = droneID, Model = Model, MaxWeight = MaxWeight};
+
+            try
+            {
+                myBl.NewDroneInList(drone, StationId);
+                droneslistWindow.Close();
+                droneslistWindow.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
+            Close();
         }
 
-        private void DroneView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void stationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+        }
+
+        private void bottonUpdate_Click(object sender, RoutedEventArgs e)
         {
 
         }

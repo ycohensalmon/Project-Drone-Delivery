@@ -20,6 +20,7 @@ namespace PL
     /// </summary>
     public partial class DronesListWindow : Window
     {
+        DronesListWindow listWindow;
         IBL.IBL myBl;
         public DronesListWindow(IBL.IBL bl)
         {
@@ -39,7 +40,7 @@ namespace PL
 
         private void BottonAdd_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(myBl).ShowDialog();
+            new DroneWindow(myBl, this).ShowDialog();
         }
 
         private void ComboWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)

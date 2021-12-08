@@ -212,7 +212,7 @@ namespace IBL
 
             public IEnumerable<DroneInList> GetDrones()
             {
-                return !drones.Any() ? throw new EmptyListException("drones") : drones;
+                return !drones.Any() ? throw new EmptyListException("drones") : drones.Select(x => x);
             }
 
             public IEnumerable<CustumerInList> GetCustomers()
