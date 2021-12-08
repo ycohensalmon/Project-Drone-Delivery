@@ -42,13 +42,48 @@ namespace IBL
                 };
             }
 
-            public DroneInList GetDroneById(int droneId)
+            public Drone GetDroneById(int droneId)
             {
-                DroneInList drone = drones.Find(x => x.Id == droneId);
-                if (drone == null)
+                DroneInList droneInList = drones.Find(x => x.Id == droneId);
+                if (droneInList == null)
                     throw new ItemNotFoundException(droneId, "Drone");
-                return drone;
+
+                ParcelInTravel parcelInTravel = new();
+
+                //filling the "parcelInTravel" method (if this drone was connected to parcel)
+                if (droneInList.NumParcel != 0)
+                {
+                    Parcel parcel = GetParcelById(droneInList.NumParcel);
+
+                    parcelInTravel.Id = parcel.Id;
+                    if (parcel.PickedUp != null)
+                        parcelInTravel.InTravel = true;
+                    else
+                        parcelInTravel.InTravel = false;
+                    parcelInTravel.Weight = parcel.Weight;
+                    parcelInTravel.Priorities = parcel.Priorities;
+                    parcelInTravel.Sender = parcel.Sender;
+                    parcelInTravel.Target = parcel.Target;
+                    parcelInTravel.source = GetCustomerById(parcel.Sender.Id).Location;
+                    parcelInTravel.Destination = GetCustomerById(parcel.Target.Id).Location;
+                    //Getting distance from the drone to target
+                    parcelInTravel.Distance = Distance.GetDistanceFromLatLonInKm(
+                        droneInList.Location.Latitude, droneInList.Location.Longitude,
+                        GetCustomerById(parcel.Sender.Id).Location.Latitude, GetCustomerById(parcel.Sender.Id).Location.Longitude);
+                }
+
+                return new Drone
+                {
+                    Id = droneInList.Id,
+                    Model = droneInList.Model,
+                    Battery = droneInList.Battery,
+                    Location = droneInList.Location,
+                    MaxWeight = droneInList.MaxWeight,
+                    Status = droneInList.Status,
+                    ParcelInTravel = parcelInTravel
+                };
             }
+
 
             public Customer GetCustomerById(int customerId)
             {
@@ -133,7 +168,7 @@ namespace IBL
                 DroneInParcel droneInParcel = new();
                 if (parcel.DroneId != 0)
                 {
-                    DroneInList droneInList = GetDroneById(parcel.DroneId);
+                    DroneInList droneInList = drones.FirstOrDefault(x => x.Id == parcel.DroneId);
                     droneInParcel.Id = droneInList.Id;
                     droneInParcel.Battery = droneInList.Battery;
                     droneInParcel.Location = droneInList.Location;

@@ -12,9 +12,9 @@ namespace IBL
         {
             public void UpdateDrone(int droneId, string model)
             {
-                DroneInList drone = GetDroneById(droneId);
+                DroneInList drone = drones.FirstOrDefault(x => x.Id == droneId);
                 drone.Model = model;
-
+                
                 try
                 {
                     dalObj.UpdateDrone(droneId, model);
@@ -61,8 +61,10 @@ namespace IBL
             /// <param name="droneId">the drone to connect</param>
             public void ConnectDroneToParcel(int droneId)
             {
-                //getting the drone and check if it available
-                DroneInList drone = GetDroneById(droneId);
+                //getting the drone and check if it exist and available
+                DroneInList drone = drones.FirstOrDefault(x => x.Id == droneId);
+                if (drone == null)
+                    throw new StatusDroneException("the drone does`nt exist");
                 if (drone.Status != DroneStatuses.Available)
                     throw new StatusDroneException("connect drone to parcel", drone.Status, DroneStatuses.Available);
 
@@ -82,10 +84,10 @@ namespace IBL
                     throw new NotEnoughBatteryException("make a delivery", drone.Battery);
 
                 //ordering the list to get the most importent parcel in the first plase on the list
-                parcels.OrderBy(parcels => Distance.GetDistanceFromLatLonInKm(dalObj.GetCustomerById(parcels.SenderId).Latitude,
-                    dalObj.GetCustomerById(parcels.SenderId).Longitude, drone.Location.Latitude, drone.Location.Longitude));
-                parcels.OrderByDescending(t => (int)t.Weight);
-                parcels.OrderByDescending(t => (int)t.Priorities);
+                parcels = parcels.OrderBy(parcels => Distance.GetDistanceFromLatLonInKm(dalObj.GetCustomerById(parcels.SenderId).Latitude,
+                    dalObj.GetCustomerById(parcels.SenderId).Longitude, drone.Location.Latitude, drone.Location.Longitude)).ToList();
+                parcels = parcels.OrderByDescending(t => (int)t.Weight).ToList();
+                parcels = parcels.OrderByDescending(t => (int)t.Priorities).ToList();
 
                 //getting the must importent parcel
                 IDAL.DO.Parcel myParcel = parcels.First();
@@ -138,7 +140,7 @@ namespace IBL
 
             public void CollectParcelsByDrone(int droneId)
             {
-                DroneInList drone = GetDroneById(droneId);
+                DroneInList drone = drones.FirstOrDefault(x => x.Id == droneId);
                 if (drone.Status != DroneStatuses.Delivery)
                     throw new StatusDroneException("collect parcel by drone", drone.Status, DroneStatuses.Delivery);
 
@@ -172,7 +174,7 @@ namespace IBL
 
             public void DeliveredParcel(int droneId)
             {
-                DroneInList drone = GetDroneById(droneId);
+                DroneInList drone = drones.FirstOrDefault(x => x.Id == droneId);
                 if (drone.Status != DroneStatuses.Delivery)
                     throw new StatusDroneException("delivered parcel to costumer", drone.Status, DroneStatuses.Delivery);
 
@@ -210,7 +212,7 @@ namespace IBL
 
             public void SendDroneToCharge(int droneId)
             {
-                DroneInList drone = GetDroneById(droneId);
+                DroneInList drone = drones.FirstOrDefault(x => x.Id == droneId);
                 if (drone.Status != DroneStatuses.Available)
                     throw new StatusDroneException("send drone to charge", drone.Status, DroneStatuses.Available);
 
@@ -246,7 +248,7 @@ namespace IBL
 
             public void ReleaseDroneFromCharging(int droneId, double timeCharge)
             {
-                DroneInList drone = GetDroneById(droneId);
+                DroneInList drone = drones.FirstOrDefault(x => x.Id == droneId);
                 if (drone.Status != DroneStatuses.Maintenance)
                     throw new StatusDroneException("release drone from charging", drone.Status, DroneStatuses.Maintenance);
 

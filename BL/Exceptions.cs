@@ -52,6 +52,7 @@ namespace IBL
         public class StatusDroneException : Exception
         {
             public StatusDroneException(string message, DroneStatuses actual, DroneStatuses mustBe) : base($"ERROR: To {message} the drone must be {mustBe}, this drone is in {actual}") { }
+            public StatusDroneException(string message) : base($"ERROR: {message}") { }
         }
 
         public class ParcelTooHeavyException : Exception
