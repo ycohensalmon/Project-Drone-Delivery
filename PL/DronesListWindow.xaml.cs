@@ -25,19 +25,15 @@ namespace PL
         {
             this.myBl = bl; 
             InitializeComponent();
-            this.StatusSelector1.ItemsSource = Enum.GetValues(typeof(IBL.BO.DroneStatuses));
-            this.StatusSelector2.ItemsSource = Enum.GetValues(typeof(IBL.BO.WeightCategory));
+            this.ComboStatusSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.DroneStatuses));
+            this.ComboWeightSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.WeightCategory));
             this.DronesListView.ItemsSource = bl.GetDrones();
         }
 
-        private void DronesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
 
-        }
-
-        private void StatusSelector1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboStatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DroneStatuses status = (DroneStatuses)StatusSelector1.SelectedItem;
+            DroneStatuses status = (DroneStatuses)ComboStatusSelector.SelectedItem;
             this.DronesListView.ItemsSource = myBl.GetDrones().Where(x => x.Status == status);
         }
 
@@ -46,10 +42,10 @@ namespace PL
             new DroneWindow(myBl).ShowDialog();
         }
 
-        private void StatusSelector2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-            WeightCategory Weight = (WeightCategory)StatusSelector2.SelectedItem;
+            WeightCategory Weight = (WeightCategory)ComboWeightSelector.SelectedItem;
             this.DronesListView.ItemsSource = myBl.GetDrones().Where(x => x.MaxWeight == Weight);
         }
 
@@ -58,10 +54,9 @@ namespace PL
             Close();
         }
 
-        private void DroneView(object sender, MouseButtonEventArgs e)
+        private void DroneView_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            DroneInList drone = (DroneInList)DronesListView.SelectedItem;
-            new DroneWindow(myBl, drone).ShowDialog();
+            new DroneWindow(myBl, DronesListView.SelectedItem, DronesListView).ShowDialog();
         }
     }
 }

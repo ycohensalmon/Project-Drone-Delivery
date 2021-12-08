@@ -8,12 +8,23 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="DronesListWindow" Height="640" Width="800">
-    <Grid Name="MainGrid">
+    <Grid Name="MainGrid" Background="DeepSkyBlue">
+        <!--#region definition row and colons-->
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
-        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Grid.ColumnSpan="2">
+        <Grid x:Name="secondeRow" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="BottonAdd" Content="add drone" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Click="BottonAdd_Click"/>
+            <Button x:Name="bottonExit" Content="exit" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="bottonExit_Click"/>
+            <ListView x:Name="DronesListView"  Grid.Column="1" MouseDoubleClick="DroneView_DoubleClick"/>
+        </Grid>
+        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -21,20 +32,12 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
 
-            <ComboBox Name="StatusSelector1" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch"
-                      Grid.Column="1" ToolTip="choose a status"
-                      Background="#FFE5DB87" BorderBrush="#892E72C8" Foreground="#FFC81D1D" SelectionChanged="StatusSelector1_SelectionChanged" />
-            <ComboBox Name="StatusSelector2" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="2" SelectionChanged="StatusSelector2_SelectionChanged"/>
-            <Label Content="Status drone"           HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="0"/>
-            <Button x:Name="BottonAdd" Content="add a drone" Grid.Column="3" HorizontalAlignment="Left" Margin="10,35,0,2" Width="190" Click="BottonAdd_Click"/>
+            <ComboBox Name="ComboStatusSelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1"
+                       ToolTip="choose a status" />
+            <ComboBox Name="ComboWeightSelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="3"
+                      ToolTip="choose a geight" FontWeight="Bold" FontStyle="Normal" FontFamily="Aharoni" HorizontalContentAlignment="Stretch" Height="67" FontSize="14"/>
+            <Label Content="Status drone:" HorizontalAlignment= "Right" VerticalAlignment="Center" Grid.Column="0" FontSize="20"/>
+            <Label Content="Weight:" HorizontalAlignment= "Right" VerticalAlignment="Center" Grid.Column="2" FontSize="20"/>
         </Grid>
-        <ListView x:Name="DronesListView" SelectionChanged="DronesListView_SelectionChanged" Grid.ColumnSpan="2" Margin="0,69,0,0" Grid.RowSpan="2" MouseDoubleClick="DroneView">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Button x:Name="bottonExit" Content="exit" HorizontalAlignment="Left" Margin="734,56,0,0" Grid.Row="1" VerticalAlignment="Top" Click="bottonExit_Click"/>
     </Grid>
 </Window>

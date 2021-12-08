@@ -5,15 +5,48 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="DroneWindow" Height="450" Width="800">
-    <Grid>
-        <ListView x:Name="DroneView">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        Title="DroneWindow" Height="600" Width="500">
+    <Grid x:Name="MainGrid">
+        <Grid x:Name="AddGrid" Background ="#FEBD69" >
+            <!--#region definition row and colones-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions >
+            <Grid x:Name="lables" Grid.Column="1" Grid.Row="1" Background = "Beige">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!--#endregion-->
 
+                <Label Content="ID:"        Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="30"/>
+                <Label Content="Max Weight:" Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="30"/>
+                <Label Content="Model:"     Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="30"/>
+                <Label Content="Status:"    Grid.Column="0" Grid.Row="3" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="30"/>
+
+                <TextBox x:Name="id" Text="123456789" Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="15"/>
+                <ComboBox Name="maxWeight" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="15" SelectionChanged="maxWeight_SelectionChanged"/>
+                <TextBox x:Name="model" Text="DJI" Grid.Column="1" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="15"/>
+                <ComboBox Name="status" Grid.Column="1" Grid.Row="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="15" SelectionChanged="status_SelectionChanged"/>
+            </Grid>
+            <Button x:Name="ButtonAdd" Content="Add" Grid.Column="2" HorizontalAlignment="Center"  Grid.Row="2" VerticalAlignment="Center" Click="ButtonAdd_Click"/>
+        </Grid>
+
+        <Grid x:Name="UpdateGrid"  Background="#FEBD69">
+            <Label Name="DroneView"/>
+        </Grid>
     </Grid>
 </Window>
