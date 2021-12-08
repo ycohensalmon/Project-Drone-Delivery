@@ -50,6 +50,7 @@ namespace IBL
 
                 ParcelInTravel parcelInTravel = new();
 
+                //filling the "parcelInTravel" method (if this drone was connected to parcel)
                 if (droneInList.NumParcel != 0)
                 {
                     Parcel parcel = GetParcelById(droneInList.NumParcel);
@@ -65,7 +66,10 @@ namespace IBL
                     parcelInTravel.Target = parcel.Target;
                     parcelInTravel.source = GetCustomerById(parcel.Sender.Id).Location;
                     parcelInTravel.Destination = GetCustomerById(parcel.Target.Id).Location;
-                    //Distance
+                    //Getting distance from the drone to target
+                    parcelInTravel.Distance = Distance.GetDistanceFromLatLonInKm(
+                        droneInList.Location.Latitude, droneInList.Location.Longitude,
+                        GetCustomerById(parcel.Sender.Id).Location.Latitude, GetCustomerById(parcel.Sender.Id).Location.Longitude);
                 }
 
                 return new Drone
@@ -164,7 +168,7 @@ namespace IBL
                 DroneInParcel droneInParcel = new();
                 if (parcel.DroneId != 0)
                 {
-                    Drone droneInList = GetDroneById(parcel.DroneId);
+                    DroneInList droneInList = drones.FirstOrDefault(x => x.Id == parcel.DroneId);
                     droneInParcel.Id = droneInList.Id;
                     droneInParcel.Battery = droneInList.Battery;
                     droneInParcel.Location = droneInList.Location;

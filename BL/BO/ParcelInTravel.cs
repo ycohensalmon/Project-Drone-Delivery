@@ -14,11 +14,16 @@ namespace IBL
             public bool InTravel { get; set; }
             public WeightCategory Weight { get; set; }
             public Priority Priorities { get; set; }
-            public CustomerInParcel Target { get; set; }
             public CustomerInParcel Sender { get; set; }
+            public CustomerInParcel Target { get; set; }
             public Location source { get; set; }
             public Location Destination { get; set; }
-            public int Distance { get; set; }
+            public double Distance { get; set; }
+            public override string ToString()
+            {
+                return $"\nId:{Id}\nIn travel:{InTravel}\nWeight:{Weight}\nPriority:{Priorities}\nSender:{Sender}\n" +
+                    $"Target:{Target}\nSource location:\n{source}\nDestination location:\n{Destination}\nDistance: {Distance}\n";
+            }
         }
     }
 }

@@ -225,7 +225,7 @@ namespace DalObject
 
         public Parcel GetParcelById(int id)
         {
-            Parcel parcel = DataSource.Parcels.Find(x => x.Id == id);
+            Parcel parcel = DataSource.Parcels.FirstOrDefault(x => x.Id == id);
             if (parcel.Id != id)
                 throw new IdNotFoundException(id, "parcel");
             return parcel;

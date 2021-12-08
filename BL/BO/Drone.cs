@@ -19,7 +19,9 @@ namespace IBL
             public Location Location { get; set; }
             public override string ToString()
             {
-                return $"Id:{Id}\nModel:{Model}\nMaxWeight:{MaxWeight}\nStatus:{Status}\nBattery:{Battery}\nParcelInTravel:{ParcelInTravel}\nLocation:{Location}";
+                if (Status == DroneStatuses.Delivery) 
+                    return $"Id:{Id}\nModel:{Model}\nMaxWeight:{MaxWeight}\nStatus:{Status}\nBattery:{Battery}\n\nParcelInTravel:{ParcelInTravel}\nLocation:{Location}";
+                return $"Id:{Id}\nModel:{Model}\nMaxWeight:{MaxWeight}\nStatus:{Status}\nBattery:{Battery}\nLocation:\n{Location}";
             }
         }
     }
