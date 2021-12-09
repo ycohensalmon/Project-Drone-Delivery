@@ -22,7 +22,8 @@
             </Grid.ColumnDefinitions>
             <Button x:Name="BottonAdd" Content="add drone" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Click="BottonAdd_Click"/>
             <Button x:Name="bottonExit" Content="exit" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="bottonExit_Click"/>
-            <ListView x:Name="DronesListView"  Grid.Column="1" MouseDoubleClick="DroneView_DoubleClick" SelectionChanged="ComboWeightSelector_SelectionChanged"/>
+            <ListView x:Name="DronesListView"  Grid.Column="1" MouseDoubleClick="DroneView_DoubleClick">
+            </ListView>
         </Grid>
         <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
             <Grid.ColumnDefinitions>

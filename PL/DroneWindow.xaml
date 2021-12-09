@@ -42,6 +42,7 @@
                 <ComboBox Name="station" Grid.Column="1" Grid.Row="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="15" SelectionChanged="stationId_SelectionChanged"/>
             </Grid>
             <Button x:Name="ButtonAdd" Content="Add" Grid.Column="2" HorizontalAlignment="Center"  Grid.Row="2" VerticalAlignment="Center" Click="ButtonAdd_Click"/>
+            <Button x:Name="ButtonCancel" Content="Cancel" Grid.Column="1" HorizontalAlignment="Center"  Grid.Row="2" VerticalAlignment="Center" Click="ButtonCancel_Click"/>
         </Grid>
 
         <Grid x:Name="UpdateGrid" Background="#FEBD69" Visibility="Visible">
@@ -53,7 +54,7 @@
             <Label Name="DroneView">
             </Label>
             <Button x:Name="bottonUpdate" Grid.Row ="1" Click="bottonUpdate_Click" Cursor="Hand">
-                <Button.Content>botton</Button.Content>
+                <Button.Content>Update</Button.Content>
             </Button>
 
         </Grid>

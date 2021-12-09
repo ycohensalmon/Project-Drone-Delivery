@@ -46,15 +46,23 @@ namespace PL
             UpdateGrid.Visibility = Visibility.Visible;
             this.Title = "Update drone";
             this.DroneView.Content = myBl.GetDroneById(drone.Id);
+
             DroneStatuses status = drone.Status;
 
-            if (status == DroneStatuses.Maintenance)
-                bottonUpdate.Content = "Release from charge";
-            if (status == DroneStatuses.Available)
-                bottonUpdate.Content = "Send to charge";
-            if (status == DroneStatuses.Delivery)
-                bottonUpdate.Content = "Collect delivery";
-
+            switch (status)
+            {
+                case DroneStatuses.Available:
+                    bottonUpdate.Content = "Release from charge";
+                    break;
+                case DroneStatuses.Maintenance:
+                    bottonUpdate.Content = "Send to charge";
+                    break;
+                case DroneStatuses.Delivery:
+                    bottonUpdate.Content = "Collect delivery";
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void maxWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -75,18 +83,19 @@ namespace PL
             try
             {
                 myBl.NewDroneInList(drone, StationId);
+                droneslistWindow.Close();
+                DronesListWindow listWindow = new DronesListWindow(myBl);
+                listWindow.ComboStatusSelector.SelectedItem = droneslistWindow.ComboStatusSelector.SelectedItem;
+                listWindow.ComboWeightSelector.SelectedItem = droneslistWindow.ComboWeightSelector.SelectedItem;
+                listWindow.Show();
+                Close();
+
+                MessageBox.Show("The drone was added successfully", "success");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "ERROR");
             }
-
-            droneslistWindow.Close();
-            DronesListWindow listWindow = new DronesListWindow(myBl);
-            listWindow.ComboStatusSelector.SelectedItem = droneslistWindow.ComboStatusSelector.SelectedItem;
-            listWindow.ComboWeightSelector.SelectedItem = droneslistWindow.ComboWeightSelector.SelectedItem;
-            listWindow.Show();
-            Close();
         }
 
         private void stationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -95,7 +104,24 @@ namespace PL
 
         private void bottonUpdate_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (drone.Status == DroneStatuses.Maintenance)
+                    myBl.ReleaseDroneFromCharging(drone.Id);
+                    if (drone.Status == DroneStatuses.Available)
+                        myBl.SendDroneToCharge(drone.Id);
+                if (drone.Status == DroneStatuses.Delivery)
+                    myBl.CollectParcelsByDrone(drone.Id);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
+        }
 
+        private void ButtonCancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

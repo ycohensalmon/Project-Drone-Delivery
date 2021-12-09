@@ -37,16 +37,16 @@ namespace PL
             this.DronesListView.ItemsSource = myBl.GetDrones().Where(x => x.Status == status);
         }
 
-        private void BottonAdd_Click(object sender, RoutedEventArgs e)
-        {
-            new DroneWindow(myBl, this).ShowDialog();
-        }
-
         private void ComboWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
             WeightCategory Weight = (WeightCategory)ComboWeightSelector.SelectedItem;
             this.DronesListView.ItemsSource = myBl.GetDrones().Where(x => x.MaxWeight == Weight);
+        }
+
+        private void BottonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            new DroneWindow(myBl, this).ShowDialog();
         }
 
         private void bottonExit_Click(object sender, RoutedEventArgs e)
