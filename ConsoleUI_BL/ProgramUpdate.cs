@@ -61,11 +61,7 @@ namespace ConsoleUI_BL
         private static void ReleaseDroneFromChargingBase(IBL.IBL bl)
         {
             int droneId = AddId4(true,false);
-
-            Console.WriteLine("Enter the charge time (in minute)\n");
-            double.TryParse(Console.ReadLine(), out double timeCharge);
-
-            bl.ReleaseDroneFromCharging(droneId, timeCharge);
+            bl.ReleaseDroneFromCharging(droneId);
         }
 
         /// <summary>

@@ -64,7 +64,7 @@ namespace IDAL
         /// release a drone from charge
         /// </summary>
         /// <param name="droneId">the id of the drone to release</param>
-        public void ReleaseDroneFromCharging(int droneId);
+        public double ReleaseDroneFromCharging(int droneId);
 
         /// <summary>
         /// Update the name of the drone
