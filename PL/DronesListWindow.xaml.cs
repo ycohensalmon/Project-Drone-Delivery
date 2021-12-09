@@ -31,7 +31,6 @@ namespace PL
             this.DronesListView.ItemsSource = bl.GetDrones();
         }
 
-
         private void ComboStatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DroneStatuses status = (DroneStatuses)ComboStatusSelector.SelectedItem;

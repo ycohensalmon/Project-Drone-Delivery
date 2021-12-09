@@ -52,7 +52,7 @@
             </Grid.RowDefinitions>
             <Label Name="DroneView">
             </Label>
-            <Button x:Name="bottonUpdate" Grid.Row ="1" Click="bottonUpdate_Click">
+            <Button x:Name="bottonUpdate" Grid.Row ="1" Click="bottonUpdate_Click" Cursor="Hand">
                 <Button.Content>botton</Button.Content>
             </Button>
 

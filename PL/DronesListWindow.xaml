@@ -22,7 +22,7 @@
             </Grid.ColumnDefinitions>
             <Button x:Name="BottonAdd" Content="add drone" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Click="BottonAdd_Click"/>
             <Button x:Name="bottonExit" Content="exit" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="bottonExit_Click"/>
-            <ListView x:Name="DronesListView"  Grid.Column="1" MouseDoubleClick="DroneView_DoubleClick"/>
+            <ListView x:Name="DronesListView"  Grid.Column="1" MouseDoubleClick="DroneView_DoubleClick" SelectionChanged="ComboWeightSelector_SelectionChanged"/>
         </Grid>
         <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
             <Grid.ColumnDefinitions>
@@ -33,9 +33,9 @@
             </Grid.ColumnDefinitions >
 
             <ComboBox Name="ComboStatusSelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1"
-                       ToolTip="choose a status" />
+                       ToolTip="choose a status" SelectionChanged="ComboStatusSelector_SelectionChanged" />
             <ComboBox Name="ComboWeightSelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="3"
-                      ToolTip="choose a geight" FontWeight="Bold" FontStyle="Normal" FontFamily="Aharoni" HorizontalContentAlignment="Stretch" Height="67" FontSize="14"/>
+                      ToolTip="choose a geight" FontWeight="Bold" FontStyle="Normal" FontFamily="Aharoni" HorizontalContentAlignment="Stretch" Height="67" FontSize="14" SelectionChanged="ComboWeightSelector_SelectionChanged"/>
             <Label Content="Status drone:" HorizontalAlignment= "Right" VerticalAlignment="Center" Grid.Column="0" FontSize="20"/>
             <Label Content="Weight:" HorizontalAlignment= "Right" VerticalAlignment="Center" Grid.Column="2" FontSize="20"/>
         </Grid>

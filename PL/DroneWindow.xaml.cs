@@ -75,13 +75,17 @@ namespace PL
             try
             {
                 myBl.NewDroneInList(drone, StationId);
-                droneslistWindow.Close();
-                droneslistWindow.Show();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "ERROR");
             }
+
+            droneslistWindow.Close();
+            DronesListWindow listWindow = new DronesListWindow(myBl);
+            listWindow.ComboStatusSelector.SelectedItem = droneslistWindow.ComboStatusSelector.SelectedItem;
+            listWindow.ComboWeightSelector.SelectedItem = droneslistWindow.ComboWeightSelector.SelectedItem;
+            listWindow.Show();
             Close();
         }
 
