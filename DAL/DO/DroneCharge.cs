@@ -12,6 +12,7 @@ namespace IDAL
         {
             public int DroneId { get; set; }
             public int StationId { get; set; }
+            public DateTime? EnteryTime { get; set; }
             public override string ToString()
             {
                 return string.Format("Drone Id: {0},  Station Id: {1}",DroneId,StationId);

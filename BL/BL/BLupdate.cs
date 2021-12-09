@@ -212,17 +212,20 @@ namespace IBL
 
             public void SendDroneToCharge(int droneId)
             {
+                //getting the drone
                 DroneInList drone = drones.FirstOrDefault(x => x.Id == droneId);
                 if (drone.Status != DroneStatuses.Available)
                     throw new StatusDroneException("send drone to charge", drone.Status, DroneStatuses.Available);
 
+                //getting the stations that available
                 List<IDAL.DO.Station> station = dalObj.GetStations(x => x.ChargeSolts != 0).ToList();
                 if (!station.Any())
                     throw new NoChargeSlotException();
 
-                station.OrderBy(s => Distance.GetDistanceFromLatLonInKm(s.Latitude, s.Longitude, drone.Location.Latitude, drone.Location.Longitude));
+                //order the station by closest
+                station = station.OrderBy(s => Distance.GetDistanceFromLatLonInKm(s.Latitude, s.Longitude, drone.Location.Latitude, drone.Location.Longitude)).ToList();
 
-
+                //checking if the drone can go to the closest station
                 double battryLoss = BatteryIossAvailable(drone.Location.Latitude, drone.Location.Longitude,
                     station.First().Latitude, station.First().Longitude);
                 if (drone.Battery - battryLoss < 0)
@@ -246,8 +249,18 @@ namespace IBL
 
             }
 
-            public void ReleaseDroneFromCharging(int droneId, double timeCharge)
+            public void ReleaseDroneFromCharging(int droneId)
             {
+                double timeCharge;
+                try
+                {
+                    timeCharge = dalObj.ReleaseDroneFromCharging(droneId);
+                }
+                catch (Exception ex)
+                {
+                    throw new DalException(ex);
+                }
+
                 DroneInList drone = drones.FirstOrDefault(x => x.Id == droneId);
                 if (drone.Status != DroneStatuses.Maintenance)
                     throw new StatusDroneException("release drone from charging", drone.Status, DroneStatuses.Maintenance);
@@ -257,15 +270,6 @@ namespace IBL
                 else
                     drone.Battery = 100;
                 drone.Status = DroneStatuses.Available;
-
-                try
-                {
-                    dalObj.ReleaseDroneFromCharging(droneId);
-                }
-                catch (Exception ex)
-                {
-                    throw new DalException(ex);
-                }
             }
         }
     }

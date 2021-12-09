@@ -100,14 +100,15 @@ namespace DalObject
             DataSource.DroneCharges.Add(new DroneCharge
             {
                 DroneId = drone.Id,
-                StationId = station.Id
+                StationId = station.Id,
+                EnteryTime = DateTime.Now
             });
             station.ChargeSolts--;
 
             DataSource.Stations.Add(station);
         }
 
-        public void ReleaseDroneFromCharging(int droneId)
+        public double ReleaseDroneFromCharging(int droneId)
         {
             DroneCharge droneCharge = DataSource.DroneCharges.FirstOrDefault(x => x.DroneId == droneId);
             if (droneCharge.DroneId != droneId)
@@ -121,6 +122,9 @@ namespace DalObject
 
             DataSource.Stations.Add(station);
             DataSource.DroneCharges.Remove(droneCharge);
+
+            //note: this return in the second, efter simulator change it to minute
+            return (DateTime.Now - droneCharge.EnteryTime).Value.TotalSeconds;
         }
 
         public void UpdateDrone(int droneId, string model)
