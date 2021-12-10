@@ -22,7 +22,9 @@ namespace PL
     {
         private IBL.IBL myBl;
         private DroneInList drone;
+        ListView droneInLists;
         DronesListWindow droneslistWindow;
+        IDAL.DO.Parcel parcel;
 
 
         public DroneWindow(IBL.IBL myBl, DronesListWindow listWindow)
@@ -30,35 +32,54 @@ namespace PL
             droneslistWindow = listWindow;
             this.myBl = myBl;
             InitializeComponent();
-            this.Title = "Add drone";
-            UpdateGrid.Visibility = Visibility.Hidden;
-            AddGrid.Visibility = Visibility.Visible;
-            this.maxWeight.ItemsSource = Enum.GetValues(typeof(IBL.BO.WeightCategory));
-            this.station.ItemsSource = myBl.GetStations();
+            //this.Title = "Add drone";
+            DroneTextBlock.Text = "Add a Drone";
+            UpdateDrone.Visibility = Visibility.Hidden;
+            //AddGrid.Visibility = Visibility.Hidden;
+            AdditionDrone.Visibility = Visibility.Visible;
+            this.MaxWeight.ItemsSource = Enum.GetValues(typeof(IBL.BO.WeightCategory));
+            this.Station.ItemsSource = myBl.GetStations();
         }
 
         public DroneWindow(IBL.IBL myBl, object selectedItem, ListView dronesListView)
         {
             this.myBl = myBl;
             this.drone = (DroneInList)selectedItem;
+            this.droneInLists = dronesListView;
             InitializeComponent();
-            AddGrid.Visibility = Visibility.Hidden;
-            UpdateGrid.Visibility = Visibility.Visible;
+            DroneTextBlock.Text = "Add a Drone";
+            AddDrone.Visibility = Visibility.Hidden;
+            UpdateDrone.Visibility = Visibility.Visible;
             this.Title = "Update drone";
-            this.DroneView.Content = myBl.GetDroneById(drone.Id);
+            try
+            {
+                this.DroneView.Content = myBl.GetDroneById(drone.Id);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
 
             DroneStatuses status = drone.Status;
 
             switch (status)
             {
                 case DroneStatuses.Available:
-                    bottonUpdate.Content = "Release from charge";
+                    bottonUpdate.Content = "Send to charge";
+                    conectToParcel.Visibility = Visibility.Visible;
                     break;
                 case DroneStatuses.Maintenance:
-                    bottonUpdate.Content = "Send to charge";
+                    bottonUpdate.Content = "Release from charge";
                     break;
                 case DroneStatuses.Delivery:
-                    bottonUpdate.Content = "Collect delivery";
+
+                    parcel = myBl.GetParcelWasConnectToParcel(drone.Id, out drone);
+                    if (parcel.Scheduled != null && parcel.PickedUp == null)
+                        bottonUpdate.Content = "Collect delivery";
+                    else if (parcel.PickedUp != null && parcel.Delivered == null)
+                        bottonUpdate.Content = "Delivered parcel by this drone";
+                    else
+                        bottonUpdate.Content = "error";
                     break;
                 default:
                     break;
@@ -72,13 +93,13 @@ namespace PL
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            int droneID = int.Parse(id.Text);
-            WeightCategory  MaxWeight = (WeightCategory)maxWeight.SelectedItem;
-            string Model = model.Text;
-            StationList Station = (StationList)station.SelectedItem;
+            int droneID = int.Parse(Id.Text);
+            WeightCategory  Weight = (WeightCategory)MaxWeight.SelectedItem;
+            string model = Model.Text;
+            StationList station = (StationList)Station.SelectedItem;
 
-            int StationId = Station.Id;
-            DroneInList drone = new() {Id = droneID, Model = Model, MaxWeight = MaxWeight};
+            int StationId = station.Id;
+            DroneInList drone = new() {Id = droneID, Model = model, MaxWeight = Weight };
 
             try
             {
@@ -106,12 +127,93 @@ namespace PL
         {
             try
             {
-                if (drone.Status == DroneStatuses.Maintenance)
-                    myBl.ReleaseDroneFromCharging(drone.Id);
-                    if (drone.Status == DroneStatuses.Available)
+
+                switch (drone.Status)
+                {
+                    case DroneStatuses.Available:
                         myBl.SendDroneToCharge(drone.Id);
-                if (drone.Status == DroneStatuses.Delivery)
-                    myBl.CollectParcelsByDrone(drone.Id);
+
+                        break;
+                    case DroneStatuses.Maintenance:
+                        myBl.ReleaseDroneFromCharging(drone.Id);
+
+                        break;
+                    case DroneStatuses.Delivery:
+                        if (parcel.Scheduled != null && parcel.PickedUp == null)
+                            myBl.CollectParcelsByDrone(drone.Id);
+                        else if (parcel.PickedUp != null && parcel.Delivered == null)
+                            myBl.DeliveredParcel(drone.Id);
+
+                        break;
+                    default:
+                        break;
+                }
+
+                Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
+            MessageBox.Show("success");
+
+        }
+
+        private void ButtonCancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void conectToParcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                myBl.ConnectDroneToParcel(drone.Id);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
+            new DronesListWindow(myBl);
+            MessageBox.Show("success");
+            Close();
+        }
+
+        private void Close_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
+
+        private void UIElement_OnMouseLeave(object sender, MouseButtonEventArgs e)
+        {
+            int droneID = int.Parse(Id.Text);
+            WeightCategory weight = (WeightCategory)MaxWeight.SelectedItem;
+            string model = Model.Text;
+            StationList station = (StationList)Station.SelectedItem;
+
+            int StationId = station.Id;
+            DroneInList drone = new() { Id = droneID, Model = model, MaxWeight = weight };
+
+            try
+            {
+                myBl.NewDroneInList(drone, StationId);
+                droneslistWindow.Close();
+                DronesListWindow listWindow = new DronesListWindow(myBl);
+                listWindow.ComboStatusSelector.SelectedItem = droneslistWindow.ComboStatusSelector.SelectedItem;
+                listWindow.ComboWeightSelector.SelectedItem = droneslistWindow.ComboWeightSelector.SelectedItem;
+                listWindow.Show();
+                Close();
+
+                MessageBox.Show("The drone was added successfully", "success");
             }
             catch (Exception ex)
             {
@@ -119,9 +221,9 @@ namespace PL
             }
         }
 
-        private void ButtonCancel_Click(object sender, RoutedEventArgs e)
+        private void Station_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Close();
+
         }
     }
 }

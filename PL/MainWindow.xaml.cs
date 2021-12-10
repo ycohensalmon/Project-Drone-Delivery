@@ -33,5 +33,10 @@ namespace PL
             new DronesListWindow(myBl).Show();
             Close();
         }
+
+        private void Close_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

@@ -20,7 +20,6 @@ namespace PL
     /// </summary>
     public partial class DronesListWindow : Window
     {
-        DronesListWindow listWindow;
         IBL.IBL myBl;
         public DronesListWindow(IBL.IBL bl)
         {
@@ -57,6 +56,16 @@ namespace PL
         private void DroneView_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             new DroneWindow(myBl, DronesListView.SelectedItem, DronesListView).ShowDialog();
+        }
+
+        private void ButtonClearStatus_Click(object sender, RoutedEventArgs e)
+        {
+            this.ComboStatusSelector.SelectedItem = 0;
+        }
+
+        private void ButtonClearWeight_Click(object sender, RoutedEventArgs e)
+        {
+            this.ComboWeightSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.WeightCategory));
         }
     }
 }

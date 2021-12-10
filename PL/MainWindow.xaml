@@ -4,11 +4,45 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+    Icon="C:\Users\ycohe\source\repos\ycohensalmon\dotNet5782_5588_8680\images\llogo.jpg"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="PL.MainWindow"
         mc:Ignorable="d"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
         Title="MainWindow" Height="450" Width="800">
-    <Grid Background ="#FEBD69">
-        <Button Content="Show list drones" HorizontalAlignment="Left" Margin="360,184,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+    <Grid>
+        <Border 
+                CornerRadius="40" BorderBrush="#FF9900" 
+                BorderThickness="4">
+            <Border.Background>
+                <ImageBrush Stretch="Fill" ImageSource="C:\Users\ycohe\source\repos\ycohensalmon\dotNet5782_5588_8680\images\drones.jfif"/>
+            </Border.Background>
+        </Border>
+        <Button Content="Show list drones" HorizontalAlignment="Left" Margin="84,260,0,0" VerticalAlignment="Top" Click="Button_Click" BorderBrush="#FF6FB6D8" Foreground="#FF6FB6D8" Height="60">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="1"/>
+                    <GradientStop Color="#FFFF9900" Offset="0"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button x:Name="Close"
+                Margin="0,10,10,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
+                                Click="Close_OnClick"
+                                Background="#FF111111">
+            <materialDesign:PackIcon Kind="Close" Width="30" Height="30"/>
+        </Button>
         <!--{StaticResource MaterialDesignDarkForeground}-->
     </Grid>
 </Window>

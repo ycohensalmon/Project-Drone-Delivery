@@ -32,6 +32,7 @@ namespace IBL
         public IEnumerable<ParcelInList> GetParcels();
         public IEnumerable<ParcelInList> GetParcelsWithoutDrone();
         public IEnumerable<StationList> GetStationWithChargeSolts();
+        public IDAL.DO.Parcel GetParcelWasConnectToParcel(int droneId, out DroneInList drone);
     }
 
 }

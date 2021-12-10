@@ -174,11 +174,9 @@ namespace IBL
 
             public void DeliveredParcel(int droneId)
             {
-                DroneInList drone = drones.FirstOrDefault(x => x.Id == droneId);
-                if (drone.Status != DroneStatuses.Delivery)
-                    throw new StatusDroneException("delivered parcel to costumer", drone.Status, DroneStatuses.Delivery);
+                DroneInList drone;
 
-                IDAL.DO.Parcel myParcel = dalObj.GetParcelById(drone.NumParcel);
+                IDAL.DO.Parcel myParcel = GetParcelWasConnectToParcel(droneId, out drone);
                 if (myParcel.PickedUp == null || myParcel.Delivered != null)
                     throw new NoParcelException("picked up", "delivered");
                 if (myParcel.DroneId != droneId)
@@ -208,6 +206,15 @@ namespace IBL
                     throw new DalException(ex);
                 }
 
+            }
+
+            public IDAL.DO.Parcel GetParcelWasConnectToParcel(int droneId, out DroneInList drone)
+            {
+                drone = drones.FirstOrDefault(x => x.Id == droneId);
+                if (drone.Status != DroneStatuses.Delivery)
+                    throw new StatusDroneException("delivered parcel to costumer", drone.Status, DroneStatuses.Delivery);
+
+                return dalObj.GetParcelById(drone.NumParcel);
             }
 
             public void SendDroneToCharge(int droneId)

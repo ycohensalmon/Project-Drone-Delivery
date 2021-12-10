@@ -20,10 +20,20 @@
                 <ColumnDefinition Width="8*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="BottonAdd" Content="add drone" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Click="BottonAdd_Click"/>
+            <Button x:Name="BottonAdd" Content="add drone" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Click="BottonAdd_Click" Margin="0,103,0,0"/>
             <Button x:Name="bottonExit" Content="exit" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="bottonExit_Click"/>
             <ListView x:Name="DronesListView"  Grid.Column="1" MouseDoubleClick="DroneView_DoubleClick">
+                <ListView.View>
+                    <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Information">
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="ID" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Model}" Header="Model" Width="110"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Battery}" Header="Battery" Width="110"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Status}" Header="Status" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=NumParcel}" Header="Parcel in delivery" Width="170"/>
+                    </GridView>
+                </ListView.View>
             </ListView>
+            <Button  x:Name="ButtonClearWeight" Content="clear" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ButtonClearWeight_Click"/>
         </Grid>
         <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
             <Grid.ColumnDefinitions>
@@ -39,6 +49,7 @@
                       ToolTip="choose a geight" FontWeight="Bold" FontStyle="Normal" FontFamily="Aharoni" HorizontalContentAlignment="Stretch" Height="67" FontSize="14" SelectionChanged="ComboWeightSelector_SelectionChanged"/>
             <Label Content="Status drone:" HorizontalAlignment= "Right" VerticalAlignment="Center" Grid.Column="0" FontSize="20"/>
             <Label Content="Weight:" HorizontalAlignment= "Right" VerticalAlignment="Center" Grid.Column="2" FontSize="20"/>
+            <Button x:Name="ButtonClearStatus" Content="clear" Grid.Column="2" HorizontalAlignment="Left"  VerticalAlignment="Top" Click="ButtonClearStatus_Click"/>
         </Grid>
     </Grid>
 </Window>
