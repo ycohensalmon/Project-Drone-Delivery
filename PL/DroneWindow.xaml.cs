@@ -26,20 +26,90 @@ namespace PL
         DronesListWindow droneslistWindow;
         IDAL.DO.Parcel parcel;
 
-
+        // add drone
         public DroneWindow(IBL.IBL myBl, DronesListWindow listWindow)
         {
             droneslistWindow = listWindow;
             this.myBl = myBl;
             InitializeComponent();
-            //this.Title = "Add drone";
             DroneTextBlock.Text = "Add a Drone";
             UpdateDrone.Visibility = Visibility.Hidden;
-            //AddGrid.Visibility = Visibility.Hidden;
-            AdditionDrone.Visibility = Visibility.Visible;
+            AddDrone.Visibility = Visibility.Visible;
             this.MaxWeight.ItemsSource = Enum.GetValues(typeof(IBL.BO.WeightCategory));
             this.Station.ItemsSource = myBl.GetStations();
         }
+        private void maxWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            int droneID = int.Parse(Id.Text);
+            WeightCategory  Weight = (WeightCategory)MaxWeight.SelectedItem;
+            string model = Model.Text;
+            StationList station = (StationList)Station.SelectedItem;
+
+            int StationId = station.Id;
+            DroneInList drone = new() {Id = droneID, Model = model, MaxWeight = Weight };
+
+            try
+            {
+                myBl.NewDroneInList(drone, StationId);
+                Refrash();
+
+                MessageBox.Show("The drone was added successfully", "success");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
+        }
+
+        private void Refrash()
+        {
+            droneslistWindow.Close();
+            DronesListWindow listWindow = new DronesListWindow(myBl);
+            listWindow.ComboStatusSelector.SelectedItem = droneslistWindow.ComboStatusSelector.SelectedItem;
+            listWindow.ComboWeightSelector.SelectedItem = droneslistWindow.ComboWeightSelector.SelectedItem;
+            listWindow.Show();
+            Close();
+        }
+
+        private void UIElement_OnMouseLeave(object sender, MouseButtonEventArgs e)
+        {
+            int droneID = int.Parse(Id.Text);
+            WeightCategory weight = (WeightCategory)MaxWeight.SelectedItem;
+            string model = Model.Text;
+            StationList station = (StationList)Station.SelectedItem;
+
+            int StationId = station.Id;
+            DroneInList drone = new() { Id = droneID, Model = model, MaxWeight = weight };
+
+            try
+            {
+                myBl.NewDroneInList(drone, StationId);
+                droneslistWindow.Close();
+                DronesListWindow listWindow = new DronesListWindow(myBl);
+                listWindow.ComboStatusSelector.SelectedItem = droneslistWindow.ComboStatusSelector.SelectedItem;
+                listWindow.ComboWeightSelector.SelectedItem = droneslistWindow.ComboWeightSelector.SelectedItem;
+                listWindow.Show();
+                Close();
+                Refrash();
+
+                MessageBox.Show("The drone was added successfully", "success");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
+        }
+        private void stationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+        }
+
+
+
+
 
         public DroneWindow(IBL.IBL myBl, object selectedItem, ListView dronesListView)
         {
@@ -85,44 +155,6 @@ namespace PL
                     break;
             }
         }
-
-        private void maxWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
-        {
-            int droneID = int.Parse(Id.Text);
-            WeightCategory  Weight = (WeightCategory)MaxWeight.SelectedItem;
-            string model = Model.Text;
-            StationList station = (StationList)Station.SelectedItem;
-
-            int StationId = station.Id;
-            DroneInList drone = new() {Id = droneID, Model = model, MaxWeight = Weight };
-
-            try
-            {
-                myBl.NewDroneInList(drone, StationId);
-                droneslistWindow.Close();
-                DronesListWindow listWindow = new DronesListWindow(myBl);
-                listWindow.ComboStatusSelector.SelectedItem = droneslistWindow.ComboStatusSelector.SelectedItem;
-                listWindow.ComboWeightSelector.SelectedItem = droneslistWindow.ComboWeightSelector.SelectedItem;
-                listWindow.Show();
-                Close();
-
-                MessageBox.Show("The drone was added successfully", "success");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "ERROR");
-            }
-        }
-
-        private void stationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-        }
-
         private void bottonUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -149,6 +181,7 @@ namespace PL
                         break;
                 }
 
+                Refrash();
                 Close();
 
             }
@@ -159,12 +192,6 @@ namespace PL
             MessageBox.Show("success");
 
         }
-
-        private void ButtonCancel_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
         private void conectToParcel_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -179,12 +206,18 @@ namespace PL
             MessageBox.Show("success");
             Close();
         }
-
         private void Close_OnClick(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
+        private void ButtonCancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+
+        // if we want to move to window
         private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -193,37 +226,49 @@ namespace PL
             }
         }
 
-        private void UIElement_OnMouseLeave(object sender, MouseButtonEventArgs e)
-        {
-            int droneID = int.Parse(Id.Text);
-            WeightCategory weight = (WeightCategory)MaxWeight.SelectedItem;
-            string model = Model.Text;
-            StationList station = (StationList)Station.SelectedItem;
-
-            int StationId = station.Id;
-            DroneInList drone = new() { Id = droneID, Model = model, MaxWeight = weight };
-
-            try
-            {
-                myBl.NewDroneInList(drone, StationId);
-                droneslistWindow.Close();
-                DronesListWindow listWindow = new DronesListWindow(myBl);
-                listWindow.ComboStatusSelector.SelectedItem = droneslistWindow.ComboStatusSelector.SelectedItem;
-                listWindow.ComboWeightSelector.SelectedItem = droneslistWindow.ComboWeightSelector.SelectedItem;
-                listWindow.Show();
-                Close();
-
-                MessageBox.Show("The drone was added successfully", "success");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "ERROR");
-            }
-        }
 
         private void Station_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
+
+        private void Id_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Model.Text == "")
+                Model = WrongText;
+        }
+
+        private void Model_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Id_TextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (Model.Text == "")
+                Model = WrongText;
+        }
+
+        /*private static int AddId4(bool drone, bool station)
+        {
+            int id;
+            do
+            {
+                if (drone == false && station == false)
+                    Console.WriteLine("add Id: (4 digits)");
+                if (drone == true && station == false)
+                    Console.WriteLine("Enter the Id of the drone");
+                if (drone == false && station == true)
+                    Console.WriteLine("Enter the Id of the station");
+                if (int.TryParse(Console.ReadLine(), out id) == false)
+                    throw new OnlyDigitsException("ID");
+                if (id < 0)
+                    throw new NegetiveValueException("ID", 4);
+
+            } while (id < 0);
+            return id;
+
+        }*/
+
     }
 }

@@ -19,7 +19,7 @@
         Height="620"
         Width="370">
     <Grid x:Name="MainGrid">
-        <Grid x:Name="AdditionDrone" Visibility="Visible">
+        <Grid x:Name="AddDrone" Visibility="Visible">
             <Border 
                 CornerRadius="40" BorderBrush="#FF9900" 
                 MouseDown="UIElement_OnMouseDown" BorderThickness="4" Background="White">
@@ -46,7 +46,7 @@
                                HorizontalAlignment="Left"/>
                     </Grid>
 
-                    <StackPanel Orientation="Vertical" Visibility="Visible">
+                    <StackPanel Orientation="Vertical">
                         <materialDesign:PackIcon
                             HorizontalAlignment="Center"
                              Height="60"
@@ -62,7 +62,7 @@
                             Text="Add a drone"/>
                     </StackPanel>
 
-                    <Grid x:Name="AddDrone" Margin="30" Visibility="Visible">
+                    <Grid Margin="30">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="20"/>
@@ -80,7 +80,7 @@
                                 Width="200"
                                 FontSize="18"
                                 materialDesign:HintAssist.Hint="Id"  
-                                materialDesign:HintAssist.IsFloating="True"/>
+                                materialDesign:HintAssist.IsFloating="True" TextChanged="Id_TextChanged" TextInput="Id_TextInput"/>
                             <materialDesign:PackIcon
                                 VerticalAlignment="Bottom"
                                 Kind="User" 
@@ -111,7 +111,7 @@
                                 Width="200"
                                 FontSize="18"
                                 materialDesign:HintAssist.Hint="Model"  
-                                materialDesign:HintAssist.IsFloating="True"/>
+                                materialDesign:HintAssist.IsFloating="True" TextChanged="Model_TextChanged"/>
                             <materialDesign:PackIcon
                                 VerticalAlignment="Bottom"
                                 Kind="Company" 
@@ -187,6 +187,21 @@
                         <Image Source="C:\Users\ycohe\source\repos\ycohensalmon\dotNet5782_5588_8680\images\logo1.png"
                                HorizontalAlignment="Center"/>
                     </Grid>
+                    <StackPanel Orientation="Vertical">
+                        <materialDesign:PackIcon
+                            HorizontalAlignment="Center"
+                             Height="60"
+                            Width="70"
+                            Kind="Drone"
+                            Opacity="1"
+                            Foreground="#111111"/>
+                        <TextBlock
+                            x:Name="UpdateTextBlock"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource MaterialDesignButtonTextBlock}"
+                            FontSize="22"
+                            Text="Update this drone"/>
+                    </StackPanel>
                     <StackPanel>
 
                         <Label Name="DroneView"/>
@@ -195,7 +210,7 @@
                                 Margin="10,10,10,10">
                             <Button.Content>Update</Button.Content>
                         </Button>
-                        <Button x:Name="conectToParcel" Content="Send drone to parcel" Visibility="Visible" Click="conectToParcel_Click" Margin="10,10,10,0" Background="#FF48A3C6" Foreground="#FFFF9900" Cursor="Hand"/>
+                        <Button x:Name="conectToParcel" Content="Send drone to parcel" Visibility="Hidden" Click="conectToParcel_Click" Margin="10,10,10,0" Background="#FF48A3C6" Foreground="#FFFF9900" Cursor="Hand"/>
 
                     </StackPanel>
 
@@ -203,6 +218,13 @@
                 </StackPanel>
 
             </Border>
+            <TextBox
+                Visibility="Hidden"
+                    Name="WrongText"
+                    FontSize="15"
+                    TextAlignment="Left"
+                    Foreground="Red"
+                />
 
         </Grid>
 
