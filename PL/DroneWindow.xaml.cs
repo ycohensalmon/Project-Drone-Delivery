@@ -22,7 +22,7 @@ namespace PL
     {
         private IBL.IBL myBl;
         private DroneInList drone;
-        ListView droneInLists;
+        DroneInList droneInLists;
         DronesListWindow droneslistWindow;
         IDAL.DO.Parcel parcel;
 
@@ -44,6 +44,8 @@ namespace PL
         }
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
+           // if(Id.Text == null)
+             //   Id.Text = Id.cont
             int droneID = int.Parse(Id.Text);
             WeightCategory  Weight = (WeightCategory)MaxWeight.SelectedItem;
             string model = Model.Text;
@@ -55,7 +57,7 @@ namespace PL
             try
             {
                 myBl.NewDroneInList(drone, StationId);
-                Refrash();
+                //Refrash();
 
                 MessageBox.Show("The drone was added successfully", "success");
             }
@@ -94,7 +96,7 @@ namespace PL
                 listWindow.ComboWeightSelector.SelectedItem = droneslistWindow.ComboWeightSelector.SelectedItem;
                 listWindow.Show();
                 Close();
-                Refrash();
+                //Refrash();
 
                 MessageBox.Show("The drone was added successfully", "success");
             }
@@ -103,6 +105,12 @@ namespace PL
                 MessageBox.Show(ex.Message, "ERROR");
             }
         }
+
+        private Exception Exception(string v)
+        {
+            throw new NotImplementedException();
+        }
+
         private void stationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
         }
@@ -115,7 +123,7 @@ namespace PL
         {
             this.myBl = myBl;
             this.drone = (DroneInList)selectedItem;
-            this.droneInLists = dronesListView;
+            //this.droneInLists = dronesListView;
             InitializeComponent();
             DroneTextBlock.Text = "Add a Drone";
             AddDrone.Visibility = Visibility.Hidden;
@@ -181,15 +189,15 @@ namespace PL
                         break;
                 }
 
-                Refrash();
+                //Refrash();
                 Close();
 
+                MessageBox.Show("success");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "ERROR");
             }
-            MessageBox.Show("success");
 
         }
         private void conectToParcel_Click(object sender, RoutedEventArgs e)
@@ -234,8 +242,12 @@ namespace PL
 
         private void Id_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (Model.Text == "")
-                Model = WrongText;
+            if (Model.Text == null)
+            {
+                MessageBox.Show("errorrrr ahi");
+                Close();
+            }
+
         }
 
         private void Model_TextChanged(object sender, TextChangedEventArgs e)

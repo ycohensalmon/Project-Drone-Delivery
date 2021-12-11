@@ -31,7 +31,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Presentation Layer", "3.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0. Targil 0", "0. Targil 0", "{B75F73D9-3D77-468F-BE94-C31EF4AC1B6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PL", "PL\PL.csproj", "{EC629310-E777-4C4C-839E-37DB691A7087}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PL", "PL\PL.csproj", "{EC629310-E777-4C4C-839E-37DB691A7087}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{7DA16AC7-5340-4354-973C-B65FCCFCE127}"
+	ProjectSection(SolutionItems) = preProject
+		images\drones.jfif = images\drones.jfif
+		images\llogo.jpg = images\llogo.jpg
+		images\logo1.png = images\logo1.png
+		images\logo11.png = images\logo11.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

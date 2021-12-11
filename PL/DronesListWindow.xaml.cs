@@ -23,7 +23,7 @@ namespace PL
         IBL.IBL myBl;
         public DronesListWindow(IBL.IBL bl)
         {
-            this.myBl = bl; 
+            this.myBl = bl;
             InitializeComponent();
             this.ComboStatusSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.DroneStatuses));
             this.ComboWeightSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.WeightCategory));
@@ -32,15 +32,37 @@ namespace PL
 
         private void ComboStatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DroneStatuses status = (DroneStatuses)ComboStatusSelector.SelectedItem;
-            this.DronesListView.ItemsSource = myBl.GetDrones().Where(x => x.Status == status);
+            if (ComboStatusSelector.SelectedItem != null)
+            {
+                DroneStatuses status = (DroneStatuses)ComboStatusSelector.SelectedItem;
+                if (ComboWeightSelector.SelectedItem == null)
+                    this.DronesListView.ItemsSource = myBl.GetDrones().Where(x => x.Status == status);
+                else
+                {
+                    WeightCategory Weight = (WeightCategory)ComboWeightSelector.SelectedItem;
+                    this.DronesListView.ItemsSource = myBl.GetDrones().Where(x => x.Status == status && x.MaxWeight == Weight);
+                }
+            }
+            else
+                this.DronesListView.ItemsSource = myBl.GetDrones();
         }
 
         private void ComboWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (ComboWeightSelector.SelectedItem != null)
+            {
+                WeightCategory Weight = (WeightCategory)ComboWeightSelector.SelectedItem;
 
-            WeightCategory Weight = (WeightCategory)ComboWeightSelector.SelectedItem;
-            this.DronesListView.ItemsSource = myBl.GetDrones().Where(x => x.MaxWeight == Weight);
+                if (ComboStatusSelector.SelectedItem == null)
+                    this.DronesListView.ItemsSource = myBl.GetDrones().Where(x => x.MaxWeight == Weight);
+                else
+                {
+                    DroneStatuses status = (DroneStatuses)ComboStatusSelector.SelectedItem;
+                    this.DronesListView.ItemsSource = myBl.GetDrones().Where(x => x.Status == status && x.MaxWeight == Weight);
+                }
+            }
+            else
+                this.DronesListView.ItemsSource = myBl.GetDrones();
         }
 
         private void BottonAdd_Click(object sender, RoutedEventArgs e)
@@ -60,12 +82,12 @@ namespace PL
 
         private void ButtonClearStatus_Click(object sender, RoutedEventArgs e)
         {
-            this.ComboStatusSelector.SelectedItem = 0;
+            this.ComboStatusSelector.SelectedItem = null;
         }
 
         private void ButtonClearWeight_Click(object sender, RoutedEventArgs e)
         {
-            this.ComboWeightSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.WeightCategory));
+            this.ComboWeightSelector.SelectedItem = null;
         }
     }
 }
