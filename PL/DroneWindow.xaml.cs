@@ -32,7 +32,9 @@ namespace PL
             UpdateDrone.Visibility = Visibility.Hidden;
             AddDrone.Visibility = Visibility.Visible;
             this.MaxWeight.ItemsSource = Enum.GetValues(typeof(IBL.BO.WeightCategory));
-            this.Station.ItemsSource = myBl.GetStations();
+            List<string> NameStations = new();
+            foreach (var item in myBl.GetStations()) NameStations.Add(item.Name);
+            this.Station.ItemsSource = NameStations;
         }
         private void maxWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -42,30 +44,6 @@ namespace PL
                 MaxWeight.Foreground = Brushes.Black;
 
         }
-        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
-        {
-            // if(Id.Text == null)
-            //   Id.Text = Id.cont
-            int droneID = int.Parse(Id.Text);
-            WeightCategory Weight = (WeightCategory)MaxWeight.SelectedItem;
-            string model = Model.Text;
-            StationList station = (StationList)Station.SelectedItem;
-
-            int StationId = station.Id;
-            DroneInList drone = new() { Id = droneID, Model = model, MaxWeight = Weight };
-
-            try
-            {
-                myBl.NewDroneInList(drone, StationId);
-                //Refrash();
-
-                MessageBox.Show("The drone was added successfully", "success");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "ERROR");
-            }
-        }
         private void UIElement_OnMouseLeave(object sender, MouseButtonEventArgs e)
         {
             try
@@ -73,9 +51,12 @@ namespace PL
                 int droneID = (Id.Text == "") ? throw new EmptyInputException("id") : int.Parse(Id.Text);
                 string model =  (Model.Text == "") ? throw new EmptyInputException("model") : Model.Text;
                 WeightCategory weight = (MaxWeight.SelectedItem == null) ? throw new EmptyInputException("weight") : (WeightCategory)MaxWeight.SelectedItem;
-                StationList station = (Station.SelectedItem == null) ? throw new EmptyInputException("station") : (StationList)Station.SelectedItem;                 
+
+
+                string nameStation = (Station.SelectedItem == null) ? throw new EmptyInputException("station") : (string)Station.SelectedItem;                 
+                StationList tempStation = myBl.GetStations().FirstOrDefault(x => x.Name == nameStation);
                  
-                int StationId = station.Id;
+                int StationId = tempStation.Id;
                 DroneInList drone = new() { Id = droneID, Model = model, MaxWeight = weight };
 
 
@@ -105,7 +86,7 @@ namespace PL
             switch (status)
             {
                 case DroneStatuses.Available:
-                    bottonUpdate.Content = "Send tooooo charge";
+                    bottonUpdate.Content = "Send to charge";
                     conectToParcel.Visibility = Visibility.Visible;
                     break;
                 case DroneStatuses.Maintenance:
@@ -115,9 +96,13 @@ namespace PL
 
                     parcel = myBl.GetParcelWasConnectToParcel(drone.Id, out drone);
                     if (parcel.Scheduled != null && parcel.PickedUp == null)
+                    {
                         bottonUpdate.Content = "Collect delivery";
+                    }
                     else if (parcel.PickedUp != null && parcel.Delivered == null)
+                    {
                         bottonUpdate.Content = "Delivered parcel by this drone";
+                    }
                     else
                         bottonUpdate.Content = "error";
                     break;
@@ -159,8 +144,6 @@ namespace PL
                 }
 
                 MessageBox.Show("success");
-                //DroneInList tempDrone = myBl.GetDrones().FirstOrDefault(x => x.Id == drone.Id);
-                //new DroneWindow(myBl,tempDrone);
                 Close();
             }
             catch (Exception ex)
@@ -174,14 +157,13 @@ namespace PL
             try
             {
                 myBl.ConnectDroneToParcel(drone.Id);
+                MessageBox.Show("success");
                 Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "ERROR");
             }
-            new DronesListWindow(myBl);
-            MessageBox.Show("success");
         }
         private void Close_OnClick(object sender, RoutedEventArgs e)
         {
@@ -249,6 +231,12 @@ namespace PL
 
         private void updateName_Click(object sender, RoutedEventArgs e)
         {
+
+            // Add this label to form
+
+            // Creating and setting the properties of TextBox1
+            TextBox Mytextbox = new TextBox();
+            Mytextbox.Name = "ModelUpdate";
 
         }
 

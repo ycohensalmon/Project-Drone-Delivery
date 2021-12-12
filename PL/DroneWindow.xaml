@@ -131,7 +131,8 @@
                                 Width="200"
                                 FontSize="18"
                                  materialDesign:HintAssist.Hint="Station Id"  
-                                materialDesign:HintAssist.IsFloating="True" SelectionChanged="Station_SelectionChanged"/>
+                                materialDesign:HintAssist.IsFloating="True" SelectionChanged="Station_SelectionChanged">
+                            </ComboBox>
                             <materialDesign:PackIcon
                                 VerticalAlignment="Bottom"
                                 Kind="Place"
@@ -210,13 +211,11 @@
                     <StackPanel>
 
                         <Label Name="DroneView"/>
-
                         <Button x:Name="bottonUpdate" Grid.Row ="1" Click="bottonUpdate_Click" Cursor="Hand" Background="#FF48A3C6" BorderBrush="{DynamicResource MaterialDesignDarkForeground}" Foreground="#FFFF9900"
                                 Margin="10,10,10,10">
                             <Button.Content>Update</Button.Content>
                         </Button>
-                        <Button x:Name="conectToParcel" Content="Send drone to parcel" Visibility="Hidden" Click="conectToParcel_Click" Margin="10,10,10,0" Background="#FF48A3C6" Foreground="#FFFF9900" Cursor="Hand"/>
-                        <Button x:Name="updateName" Content="Update the model" Click="updateName_Click" Margin="10,10,10,0" Background="#FF48A3C6" Foreground="#FFFF9900" Cursor="Hand"/>
+                        <Button x:Name="conectToParcel" Content="Send drone to parcel" Visibility="Hidden" Click="conectToParcel_Click" Margin="10,10,10,0" Background="#FF48A3C6" Foreground="#FFFF9900"/>
 
                     </StackPanel>
 
