@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\drones.jfif" />
+    <None Remove="images\iPhone.jpg" />
+    <None Remove="images\llogo.jpg" />
+    <None Remove="images\logo1.png" />
+    <None Remove="images\logo11.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
   </ItemGroup>
 
@@ -15,9 +23,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="images\llogo.jpg">
+    <Resource Include="images\drones.jfif" />
+    <Resource Include="images\iPhone.jpg" />
+    <Resource Include="images\llogo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Resource>
+    <Resource Include="images\logo1.png" />
+    <Resource Include="images\logo11.png" />
   </ItemGroup>
 
 </Project>

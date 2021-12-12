@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
-        Icon="C:\Users\ycohe\source\repos\ycohensalmon\dotNet5782_5588_8680\PL\images\llogo.jpg"
+        Icon="images/llogo.jpg"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="PL.MainWindow"
         mc:Ignorable="d"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -23,7 +23,7 @@
                 CornerRadius="40" BorderBrush="#FF9900" 
                 BorderThickness="4">
             <Border.Background>
-                <ImageBrush Stretch="Fill" ImageSource="C:\Users\ycohe\source\repos\ycohensalmon\dotNet5782_5588_8680\images\drones.jfif"/>
+                <ImageBrush Stretch="Fill" ImageSource="images/drones.jfif"/>
             </Border.Background>
         </Border>
         <Button Content="Show list drones" HorizontalAlignment="Left" Margin="84,260,0,0" VerticalAlignment="Top" Click="Button_Click" BorderBrush="#FF6FB6D8" Foreground="#FF6FB6D8" Height="60">
