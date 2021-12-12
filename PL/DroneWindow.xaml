@@ -24,7 +24,7 @@
                 CornerRadius="55"  
                 MouseDown="UIElement_OnMouseDown">
                 <Border.Background>
-                    <ImageBrush Stretch="Fill" ImageSource="C:\Users\ycohe\Dropbox\iPhone.jpg"/>
+                    <ImageBrush Stretch="Fill" ImageSource="images\iPhone.jpg"/>
                 </Border.Background>
 
 
@@ -46,7 +46,7 @@
                                 Background="#FF111111">
                             <materialDesign:PackIcon Kind="ArrowBack" Width="30" Height="30"/>
                         </Button>
-                        <Image Source="C:\Users\ycohe\source\repos\ycohensalmon\dotNet5782_5588_8680\images\logo1.png"
+                        <Image Source="images\logo1.png"
                                HorizontalAlignment="Right" Grid.Column="1" Margin="0,0,15,0"/>
                     </Grid>
 
@@ -189,7 +189,7 @@
                                 Background="#FF111111">
                             <materialDesign:PackIcon Kind="Close" Width="31" Height="30" VerticalAlignment="Center"/>
                         </Button>
-                        <Image Source="C:\Users\ycohe\source\repos\ycohensalmon\dotNet5782_5588_8680\images\logo1.png"
+                        <Image Source="images/logo1.png"
                                HorizontalAlignment="Center"/>
                     </Grid>
                     <StackPanel Orientation="Vertical">
