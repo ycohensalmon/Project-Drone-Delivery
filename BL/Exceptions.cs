@@ -34,11 +34,6 @@ namespace IBL
             public DalException(Exception item) : base(item.Message) { }
         }
 
-        public class BlException : Exception
-        {
-            public BlException(Exception item) { }
-        }
-
         public class ItemNotFoundException : Exception
         {
             public ItemNotFoundException(int item, string message) : base($"ERROR: {message} with id - {item} not exsist") { }
@@ -86,6 +81,11 @@ namespace IBL
         public class EmptyListException : Exception
         {
             public EmptyListException(string message) : base($"ERROR: The list of {message} is empty") { }
+        }
+
+        public class EmptyInputException : Exception
+        {
+            public EmptyInputException(string message) : base($"ERROR: The {message} is empty") { }
         }
     }
 }

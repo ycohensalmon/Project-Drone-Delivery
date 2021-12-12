@@ -36,6 +36,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{7DA16AC7-5340-4354-973C-B65FCCFCE127}"
 	ProjectSection(SolutionItems) = preProject
 		images\drones.jfif = images\drones.jfif
+		..\..\..\..\Dropbox\iPhone.jpg = ..\..\..\..\Dropbox\iPhone.jpg
 		images\llogo.jpg = images\llogo.jpg
 		images\logo1.png = images\logo1.png
 		images\logo11.png = images\logo11.png

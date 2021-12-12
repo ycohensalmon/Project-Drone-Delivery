@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
-    Icon="C:\Users\ycohe\source\repos\ycohensalmon\dotNet5782_5588_8680\images\llogo.jpg"
+        Icon="C:\Users\ycohe\source\repos\ycohensalmon\dotNet5782_5588_8680\PL\images\llogo.jpg"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="PL.MainWindow"
         mc:Ignorable="d"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"

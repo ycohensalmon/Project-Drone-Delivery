@@ -22,17 +22,13 @@ namespace PL
     {
         private IBL.IBL myBl;
         private DroneInList drone;
-        DroneInList droneInLists;
-        DronesListWindow droneslistWindow;
         IDAL.DO.Parcel parcel;
 
         // add drone
-        public DroneWindow(IBL.IBL myBl, DronesListWindow listWindow)
+        public DroneWindow(IBL.IBL myBl)
         {
-            droneslistWindow = listWindow;
             this.myBl = myBl;
             InitializeComponent();
-            DroneTextBlock.Text = "Add a Drone";
             UpdateDrone.Visibility = Visibility.Hidden;
             AddDrone.Visibility = Visibility.Visible;
             this.MaxWeight.ItemsSource = Enum.GetValues(typeof(IBL.BO.WeightCategory));
@@ -40,19 +36,23 @@ namespace PL
         }
         private void maxWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (MaxWeight.SelectedItem == null)
+                MaxWeight.Foreground = Brushes.Red;
+            else
+                MaxWeight.Foreground = Brushes.Black;
 
         }
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-           // if(Id.Text == null)
-             //   Id.Text = Id.cont
+            // if(Id.Text == null)
+            //   Id.Text = Id.cont
             int droneID = int.Parse(Id.Text);
-            WeightCategory  Weight = (WeightCategory)MaxWeight.SelectedItem;
+            WeightCategory Weight = (WeightCategory)MaxWeight.SelectedItem;
             string model = Model.Text;
             StationList station = (StationList)Station.SelectedItem;
 
             int StationId = station.Id;
-            DroneInList drone = new() {Id = droneID, Model = model, MaxWeight = Weight };
+            DroneInList drone = new() { Id = droneID, Model = model, MaxWeight = Weight };
 
             try
             {
@@ -66,37 +66,21 @@ namespace PL
                 MessageBox.Show(ex.Message, "ERROR");
             }
         }
-
-        private void Refrash()
-        {
-            droneslistWindow.Close();
-            DronesListWindow listWindow = new DronesListWindow(myBl);
-            listWindow.ComboStatusSelector.SelectedItem = droneslistWindow.ComboStatusSelector.SelectedItem;
-            listWindow.ComboWeightSelector.SelectedItem = droneslistWindow.ComboWeightSelector.SelectedItem;
-            listWindow.Show();
-            Close();
-        }
-
         private void UIElement_OnMouseLeave(object sender, MouseButtonEventArgs e)
         {
-            int droneID = int.Parse(Id.Text);
-            WeightCategory weight = (WeightCategory)MaxWeight.SelectedItem;
-            string model = Model.Text;
-            StationList station = (StationList)Station.SelectedItem;
-
-            int StationId = station.Id;
-            DroneInList drone = new() { Id = droneID, Model = model, MaxWeight = weight };
-
             try
             {
+                int droneID = (Id.Text == "") ? throw new EmptyInputException("id") : int.Parse(Id.Text);
+                string model =  (Model.Text == "") ? throw new EmptyInputException("model") : Model.Text;
+                WeightCategory weight = (MaxWeight.SelectedItem == null) ? throw new EmptyInputException("weight") : (WeightCategory)MaxWeight.SelectedItem;
+                StationList station = (Station.SelectedItem == null) ? throw new EmptyInputException("station") : (StationList)Station.SelectedItem;                 
+                 
+                int StationId = station.Id;
+                DroneInList drone = new() { Id = droneID, Model = model, MaxWeight = weight };
+
+
                 myBl.NewDroneInList(drone, StationId);
-                droneslistWindow.Close();
-                DronesListWindow listWindow = new DronesListWindow(myBl);
-                listWindow.ComboStatusSelector.SelectedItem = droneslistWindow.ComboStatusSelector.SelectedItem;
-                listWindow.ComboWeightSelector.SelectedItem = droneslistWindow.ComboWeightSelector.SelectedItem;
-                listWindow.Show();
                 Close();
-                //Refrash();
 
                 MessageBox.Show("The drone was added successfully", "success");
             }
@@ -105,45 +89,23 @@ namespace PL
                 MessageBox.Show(ex.Message, "ERROR");
             }
         }
-
-        private Exception Exception(string v)
-        {
-            throw new NotImplementedException();
-        }
-
         private void stationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
         }
-
-
-
-
-
-        public DroneWindow(IBL.IBL myBl, object selectedItem, ListView dronesListView)
+        public DroneWindow(IBL.IBL myBl, object selectedItem)
         {
             this.myBl = myBl;
             this.drone = (DroneInList)selectedItem;
-            //this.droneInLists = dronesListView;
             InitializeComponent();
-            DroneTextBlock.Text = "Add a Drone";
             AddDrone.Visibility = Visibility.Hidden;
             UpdateDrone.Visibility = Visibility.Visible;
-            this.Title = "Update drone";
-            try
-            {
-                this.DroneView.Content = myBl.GetDroneById(drone.Id);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "ERROR");
-            }
 
             DroneStatuses status = drone.Status;
 
             switch (status)
             {
                 case DroneStatuses.Available:
-                    bottonUpdate.Content = "Send to charge";
+                    bottonUpdate.Content = "Send tooooo charge";
                     conectToParcel.Visibility = Visibility.Visible;
                     break;
                 case DroneStatuses.Maintenance:
@@ -162,6 +124,15 @@ namespace PL
                 default:
                     break;
             }
+
+            try
+            {
+                this.DroneView.Content = myBl.GetDroneById(drone.Id);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR");
+            }
         }
         private void bottonUpdate_Click(object sender, RoutedEventArgs e)
         {
@@ -172,11 +143,9 @@ namespace PL
                 {
                     case DroneStatuses.Available:
                         myBl.SendDroneToCharge(drone.Id);
-
                         break;
                     case DroneStatuses.Maintenance:
                         myBl.ReleaseDroneFromCharging(drone.Id);
-
                         break;
                     case DroneStatuses.Delivery:
                         if (parcel.Scheduled != null && parcel.PickedUp == null)
@@ -189,10 +158,10 @@ namespace PL
                         break;
                 }
 
-                //Refrash();
-                Close();
-
                 MessageBox.Show("success");
+                //DroneInList tempDrone = myBl.GetDrones().FirstOrDefault(x => x.Id == drone.Id);
+                //new DroneWindow(myBl,tempDrone);
+                Close();
             }
             catch (Exception ex)
             {
@@ -205,6 +174,7 @@ namespace PL
             try
             {
                 myBl.ConnectDroneToParcel(drone.Id);
+                Close();
             }
             catch (Exception ex)
             {
@@ -212,7 +182,6 @@ namespace PL
             }
             new DronesListWindow(myBl);
             MessageBox.Show("success");
-            Close();
         }
         private void Close_OnClick(object sender, RoutedEventArgs e)
         {
@@ -234,7 +203,6 @@ namespace PL
             }
         }
 
-
         private void Station_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -242,12 +210,10 @@ namespace PL
 
         private void Id_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (Model.Text == null)
-            {
-                MessageBox.Show("errorrrr ahi");
-                Close();
-            }
-
+            if (Id.Text == "")
+                Id.Foreground = Brushes.Red;
+            else
+                Id.Foreground = Brushes.Black;
         }
 
         private void Model_TextChanged(object sender, TextChangedEventArgs e)
@@ -259,6 +225,31 @@ namespace PL
         {
             if (Model.Text == "")
                 Model = WrongText;
+        }
+
+        private void MaxWeight_DragEnter(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void MaxWeight_DragLeave(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void MaxWeight_PreviewDragEnter(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void MaxWeight_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+
+        }
+
+        private void updateName_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         /*private static int AddId4(bool drone, bool station)
@@ -281,6 +272,5 @@ namespace PL
             return id;
 
         }*/
-
     }
 }

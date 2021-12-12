@@ -67,7 +67,11 @@ namespace PL
 
         private void BottonAdd_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(myBl, this).ShowDialog();
+            new DroneWindow(myBl).ShowDialog();
+
+            ButtonClearStatus_Click(sender, e);
+            ButtonClearWeight_Click(sender, e);
+            this.DronesListView.ItemsSource = myBl.GetDrones();
         }
 
         private void bottonExit_Click(object sender, RoutedEventArgs e)
@@ -77,7 +81,10 @@ namespace PL
 
         private void DroneView_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            new DroneWindow(myBl, DronesListView.SelectedItem, DronesListView).ShowDialog();
+            new DroneWindow(myBl, DronesListView.SelectedItem).ShowDialog();
+            ButtonClearStatus_Click(sender, e);
+            ButtonClearWeight_Click(sender, e);
+            DronesListView.ItemsSource = myBl.GetDrones();
         }
 
         private void ButtonClearStatus_Click(object sender, RoutedEventArgs e)
