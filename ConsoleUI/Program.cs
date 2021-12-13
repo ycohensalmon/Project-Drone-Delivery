@@ -379,7 +379,7 @@ namespace ConsoleUI
             Random rand = new Random();
             Parcel temp = new Parcel
             {
-                Id = dal.DataSource.SerialNum++,
+                //Id = dal.DataSource.SerialNum++,
                 DroneId = 0,
                 SenderId = rand.Next(10000, 99999),
                 TargetId = rand.Next(10000, 99999),

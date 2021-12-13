@@ -23,7 +23,7 @@ namespace DO
         public override string ToString()
         {
             return string.Format("Id: {0}\nName: {1}\nLattitude: {2}\nLongitude: {3}\nAvailable charging positions: {4}\n"
-                , Id, Name, DalObject.DataSource.Sexagesimal(Latitude, 'N'), DalObject.DataSource.Sexagesimal(Longitude, 'E'), ChargeSolts);
+                , Id, Name, Utils.Sexagesimal(Latitude, 'N'), Utils.Sexagesimal(Longitude, 'E'), ChargeSolts);
         }
     }
 }

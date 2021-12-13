@@ -15,8 +15,8 @@ namespace DO
         public double Longitude { get; set; }
         public override string ToString()
         {
-            return $"Id: {Id}, Name:{Name}, Phone:{Phone},Latittude:{DalObject.DataSource.Sexagesimal(Latitude, 'N')}," +
-                                                        $"Longitude:{DalObject.DataSource.Sexagesimal(Longitude, 'E')}";
+            return $"Id: {Id}, Name:{Name}, Phone:{Phone},Latittude:{Utils.Sexagesimal(Latitude, 'N')}," +
+                                                        $"Longitude:{Utils.Sexagesimal(Longitude, 'E')}";
         }
     }
 }
