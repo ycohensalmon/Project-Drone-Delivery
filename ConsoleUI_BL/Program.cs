@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using BL.BO;
+using BL;
+using BlApi;
 
 namespace ConsoleUI_BL
 {
     partial class Program
     {
+        static IBL bl = BlFactory.GetBl();
+
         static void Main(string[] args)
         {
             PrintEnterToTheProject();
 
             int choises = 0;
-
-            BL.IBL bl = new BL();
 
             do
             {
@@ -27,19 +28,19 @@ namespace ConsoleUI_BL
                     {
                         case 1:
                             PrintMenu1();
-                            Switch1(bl);
+                            Switch1();
                             break;
                         case 2:
                             PrintMenu2();
-                            Switch2(bl);
+                            Switch2();
                             break;
                         case 3:
                             PrintMenu3();
-                            Switch3(bl);
+                            Switch3();
                             break;
                         case 4:
                             PrintMenu4();
-                            Switch4(bl);
+                            Switch4();
                             break;
                         case 5:
                             break;
