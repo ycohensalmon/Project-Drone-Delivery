@@ -21,9 +21,9 @@ namespace BL
 
 
             Random rand = new Random();
-            public IDal dalObj;
-            public List<DroneInList> drones;
-            public double Available, LightParcel, MediumParcel, HeavyParcel, LoadingRate;
+            private IDal dalObj;
+            internal List<DroneInList> drones;
+            private double Available, LightParcel, MediumParcel, HeavyParcel, LoadingRate;
 
             public BL()
             {
