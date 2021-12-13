@@ -5,7 +5,7 @@ using System.Xml.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DalFacade
+namespace DalApi
 {
     class DalConfig
     {
@@ -25,5 +25,4 @@ namespace DalFacade
         public DalConfigException(string msg) : base(msg) { }
         public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
     }
-}
 }
