@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v5.0": {
       "PL/1.0.0": {
         "dependencies": {
+          "BL": "1.0.0",
           "MaterialDesignThemes": "4.3.0"
         },
         "runtime": {
@@ -32,6 +33,37 @@
             "fileVersion": "4.3.0.3"
           }
         }
+      },
+      "BL/1.0.0": {
+        "dependencies": {
+          "DalFacade": "1.0.0",
+          "DalObject": "1.0.0",
+          "DalXml": "1.0.0"
+        },
+        "runtime": {
+          "BL.dll": {}
+        }
+      },
+      "DalFacade/1.0.0": {
+        "runtime": {
+          "DalFacade.dll": {}
+        }
+      },
+      "DalObject/1.0.0": {
+        "dependencies": {
+          "DalFacade": "1.0.0"
+        },
+        "runtime": {
+          "DalObject.dll": {}
+        }
+      },
+      "DalXml/1.0.0": {
+        "dependencies": {
+          "DalFacade": "1.0.0"
+        },
+        "runtime": {
+          "DalXml.dll": {}
+        }
       }
     }
   },
@@ -54,6 +86,26 @@
       "sha512": "sha512-edXh0Hl2LukyEZN+REVFuN+gaaUFo6AfHSaBjuZ95k4Qz1TljcxnfCznMKkGaQoEsy5ryk85ZbeRY/tOzFmKxg==",
       "path": "materialdesignthemes/4.3.0",
       "hashPath": "materialdesignthemes.4.3.0.nupkg.sha512"
+    },
+    "BL/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DalFacade/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DalObject/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DalXml/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }
