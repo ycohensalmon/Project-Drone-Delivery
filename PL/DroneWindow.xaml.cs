@@ -11,8 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using BL.BO;
-using BL.BlFacade;
+using BO;
+using BlApi;
+using BL;
 
 namespace PL
 {
@@ -32,7 +33,7 @@ namespace PL
             InitializeComponent();
             UpdateDrone.Visibility = Visibility.Hidden;
             AddDrone.Visibility = Visibility.Visible;
-            this.MaxWeight.ItemsSource = Enum.GetValues(typeof(BL.BO.WeightCategory));
+            this.MaxWeight.ItemsSource = Enum.GetValues(typeof(BO.WeightCategory));
             List<string> NameStations = new();
             foreach (var item in myBl.GetStations()) NameStations.Add(item.Name);
             this.Station.ItemsSource = NameStations;
