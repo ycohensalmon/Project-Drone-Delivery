@@ -11,7 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using IBL.BO;
+using BL.BO;
+using BL.BlFacade;
 
 namespace PL
 {
@@ -20,22 +21,23 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
-        private IBL.IBL myBl;
+        private IBL myBl;
         private DroneInList drone;
-        IDAL.DO.Parcel parcel;
+        DO.Parcel parcel;
 
         // add drone
-        public DroneWindow(IBL.IBL myBl)
+        public DroneWindow(IBL myBl)
         {
             this.myBl = myBl;
             InitializeComponent();
             UpdateDrone.Visibility = Visibility.Hidden;
             AddDrone.Visibility = Visibility.Visible;
-            this.MaxWeight.ItemsSource = Enum.GetValues(typeof(IBL.BO.WeightCategory));
+            this.MaxWeight.ItemsSource = Enum.GetValues(typeof(BL.BO.WeightCategory));
             List<string> NameStations = new();
             foreach (var item in myBl.GetStations()) NameStations.Add(item.Name);
             this.Station.ItemsSource = NameStations;
         }
+
         private void maxWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (MaxWeight.SelectedItem == null)
@@ -44,6 +46,7 @@ namespace PL
                 MaxWeight.Foreground = Brushes.Black;
 
         }
+
         private void UIElement_OnMouseLeave(object sender, MouseButtonEventArgs e)
         {
             try
@@ -70,10 +73,12 @@ namespace PL
                 MessageBox.Show(ex.Message, "ERROR");
             }
         }
+
         private void stationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
         }
-        public DroneWindow(IBL.IBL myBl, object selectedItem)
+
+        public DroneWindow(IBL myBl, object selectedItem)
         {
             this.myBl = myBl;
             this.drone = (DroneInList)selectedItem;

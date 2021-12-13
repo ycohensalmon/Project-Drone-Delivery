@@ -1,4 +1,4 @@
-﻿using IBL.BO;
+﻿using BL.BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BL.BO;
+using BL.BlFacade;
 
 namespace PL
 {
@@ -20,13 +22,13 @@ namespace PL
     /// </summary>
     public partial class DronesListWindow : Window
     {
-        IBL.IBL myBl;
-        public DronesListWindow(IBL.IBL bl)
+        IBL myBl;
+        public DronesListWindow(IBL bl)
         {
             this.myBl = bl;
             InitializeComponent();
-            this.ComboStatusSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.DroneStatuses));
-            this.ComboWeightSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.WeightCategory));
+            this.ComboStatusSelector.ItemsSource = Enum.GetValues(typeof(BL.BO.DroneStatuses));
+            this.ComboWeightSelector.ItemsSource = Enum.GetValues(typeof(BL.BO.WeightCategory));
             this.DronesListView.ItemsSource = bl.GetDrones();
         }
 
