@@ -6,6 +6,10 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>C:\Users\ycohe\source\repos\ycohensalmon\dotNet5782_5588_8680\</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="images\drones.jfif" />
     <None Remove="images\iPhone.jpg" />
