@@ -1,4 +1,4 @@
-﻿using IBL.BO;
+﻿using BL.BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ namespace ConsoleUI_BL
         /// options of switch1 
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void Switch1(IBL.IBL bl)
+        private static void Switch1(BL.IBL bl)
         {
             int choises;
             int.TryParse(Console.ReadLine(), out choises);
@@ -44,7 +44,7 @@ namespace ConsoleUI_BL
         /// options of switch2
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void Switch2(IBL.IBL bl)
+        private static void Switch2(BL.IBL bl)
         {
             int choises;
             int.TryParse(Console.ReadLine(), out choises);
@@ -83,7 +83,7 @@ namespace ConsoleUI_BL
         /// options of switch3
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void Switch3(IBL.IBL bl)
+        private static void Switch3(BL.IBL bl)
         {
             int choises;
             int.TryParse(Console.ReadLine(), out choises);
@@ -110,7 +110,7 @@ namespace ConsoleUI_BL
         /// options of switch4
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void Switch4(IBL.IBL bl)
+        private static void Switch4(BL.IBL bl)
         {
             int choises;
             int.TryParse(Console.ReadLine(), out choises);

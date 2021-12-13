@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DO;
+using DalFacade;
+using BL.BO;
 
-namespace IBL
+namespace BL
 {
-    namespace BO
+    namespace BlFacade
     {
         public partial class BL : IBL
         {
@@ -31,20 +34,20 @@ namespace IBL
                 return batteryIoss;
             }
 
-            private int GetNumParcel(DroneStatuses statuses, int droneId, IEnumerable<IDAL.DO.Parcel> parcel)
+            private int GetNumParcel(DroneStatuses statuses, int droneId, IEnumerable<DO.Parcel> parcel)
             {
                 if (statuses == DroneStatuses.Delivery)
                 {
-                    IDAL.DO.Parcel tempParcel = GetTempParcel(droneId, parcel);
+                    DO.Parcel tempParcel = GetTempParcel(droneId, parcel);
                     return tempParcel.Id;
                 }
                 else
                     return 0;
             }
 
-            private Location GetLocation(DroneStatuses statuses, int droneId, IEnumerable<IDAL.DO.Parcel> parcel, IEnumerable<IDAL.DO.Customer> customer, IEnumerable<IDAL.DO.Station> station)
+            private Location GetLocation(DroneStatuses statuses, int droneId, IEnumerable<DO.Parcel> parcel, IEnumerable<DO.Customer> customer, IEnumerable<DO.Station> station)
             {
-                IDAL.DO.Parcel tempParcel = GetTempParcel(droneId, parcel);
+                DO.Parcel tempParcel = GetTempParcel(droneId, parcel);
 
                 if (statuses == DroneStatuses.Delivery)
                 {
@@ -52,14 +55,14 @@ namespace IBL
                     if (tempParcel.Scheduled != null && tempParcel.PickedUp == null)
                     {
                         // מיקום - תחנה הקרובה לשולח
-                        IDAL.DO.Customer tempCustomer = GetTempCustomer(customer, tempParcel);
+                        DO.Customer tempCustomer = GetTempCustomer(customer, tempParcel);
                         return GetLocationWithMinDistance(station, tempCustomer);
                     }
                     // חבילה נאספה אך לא סופקה
                     else if (tempParcel.PickedUp != null && tempParcel.Delivered == null)
                     {
                         // מיקום - מיקום השולח
-                        IDAL.DO.Customer tempCustomer = GetTempCustomer(customer, tempParcel);
+                        DO.Customer tempCustomer = GetTempCustomer(customer, tempParcel);
                         return GetLocationCustomer(tempCustomer);
                     }
                 }
@@ -94,7 +97,7 @@ namespace IBL
                 return location;
             }
 
-            private Location GetLocationStation(IEnumerable<IDAL.DO.Station> station, int stationID)
+            private Location GetLocationStation(IEnumerable<DO.Station> station, int stationID)
             {
                 return new Location
                 {
@@ -103,7 +106,7 @@ namespace IBL
                 };
             }
 
-            private Location GetLocationWithMinDistance(IEnumerable<IDAL.DO.Station> station, IDAL.DO.Customer tempCustomer)
+            private Location GetLocationWithMinDistance(IEnumerable<DO.Station> station, DO.Customer tempCustomer)
             {
                 double tempDistance, min = Distance.GetDistanceFromLatLonInKm(tempCustomer.Latitude, tempCustomer.Longitude, station.First().Latitude, station.First().Longitude);
                 Location location = new() { Latitude = station.First().Latitude, Longitude = station.First().Longitude };
@@ -122,7 +125,7 @@ namespace IBL
                 return location;
             }
 
-            private Location GetLocationCustomer(IDAL.DO.Customer tempCustomer)
+            private Location GetLocationCustomer(DO.Customer tempCustomer)
             {
                 return new Location
                 {
@@ -137,7 +140,7 @@ namespace IBL
                 else return rand.Next(0, 20);
             }
 
-            private DroneStatuses GetStatus(int droneId, IEnumerable<IDAL.DO.Parcel> parcel)
+            private DroneStatuses GetStatus(int droneId, IEnumerable<DO.Parcel> parcel)
             {
                 if (GetTempParcel(droneId, parcel).DroneId == droneId && GetTempParcel(droneId, parcel).Delivered == null)
                     return DroneStatuses.Delivery;
@@ -145,12 +148,12 @@ namespace IBL
                     return (DroneStatuses)rand.Next(2);
             }
 
-            private IDAL.DO.Customer GetTempCustomer(IEnumerable<IDAL.DO.Customer> customer, IDAL.DO.Parcel tempParcel)
+            private DO.Customer GetTempCustomer(IEnumerable<DO.Customer> customer, DO.Parcel tempParcel)
             {
                 return customer.FirstOrDefault(customer => customer.Id == tempParcel.SenderId);
             }
 
-            private IDAL.DO.Parcel GetTempParcel(int droneId, IEnumerable<IDAL.DO.Parcel> parcel)
+            private DO.Parcel GetTempParcel(int droneId, IEnumerable<DO.Parcel> parcel)
             {
                 return parcel.FirstOrDefault(parcel => parcel.DroneId == droneId);
             }

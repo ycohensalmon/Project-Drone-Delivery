@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using IBL.BO;
+using BL.BO;
 
 namespace ConsoleUI_BL
 {
@@ -12,7 +12,7 @@ namespace ConsoleUI_BL
 
             int choises = 0;
 
-            IBL.IBL bl = new BL();
+            BL.IBL bl = new BL();
 
             do
             {

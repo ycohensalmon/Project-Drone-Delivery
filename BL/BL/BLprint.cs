@@ -1,22 +1,23 @@
-﻿using System;
+﻿using BL.BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBL
+namespace BL
 {
-    namespace BO
+    namespace BlFacade
     {
         public partial class BL : IBL
         {
             public Station GetStationById(int stationId)
             {
-                IDAL.DO.Station station = dalObj.GetStationById(stationId);
+                DO.Station station = dalObj.GetStationById(stationId);
 
                 Location temp = new Location { Latitude = station.Latitude, Longitude = station.Longitude };
 
-                List<IDAL.DO.DroneCharge> droneChargeIDAL = dalObj.GetDroneCharges().ToList();
+                List<DO.DroneCharge> droneChargeIDAL = dalObj.GetDroneCharges().ToList();
                 List<DroneCharge> droneChargesBL = new();
 
                 //fill the List droneChargesBL
@@ -88,8 +89,8 @@ namespace IBL
             public Customer GetCustomerById(int customerId)
             {
                 //find the Customer and his parcels fron DL
-                IDAL.DO.Customer customer = dalObj.GetCustomerById(customerId);
-                List<IDAL.DO.Parcel> parcels = dalObj.GetParcels().ToList();
+                DO.Customer customer = dalObj.GetCustomerById(customerId);
+                List<DO.Parcel> parcels = dalObj.GetParcels().ToList();
 
                 Location temp = new Location { Latitude = customer.Latitude, Longitude = customer.Longitude };
 
@@ -103,7 +104,7 @@ namespace IBL
                     if (item.SenderId == customer.Id)
                     {
                         //for build the CustomerInParcel method
-                        IDAL.DO.Customer targetCustomer = dalObj.GetCustomerById(item.TargetId);
+                        DO.Customer targetCustomer = dalObj.GetCustomerById(item.TargetId);
 
                         //add to the ParcelAtCustomer list
                         FromCustomer.Add(new ParcelAtCustomer
@@ -125,7 +126,7 @@ namespace IBL
                     if (item.TargetId == customer.Id)
                     {
                         //for build the CustomerInParcel method
-                        IDAL.DO.Customer senderCustomer = dalObj.GetCustomerById(item.SenderId);
+                        DO.Customer senderCustomer = dalObj.GetCustomerById(item.SenderId);
 
                         //add to the ParcelAtCustomer list
                         ToCustomer.Add(new ParcelAtCustomer
@@ -155,7 +156,7 @@ namespace IBL
 
             public Parcel GetParcelById(int parcelid)
             {
-                IDAL.DO.Parcel parcel = dalObj.GetParcelById(parcelid);
+                DO.Parcel parcel = dalObj.GetParcelById(parcelid);
                 CustomerInParcel senderOfParcel = new();
                 CustomerInParcel targelOfParcel = new();
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using IBL.BO;
+using BL.BO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +13,7 @@ namespace ConsoleUI_BL
         // switch 2 - Updates fonctions //
         //-----------------------------------------------------------------------------------------------------------//
 
-        private static void UpdateDrone(IBL.IBL bl)
+        private static void UpdateDrone(BL.IBL bl)
         {
             int droneId = AddId4(true,false);
             string model = AddModel(true);
@@ -21,7 +21,7 @@ namespace ConsoleUI_BL
             bl.UpdateDrone(droneId, model);
         }
 
-        private static void UpdateBase(IBL.IBL bl)
+        private static void UpdateBase(BL.IBL bl)
         {
             int stationID = AddId4(false,true);
             Console.WriteLine("Enter the new name of the base (if you dont want change the name press Enter)");
@@ -31,7 +31,7 @@ namespace ConsoleUI_BL
             bl.UpdateBase(stationID, newName, newChargeSolts);
         }
 
-        private static void UpdateCustomer(IBL.IBL bl)
+        private static void UpdateCustomer(BL.IBL bl)
         {
             Console.WriteLine("Enter the ID of the Customer\n");
             int.TryParse(Console.ReadLine(), out int CustomerID);
@@ -47,7 +47,7 @@ namespace ConsoleUI_BL
         /// send a drone to charge
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void SendDroneToCharge(IBL.IBL bl)
+        private static void SendDroneToCharge(BL.IBL bl)
         {
             int droneId = AddId4(true,false);
 
@@ -58,7 +58,7 @@ namespace ConsoleUI_BL
         /// release a drone from charge
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void ReleaseDroneFromChargingBase(IBL.IBL bl)
+        private static void ReleaseDroneFromChargingBase(BL.IBL bl)
         {
             int droneId = AddId4(true,false);
             bl.ReleaseDroneFromCharging(droneId);
@@ -68,7 +68,7 @@ namespace ConsoleUI_BL
         /// updates the drone that was assigned to a parcel to pick up the parcel
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void AssociateDroneToParcel(IBL.IBL bl)
+        private static void AssociateDroneToParcel(BL.IBL bl)
         {
             int droneId = AddId4(true,false);
 
@@ -79,7 +79,7 @@ namespace ConsoleUI_BL
         /// updates the drone that was assigned to a parcel to pick up the parcel
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void CollectParcelsByDrones(IBL.IBL bl)
+        private static void CollectParcelsByDrones(BL.IBL bl)
         {
             int droneId = AddId4(true,false);
 
@@ -90,7 +90,7 @@ namespace ConsoleUI_BL
         /// updates that the parcel was delivered to the target
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void DeliveredParcelToCostumer(IBL.IBL bl)
+        private static void DeliveredParcelToCostumer(BL.IBL bl)
         {
             int droneId = AddId4(true,false);
 

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL;
-using IDAL.DO;
+using DalFacade;
+using BL.BO;
 
-namespace IBL
+namespace BL
 {
-    namespace BO
+    namespace BlFacade
     {
         public partial class BL : IBL
         {
@@ -16,7 +16,7 @@ namespace IBL
             {
                 try
                 {
-                    dalObj.NewStation(new IDAL.DO.Station
+                    dalObj.NewStation(new DO.Station
                     {
                         Id = station.Id,
                         Name = station.Name,
@@ -50,11 +50,11 @@ namespace IBL
 
                     drones.Add(drone);
 
-                    dalObj.NewDrone(new IDAL.DO.Drone
+                    dalObj.NewDrone(new DO.Drone
                     {
                         Id = drone.Id,
                         Model = drone.Model,
-                        MaxWeight = (IDAL.DO.WeightCategory)drone.MaxWeight
+                        MaxWeight = (DO.WeightCategory)drone.MaxWeight
                     });
                     dalObj.SendDroneToBaseCharge(drone.Id, stationId);
                 }
@@ -69,7 +69,7 @@ namespace IBL
             {
                 try
                 {
-                    dalObj.NewCostumer(new IDAL.DO.Customer
+                    dalObj.NewCostumer(new DO.Customer
                     {
                         Id = customer.Id,
                         Name = customer.Name,
@@ -90,7 +90,7 @@ namespace IBL
                     throw new SelfDeliveryException();
                 try
                 {
-                    dalObj.NewParcel(new IDAL.DO.Parcel
+                    dalObj.NewParcel(new DO.Parcel
                     {
                         Id = DalObject.DataSource.SerialNum++,
                         SenderId = senderID,
@@ -100,8 +100,8 @@ namespace IBL
                         Scheduled = null,
                         PickedUp = null,
                         Delivered = null,
-                        Weight = (IDAL.DO.WeightCategory)parcel.Weight,
-                        Priorities = (IDAL.DO.Priority)parcel.Priorities
+                        Weight = (DO.WeightCategory)parcel.Weight,
+                        Priorities = (DO.Priority)parcel.Priorities
                     });
                 }
                 catch (Exception ex)

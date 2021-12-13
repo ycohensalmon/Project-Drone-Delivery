@@ -1,14 +1,15 @@
-﻿using IDAL;
-using IDAL.DO;
+﻿using DalFacade;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DalFacade;
+using BL.BO;
 
-namespace IBL
+namespace BL
 {
-    namespace BO
+    namespace BlFacade
     {
         public partial class BL : IBL
         {
@@ -28,10 +29,10 @@ namespace IBL
                 LoadingRate = dalObj.PowerConsumptionByDrone()[4];
 
                 
-                IEnumerable<IDAL.DO.Drone> drone = dalObj.GetDrones();
-                IEnumerable<IDAL.DO.Station> station = dalObj.GetStations();
-                IEnumerable<IDAL.DO.Customer> customer = dalObj.GetCustomers();
-                IEnumerable<IDAL.DO.Parcel> parcel = dalObj.GetParcels();
+                IEnumerable<DO.Drone> drone = dalObj.GetDrones();
+                IEnumerable<DO.Station> station = dalObj.GetStations();
+                IEnumerable<DO.Customer> customer = dalObj.GetCustomers();
+                IEnumerable<DO.Parcel> parcel = dalObj.GetParcels();
 
                 foreach (var tempDrone in drone)
                 {

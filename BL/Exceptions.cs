@@ -4,10 +4,11 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using BL.BO;
 
-namespace IBL
+namespace BL
 {
-    namespace BO
+    namespace BlFacade
     {
         public class NegetiveValueException : Exception
         {

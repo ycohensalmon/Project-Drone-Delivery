@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DalFacade;
+using BL.BO;
 
-namespace IBL
+namespace BL
 {
-    namespace BO
+    namespace BlFacade
     {
         public partial class BL : IBL
         {
@@ -30,10 +32,10 @@ namespace IBL
                 int result = 0;
                 if (newChargeSolts != "")
                 {
-                    IDAL.DO.Station station = dalObj.GetStationById(stationId);
+                    DO.Station station = dalObj.GetStationById(stationId);
                     result = Int32.Parse(newChargeSolts);
                     // אם ההמרה לא עבדה ונכנס רק אותיות
-                    List<IDAL.DO.DroneCharge> droneCharge = dalObj.GetDroneCharges().ToList();
+                    List<DO.DroneCharge> droneCharge = dalObj.GetDroneCharges().ToList();
                     foreach (var item in droneCharge)
                     {
                         if (item.StationId == station.Id)
@@ -69,7 +71,7 @@ namespace IBL
                     throw new StatusDroneException("connect drone to parcel", drone.Status, DroneStatuses.Available);
 
                 //getting the list of parcels that are not Scheduled 
-                List<IDAL.DO.Parcel> parcels = dalObj.GetParcels(x => x.Scheduled == null).ToList();
+                List<DO.Parcel> parcels = dalObj.GetParcels(x => x.Scheduled == null).ToList();
                 if (!parcels.Any())
                     throw new NoParcelException("requested", "scheduled");
 
@@ -90,7 +92,7 @@ namespace IBL
                 parcels = parcels.OrderByDescending(t => (int)t.Priorities).ToList();
 
                 //getting the must importent parcel
-                IDAL.DO.Parcel myParcel = parcels.First();
+                DO.Parcel myParcel = parcels.First();
 
                 //update the drone in BL
                 drone.Status = DroneStatuses.Delivery;
@@ -114,7 +116,7 @@ namespace IBL
             /// <param name="parcel">the parcel</param>
             /// <param name="drone">the drone</param>
             /// <returns>if there is enough battrey to take this parcel the function will return number>0 if there is no return num<0</returns>
-            private double CheckEnoughBattery(IDAL.DO.Parcel parcel, DroneInList drone)
+            private double CheckEnoughBattery(DO.Parcel parcel, DroneInList drone)
             {
                 double batteryIossAvailable, batteryIossWithParcel, allBatteryLoss;
 
@@ -144,13 +146,13 @@ namespace IBL
                 if (drone.Status != DroneStatuses.Delivery)
                     throw new StatusDroneException("collect parcel by drone", drone.Status, DroneStatuses.Delivery);
 
-                IDAL.DO.Parcel myParcel = dalObj.GetParcelById(drone.NumParcel);
+                DO.Parcel myParcel = dalObj.GetParcelById(drone.NumParcel);
                 if (myParcel.Scheduled == null || myParcel.PickedUp != null)
                     throw new NoParcelException("scheduled", "picked up");
                 if (myParcel.DroneId != droneId)
                     throw new NotConnectException(droneId, myParcel.DroneId, myParcel.Id);
 
-                IDAL.DO.Customer myCustomer = dalObj.GetCustomerById(myParcel.SenderId);
+                DO.Customer myCustomer = dalObj.GetCustomerById(myParcel.SenderId);
 
                 //loss from his location to sender
                 double batteryIossAvailable = BatteryIossAvailable(drone.Location.Latitude, drone.Location.Longitude,
@@ -176,14 +178,14 @@ namespace IBL
             {
                 DroneInList drone;
 
-                IDAL.DO.Parcel myParcel = GetParcelWasConnectToParcel(droneId, out drone);
+                DO.Parcel myParcel = GetParcelWasConnectToParcel(droneId, out drone);
                 if (myParcel.PickedUp == null || myParcel.Delivered != null)
                     throw new NoParcelException("picked up", "delivered");
                 if (myParcel.DroneId != droneId)
                     throw new NotConnectException(droneId, myParcel.DroneId, myParcel.Id);
 
 
-                IDAL.DO.Customer myCustomer = dalObj.GetCustomerById(myParcel.TargetId);
+                DO.Customer myCustomer = dalObj.GetCustomerById(myParcel.TargetId);
 
                 //loss from sender lo target
                 double batteryIossWithParcel = BatteryIossWithParcel(drone.Location.Latitude, drone.Location.Longitude,
@@ -208,7 +210,7 @@ namespace IBL
 
             }
 
-            public IDAL.DO.Parcel GetParcelWasConnectToParcel(int droneId, out DroneInList drone)
+            public DO.Parcel GetParcelWasConnectToParcel(int droneId, out DroneInList drone)
             {
                 drone = drones.FirstOrDefault(x => x.Id == droneId);
                 if (drone.Status != DroneStatuses.Delivery)
@@ -225,7 +227,7 @@ namespace IBL
                     throw new StatusDroneException("send drone to charge", drone.Status, DroneStatuses.Available);
 
                 //getting the stations that available
-                List<IDAL.DO.Station> station = dalObj.GetStations(x => x.ChargeSolts != 0).ToList();
+                List<DO.Station> station = dalObj.GetStations(x => x.ChargeSolts != 0).ToList();
                 if (!station.Any())
                     throw new NoChargeSlotException();
 

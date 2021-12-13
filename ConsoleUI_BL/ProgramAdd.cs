@@ -1,4 +1,4 @@
-﻿using IBL.BO;
+﻿using BL.BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace ConsoleUI_BL
         /// add stetion to the list 
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists </param>
-        private static void AddStation(IBL.IBL bl)
+        private static void AddStation(BL.IBL bl)
         {
             int id = AddId4(false, false);
             string name = AddName();
@@ -47,7 +47,7 @@ namespace ConsoleUI_BL
         /// add drone to the list
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void AddDrone(IBL.IBL bl)
+        private static void AddDrone(BL.IBL bl)
         {
             int id = AddId4(false, false);
             string model = AddModel(false);
@@ -68,7 +68,7 @@ namespace ConsoleUI_BL
         /// add Customer to the list
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void AddCustomer(IBL.IBL bl)
+        private static void AddCustomer(BL.IBL bl)
         {
             int id = AddId9(false, false);
             string name = AddName();
@@ -97,7 +97,7 @@ namespace ConsoleUI_BL
         /// add parcel to the list
         /// </summary>
         /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void AddParcel(IBL.IBL bl)
+        private static void AddParcel(BL.IBL bl)
         {
             int senderID = AddId9(true, false);
             int receiveID = AddId9(false, true);
