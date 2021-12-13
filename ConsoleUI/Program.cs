@@ -16,7 +16,7 @@ namespace ConsoleUI
 
             int choises = 0;
 
-            IDal dalObject = new Dal.DalObject();
+            IDal dal = DalFactory.GetDal();
 
             do
             {
@@ -30,19 +30,19 @@ namespace ConsoleUI
                     {
                         case 1:
                             PrintMenu1();
-                            Switch1(dalObject);
+                            Switch1(dal);
                             break;
                         case 2:
                             PrintMenu2();
-                            Switch2(dalObject);
+                            Switch2(dal);
                             break;
                         case 3:
                             PrintMenu3();
-                            Switch3(dalObject);
+                            Switch3(dal);
                             break;
                         case 4:
                             PrintMenu4();
-                            Switch4(dalObject);
+                            Switch4(dal);
                             break;
                         default:
                             break;
@@ -163,24 +163,24 @@ namespace ConsoleUI
         /// <summary>
         /// options of switch1 
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void Switch1(IDal dalObject)
+        /// <param name="Dal">the parameter that include all the lists</param>
+        private static void Switch1(IDal dal)
         {
             int choises;
             int.TryParse(Console.ReadLine(), out choises);
             switch (choises)
             {
                 case 1:
-                    AddStation(dalObject);
+                    AddStation(dal);
                     break;
                 case 2:
-                    AddDrone(dalObject);
+                    AddDrone(dal);
                     break;
                 case 3:
-                    AddCustomer(dalObject);
+                    AddCustomer(dal);
                     break;
                 case 4:
-                    AddParcel(dalObject);
+                    AddParcel(dal);
                     break;
                 default:
                     break;
@@ -190,27 +190,27 @@ namespace ConsoleUI
         /// <summary>
         /// options of switch2
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void Switch2(IDal dalObject)
+        /// <param name="Dal">the parameter that include all the lists</param>
+        private static void Switch2(IDal dal)
         {
             int choises;
             int.TryParse(Console.ReadLine(), out choises);
             switch (choises)
             {
                 case 1:
-                    AssociateDroneToParcel(dalObject);
+                    AssociateDroneToParcel(dal);
                     break;
                 case 2:
-                    CollectParcelsByDrones(dalObject);
+                    CollectParcelsByDrones(dal);
                     break;
                 case 3:
-                    deliveredParcelToCostumer(dalObject);
+                    deliveredParcelToCostumer(dal);
                     break;
                 case 4:
-                    SendDroneToCharge(dalObject);
+                    SendDroneToCharge(dal);
                     break;
                 case 5:
-                    ReleaseDroneFromChargingBase(dalObject);
+                    ReleaseDroneFromChargingBase(dal);
                     break;
                 default:
                     break;
@@ -220,8 +220,8 @@ namespace ConsoleUI
         /// <summary>
         /// options of switch3
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void Switch3(IDal dalObject)
+        /// <param name="dal">the parameter that include all the lists</param>
+        private static void Switch3(IDal dal)
         {
             int choises;
             int.TryParse(Console.ReadLine(), out choises);
@@ -229,16 +229,16 @@ namespace ConsoleUI
             switch (choises)
             {
                 case 1:
-                    PrintStationById(dalObject);
+                    PrintStationById(dal);
                     break;
                 case 2:
-                    PrintDroneById(dalObject);
+                    PrintDroneById(dal);
                     break;
                 case 3:
-                    PrintCustomerById(dalObject);
+                    PrintCustomerById(dal);
                     break;
                 case 4:
-                    PrintParcelById(dalObject);
+                    PrintParcelById(dal);
                     break;
                 default:
                     break;
@@ -248,8 +248,8 @@ namespace ConsoleUI
         /// <summary>
         /// options of switch4
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void Switch4(IDal dalObject)
+        /// <param name="dal">the parameter that include all the lists</param>
+        private static void Switch4(IDal dal)
         {
             int choises;
             int.TryParse(Console.ReadLine(), out choises);
@@ -257,22 +257,22 @@ namespace ConsoleUI
             switch (choises)
             {
                 case 1:
-                    PrintStations(dalObject);
+                    PrintStations(dal);
                     break;
                 case 2:
-                    PrintDrones(dalObject);
+                    PrintDrones(dal);
                     break;
                 case 3:
-                    PrintCostumers(dalObject);
+                    PrintCostumers(dal);
                     break;
                 case 4:
-                    PrintParcels(dalObject);
+                    PrintParcels(dal);
                     break;
                 case 5:
-                    PrintParcelsWithoutDrone(dalObject);
+                    PrintParcelsWithoutDrone(dal);
                     break;
                 case 6:
-                    PrintStationWithChargeSolts(dalObject);
+                    PrintStationWithChargeSolts(dal);
                     break;
                 default:
                     break;
@@ -286,8 +286,8 @@ namespace ConsoleUI
         /// <summary>
         /// add stetion to the list 
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists </param>
-        private static void AddStation(IDal dalObject)
+        /// <param name="dal">the parameter that include all the lists </param>
+        private static void AddStation(IDal dal)
         {
             int id, chargeSlots;
             string name;
@@ -311,14 +311,14 @@ namespace ConsoleUI
                 Longitude = longitude,
                 ChargeSolts = chargeSlots
             };
-            dalObject.NewStation(temp);
+            dal.NewStation(temp);
         }
 
         /// <summary>
         /// add Customer to the list
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void AddCustomer(IDal dalObject)
+        /// <param name="dal">the parameter that include all the lists</param>
+        private static void AddCustomer(IDal dal)
         {
             int id, phone;
             string name;
@@ -344,14 +344,14 @@ namespace ConsoleUI
                 Longitude = longitude
             };
 
-            dalObject.NewCostumer(temp);
+            dal.NewCostumer(temp);
         }
 
         /// <summary>
         /// add drone to the list
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void AddDrone(IDal dalObject)
+        /// <param name="Dal">the parameter that include all the lists</param>
+        private static void AddDrone(IDal Dal)
         {
             Console.WriteLine("add Id: (4 digits)\n");
             int.TryParse(Console.ReadLine(), out int id);
@@ -367,13 +367,13 @@ namespace ConsoleUI
                 MaxWeight = (WeightCategory)maxWeight
             };
 
-            dalObject.NewDrone(temp);
+            Dal.NewDrone(temp);
         }
         /// <summary>
         /// add parcel to the list
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void AddParcel(IDal dalObject)
+        /// <param name="Dal">the parameter that include all the lists</param>
+        private static void AddParcel(IDal Dal)
         {
             int priorities, weight;
 
@@ -385,7 +385,7 @@ namespace ConsoleUI
             Random rand = new Random();
             Parcel temp = new Parcel
             {
-                Id = DalObject.DataSource.SerialNum++,
+                Id = Dal.DataSource.SerialNum++,
                 DroneId = 0,
                 SenderId = rand.Next(10000, 99999),
                 TargetId = rand.Next(10000, 99999),
@@ -397,7 +397,7 @@ namespace ConsoleUI
                 Priorities = (Priority)priorities
             };
 
-            dalObject.NewParcel(temp);
+            Dal.NewParcel(temp);
         }
 
         //-----------------------------------------------------------------------------------------------------------//
@@ -407,86 +407,86 @@ namespace ConsoleUI
         /// <summary>
         /// updates the drone that was assigned to a parcel to pick up the parcel
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void AssociateDroneToParcel(IDal dalObject)
+        /// <param name="Dal">the parameter that include all the lists</param>
+        private static void AssociateDroneToParcel(IDal Dal)
         {
-            IEnumerable<Parcel> temp = dalObject.GetParcels();
+            IEnumerable<Parcel> temp = Dal.GetParcels();
             foreach (Parcel x in temp) { if (x.DroneId == 0) { Console.WriteLine(x); } }
             Console.WriteLine("Enter the Id of the parcel");
             int.TryParse(Console.ReadLine(), out int parcelId);
 
-            IEnumerable<Drone> temp2 = dalObject.GetDrones();
+            IEnumerable<Drone> temp2 = Dal.GetDrones();
             //foreach (Drone y in temp2) { if (y.Status == DroneStatuses.Available) { Console.WriteLine(y); } }
             Console.WriteLine("Enter the Id of the drone");
             int.TryParse(Console.ReadLine(), out int droneId);
 
-            dalObject.ConnectDroneToParcel(droneId, parcelId);
+            Dal.ConnectDroneToParcel(droneId, parcelId);
         }
 
         /// <summary>
         /// updates the drone that was assigned to a parcel to pick up the parcel
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void CollectParcelsByDrones(IDal dalObject)
+        /// <param name="Dal">the parameter that include all the lists</param>
+        private static void CollectParcelsByDrones(IDal Dal)
         {
 
             int parcelId;
-            IEnumerable<Parcel> temp = dalObject.GetParcels();
+            IEnumerable<Parcel> temp = Dal.GetParcels();
             foreach (Parcel x in temp) { if (x.DroneId != 0) { Console.WriteLine(x); } }
             Console.WriteLine("Enter the Id of the parcel");
             int.TryParse(Console.ReadLine(), out parcelId);
 
-            dalObject.CollectParcelByDrone(parcelId);
+            Dal.CollectParcelByDrone(parcelId);
         }
 
         /// <summary>
         /// updates that the parcel was delivered to the target
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void deliveredParcelToCostumer(IDal dalObject)
+        /// <param name="Dal">the parameter that include all the lists</param>
+        private static void deliveredParcelToCostumer(IDal Dal)
         {
             int parcelId;
-            IEnumerable<Parcel> temp = dalObject.GetParcels();
+            IEnumerable<Parcel> temp = Dal.GetParcels();
             foreach (Parcel x in temp) { if (x.PickedUp != null && x.Delivered == null) { Console.WriteLine(x); } }
             Console.WriteLine("Enter the Id of the parcel");
             int.TryParse(Console.ReadLine(), out parcelId);
 
-            dalObject.DeliveredParcel(parcelId);
+            Dal.DeliveredParcel(parcelId);
         }
 
         /// <summary>
         /// send a drone to charge
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void SendDroneToCharge(IDal dalObject)
+        /// <param name="Dal">the parameter that include all the lists</param>
+        private static void SendDroneToCharge(IDal Dal)
         {
             int droneId, stationId;
-            IEnumerable<Drone> temp = dalObject.GetDrones();
+            IEnumerable<Drone> temp = Dal.GetDrones();
             //foreach (Drone y in temp) { if (y.Status != DroneStatuses.Maintenance) { Console.WriteLine(y); } }
             Console.WriteLine("Enter the Id of the drone to send to charge");
             int.TryParse(Console.ReadLine(), out droneId);
 
-            PrintStationWithChargeSolts(dalObject);
+            PrintStationWithChargeSolts(Dal);
             Console.WriteLine("Enter the Id of the station");
             int.TryParse(Console.ReadLine(), out stationId);
 
-            dalObject.SendDroneToBaseCharge(droneId, stationId);
+            Dal.SendDroneToBaseCharge(droneId, stationId);
 
         }
 
         /// <summary>
         /// release a drone from charge
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void ReleaseDroneFromChargingBase(IDal dalObject)
+        /// <param name="Dal">the parameter that include all the lists</param>
+        private static void ReleaseDroneFromChargingBase(IDal Dal)
         {
             int droneId;
-            IEnumerable<Drone> temp = dalObject.GetDrones();
+            IEnumerable<Drone> temp = Dal.GetDrones();
             //foreach (Drone y in temp) { if (y.Status == DroneStatuses.Maintenance) { Console.WriteLine(y); } }
             Console.WriteLine("Enter the Id of the drone");
             int.TryParse(Console.ReadLine(), out droneId);
 
-            dalObject.ReleaseDroneFromCharging(droneId);
+            Dal.ReleaseDroneFromCharging(droneId);
         }
 
         //-----------------------------------------------------------------------------------------------------------//
@@ -496,53 +496,53 @@ namespace ConsoleUI
         /// <summary>
         /// returns the object Station that matches the id
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void PrintStationById(IDal dalObject)
+        /// <param name="Dal">the parameter that include all the lists</param>
+        private static void PrintStationById(IDal Dal)
         {
             int stationId;
             Console.WriteLine("enter the id of the station");
             int.TryParse(Console.ReadLine(), out stationId);
 
-            Console.WriteLine(dalObject.GetStationById(stationId));
+            Console.WriteLine(Dal.GetStationById(stationId));
         }
 
         /// <summary>
         /// returns the object drone that matches the id
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void PrintDroneById(IDal dalObject)
+        /// <param name="Dal">the parameter that include all the lists</param>
+        private static void PrintDroneById(IDal Dal)
         {
             int droneId;
             Console.WriteLine("enter the id of the drone");
             int.TryParse(Console.ReadLine(), out droneId);
 
-            Console.WriteLine(dalObject.GetDroneById(droneId));
+            Console.WriteLine(Dal.GetDroneById(droneId));
         }
 
         /// <summary>
         /// returns the object customer that matches the id
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void PrintCustomerById(IDal dalObject)
+        /// <param name="Dal">the parameter that include all the lists</param>
+        private static void PrintCustomerById(IDal Dal)
         {
             int customerId;
             Console.WriteLine("enter the id of the customer");
             int.TryParse(Console.ReadLine(), out customerId);
 
-            Console.WriteLine(dalObject.GetCustomerById(customerId));
+            Console.WriteLine(Dal.GetCustomerById(customerId));
         }
 
         /// <summary>
         /// returns the object parcel that matches the id
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void PrintParcelById(IDal dalObject)
+        /// <param name="Dal">the parameter that include all the lists</param>
+        private static void PrintParcelById(IDal Dal)
         {
             int parcelId;
             Console.WriteLine("enter the id of the parcel");
             int.TryParse(Console.ReadLine(), out parcelId);
 
-            Console.WriteLine(dalObject.GetParcelById(parcelId));
+            Console.WriteLine(Dal.GetParcelById(parcelId));
         }
 
         //-----------------------------------------------------------------------------------------------------------//
@@ -552,60 +552,60 @@ namespace ConsoleUI
         /// <summary>
         /// print the list of stations
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void PrintStations(IDal dalObject)
+        /// <param name="Dal">the parameter that include all the lists</param>
+        private static void PrintStations(IDal Dal)
         {
-            IEnumerable<Station> temp = dalObject.GetStations();
+            IEnumerable<Station> temp = Dal.GetStations();
             foreach (Station y in temp) { Console.WriteLine(y); }
         }
 
         /// <summary>
         /// print the list of Drones
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void PrintDrones(IDal dalObject)
+        /// <param name="Dal">the parameter that include all the lists</param>
+        private static void PrintDrones(IDal Dal)
         {
-            IEnumerable<Drone> temp = dalObject.GetDrones();
+            IEnumerable<Drone> temp = Dal.GetDrones();
             foreach (Drone y in temp) { Console.WriteLine(y); }
         }
 
         /// <summary>
         /// print the list of Costumers
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void PrintCostumers(IDal dalObject)
+        /// <param name="Dal">the parameter that include all the lists</param>
+        private static void PrintCostumers(IDal Dal)
         {
-            IEnumerable<Customer> temp = dalObject.GetCustomers();
+            IEnumerable<Customer> temp = Dal.GetCustomers();
             foreach (Customer y in temp) { Console.WriteLine(y); }
         }
 
         /// <summary>
         /// print the list of Parcels
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void PrintParcels(IDal dalObject)
+        /// <param name="Dal">the parameter that include all the lists</param>
+        private static void PrintParcels(IDal Dal)
         {
-            IEnumerable<Parcel> temp = dalObject.GetParcels();
+            IEnumerable<Parcel> temp = Dal.GetParcels();
             foreach (Parcel y in temp) { Console.WriteLine(y); }
         }
 
         /// <summary>
         /// print a list with all the parcels that are not associated to a drone
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void PrintParcelsWithoutDrone(IDal dalObject)
+        /// <param name="Dal">the parameter that include all the lists</param>
+        private static void PrintParcelsWithoutDrone(IDal Dal)
         {
-            IEnumerable<Parcel> temp = dalObject.GetParcels(x => x.DroneId == 0);
+            IEnumerable<Parcel> temp = Dal.GetParcels(x => x.DroneId == 0);
             foreach (Parcel y in temp) {Console.WriteLine(y); }
         }
 
         /// <summary>
         /// print an array with tyhe list of stations with empty charge slots
         /// </summary>
-        /// <param name="dalObject">the parameter that include all the lists</param>
-        private static void PrintStationWithChargeSolts(IDal dalObject)
+        /// <param name="Dal">the parameter that include all the lists</param>
+        private static void PrintStationWithChargeSolts(IDal Dal)
         {
-            IEnumerable<Station> temp = dalObject.GetStations(x => x.ChargeSolts != 0);
+            IEnumerable<Station> temp = Dal.GetStations(x => x.ChargeSolts != 0);
             foreach (Station y in temp) { Console.WriteLine(y); }
         }
     }
