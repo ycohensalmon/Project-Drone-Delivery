@@ -90,9 +90,9 @@ namespace BL
                     throw new SelfDeliveryException();
                 try
                 {
-                    dalObj.NewParcel(new DO.Parcel
+                    HelpSerialNum = dalObj.NewParcel(new DO.Parcel
                     {
-                        Id = DalObject.DataSource.SerialNum++,
+                        Id = HelpSerialNum,
                         SenderId = senderID,
                         TargetId = receiveID,
                         DroneId = 0,

@@ -8,7 +8,7 @@ namespace DalFacade
 {
     public static class DalFactory
     {
-        public IDal GetDal()
+        public static IDal GetDal()
         {
             IDal dal;
             return dal;

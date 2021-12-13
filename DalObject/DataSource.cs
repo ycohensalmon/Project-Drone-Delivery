@@ -17,7 +17,7 @@ namespace Dal
 
         internal class Config
         {
-            public static int SerialNum = 1000;
+            internal static int SerialNum = 1000;
 
             internal static Random rand = new Random();
             public static double Available { get => 0.2; }    // 0.2% per KM
@@ -128,7 +128,7 @@ namespace Dal
                 int senderID = Customers.ElementAt(Config.rand.Next(Customers.Count)).Id;
                 Parcels.Add(new Parcel
                 {
-                    Id = SerialNum++,
+                    Id = Config.SerialNum++,
                     SenderId = senderID,
                     TargetId = GetTargetId(senderID),
                     DroneId = 0,
@@ -146,7 +146,7 @@ namespace Dal
                 int senderID = Customers.ElementAt(Config.rand.Next(Customers.Count)).Id;
                 Parcels.Add(new Parcel
                 {
-                    Id = SerialNum++,
+                    Id = Config.SerialNum++,
                     SenderId = senderID,
                     TargetId = GetTargetId(senderID),
                     DroneId = Drones[Config.rand.Next(Drones.Count())].Id,

@@ -24,6 +24,7 @@ namespace BL
             private IDal dalObj;
             internal List<DroneInList> drones;
             private double Available, LightParcel, MediumParcel, HeavyParcel, LoadingRate;
+            private int HelpSerialNum = 1011;
 
             public BL()
             {

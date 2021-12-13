@@ -50,7 +50,11 @@ namespace Dal
             DataSource.Customers.Add(customer);
         }
 
-        public void NewParcel(Parcel parcel) => DataSource.Parcels.Add(parcel);
+        public int NewParcel(Parcel parcel)
+        {
+            DataSource.Parcels.Add(parcel);
+            return ++DataSource.Config.SerialNum;
+        }
 
 
         //-----------------------------------------------------------------------------------------------------------//
