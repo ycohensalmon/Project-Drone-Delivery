@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 using BL;
 using BlApi;
+using BO;
 
 namespace ConsoleUI_BL
 {

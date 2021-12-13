@@ -11,7 +11,7 @@ namespace Dal
     internal class DalObject : IDal
     {
         #region singelton
-        public static IDal Instance { get; } = new DalObject();
+        internal static IDal Instance { get; } = new DalObject();
         static DalObject() { }
 
         /// <summary>

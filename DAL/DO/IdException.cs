@@ -5,16 +5,16 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dal
+namespace DO
 {
     [Serializable]
-    internal class IdAlreadyExistException : Exception
+    public class IdAlreadyExistException : Exception
     {
         public IdAlreadyExistException(int id, string message) : base($"ERROR: {message} with id - {id} already exsist !") { }
     }
 
     [Serializable]
-    internal class IdNotFoundException : Exception
+    public class IdNotFoundException : Exception
     {
         public IdNotFoundException(int id, string message) : base($"ERROR: {message} with id - {id} not found !") { }
     }

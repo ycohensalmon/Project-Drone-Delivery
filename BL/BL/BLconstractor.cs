@@ -11,7 +11,7 @@ namespace BL
 {
     internal partial class BL : IBL
     {
-        public static IBL Instance { get; } = new BL();
+        internal static IBL Instance { get; } = new BL();
         static BL() { }
 
         internal IDal dalObj;

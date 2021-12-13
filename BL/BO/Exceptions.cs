@@ -4,9 +4,8 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using BO;
 
-namespace BL
+namespace BO
 {
     public class NegetiveValueException : Exception
     {

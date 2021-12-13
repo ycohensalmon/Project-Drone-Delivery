@@ -10,7 +10,7 @@ namespace Dal
 {
     internal class DalXml : IDal
     {
-        public static IDal Instance { get; } = new DalXml();
+        internal static IDal Instance { get; } = new DalXml();
         DalXml() { }
 
         public void NewStation(Station station)
