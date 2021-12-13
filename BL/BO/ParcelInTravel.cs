@@ -4,26 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL
+namespace BO
 {
-    namespace BO
+    public class ParcelInTravel
     {
-        public class ParcelInTravel
+        public int Id { get; set; }
+        public bool InTravel { get; set; }
+        public WeightCategory Weight { get; set; }
+        public Priority Priorities { get; set; }
+        public CustomerInParcel Sender { get; set; }
+        public CustomerInParcel Target { get; set; }
+        public Location source { get; set; }
+        public Location Destination { get; set; }
+        public double Distance { get; set; }
+        public override string ToString()
         {
-            public int Id { get; set; }
-            public bool InTravel { get; set; }
-            public WeightCategory Weight { get; set; }
-            public Priority Priorities { get; set; }
-            public CustomerInParcel Sender { get; set; }
-            public CustomerInParcel Target { get; set; }
-            public Location source { get; set; }
-            public Location Destination { get; set; }
-            public double Distance { get; set; }
-            public override string ToString()
-            {
-                return $"\nId:{Id}\nIn travel:{InTravel}\nWeight:{Weight}\nPriority:{Priorities}\nSender:{Sender}\n" +
-                    $"Target:{Target}\nSource location:\n{source}\nDestination location:\n{Destination}\nDistance: {Distance}\n";
-            }
+            return $"\nId:{Id}\nIn travel:{InTravel}\nWeight:{Weight}\nPriority:{Priorities}\nSender:{Sender}\n" +
+                $"Target:{Target}\nSource location:\n{source}\nDestination location:\n{Destination}\nDistance: {Distance}\n";
         }
     }
 }

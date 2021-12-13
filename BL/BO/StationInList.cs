@@ -4,20 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL
+namespace BO
 {
-    namespace BO
+    public class StationList
     {
-        public class StationList
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int ChargeSoltsAvailable { get; set; }
+        public int ChargeSoltsBusy { get; set; }
+        public override string ToString()
         {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public int ChargeSoltsAvailable { get; set; }
-            public int ChargeSoltsBusy { get; set; }
-            public override string ToString()
-            {
-                return string.Format($"Id: {Id}\nName: {Name}\nchargeSoltsAvailable: {ChargeSoltsAvailable}\nchargeSoltsBusy: {ChargeSoltsBusy}");
-            }
+            return string.Format($"Id: {Id}\nName: {Name}\nchargeSoltsAvailable: {ChargeSoltsAvailable}\nchargeSoltsBusy: {ChargeSoltsBusy}");
         }
     }
 }

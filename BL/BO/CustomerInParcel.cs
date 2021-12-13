@@ -4,20 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL
+namespace BO
 {
-    namespace BO
+    public class CustomerInParcel
     {
-        public class CustomerInParcel
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
 
-            public override string ToString()
-            {
-                string sp = "   ";
-                return ($"{sp}Id: {Id}\n{sp}Name: {Name}");
-            }
+        public override string ToString()
+        {
+            string sp = "   ";
+            return ($"{sp}Id: {Id}\n{sp}Name: {Name}");
         }
     }
 }
