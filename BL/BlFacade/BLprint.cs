@@ -9,7 +9,7 @@ namespace BL
 {
     namespace BlFacade
     {
-        public partial class BL : IBL
+        internal partial class BL : IBL
         {
             public Station GetStationById(int stationId)
             {

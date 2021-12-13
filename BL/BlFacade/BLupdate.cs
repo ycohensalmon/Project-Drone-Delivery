@@ -10,7 +10,7 @@ namespace BL
 {
     namespace BlFacade
     {
-        public partial class BL : IBL
+        internal partial class BL : IBL
         {
             public void UpdateDrone(int droneId, string model)
             {

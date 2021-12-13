@@ -11,7 +11,7 @@ namespace BL
 {
     namespace BlFacade
     {
-        public partial class BL : IBL
+        internal partial class BL : IBL
         {
             Random rand = new Random();
             public IDal dalObj;

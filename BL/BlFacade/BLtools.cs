@@ -11,7 +11,7 @@ namespace BL
 {
     namespace BlFacade
     {
-        public partial class BL : IBL
+        internal partial class BL : IBL
         {
             private double BatteryIossAvailable(double lat1, double lon1, double lat2, double lon2)
                 => (Distance.GetDistanceFromLatLonInKm(lat1, lon1, lat2, lon2)) * Available;
