@@ -13,6 +13,13 @@ namespace BL
     {
         internal partial class BL : IBL
         {
+            private static readonly BL instance = new BL();
+            static BL() { }
+            public static BL Instance { get => instance; }
+
+            private readonly IBL myDal = BlFactory.GetBL();
+
+
             Random rand = new Random();
             public IDal dalObj;
             public List<DroneInList> drones;

@@ -8,7 +8,7 @@ using DO;
 
 namespace Dal
 {
-    public class DalObject : IDal
+    internal class DalObject : IDal
     {
         /// <summary>
         /// constructor for DalObject class

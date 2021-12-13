@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.BlFacade
+namespace DalFacade
 {
-    public static class BlFactory
+    public static class DalFactory
     {
-        public static IBL GetBL()
+        public IDal GetDal()
         {
-            return BL.Instance;
+            IDal dal;
+            return dal;
         }
     }
 }
-
-

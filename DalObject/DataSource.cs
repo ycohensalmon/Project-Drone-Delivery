@@ -15,9 +15,10 @@ namespace Dal
         internal static List<Parcel> Parcels = new();
         internal static List<DroneCharge> DroneCharges = new();
 
-        public static int SerialNum = 1000;
         internal class Config
         {
+            public static int SerialNum = 1000;
+
             internal static Random rand = new Random();
             public static double Available { get => 0.2; }    // 0.2% per KM
             public static double LightParcel { get => 1.0; }  // 1%   per KM
