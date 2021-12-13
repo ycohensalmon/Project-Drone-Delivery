@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DalFacade;
+using DalApi;
 using DO;
 
 namespace Dal
 {
     internal class DalObject : IDal
     {
+        #region singelton
+        public static IDal Instance { get; } = new DalObject();
+        static DalObject() { }
+
         /// <summary>
-        /// constructor for DalObject class
+        /// The constructor initialize randomly some donres parcels stations and custumers
         /// </summary>
         public DalObject() => DataSource.Initialize();
+        #endregion
 
-        //-----------------------------------------------------------------------------------------------------------//
-        // news functions //
-        //-----------------------------------------------------------------------------------------------------------//
-
+        #region Add fonctions
         public void NewStation(Station station)
         {
             foreach (var item in GetStations())
@@ -55,12 +57,9 @@ namespace Dal
             DataSource.Parcels.Add(parcel);
             return ++DataSource.Config.SerialNum;
         }
+        #endregion
 
-
-        //-----------------------------------------------------------------------------------------------------------//
-        // uptades fonctions //
-        //-----------------------------------------------------------------------------------------------------------//
-
+        #region Uptade fonctions
         public void ConnectDroneToParcel(int droneId, int parcelId)
         {
             if (GetDrones().FirstOrDefault(drone => drone.Id == droneId).Id != droneId)
@@ -184,11 +183,9 @@ namespace Dal
                 DataSource.Customers.Add(customer);
             }
         }
+        #endregion
 
-        //-----------------------------------------------------------------------------------------------------------//
-        // Get List //
-        //-----------------------------------------------------------------------------------------------------------//
-
+        #region Get Lists 
         public IEnumerable<Drone> GetDrones(Func<Drone, bool> predicate = null)
             => predicate == null ? DataSource.Drones.Select(item => item) : DataSource.Drones.Where(predicate).Select(item => item);
 
@@ -203,11 +200,9 @@ namespace Dal
 
         public IEnumerable<DroneCharge> GetDroneCharges(Func<DroneCharge, bool> predicate = null)
             => predicate == null ? DataSource.DroneCharges.Select(item => item) : DataSource.DroneCharges.Where(predicate).Select(item => item);
+        #endregion
 
-        //-----------------------------------------------------------------------------------------------------------//
-        // get objects by id //
-        //-----------------------------------------------------------------------------------------------------------//
-
+        #region get objects by id
         public Station GetStationById(int id)
         {
             Station station = DataSource.Stations.Find(x => x.Id == id);
@@ -239,10 +234,8 @@ namespace Dal
                 throw new IdNotFoundException(id, "parcel");
             return parcel;
         }
+        #endregion
 
-        //-----------------------------------------------------------------------------------------------------------//
-        // other //
-        //-----------------------------------------------------------------------------------------------------------//
         public double[] PowerConsumptionByDrone()
         {
             double[] battery = new double[5];
