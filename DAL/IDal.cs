@@ -31,7 +31,7 @@ namespace DalFacade
         /// adds a parcel to the list of Parcels
         /// </summary>
         /// <param name="parcel">the paraneter to adding</param>
-        public void NewParcel(Parcel parcel);
+        public int NewParcel(Parcel parcel);
 
         /// <summary>
         /// assign a drone to a parcel and update the scheduled time
