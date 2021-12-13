@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL.DO;
+using DalFacade;
+using DO;
 
-namespace DalObject
+namespace Dal
 {
-    public class DalObject : IDAL.IDal
+    public class DalObject : IDal
     {
         /// <summary>
         /// constructor for DalObject class
@@ -23,7 +24,7 @@ namespace DalObject
             foreach (var item in GetStations())
             {
                 if (item.Id == station.Id)
-                    throw new IdAlreadyExistException(station.Id,"Station");
+                    throw new IdAlreadyExistException(station.Id, "Station");
             }
             DataSource.Stations.Add(station);
 
@@ -58,7 +59,7 @@ namespace DalObject
 
         public void ConnectDroneToParcel(int droneId, int parcelId)
         {
-            if (GetDrones().FirstOrDefault(drone=> drone.Id == droneId).Id != droneId)
+            if (GetDrones().FirstOrDefault(drone => drone.Id == droneId).Id != droneId)
                 throw new IdNotFoundException(droneId, "Drone");
 
             Parcel parcel = GetParcelById(parcelId);
@@ -69,7 +70,7 @@ namespace DalObject
 
             DataSource.Parcels.Add(parcel);
         }
-        
+
         public void CollectParcelByDrone(int parcelId)
         {
             Parcel parcel = GetParcelById(parcelId);
@@ -79,7 +80,7 @@ namespace DalObject
 
             DataSource.Parcels.Add(parcel);
         }
-        
+
         public void DeliveredParcel(int parcelId)
         {
             Parcel parcel = GetParcelById(parcelId);
@@ -90,7 +91,7 @@ namespace DalObject
 
             DataSource.Parcels.Add(parcel);
         }
-        
+
         public void SendDroneToBaseCharge(int droneId, int stationId)
         {
             Drone drone = GetDroneById(droneId);
@@ -146,14 +147,14 @@ namespace DalObject
             if (station.Id != stationId)
                 throw new IdNotFoundException(stationId, "Station");
 
-            if (newName != "") 
+            if (newName != "")
             {
                 DataSource.Stations.Remove(station);
                 station.Name = newName;
                 DataSource.Stations.Add(station);
             }
 
-            if (newChargeSolts != "") 
+            if (newChargeSolts != "")
             {
                 DataSource.Stations.Remove(station);
                 station.ChargeSolts = result;
@@ -175,7 +176,7 @@ namespace DalObject
             if (newPhone != "")
             {
                 DataSource.Customers.Remove(customer);
-                customer.Phone = Int32.Parse(newPhone);
+                customer.Phone = int.Parse(newPhone);
                 DataSource.Customers.Add(customer);
             }
         }

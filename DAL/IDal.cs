@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DalObject;
-using IDAL.DO;
+using DO;
 
-namespace IDAL
+namespace DalFacade
 {
     public interface IDal
     {
@@ -96,7 +95,7 @@ namespace IDAL
         /// </summary>
         /// <param name="predicate">can be</param>
         /// <returns>the lists of the Drones </returns>
-        public IEnumerable<Drone> GetDrones(Func<Drone,bool> predicate = null);
+        public IEnumerable<Drone> GetDrones(Func<Drone, bool> predicate = null);
 
         /// <summary>
         /// Get the Stations

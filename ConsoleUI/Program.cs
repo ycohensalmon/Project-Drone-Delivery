@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.Text;
 using System.Collections.Generic;
-using IDAL.DO;
-using IDAL;
+using DO;
 using System.Runtime.Serialization;
+using DalFacade;
 
 namespace ConsoleUI
 {
@@ -16,7 +16,7 @@ namespace ConsoleUI
 
             int choises = 0;
 
-            IDal dalObject = new DalObject.DalObject();
+            IDal dalObject = new Dal.DalObject();
 
             do
             {
