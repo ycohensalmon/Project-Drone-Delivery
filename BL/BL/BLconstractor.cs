@@ -48,7 +48,6 @@ namespace BL
         {
             dalObj = DalFactory.GetDal();
             drones = new();
-            dalObj = DalFactory.GetDal();
             Available = dalObj.PowerConsumptionByDrone()[0];
             LightParcel = dalObj.PowerConsumptionByDrone()[1];
             MediumParcel = dalObj.PowerConsumptionByDrone()[2];

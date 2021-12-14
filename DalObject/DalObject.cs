@@ -11,8 +11,28 @@ namespace Dal
     internal class DalObject : IDal
     {
         #region singelton
-        internal static IDal Instance { get; } = new DalObject();
-        static DalObject() { }
+        private static DalObject instance = null;
+        private static readonly object padlock = new object();
+
+        public static DalObject Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    lock (padlock)
+                    {
+                        if (instance == null)
+                        {
+                            instance = new DalObject();
+                        }
+                    }
+                }
+                return instance;
+            }
+        }
+        //internal static IDal Instance { get; } = new DalObject();
+        //static DalObject() { }
 
         /// <summary>
         /// The constructor initialize randomly some donres parcels stations and custumers
