@@ -11,21 +11,20 @@ namespace BL
 {
     internal partial class BL : IBL
     {
-        //static readonly BL Instance = new BL();
-        //static BL() { }
-        //BL() { } 
-        //public static BL Instance { get => Instance; }
-        //static BL() { }
-
+        #region singelton
+        // =null that if we dont need to create a "new bl" it will not create it
         private static BL instance = null;
+        // for safty. So that if requests come from two places at the same time, it will not create it twice 
         private static readonly object padlock = new object();
 
         public static BL Instance
         {
             get
             {
+                //if "instance" hasn`t yet been created, a new one will be created 
                 if (instance == null)
                 {
+                    //stops a request from two places at the same time
                     lock(padlock)
                     {
                         if (instance == null)
@@ -37,6 +36,7 @@ namespace BL
                 return instance;
             }
         }
+        #endregion
 
         internal IDal dalObj;
         Random rand = new Random();
@@ -46,8 +46,12 @@ namespace BL
 
         public BL()
         {
+            //intializing data with a DalObject
             dalObj = DalFactory.GetDal();
+
             drones = new();
+
+            //getting electricity consumption of drones 
             Available = dalObj.PowerConsumptionByDrone()[0];
             LightParcel = dalObj.PowerConsumptionByDrone()[1];
             MediumParcel = dalObj.PowerConsumptionByDrone()[2];

@@ -11,15 +11,19 @@ namespace Dal
     internal class DalObject : IDal
     {
         #region singelton
+        // =null that if we dont need to create a "new bl" it will not create it
         private static DalObject instance = null;
+        // for safty. So that if requests come from two places at the same time, it will not create it twice 
         private static readonly object padlock = new object();
 
         public static DalObject Instance
         {
             get
             {
+                //if "instance" hasn`t yet been created, a new one will be created 
                 if (instance == null)
                 {
+                    //stops a request from two places at the same time
                     lock (padlock)
                     {
                         if (instance == null)
@@ -31,9 +35,7 @@ namespace Dal
                 return instance;
             }
         }
-        //internal static IDal Instance { get; } = new DalObject();
-        //static DalObject() { }
-
+        
         /// <summary>
         /// The constructor initialize randomly some donres parcels stations and custumers
         /// </summary>
