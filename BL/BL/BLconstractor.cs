@@ -11,8 +11,32 @@ namespace BL
 {
     internal partial class BL : IBL
     {
-        internal static IBL Instance { get; } = new BL();
-        static BL() { }
+        //static readonly BL Instance = new BL();
+        //static BL() { }
+        //BL() { } 
+        //public static BL Instance { get => Instance; }
+        //static BL() { }
+
+        private static BL instance = null;
+        private static readonly object padlock = new object();
+
+        public static BL Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    lock(padlock)
+                    {
+                        if (instance == null)
+                        {
+                            instance = new BL();
+                        }
+                    }
+                }
+                return instance;
+            }
+        }
 
         internal IDal dalObj;
         Random rand = new Random();
@@ -22,6 +46,7 @@ namespace BL
 
         public BL()
         {
+            dalObj = DalFactory.GetDal();
             drones = new();
             dalObj = DalFactory.GetDal();
             Available = dalObj.PowerConsumptionByDrone()[0];
