@@ -7,10 +7,19 @@ using System.Threading.Tasks;
 
 namespace DalApi
 {
+    /// <summary>
+    /// Class for processing config.xml file and getting from there
+    /// information which is relevant for initialization of DalApi
+    /// </summary>
     class DalConfig
     {
         internal static string DalName;
         internal static Dictionary<string, string> DalPackages;
+
+        /// <summary>
+        /// Static constructor extracts Dal packages list and Dal type from
+        /// Dal configuration file config.xml
+        /// </summary>
         static DalConfig()
         {
             XElement dalConfig = XElement.Load(@"dal-config.xml");
@@ -20,6 +29,10 @@ namespace DalApi
                           ).ToDictionary(p => "" + p.Name, p => p.Value);
         }
     }
+
+    /// <summary>
+    /// Represents errors during DalApi initialization
+    /// </summary>
     public class DalConfigException : Exception
     {
         public DalConfigException(string msg) : base(msg) { }
