@@ -12,6 +12,9 @@
 
   <ItemGroup>
     <None Remove="images\drones.jfif" />
+    <None Remove="images\homescreen.png" />
+    <None Remove="images\homescreenwithe.png" />
+    <None Remove="images\homescrenn %281%29.png" />
     <None Remove="images\homescrenn.png" />
     <None Remove="images\iPhone.jpg" />
     <None Remove="images\llogo.jpg" />
@@ -32,6 +35,9 @@
 
   <ItemGroup>
     <Resource Include="images\drones.jfif" />
+    <Resource Include="images\homescreen.png" />
+    <Resource Include="images\homescreenwithe.png" />
+    <Resource Include="images\homescrenn (1).png" />
     <Resource Include="images\homescrenn.png" />
     <Resource Include="images\iPhone.jpg" />
     <Resource Include="images\llogo.jpg">

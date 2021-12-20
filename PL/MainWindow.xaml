@@ -17,12 +17,13 @@
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
-        Title="MainWindow" Height="700" Width="365">
+        Height="700" Width="365"
+        Title="MainWindow">
     <Grid>
         <!--#region background-->
         <Border CornerRadius="55">
             <Border.Background>
-                <ImageBrush Stretch="Fill" ImageSource="images/homescrenn.png" />
+                <ImageBrush Stretch="Fill" ImageSource="images/homescrenn (1).png" />
             </Border.Background>
         </Border>
         <!--#endregion-->
@@ -48,7 +49,7 @@
         </Border>
         <Label Content="Stations" Margin="202,120,0,560" FontFamily="San Francisco" Foreground="AliceBlue" FontWeight="DemiBold" HorizontalAlignment="Left"/>
 
-        <Border Height="60" CornerRadius="14,14,14,14" Margin="270,60,30,580">
+        <Border Height="60" CornerRadius="14,14,14,14" Margin="275,60,30,580">
             <Border.Background>
                 <ImageBrush ImageSource="/images/logoparcels.png"  Stretch="Fill"/>
             </Border.Background>
@@ -56,7 +57,7 @@
         <Label Content="Parcels" Margin="280,120,0,560" FontFamily="San Francisco" Foreground="AliceBlue" FontWeight="DemiBold" HorizontalAlignment="Left"/>
 
 
-        <Button x:Name="Close" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="DarkRed" BorderBrush="DarkRed">
+        <Button x:Name="Close" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="DarkRed" BorderBrush="DarkRed" Margin="0,17,111,0">
             <materialDesign:PackIcon Kind="Close" Width="18" Height="18"/>
         </Button>
 

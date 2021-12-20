@@ -16,16 +16,15 @@
         Background="Transparent"
         AllowsTransparency="True"
         WindowStyle="None"
-        Height="620"
-        Width="370">
+        Height="700" Width="365">
     <Window.Resources>
         <FontFamily x:Key="FontApple">San Francisco</FontFamily>
     </Window.Resources>
     <Grid x:Name="MainGrid">
-        <Grid x:Name="AddDrone" Visibility="Visible">
-            <Border CornerRadius="55" MouseDown="UIElement_OnMouseDown">
+        <Grid x:Name="AddDrone" Visibility="Hidden">
+            <Border CornerRadius="42" MouseDown="UIElement_OnMouseDown">
                 <Border.Background>
-                    <ImageBrush Stretch="Fill" ImageSource="images\iPhone.jpg"/>
+                    <ImageBrush Stretch="Fill" ImageSource="images\homescreen.png"/>
                 </Border.Background>
 
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -41,7 +40,7 @@
                     </Grid>
                     <StackPanel Orientation="Vertical">
                         <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="Drone" Opacity="1" Foreground="Black"/>
-                        <TextBlock x:Name="DroneTextBlock" FontFamily="{StaticResource FontApple}"  HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" FontSize="22" Text="Add a drone"/>
+                        <TextBlock x:Name="DroneTextBlock" FontFamily="San Francisco" FontWeight="DemiBold"  HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" FontSize="22" Text="Add a drone"/>
                     </StackPanel>
                     <Grid Margin="30">
                         <Grid.RowDefinitions>
@@ -57,21 +56,21 @@
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
                             <Border CornerRadius="40"/>
-                            <TextBox x:Name="Id" Width="200" FontSize="18" materialDesign:HintAssist.Hint="Id" materialDesign:HintAssist.IsFloating="True" TextChanged="Id_TextChanged" TextInput="Id_TextInput"/>
-                            <materialDesign:PackIcon VerticalAlignment="Bottom" Kind="User" Height="35" Width="70" Opacity="1" Foreground="#6fb6d8"/>
+                            <TextBox x:Name="Id" Width="200" FontFamily="San Francisco" FontWeight="DemiBold" FontSize="18" materialDesign:HintAssist.Hint="Id" materialDesign:HintAssist.IsFloating="True" TextChanged="Id_TextChanged" TextInput="Id_TextInput"/>
+                            <materialDesign:PackIcon VerticalAlignment="Bottom" Kind="User" Height="35" Width="70" Foreground="RoyalBlue"/>
                         </StackPanel>
                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <ComboBox FontFamily="{StaticResource FontApple}" x:Name="MaxWeight" Width="200" FontSize="18" materialDesign:HintAssist.Hint="Max Weight" materialDesign:HintAssist.IsFloating="True" SelectionChanged="maxWeight_SelectionChanged"/>
-                            <materialDesign:PackIcon VerticalAlignment="Bottom" Kind="WeightKg" Height="30" Width="70" Foreground="#6fb6d8"/>
+                            <ComboBox FontFamily="San Francisco" FontWeight="DemiBold" x:Name="MaxWeight" Width="200" FontSize="18" materialDesign:HintAssist.Hint="Max Weight" materialDesign:HintAssist.IsFloating="True" SelectionChanged="maxWeight_SelectionChanged"/>
+                            <materialDesign:PackIcon VerticalAlignment="Bottom" Kind="WeightKg" Height="30" Width="70" Foreground="RoyalBlue"/>
                         </StackPanel>
                         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBox x:Name="Model" Width="200" FontSize="18" materialDesign:HintAssist.Hint="Model" materialDesign:HintAssist.IsFloating="True" TextChanged="Model_TextChanged"/>
-                            <materialDesign:PackIcon VerticalAlignment="Bottom" Kind="Company" Height="35" Width="70"                                Foreground="#6fb6d8"/>
+                            <TextBox x:Name="Model" Width="200" FontFamily="San Francisco" FontWeight="DemiBold" FontSize="18" materialDesign:HintAssist.Hint="Model" materialDesign:HintAssist.IsFloating="True" TextChanged="Model_TextChanged"/>
+                            <materialDesign:PackIcon VerticalAlignment="Bottom" Kind="Company" Height="35" Width="70" Foreground="RoyalBlue"/>
                         </StackPanel>
                         <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <ComboBox x:Name="Station" Width="200" FontSize="18" materialDesign:HintAssist.Hint="Station" materialDesign:HintAssist.IsFloating="True" SelectionChanged="Station_SelectionChanged">
+                            <ComboBox x:Name="Station" FontFamily="San Francisco" FontWeight="DemiBold" Width="200" FontSize="18" materialDesign:HintAssist.Hint="Station" materialDesign:HintAssist.IsFloating="True" SelectionChanged="Station_SelectionChanged">
                             </ComboBox>
-                            <materialDesign:PackIcon VerticalAlignment="Bottom" Kind="Place" Height="30" Width="70" Foreground="#6fb6d8"/>
+                            <materialDesign:PackIcon VerticalAlignment="Bottom" Kind="Place" Height="30" Width="70" Foreground="RoyalBlue"/>
                         </StackPanel>
                         <StackPanel Grid.Row="8">
                             <Border Grid.Column="0" CornerRadius="30" Height="60" Margin="10" Opacity="0.8" BorderThickness="3" MouseDown="UIElement_OnMouseLeave">
@@ -89,29 +88,32 @@
             </Border>
         </Grid>
 
-        <Grid x:Name="UpdateDrone"  Visibility="Hidden">
-            <Border CornerRadius="40" BorderBrush="#FF9900" MouseDown="UIElement_OnMouseDown" BorderThickness="4" Background="White">
+        <Grid x:Name="UpdateDrone"  Visibility="Visible">
+            <Border CornerRadius="42" MouseDown="UIElement_OnMouseDown">
+                <Border.Background>
+                    <ImageBrush Stretch="Fill" ImageSource="images\homescreen.png"/>
+                </Border.Background>
                 <StackPanel >
-                    <Grid Height="50" Margin="0,10,0,0">
+                    <Grid Height="50" Margin="0,40,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="Closee" Grid.Column="1" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="#FF111111">
-                            <materialDesign:PackIcon Kind="Close" Width="31" Height="30" VerticalAlignment="Center"/>
+                        <Button x:Name="Closee" Grid.Column="0" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="#FF111111">
+                            <materialDesign:PackIcon Kind="ArrowBack" Width="31" Height="30" VerticalAlignment="Center"/>
                         </Button>
-                        <Image Source="images/logo1.png" HorizontalAlignment="Center"/>
+                        <Image Source="images/logo1.png" Grid.Column="1" HorizontalAlignment="Center"/>
                     </Grid>
                     <StackPanel Orientation="Vertical">
                         <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="Drone" Foreground="Black"/>
                         <TextBlock x:Name="UpdateTextBlock" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" FontSize="22" Text="Update this drone"/>
                     </StackPanel>
                     <StackPanel>
-                        <Label Name="DroneView"/>
-                        <Button x:Name="bottonUpdate" Grid.Row ="1" Click="bottonUpdate_Click" Cursor="Hand" Background="#FF48A3C6" BorderBrush="{DynamicResource MaterialDesignDarkForeground}" Foreground="#FFFF9900" Margin="10,10,10,10">
+                        <Label Name="DroneView" Width="318"/>
+                        <Button x:Name="bottonUpdate" Grid.Row ="1" Click="bottonUpdate_Click" Cursor="Hand" Background="#FF48A3C6" BorderBrush="{DynamicResource MaterialDesignDarkForeground}" Foreground="#FFFF9900" Margin="10,10,10,10" Width="325">
                             <Button.Content>Update</Button.Content>
                         </Button>
-                        <Button x:Name="conectToParcel" Content="Send drone to parcel" Visibility="Hidden" Click="conectToParcel_Click" Margin="10,10,10,0" Background="#FF48A3C6" Foreground="#FFFF9900"/>
+                        <Button x:Name="conectToParcel" Content="Send drone to parcel" Visibility="Hidden" Click="conectToParcel_Click" Margin="10,10,10,0" Background="#FF48A3C6" Foreground="#FFFF9900" Width="320"/>
                     </StackPanel>
                 </StackPanel>
             </Border>
