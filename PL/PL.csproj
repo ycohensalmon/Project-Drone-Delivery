@@ -12,10 +12,14 @@
 
   <ItemGroup>
     <None Remove="images\drones.jfif" />
+    <None Remove="images\homescrenn.png" />
     <None Remove="images\iPhone.jpg" />
     <None Remove="images\llogo.jpg" />
     <None Remove="images\logo1.png" />
     <None Remove="images\logo11.png" />
+    <None Remove="images\logoAmazon.png" />
+    <None Remove="images\logoCustomer.png" />
+    <None Remove="images\logoparcels.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,12 +32,16 @@
 
   <ItemGroup>
     <Resource Include="images\drones.jfif" />
+    <Resource Include="images\homescrenn.png" />
     <Resource Include="images\iPhone.jpg" />
     <Resource Include="images\llogo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\logo1.png" />
     <Resource Include="images\logo11.png" />
+    <Resource Include="images\logoamazon.png" />
+    <Resource Include="images\logoCustomer.png" />
+    <Resource Include="images\logoparcels.png" />
   </ItemGroup>
 
 </Project>

@@ -30,15 +30,14 @@ namespace PL
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            new DronesListWindow(myBl).Show();
-            Close();
-        }
-
         private void Close_OnClick(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void ClickDrones(object sender, MouseButtonEventArgs e)
+        {
+            new DronesListWindow(myBl).Show();
         }
     }
 }

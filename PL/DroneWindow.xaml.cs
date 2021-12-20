@@ -25,6 +25,7 @@ namespace PL
         private IBL myBl;
         private DroneInList drone;
         DO.Parcel parcel;
+        ListView droneList;
 
         // add drone
         public DroneWindow(IBL myBl)
@@ -79,14 +80,20 @@ namespace PL
         {
         }
 
-        public DroneWindow(IBL myBl, object selectedItem)
+        public DroneWindow(IBL myBl, object selectedItem, ListView droneList)
         {
             this.myBl = myBl;
             this.drone = (DroneInList)selectedItem;
+            this.droneList = droneList;
             InitializeComponent();
             AddDrone.Visibility = Visibility.Hidden;
             UpdateDrone.Visibility = Visibility.Visible;
 
+            RefreshButtonUpdate(myBl);
+        }
+
+        private void RefreshButtonUpdate(IBL myBl)
+        {
             DroneStatuses status = drone.Status;
 
             switch (status)
@@ -118,13 +125,14 @@ namespace PL
 
             try
             {
-                this.DroneView.Content = myBl.GetDroneById(drone.Id);
+                this.DroneView.Content = myBl.GetDroneById(drone.Id).ToString();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "ERROR");
             }
         }
+
         private void bottonUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -143,14 +151,14 @@ namespace PL
                             myBl.CollectParcelsByDrone(drone.Id);
                         else if (parcel.PickedUp != null && parcel.Delivered == null)
                             myBl.DeliveredParcel(drone.Id);
-
                         break;
                     default:
                         break;
                 }
 
                 MessageBox.Show("success");
-                Close();
+                RefreshButtonUpdate(myBl);
+                droneList = (ListView)myBl.GetDrones();
             }
             catch (Exception ex)
             {
@@ -164,7 +172,8 @@ namespace PL
             {
                 myBl.ConnectDroneToParcel(drone.Id);
                 MessageBox.Show("success");
-                Close();
+                conectToParcel.Visibility = Visibility.Hidden;
+                RefreshButtonUpdate(myBl);
             }
             catch (Exception ex)
             {

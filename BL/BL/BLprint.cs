@@ -265,7 +265,7 @@ namespace BL
             if (!parcels.Any())
                 throw new EmptyListException("parcels");
 
-            return parcels;
+            return parcels.Select(x => x);
         }
 
         public IEnumerable<ParcelInList> GetParcelsWithoutDrone()

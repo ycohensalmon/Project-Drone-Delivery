@@ -82,7 +82,7 @@ namespace PL
 
         private void DroneView_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            new DroneWindow(myBl, DronesListView.SelectedItem).ShowDialog();
+            new DroneWindow(myBl, DronesListView.SelectedItem, DronesListView).ShowDialog();
             ButtonClearStatus_Click(sender, e);
             ButtonClearWeight_Click(sender, e);
             DronesListView.ItemsSource = myBl.GetDrones();
