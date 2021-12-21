@@ -14,6 +14,7 @@ namespace Dal
         internal static List<Customer> Customers = new();
         internal static List<Parcel> Parcels = new();
         internal static List<DroneCharge> DroneCharges = new();
+        internal static List<User> Users = new();
 
         internal class Config
         {

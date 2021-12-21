@@ -256,6 +256,15 @@ namespace Dal
                 throw new IdNotFoundException(id, "parcel");
             return parcel;
         }
+
+        public User GetUserById(int id)
+        {
+            User user = DataSource.Users.FirstOrDefault(x => x.Id == id);
+            if (user.Id != id)
+                throw new IdNotFoundException(id, "user");
+            return user;
+        }
+
         #endregion
 
         public double[] PowerConsumptionByDrone()

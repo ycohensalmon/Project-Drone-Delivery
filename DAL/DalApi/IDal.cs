@@ -154,6 +154,13 @@ namespace DalApi
         public Parcel GetParcelById(int id);
 
         /// <summary>
+        /// get customer with this id and if no, error is thrown
+        /// </summary>
+        /// <param name="id">the id of the user</param>
+        /// <returns>the information of this user</returns>
+        public User GetUserById(int id);
+
+        /// <summary>
         /// Transfers in the array from the data layer to the logic layer
         /// the battery consumption data for all types of weights
         /// </summary>

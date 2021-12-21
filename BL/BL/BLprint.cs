@@ -189,6 +189,23 @@ namespace BL
             };
         }
 
+        public User GetUserById(int userId)
+        {
+            DO.User user = dalObj.GetUserById(userId);
+            Customer customer = GetCustomerById(userId);
+
+            return new User
+            {
+                Id = user.Id,
+                Name = user.Name,
+                SafePassword = user.SafePassword,
+                Phone = user.Phone,
+                Photo = user.Photo,
+                ParcelsFromUser = customer.ParcelsFromCustomer,
+                ParcelsToUser = customer.ParcelsToCustomer
+            };
+        }
+
         public IEnumerable<StationList> GetStations()
         {
             List<StationList> stations = new();

@@ -25,6 +25,7 @@ namespace BlApi
         public Drone GetDroneById(int droneId);
         public Customer GetCustomerById(int customerId);
         public Parcel GetParcelById(int parcelid);
+        public User GetUserById(int userId);
         public IEnumerable<StationList> GetStations();
         public IEnumerable<DroneInList> GetDrones();
         public IEnumerable<CustumerInList> GetCustomers();
