@@ -192,21 +192,18 @@ namespace BL
         public User GetUserById(int userId)
         {
             DO.User user = dalObj.GetUserById(userId);
-            Customer customer = GetCustomerById(userId);
 
             return new User
             {
                 Id = user.Id,
-                Name = user.Name,
+                UserName = user.UserName,
                 SafePassword = user.SafePassword,
-                Phone = user.Phone,
                 Photo = user.Photo,
-                ParcelsFromUser = customer.ParcelsFromCustomer,
-                ParcelsToUser = customer.ParcelsToCustomer
+                customer = GetCustomerById(userId)
             };
         }
 
-        public IEnumerable<StationList> GetStations()
+        public IEnumerable<StationList> GetStations(Predicate<StationList> predicate = null)
         {
             List<StationList> stations = new();
 
@@ -222,17 +219,27 @@ namespace BL
                 });
             }
 
-            if (!stations.Any())
+            if (predicate != null)
+                stations = stations.FindAll(x => predicate(x));
+
+            if (!stations.Any()) 
                 throw new EmptyListException("stations");
+
             return stations;
         }
 
-        public IEnumerable<DroneInList> GetDrones()
+        public IEnumerable<DroneInList> GetDrones(Predicate<DroneInList> predicate = null)
         {
+            if (predicate != null)
+            {
+                List<DroneInList> droneInLists = drones.FindAll(x => predicate(x));
+                return !droneInLists.Any() ? throw new EmptyListException("drones") : droneInLists.Select(x => x);
+            }
+
             return !drones.Any() ? throw new EmptyListException("drones") : drones.Select(x => x);
         }
 
-        public IEnumerable<CustumerInList> GetCustomers()
+        public IEnumerable<CustumerInList> GetCustomers(Predicate<CustumerInList> predicate = null)
         {
             List<CustumerInList> customers = new();
 
@@ -252,13 +259,16 @@ namespace BL
                 });
             }
 
+            if (predicate != null)
+                customers = customers.FindAll(x => predicate(x));
+
             if (!customers.Any())
                 throw new EmptyListException("customers");
 
             return customers;
         }
 
-        public IEnumerable<ParcelInList> GetParcels()
+        public IEnumerable<ParcelInList> GetParcels(Predicate<ParcelInList> predicate = null)
         {
             List<ParcelInList> parcels = new();
 
@@ -278,6 +288,9 @@ namespace BL
                     Priorities = parcel.Priorities
                 });
             }
+
+            if (predicate != null)
+                parcels = parcels.FindAll(x => predicate(x));
 
             if (!parcels.Any())
                 throw new EmptyListException("parcels");

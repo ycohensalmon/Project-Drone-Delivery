@@ -32,6 +32,12 @@ namespace ConsoleUI_BL
                 Console.ForegroundColor = ConsoleColor.White;
         }
 
+        private static void PrintAskMenu()
+        {
+            Console.WriteLine(
+                "for login as manager - - press 1:\n" +
+                "for login as user- - - - press 2:\n" );
+        }
 
         /// <summary>
         /// Print main menu to user
@@ -99,6 +105,13 @@ namespace ConsoleUI_BL
                 "Displays the list of packages- - - - - - - - - - - - - - - - - - - - - - - press 4\n" +
                 "Displays a list of packages that have not yet been assigned to the glider- press 5\n" +
                 "Display base stations with available charging stations - - - - - - - - - - press 6");
+        }
+
+        private static void PrintUserMenu()
+        {
+            Console.WriteLine(
+                "for login - - - - - - - - - press 1:\n" +
+                "for create a new user - - - press 2:\n");
         }
 
         /// <summary>

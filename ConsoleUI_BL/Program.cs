@@ -16,19 +16,25 @@ namespace ConsoleUI_BL
 
             int choises = 0;
 
-            //PrintAskMenu();
-            //int.TryParse(Console.ReadLine(), out choises);
-            //if (choises == 0)
-            //{
-            //    PrintUserMenu();
-
-            //}
-
-            //choises = 0;
+            Pause();
 
             do
             {
-                Pause();
+                PrintAskMenu();
+                int.TryParse(Console.ReadLine(), out choises);
+
+            } while (true);
+            //if (choises == 2)
+            //{
+            //    PrintUserMenu();
+            //    int.TryParse(Console.ReadLine(), out choises);
+
+            //}
+
+            choises = 0;
+
+            do
+            {
 
                 PrintFirstMenu();
                 int.TryParse(Console.ReadLine(), out choises);

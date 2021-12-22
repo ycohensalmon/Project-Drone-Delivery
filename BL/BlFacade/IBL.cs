@@ -26,10 +26,10 @@ namespace BlApi
         public Customer GetCustomerById(int customerId);
         public Parcel GetParcelById(int parcelid);
         public User GetUserById(int userId);
-        public IEnumerable<StationList> GetStations();
-        public IEnumerable<DroneInList> GetDrones();
-        public IEnumerable<CustumerInList> GetCustomers();
-        public IEnumerable<ParcelInList> GetParcels();
+        public IEnumerable<StationList> GetStations(Predicate<StationList> predicate = null);
+        public IEnumerable<DroneInList> GetDrones(Predicate<DroneInList> predicate = null);
+        public IEnumerable<CustumerInList> GetCustomers(Predicate<CustumerInList> predicate = null);
+        public IEnumerable<ParcelInList> GetParcels(Predicate<ParcelInList> predicate = null);
         public IEnumerable<ParcelInList> GetParcelsWithoutDrone();
         public IEnumerable<StationList> GetStationWithChargeSolts();
         public DO.Parcel GetParcelWasConnectToParcel(int droneId, out DroneInList drone);
