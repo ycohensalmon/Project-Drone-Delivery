@@ -1,0 +1,47 @@
+﻿<Window x:Class="PL.StationsListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="False"
+        WindowStyle="SingleBorderWindow"
+        Title="StationsListWindow" Height="450" Width="800">
+    <Border CornerRadius="40" BorderBrush="#FF9900" BorderThickness="4" Background="DeepSkyBlue">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="70"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            
+            <Button x:Name="bottonExit" Grid.Column="2" BorderBrush="DarkRed" Background="DarkRed" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="bottonExit_Click" Margin="15,15,15,15">
+                <materialDesign:PackIcon Kind="Close" Width="31" Height="30" VerticalAlignment="Center"/>
+            </Button>
+
+            <Button x:Name="bottonAdd" Grid.Column="2" Grid.Row="1" BorderBrush="#FF9900" Background="#FF9900" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="bottonAdd_Click" Margin="15,15,15,15">
+                <materialDesign:PackIcon Kind="Add" Width="31" Height="30" VerticalAlignment="Center"/>
+            </Button>
+
+            <ListView x:Name="StasionsListView" MouseDoubleClick="StationView_DoubleClick" Grid.Row="1" Grid.Column="1">
+                <ListView.View>
+                    <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Information">
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="ID" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="110"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=ChargeSoltsAvailable}" Header="Charge Solts Available" Width="200"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=ChargeSoltsBusy}" Header="Charge Solts Busy" Width="200"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </Border>
+</Window>

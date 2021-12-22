@@ -39,5 +39,10 @@ namespace PL
         {
             new DronesListWindow(myBl).ShowDialog();
         }
+
+        private void StationsClick(object sender, MouseButtonEventArgs e)
+        {
+            new StationsListWindow(myBl).ShowDialog();
+        }
     }
 }
