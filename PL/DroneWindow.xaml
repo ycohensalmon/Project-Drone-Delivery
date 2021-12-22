@@ -11,17 +11,25 @@
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
-        FontFamily="{DynamicResource MaterialDesignFont}"
+        FontFamily="San Francisco"
+        FontSize="18"
+        FontWeight="DemiBold"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         AllowsTransparency="True"
         WindowStyle="None"
         Height="700" Width="365">
     <Window.Resources>
-        <FontFamily x:Key="FontApple">San Francisco</FontFamily>
+        <Style  x:Key="SizeIcon" TargetType="materialDesign:PackIcon">
+            <Setter Property="Width" Value="70"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Foreground" Value="RoyalBlue"/>
+        </Style>
     </Window.Resources>
+    
     <Grid x:Name="MainGrid">
-        <Grid x:Name="AddDrone" Visibility="Visible">
+        <Grid x:Name="AddDrone" Visibility="Hidden">
             <Border CornerRadius="42" MouseDown="UIElement_OnMouseDown">
                 <Border.Background>
                     <ImageBrush Stretch="Fill" ImageSource="images\homescreen.png"/>
@@ -33,14 +41,14 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="Close" Margin="15,0,0,0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="Black">
+                        <Button x:Name="Close" Margin="15,0,0,0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="Black" BorderBrush="Black">
                             <materialDesign:PackIcon Kind="ArrowBack" Width="30" Height="30"/>
                         </Button>
                         <Image Source="images\logo1.png" HorizontalAlignment="Right" Grid.Column="1" Margin="0,0,15,0"/>
                     </Grid>
                     <StackPanel Orientation="Vertical">
                         <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="Drone" Opacity="1" Foreground="Black"/>
-                        <TextBlock x:Name="DroneTextBlock" FontFamily="San Francisco" FontWeight="DemiBold"  HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" FontSize="22" Text="Add a drone"/>
+                        <TextBlock x:Name="DroneTextBlock"  HorizontalAlignment="Center"  Text="Add a drone"/>
                     </StackPanel>
                     <Grid Margin="30">
                         <Grid.RowDefinitions>
@@ -56,24 +64,23 @@
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
                             <Border CornerRadius="40"/>
-                            <TextBox x:Name="Id" Width="200" FontFamily="San Francisco" FontWeight="DemiBold" FontSize="18" materialDesign:HintAssist.Hint="Id" materialDesign:HintAssist.IsFloating="True" TextChanged="Id_TextChanged" TextInput="Id_TextInput"/>
-                            <materialDesign:PackIcon VerticalAlignment="Bottom" Kind="User" Height="35" Width="70" Foreground="RoyalBlue"/>
+                            <TextBox x:Name="Id" Width="200" materialDesign:HintAssist.Hint="Id" materialDesign:HintAssist.IsFloating="True" TextChanged="Id_TextChanged"/>
+                            <materialDesign:PackIcon Kind="User" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <ComboBox FontFamily="San Francisco" FontWeight="DemiBold" x:Name="MaxWeight" Width="200" FontSize="18" materialDesign:HintAssist.Hint="Max Weight" materialDesign:HintAssist.IsFloating="True" SelectionChanged="maxWeight_SelectionChanged"/>
-                            <materialDesign:PackIcon VerticalAlignment="Bottom" Kind="WeightKg" Height="30" Width="70" Foreground="RoyalBlue"/>
+                            <ComboBox x:Name="MaxWeight" Width="200" materialDesign:HintAssist.Hint="Max Weight" materialDesign:HintAssist.IsFloating="True"/>
+                            <materialDesign:PackIcon Kind="WeightKg" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBox x:Name="Model" Width="200" FontFamily="San Francisco" FontWeight="DemiBold" FontSize="18" materialDesign:HintAssist.Hint="Model" materialDesign:HintAssist.IsFloating="True" TextChanged="Model_TextChanged"/>
-                            <materialDesign:PackIcon VerticalAlignment="Bottom" Kind="Company" Height="35" Width="70" Foreground="RoyalBlue"/>
+                            <TextBox x:Name="Model" Width="200" materialDesign:HintAssist.Hint="Model" materialDesign:HintAssist.IsFloating="True"/>
+                            <materialDesign:PackIcon Kind="Company" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <ComboBox x:Name="Station" FontFamily="San Francisco" FontWeight="DemiBold" Width="200" FontSize="18" materialDesign:HintAssist.Hint="Station" materialDesign:HintAssist.IsFloating="True" SelectionChanged="Station_SelectionChanged">
-                            </ComboBox>
-                            <materialDesign:PackIcon VerticalAlignment="Bottom" Kind="Place" Height="30" Width="70" Foreground="RoyalBlue"/>
+                            <ComboBox x:Name="Station" Width="200" materialDesign:HintAssist.Hint="Station" materialDesign:HintAssist.IsFloating="True"/>
+                            <materialDesign:PackIcon Kind="Place" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="8">
-                            <Border Grid.Column="0" CornerRadius="30" Height="60" Margin="10" Opacity="0.8" BorderThickness="3" MouseDown="UIElement_OnMouseLeave">
+                            <Border Grid.Column="0" CornerRadius="30" Height="60" Margin="10" Opacity="0.8" BorderThickness="3" MouseDown="AddDrone_Click">
                                 <Border.Background>
                                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                         <GradientStop Color="Black"/>
@@ -88,7 +95,7 @@
             </Border>
         </Grid>
 
-        <Grid x:Name="UpdateDrone"  Visibility="Hidden">
+        <Grid x:Name="UpdateDrone"  Visibility="Visible">
             <Border CornerRadius="42" MouseDown="UIElement_OnMouseDown">
                 <Border.Background>
                     <ImageBrush Stretch="Fill" ImageSource="images\homescreen.png"/>

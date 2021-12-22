@@ -11,7 +11,7 @@
         AllowsTransparency="True"
         WindowStyle="None"
         Title="DronesListWindow" Height="640" Width="800">
-    <Border CornerRadius="40" BorderBrush="#FF9900" BorderThickness="4" Background="DeepSkyBlue">
+    <Border CornerRadius="40" BorderBrush="#FF9900" BorderThickness="4" Background="White">
         <Grid Name="MainGrid">
             <!--#region definition row and colons-->
             <Grid.RowDefinitions>

@@ -86,4 +86,10 @@ namespace BO
     {
         public EmptyInputException(string message) : base($"ERROR: The {message} is empty") { }
     }
+
+    public class IncorectInputException : Exception
+    {
+        public IncorectInputException(string message) : base($"ERROR: the {message} is incorrect") { }
+        public IncorectInputException() : base($"ERROR: the input is incorrect") { }
+    }
 }

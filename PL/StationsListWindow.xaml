@@ -9,9 +9,9 @@
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         AllowsTransparency="False"
-        WindowStyle="SingleBorderWindow"
+        WindowStyle="None"
         Title="StationsListWindow" Height="450" Width="800">
-    <Border CornerRadius="40" BorderBrush="#FF9900" BorderThickness="4" Background="DeepSkyBlue">
+    <Border CornerRadius="40" BorderBrush="DarkBlue" BorderThickness="4" Background="White">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="70"/>
@@ -28,7 +28,7 @@
                 <materialDesign:PackIcon Kind="Close" Width="31" Height="30" VerticalAlignment="Center"/>
             </Button>
 
-            <Button x:Name="bottonAdd" Grid.Column="2" Grid.Row="1" BorderBrush="#FF9900" Background="#FF9900" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="bottonAdd_Click" Margin="15,15,15,15">
+            <Button x:Name="bottonAdd" Grid.Column="2" Grid.Row="1" BorderBrush="DarkBlue" Background="DarkBlue" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="bottonAdd_Click" Margin="15,15,15,15">
                 <materialDesign:PackIcon Kind="Add" Width="31" Height="30" VerticalAlignment="Center"/>
             </Button>
 

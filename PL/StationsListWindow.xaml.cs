@@ -40,6 +40,7 @@ namespace PL
         private void bottonAdd_Click(object sender, RoutedEventArgs e)
         {
             new StationWindow(myBl).ShowDialog();
+            StasionsListView.ItemsSource = myBl.GetStations();
         }
     }
 }
