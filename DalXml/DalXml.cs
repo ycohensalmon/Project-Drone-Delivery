@@ -122,5 +122,10 @@ namespace Dal
         {
             throw new NotImplementedException();
         }
+
+        public User GetUserById(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

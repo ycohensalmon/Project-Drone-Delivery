@@ -16,6 +16,16 @@ namespace ConsoleUI_BL
 
             int choises = 0;
 
+            //PrintAskMenu();
+            //int.TryParse(Console.ReadLine(), out choises);
+            //if (choises == 0)
+            //{
+            //    PrintUserMenu();
+
+            //}
+
+            //choises = 0;
+
             do
             {
                 Pause();
