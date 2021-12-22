@@ -42,7 +42,7 @@
         </Border>
         <Label Content="Custumers" Margin="117,120,0,560" FontFamily="San Francisco" Foreground="AliceBlue" FontWeight="DemiBold" HorizontalAlignment="Left"/>
 
-        <Border Height="60" CornerRadius="12,12,12,12" Margin="195,60,105,580">
+        <Border Height="60" CornerRadius="12,12,12,12" Margin="195,60,105,580" MouseDown="StationsClick">
             <Border.Background>
                 <ImageBrush ImageSource="/images/logoamazon.png"  Stretch="Fill"/>
             </Border.Background>
