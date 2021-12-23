@@ -23,11 +23,12 @@ namespace PL
     public partial class DroneWindow : Window
     {
         private IBL myBl;
-        private DroneInList drone;
-        DO.Parcel parcel;
+        private Drone drone;
+        private Parcel parcel;
         ListView droneList;
+        public event EventHandler DroneChanged;
 
-        // add drone
+        #region add drone
         public DroneWindow(IBL myBl)
         {
             this.myBl = myBl;
@@ -36,62 +37,67 @@ namespace PL
             AddDrone.Visibility = Visibility.Visible;
             this.MaxWeight.ItemsSource = Enum.GetValues(typeof(BO.WeightCategory));
             List<string> NameStations = new();
-            foreach (var item in myBl.GetStations()) NameStations.Add(item.Name);
+            foreach (var item in myBl.GetStations(x => x.ChargeSoltsAvailable != 0)) NameStations.Add(item.Name);
             this.Station.ItemsSource = NameStations;
         }
-
-        private void maxWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Id_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (MaxWeight.SelectedItem == null)
-                MaxWeight.Foreground = Brushes.Red;
-            else
-                MaxWeight.Foreground = Brushes.Black;
+            if (Id.Text != "")
+            {
+                // check if there are a lattres
+                if (Id.Text.Any(x => x < '0') == true || Id.Text.Any(x => x > '9') == true)
+                {
+                    Id.Foreground = Brushes.Red;
+                    return;
+                }
 
+                // if the id is nagative or less than 4 digits
+                if (Id.Text.Length < 4 || int.Parse(Id.Text) < 0)
+                    Id.Foreground = Brushes.Red;
+                else
+                    Id.Foreground = Brushes.Black;
+            }
         }
-
-        private void UIElement_OnMouseLeave(object sender, MouseButtonEventArgs e)
+        private void AddDrone_Click(object sender, MouseButtonEventArgs e)
         {
             try
             {
+                if (Id.Foreground == Brushes.Red) throw new IncorectInputException("id");
                 int droneID = (Id.Text == "") ? throw new EmptyInputException("id") : int.Parse(Id.Text);
-                string model =  (Model.Text == "") ? throw new EmptyInputException("model") : Model.Text;
+                string model = (Model.Text == "") ? throw new EmptyInputException("model") : Model.Text;
                 WeightCategory weight = (MaxWeight.SelectedItem == null) ? throw new EmptyInputException("weight") : (WeightCategory)MaxWeight.SelectedItem;
-
-
-                string nameStation = (Station.SelectedItem == null) ? throw new EmptyInputException("station") : (string)Station.SelectedItem;                 
+                string nameStation = (Station.SelectedItem == null) ? throw new EmptyInputException("station") : (string)Station.SelectedItem;
                 StationList tempStation = myBl.GetStations().FirstOrDefault(x => x.Name == nameStation);
-                 
+
                 int StationId = tempStation.Id;
                 DroneInList drone = new() { Id = droneID, Model = model, MaxWeight = weight };
 
 
                 myBl.NewDroneInList(drone, StationId);
                 Close();
-
-                MessageBox.Show("The drone was added successfully", "success");
+                MessageBox.Show("The drone was added successfully", "success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "ERROR");
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        #endregion
 
-        private void stationId_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-        }
-
+        #region update drone refresh
         public DroneWindow(IBL myBl, object selectedItem, ListView droneList)
         {
             this.myBl = myBl;
-            this.drone = (DroneInList)selectedItem;
+            this.drone = myBl.GetDroneById(((DroneInList)selectedItem).Id);
             this.droneList = droneList;
             InitializeComponent();
             AddDrone.Visibility = Visibility.Hidden;
             UpdateDrone.Visibility = Visibility.Visible;
 
+            //DroneChanged += refreshWindow;
+            //DroneChanged(this, EventArgs.Empty);
             RefreshButtonUpdate(myBl);
         }
-
         private void RefreshButtonUpdate(IBL myBl)
         {
             DroneStatuses status = drone.Status;
@@ -104,10 +110,10 @@ namespace PL
                     break;
                 case DroneStatuses.Maintenance:
                     bottonUpdate.Content = "Release from charge";
+                    conectToParcel.Visibility = Visibility.Hidden;
                     break;
                 case DroneStatuses.Delivery:
-
-                    parcel = myBl.GetParcelWasConnectToParcel(drone.Id, out drone);
+                    parcel = myBl.GetParcelById(drone.ParcelInTravel.Id);
                     if (parcel.Scheduled != null && parcel.PickedUp == null)
                     {
                         bottonUpdate.Content = "Collect delivery";
@@ -125,19 +131,25 @@ namespace PL
 
             try
             {
+                // update the Drone Window
                 this.DroneView.Content = myBl.GetDroneById(drone.Id).ToString();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "ERROR");
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        public void refreshWindow(object s, EventArgs e)
+        {
+            DroneView.Content = myBl.GetDroneById(drone.Id);
+        }
+        #endregion
 
+        #region buttons update
         private void bottonUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-
                 switch (drone.Status)
                 {
                     case DroneStatuses.Available:
@@ -155,14 +167,15 @@ namespace PL
                     default:
                         break;
                 }
-
-                MessageBox.Show("success");
+                //DroneChanged += refreshWindow;
+                //drone = myBl.GetDroneById(drone.Id);
+                //droneList.DataContext = myBl.GetDrones();
+                MessageBox.Show("The drone was update successfully", "success", MessageBoxButton.OK, MessageBoxImage.Information);
                 RefreshButtonUpdate(myBl);
-                droneList = (ListView)myBl.GetDrones();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "ERROR");
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
@@ -170,80 +183,19 @@ namespace PL
         {
             try
             {
+                //DroneChanged += refreshWindow;
+                //drone = myBl.GetDroneById(drone.Id);
                 myBl.ConnectDroneToParcel(drone.Id);
-                MessageBox.Show("success");
+                //droneList.DataContext = myBl.GetDrones();
+                MessageBox.Show("The drone was update successfully", "success", MessageBoxButton.OK, MessageBoxImage.Information);
                 conectToParcel.Visibility = Visibility.Hidden;
                 RefreshButtonUpdate(myBl);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "ERROR");
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private void Close_OnClick(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        private void ButtonCancel_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-
-        // if we want to move to window
-        private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                DragMove();
-            }
-        }
-
-        private void Station_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void Id_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (Id.Text == "")
-                Id.Foreground = Brushes.Red;
-            else
-                Id.Foreground = Brushes.Black;
-        }
-
-        private void Model_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void Id_TextInput(object sender, TextCompositionEventArgs e)
-        {
-            if (Model.Text == "")
-                Model = WrongText;
-        }
-
-        private void MaxWeight_DragEnter(object sender, DragEventArgs e)
-        {
-
-        }
-
-        private void MaxWeight_DragLeave(object sender, DragEventArgs e)
-        {
-
-        }
-
-        private void MaxWeight_PreviewDragEnter(object sender, DragEventArgs e)
-        {
-
-        }
-
-        private void MaxWeight_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-
-        }
-
         private void updateName_Click(object sender, RoutedEventArgs e)
         {
 
@@ -254,26 +206,22 @@ namespace PL
             Mytextbox.Name = "ModelUpdate";
 
         }
+        #endregion
 
-        /*private static int AddId4(bool drone, bool station)
+        #region somes buttons
+        private void Close_OnClick(object sender, RoutedEventArgs e)
         {
-            int id;
-            do
-            {
-                if (drone == false && station == false)
-                    Console.WriteLine("add Id: (4 digits)");
-                if (drone == true && station == false)
-                    Console.WriteLine("Enter the Id of the drone");
-                if (drone == false && station == true)
-                    Console.WriteLine("Enter the Id of the station");
-                if (int.TryParse(Console.ReadLine(), out id) == false)
-                    throw new OnlyDigitsException("ID");
-                if (id < 0)
-                    throw new NegetiveValueException("ID", 4);
+            Close();
+        }
 
-            } while (id < 0);
-            return id;
-
-        }*/
+        /// <summary>
+        /// if we want to move to window
+        /// </summary>
+        private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
+        }
+        #endregion
     }
 }

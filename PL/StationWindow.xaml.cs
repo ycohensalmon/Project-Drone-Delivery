@@ -84,19 +84,19 @@ namespace PL
                 int StationID = (Id.Text == "") ? throw new EmptyInputException("id") : int.Parse(Id.Text);
                 string name = (StationName.Text == "") ? throw new EmptyInputException("name") : StationName.Text;
                 int chargeSlot = (ChargeSlot.Text == "") ? throw new EmptyInputException("Charge Slot") : int.Parse(ChargeSlot.Text);
-                double lat = (Latitude.Text == "") ? throw new EmptyInputException("Latitude") : double.Parse(Latitude.Text);
-                double longt = (Longitude.Text == "") ? throw new EmptyInputException("Logitude") : double.Parse(Longitude.Text);
+                double lat = SliderLatitude.Value;      // there are no exception bacause the slider can't be empty
+                double longt = SliderLongitude.Value;
                 Location loc = new Location { Latitude = lat, Longitude = longt };
                 Station station = new() { Id = StationID, Name = name, ChargeSolts = chargeSlot, Location = loc };
 
                 myBl.NewStation(station);
 
-                MessageBox.Show("The drone was added successfully", "success");
+                MessageBox.Show("The drone was added successfully", "success", MessageBoxButton.OK, MessageBoxImage.Information);
                 Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "ERROR");
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
