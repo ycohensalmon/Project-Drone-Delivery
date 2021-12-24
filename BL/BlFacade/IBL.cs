@@ -30,7 +30,7 @@ namespace BlApi
         public IEnumerable<DroneInList> GetDrones(Predicate<DroneInList> predicate = null);
         public IEnumerable<CustumerInList> GetCustomers(Predicate<CustumerInList> predicate = null);
         public IEnumerable<ParcelInList> GetParcels(Predicate<ParcelInList> predicate = null);
-        public IEnumerable<ParcelInList> GetParcelsWithoutDrone();
+        public IEnumerable<ParcelInList> GetParcelsWithoutDrone(); 
         public IEnumerable<StationList> GetStationWithChargeSolts();
         public DO.Parcel GetParcelWasConnectToParcel(int droneId, out DroneInList drone);
     }

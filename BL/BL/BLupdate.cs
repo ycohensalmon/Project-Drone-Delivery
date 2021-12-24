@@ -70,42 +70,80 @@ namespace BL
                 throw new StatusDroneException("connect drone to parcel", drone.Status, DroneStatuses.Available);
 
             //getting the list of parcels that are not Scheduled 
-            List<DO.Parcel> parcels = dalObj.GetParcels(x => x.Scheduled == null).ToList();
+            IEnumerable<DO.Parcel> parcels = dalObj.GetParcels(x => x.Scheduled == null);
             if (!parcels.Any())
                 throw new NoParcelException("requested", "scheduled");
 
-            //remove all the parcel that the drone can`t carry
-            parcels.RemoveAll(parcels => (int)parcels.Weight > (int)drone.MaxWeight);
-            if (parcels.Count == 0)
+            DO.Parcel worth = parcels.FirstOrDefault(x => CheckEnoughBattery(x, drone) > 0 && (int)x.Weight <= (int)drone.MaxWeight);
+            if (worth.Id == 0)
                 throw new ParcelTooHeavyException(drone.MaxWeight);
 
-            //remove all the parcel that there is no enough battrey in the drone to take them
-            parcels.RemoveAll(parcels => CheckEnoughBattery(parcels, drone) < 0);
-            if (parcels.Count == 0)
-                throw new NotEnoughBatteryException("make a delivery", drone.Battery);
-
-            //ordering the list to get the most importent parcel in the first plase on the list
-            parcels = parcels.OrderBy(parcels => Distance.GetDistanceFromLatLonInKm(dalObj.GetCustomerById(parcels.SenderId).Latitude,
-                dalObj.GetCustomerById(parcels.SenderId).Longitude, drone.Location.Latitude, drone.Location.Longitude)).ToList();
-            parcels = parcels.OrderByDescending(t => (int)t.Weight).ToList();
-            parcels = parcels.OrderByDescending(t => (int)t.Priorities).ToList();
-
-            //getting the must importent parcel
-            DO.Parcel myParcel = parcels.First();
+            foreach (var x in parcels)
+            {
+                worth = GetWorthParcel((DO.Parcel)worth, x, drone);
+            }
 
             //update the drone in BL
             drone.Status = DroneStatuses.Delivery;
-            drone.NumParcel = myParcel.Id;
+            drone.NumParcel = worth.Id;
 
             //update the drone in DL
             try
             {
-                dalObj.ConnectDroneToParcel(droneId, myParcel.Id);
+                dalObj.ConnectDroneToParcel(droneId, worth.Id);
             }
             catch (Exception ex)
             {
                 throw new DalException(ex);
             }
+        }
+
+        /// <summary>
+        /// Compares between 2 parcels 
+        /// </summary>
+        /// <param name="worth">the parsel that found most compatible at this point</param>
+        /// <param name="check">the parcel we want to compare with the "worth" parcel</param>
+        /// <param name="drone">the drone we wamt connect to parcel</param>
+        /// <returns>returns the more compatible parcel</returns>
+        private DO.Parcel GetWorthParcel(DO.Parcel worth, DO.Parcel check, DroneInList drone)
+        {
+            //if the drone can`t carry this parcel ("check") 
+            if((int)check.Weight > (int)drone.MaxWeight || CheckEnoughBattery(check, drone) < 0)
+                return worth;
+
+            //the parcel "worth" found more compatible (becuse the "Priorities")
+            if ((int)worth.Priorities > (int)check.Priorities)
+                return worth;
+
+            //the parcel "check" found more compatible (becuse the "Priorities")
+            if ((int)worth.Priorities < (int)check.Priorities)
+                return check;
+
+            //the parcel "worth" found more compatible (becuse the "Weight")
+            if ((int)worth.Weight > (int)check.Weight)
+                return worth;
+
+            //the parcel "check" found more compatible (becuse the "Weight")
+            if ((int)worth.Weight < (int)check.Weight)
+                return check;
+
+            //getting the distance from drone to parcel "worth"
+            double theDistanceToWorth = Distance.GetDistanceFromLatLonInKm(dalObj.GetCustomerById(worth.SenderId).Latitude,
+                dalObj.GetCustomerById(worth.SenderId).Longitude, drone.Location.Latitude, drone.Location.Longitude);
+
+            //getting the distance from drone to parcel "check"
+            double theDistanceToCheck = Distance.GetDistanceFromLatLonInKm(dalObj.GetCustomerById(check.SenderId).Latitude,
+                dalObj.GetCustomerById(check.SenderId).Longitude, drone.Location.Latitude, drone.Location.Longitude);
+
+            //the parcel "worth" is closer
+            if (theDistanceToWorth < theDistanceToCheck)
+                return worth;
+
+            //the parcel "check" closer
+            if (theDistanceToWorth > theDistanceToCheck)
+                return check;
+
+            return worth;
         }
 
 
