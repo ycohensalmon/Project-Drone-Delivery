@@ -23,10 +23,7 @@ namespace PL
     public partial class DroneWindow : Window
     {
         private IBL myBl;
-        private Drone drone;
-        private Parcel parcel;
-        ListView droneList;
-        public event EventHandler DroneChanged;
+        public Drone drone;
 
         #region add drone
         public DroneWindow(IBL myBl)
@@ -85,54 +82,27 @@ namespace PL
         #endregion
 
         #region update drone refresh
-        public DroneWindow(IBL myBl, object selectedItem, ListView droneList)
+        public DroneWindow(IBL myBl, object selectedItem)
         {
             this.myBl = myBl;
             this.drone = myBl.GetDroneById(((DroneInList)selectedItem).Id);
-            this.droneList = droneList;
             InitializeComponent();
             AddDrone.Visibility = Visibility.Hidden;
             UpdateDrone.Visibility = Visibility.Visible;
-
-            //DroneChanged += refreshWindow;
-            //DroneChanged(this, EventArgs.Empty);
+            
             RefreshButtonUpdate(myBl);
         }
         private void RefreshButtonUpdate(IBL myBl)
         {
             DroneStatuses status = drone.Status;
-
-            switch (status)
-            {
-                case DroneStatuses.Available:
-                    bottonUpdate.Content = "Send to charge";
-                    conectToParcel.Visibility = Visibility.Visible;
-                    break;
-                case DroneStatuses.Maintenance:
-                    bottonUpdate.Content = "Release from charge";
-                    conectToParcel.Visibility = Visibility.Hidden;
-                    break;
-                case DroneStatuses.Delivery:
-                    parcel = myBl.GetParcelById(drone.ParcelInTravel.Id);
-                    if (parcel.Scheduled != null && parcel.PickedUp == null)
-                    {
-                        bottonUpdate.Content = "Collect delivery";
-                    }
-                    else if (parcel.PickedUp != null && parcel.Delivered == null)
-                    {
-                        bottonUpdate.Content = "Delivered parcel by this drone";
-                    }
-                    else
-                        bottonUpdate.Content = "error";
-                    break;
-                default:
-                    break;
-            }
+            bottonUpdate.DataContext = drone;
+            conectToParcel.DataContext = drone;
 
             try
             {
                 // update the Drone Window
-                this.DroneView.Content = myBl.GetDroneById(drone.Id).ToString();
+                drone = myBl.GetDroneById(drone.Id);
+                this.DroneView.DataContext = drone;
             }
             catch (Exception ex)
             {
@@ -141,7 +111,8 @@ namespace PL
         }
         public void refreshWindow(object s, EventArgs e)
         {
-            DroneView.Content = myBl.GetDroneById(drone.Id);
+            drone = myBl.GetDroneById(drone.Id);
+            this.DroneView.DataContext = drone;
         }
         #endregion
 
@@ -159,17 +130,15 @@ namespace PL
                         myBl.ReleaseDroneFromCharging(drone.Id);
                         break;
                     case DroneStatuses.Delivery:
-                        if (parcel.Scheduled != null && parcel.PickedUp == null)
+                        if (drone.ParcelInTravel.InTravel == true)
                             myBl.CollectParcelsByDrone(drone.Id);
-                        else if (parcel.PickedUp != null && parcel.Delivered == null)
+                        else
                             myBl.DeliveredParcel(drone.Id);
                         break;
                     default:
                         break;
                 }
-                //DroneChanged += refreshWindow;
-                //drone = myBl.GetDroneById(drone.Id);
-                //droneList.DataContext = myBl.GetDrones();
+                drone = myBl.GetDroneById(drone.Id);
                 MessageBox.Show("The drone was update successfully", "success", MessageBoxButton.OK, MessageBoxImage.Information);
                 RefreshButtonUpdate(myBl);
             }
@@ -183,10 +152,8 @@ namespace PL
         {
             try
             {
-                //DroneChanged += refreshWindow;
-                //drone = myBl.GetDroneById(drone.Id);
+                drone = myBl.GetDroneById(drone.Id);
                 myBl.ConnectDroneToParcel(drone.Id);
-                //droneList.DataContext = myBl.GetDrones();
                 MessageBox.Show("The drone was update successfully", "success", MessageBoxButton.OK, MessageBoxImage.Information);
                 conectToParcel.Visibility = Visibility.Hidden;
                 RefreshButtonUpdate(myBl);
@@ -223,5 +190,21 @@ namespace PL
                 DragMove();
         }
         #endregion
+
+        private void ShowMap_Click(object sender, RoutedEventArgs e)
+        {
+            new ShowMapWindow(drone).ShowDialog();
+        }
+
+        private void ShowParcel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void UpdateModel_Click(object sender, RoutedEventArgs e)
+        {
+            modelTextBox.IsEnabled = true;
+            UpdateModelIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.Verified;
+        }
     }
 }
