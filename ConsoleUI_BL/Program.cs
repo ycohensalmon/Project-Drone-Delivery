@@ -22,15 +22,33 @@ namespace ConsoleUI_BL
             {
                 PrintAskMenu();
                 int.TryParse(Console.ReadLine(), out choises);
-
-            } while (true);
-            //if (choises == 2)
-            //{
-            //    PrintUserMenu();
-            //    int.TryParse(Console.ReadLine(), out choises);
-
-            //}
-
+                if (choises == 1)
+                {
+                    PrintUserMenu();
+                    int.TryParse(Console.ReadLine(), out choises);
+                    try
+                    {
+                        switch (choises)
+                        {
+                            case 1:
+                                PrintLoginMenu();
+                                break;
+                            case 2:
+                                printCreateUserMenu();
+                                break;
+                            case 3:
+                                break;
+                            default:
+                                throw new WrongEnumValuesException("Menu", 1, 3);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        PrintException(ex);
+                    }
+                }
+            } while (choises != 2);
+           
             choises = 0;
 
             do

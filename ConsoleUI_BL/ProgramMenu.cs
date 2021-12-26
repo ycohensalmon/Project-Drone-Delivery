@@ -35,8 +35,8 @@ namespace ConsoleUI_BL
         private static void PrintAskMenu()
         {
             Console.WriteLine(
-                "for login as manager - - press 1:\n" +
-                "for login as user- - - - press 2:\n" );
+                "for login as user- - - - press 1:\n" +
+                "for login as manager - - press 2:\n" );
         }
 
         /// <summary>
