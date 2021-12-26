@@ -7,10 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace PL
 {
-    class ButtonUpdateConverter : IValueConverter
+    class ButtonUpdateDroneConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -37,13 +38,64 @@ namespace PL
         }
     }
 
-    class VisibilityUpdateConverter : IValueConverter
+    class VisibilityUpdateDroneConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             DroneStatuses statuses = (DroneStatuses)value;
 
             if (statuses == DroneStatuses.Available)
+                return Visibility.Visible;
+            else
+                return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    class EnableTextModelConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            MaterialDesignThemes.Wpf.PackIconKind iconKind = (MaterialDesignThemes.Wpf.PackIconKind)value;
+            if (iconKind == MaterialDesignThemes.Wpf.PackIconKind.Verified)
+                return true;
+            else
+                return false;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    class BrushTextModelConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            MaterialDesignThemes.Wpf.PackIconKind iconKind = (MaterialDesignThemes.Wpf.PackIconKind)value;
+            if (iconKind == MaterialDesignThemes.Wpf.PackIconKind.Verified)
+                return System.Drawing.Color.DarkBlue;
+            else
+                return System.Drawing.Color.Black;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    class VisibilityParcelInTravelConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            DroneStatuses statuses = (DroneStatuses)value;
+
+            if (statuses == DroneStatuses.Delivery)
                 return Visibility.Visible;
             else
                 return Visibility.Collapsed;

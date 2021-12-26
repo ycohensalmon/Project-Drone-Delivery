@@ -47,15 +47,15 @@ namespace BL
                     Longitude = dalObj.GetStationById(stationId).Longitude
                 };
 
-                drones.Add(drone);
-
                 dalObj.NewDrone(new DO.Drone
                 {
                     Id = drone.Id,
                     Model = drone.Model,
                     MaxWeight = (DO.WeightCategory)drone.MaxWeight
                 });
+
                 dalObj.SendDroneToBaseCharge(drone.Id, stationId);
+                drones.Add(drone);
             }
             catch (Exception ex)
             {

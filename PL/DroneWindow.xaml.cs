@@ -89,7 +89,7 @@ namespace PL
             InitializeComponent();
             AddDrone.Visibility = Visibility.Hidden;
             UpdateDrone.Visibility = Visibility.Visible;
-            
+
             RefreshButtonUpdate(myBl);
         }
         private void RefreshButtonUpdate(IBL myBl)
@@ -203,8 +203,17 @@ namespace PL
 
         private void UpdateModel_Click(object sender, RoutedEventArgs e)
         {
-            modelTextBox.IsEnabled = true;
-            UpdateModelIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.Verified;
+            if (modelTextBox.IsEnabled == false)
+            {
+                UpdateModelIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.Verified;
+            }
+            else
+            {
+                myBl.UpdateDrone(drone.Id, modelTextBox.Text);
+                drone = myBl.GetDroneById(drone.Id);
+                modelTextBox.DataContext = drone;
+                UpdateModelIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.Update;
+            }
         }
     }
 }

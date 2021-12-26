@@ -39,7 +39,7 @@ namespace PL
 
         private void bottonAdd_Click(object sender, RoutedEventArgs e)
         {
-            new StationWindow(myBl).ShowDialog();
+            new StationWindow(myBl).Show();
             StasionsListView.ItemsSource = myBl.GetStations();
         }
     }

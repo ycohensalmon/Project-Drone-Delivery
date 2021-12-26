@@ -28,7 +28,8 @@ namespace PL
             InitializeComponent();
             this.ComboStatusSelector.ItemsSource = Enum.GetValues(typeof(BO.DroneStatuses));
             this.ComboWeightSelector.ItemsSource = Enum.GetValues(typeof(BO.WeightCategory));
-            this.DronesListView.ItemsSource = bl.GetDrones();
+            var droneList = bl.GetDrones();
+            this.DronesListView.ItemsSource = droneList;
         }
 
         private void ComboStatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -85,6 +86,7 @@ namespace PL
             droneWindow.Show();
             droneWindow.bottonUpdate.Click += UpdateDroneList;
             droneWindow.conectToParcel.Click += UpdateDroneList;
+            droneWindow.UpdateModel.Click += UpdateDroneList;
 
         }
 

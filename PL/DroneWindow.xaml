@@ -26,8 +26,11 @@
             <Setter Property="VerticalAlignment" Value="Bottom"/>
             <Setter Property="Foreground" Value="RoyalBlue"/>
         </Style>
-        <local:ButtonUpdateConverter x:Key="ButtonUpdateConverter"/>
-        <local:VisibilityUpdateConverter x:Key="VisibilityUpdateConverter"/>
+        <local:ButtonUpdateDroneConverter x:Key="ButtonUpdateConverter"/>
+        <local:VisibilityUpdateDroneConverter x:Key="VisibilityUpdateConverter"/>
+        <local:EnableTextModelConverter x:Key="EnableTextModelConverter"/>
+        <local:BrushTextModelConverter x:Key="BrushTextModelConverter"/>
+        <local:VisibilityParcelInTravelConverter x:Key="VisibilityParcelInTravel"/>
     </Window.Resources>
 
     <Grid x:Name="MainGrid">
@@ -150,7 +153,10 @@
                         <Label x:Name="idLabel" Content="{Binding Id}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" FontWeight="Normal"/>
 
                         <Label Content="Model:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-                        <TextBox x:Name="modelTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" FontWeight="Normal" Text="{Binding Model, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" IsEnabled="False" VerticalAlignment="Center" Width="120" Opacity="1" BorderBrush="Transparent"/>
+                        <TextBox x:Name="modelTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" FontWeight="Normal" VerticalAlignment="Center" Width="120" Opacity="1" SelectionOpacity="1"
+                                 Text="{Binding Model, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
+                                 IsEnabled="{Binding Kind, ElementName=UpdateModelIcon, Converter={StaticResource EnableTextModelConverter}}"
+                                 />
                         <Button x:Name="UpdateModel" Grid.Row="1" Grid.Column="2" Margin="10 1" Width="35" Height="35" Style="{StaticResource MaterialDesignFloatingActionButton}" Background="DarkBlue" BorderBrush="DarkBlue" Click="UpdateModel_Click">
                             <materialDesign:PackIcon x:Name="UpdateModelIcon" Width="30" Height="30" Kind="Update"/>
                         </Button>
@@ -220,7 +226,7 @@
 
 
                     <StackPanel>
-                        <Button x:Name="ShowParcel" Content="Show Parcel In delivery" Foreground="#FFFF9900" Margin="10,10,10,10" Width="320" Background="#FF48A3C6" Click="ShowParcel_Click"/>
+                        <Button x:Name="ShowParcel" Content="Show Parcel In delivery"  Foreground="#FFFF9900" Margin="10,10,10,10" Width="320" Background="#FF48A3C6" Click="ShowParcel_Click" IsEnabled="{Binding Path= drone.Status, Converter={StaticResource VisibilityParcelInTravel}}"/>
                         <Button x:Name="bottonUpdate" Grid.Row ="1" Content="{Binding Path= drone.Status, Converter={StaticResource ButtonUpdateConverter}}" Click="bottonUpdate_Click" Cursor="Hand" Background="#FF48A3C6" BorderBrush="{DynamicResource MaterialDesignDarkForeground}" Foreground="#FFFF9900" Margin="10,10,10,10" Width="320">
                         </Button>
                         <Button x:Name="conectToParcel" Content="Send drone to parcel" Visibility="{Binding Path = Status, Converter={StaticResource VisibilityUpdateConverter}}" Click="conectToParcel_Click" Margin="10,10,10,0" Background="#FF48A3C6" Foreground="#FFFF9900" Width="320"/>

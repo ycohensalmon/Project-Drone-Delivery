@@ -10,44 +10,51 @@
         Background="Transparent"
         AllowsTransparency="True"
         WindowStyle="None"
-        Title="DronesListWindow" Height="640" Width="800">
-    <Border CornerRadius="40" BorderBrush="#FF9900" BorderThickness="4" Background="White">
+        Title="DronesListWindow" Height="700" Width="365">
+    <Border CornerRadius="42">
+        <Border.Background>
+            <ImageBrush Stretch="Fill" ImageSource="images\homescreen.png"/>
+        </Border.Background>
+
         <Grid Name="MainGrid">
             <!--#region definition row and colons-->
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
                 <RowDefinition Height="8*"/>
+                <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
-            <Grid x:Name="secondeRow" Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="8*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <Button x:Name="BottonAdd" Content="add drone" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top" Click="BottonAdd_Click" Margin="0,12,0,0"/>
-                <ListView x:Name="DronesListView" ItemsSource="{Binding}" Grid.Column="1" MouseDoubleClick="DroneView_DoubleClick">
-                    <ListView.View>
-                        <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Information">
-                            <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="ID" Width="100"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Path=Model}" Header="Model" Width="110"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Path=Battery}" Header="Battery" Width="110"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Path=Status}" Header="Status" Width="100"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Path=NumParcel}" Header="Parcel in delivery" Width="170"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </Grid>
-            <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
-                <ComboBox Name="ComboStatusSelector" HorizontalAlignment= "Left" ToolTip="choose a status" SelectionChanged="ComboStatusSelector_SelectionChanged" Width="153" Margin="123,18,0,18" />
-                <ComboBox Name="ComboWeightSelector" HorizontalAlignment= "Left" ToolTip="choose a geight" FontWeight="Bold" FontStyle="Normal" FontFamily="Aharoni" HorizontalContentAlignment="Stretch" FontSize="14" SelectionChanged="ComboWeightSelector_SelectionChanged" Margin="456,18,0,18" Width="145"/>
-                <Label Content="Status drone:" HorizontalAlignment= "Left" VerticalAlignment="Center" Grid.Column="0" FontSize="20"/>
-                <Label Content="Weight:" HorizontalAlignment= "Left" VerticalAlignment="Center" FontSize="20" Margin="381,0,0,0"/>
-                <Button x:Name="ButtonClearStatus" Content="clear" HorizontalAlignment="Left"  Click="ButtonClearStatus_Click" Margin="281,20,0,18"/>
-                <Button  x:Name="ButtonClearWeight" Content="clear" HorizontalAlignment="Left" VerticalAlignment="Center" Click="ButtonClearWeight_Click" Margin="606,0,0,0"/>
-                <Button x:Name="bottonExit" Grid.Column="2" HorizontalAlignment="Right" Background="Black" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" VerticalAlignment="Bottom" Click="bottonExit_Click" Margin="0,0,17,19">
-                    <materialDesign:PackIcon Kind="Close" Width="31" Height="30" VerticalAlignment="Center"/>
+            <Grid Name="UpGrid" Height="auto" Grid.Row="1" Width="auto">
+                <ComboBox Name="ComboStatusSelector" HorizontalAlignment= "Left" ToolTip="choose a status" SelectionChanged="ComboStatusSelector_SelectionChanged" Width="117" Margin="188,14,0,50" />
+                <ComboBox Name="ComboWeightSelector" HorizontalAlignment= "Left" ToolTip="choose a geight" FontWeight="Bold" FontStyle="Normal" FontFamily="Aharoni" HorizontalContentAlignment="Stretch" FontSize="14" SelectionChanged="ComboWeightSelector_SelectionChanged" Margin="188,61,0,8" Width="117"/>
+                <Label Content="Status drone:" HorizontalAlignment= "Left" VerticalAlignment="Top" Grid.Column="0" FontSize="15" Margin="88,15,0,0" Height="24"/>
+                <Label Content="Weight:" HorizontalAlignment= "Left" VerticalAlignment="Top" FontSize="15" Margin="124,61,0,0" Height="27"/>
+                <Button x:Name="ButtonClearStatus" Click="ButtonClearStatus_Click" Margin="315,20,25,56" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Height="25" Width="25">
+                    <materialDesign:PackIcon Width="20" Height="20" Kind="DeleteCircle"/>
+                </Button>
+                <Button  x:Name="ButtonClearWeight" HorizontalAlignment="Left" VerticalAlignment="Center" Click="ButtonClearWeight_Click" Margin="315,64,0,0" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Height="25" Width="25">
+                    <materialDesign:PackIcon Kind="DeleteCircle" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Button>
+
+                <Button x:Name="bottonExit" HorizontalAlignment="Right" Background="Black" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" VerticalAlignment="Bottom" Click="bottonExit_Click" Margin="0,0,305,55">
+                    <materialDesign:PackIcon Kind="ArrowBack" Width="30" Height="30"/>
                 </Button>
             </Grid>
+
+
+            <ListView x:Name="DronesListView" ItemsSource="{Binding}" Grid.Row="2" Margin="15 0" MouseDoubleClick="DroneView_DoubleClick">
+                <ListView.View>
+                    <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Information">
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="ID" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Model}" Header="Model" Width="110"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Battery}" Header="Battery" Width="110"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Status}" Header="Status" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=NumParcel}" Header="Parcel in delivery" Width="170"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <Button x:Name="BottonAdd" Content="add drone" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Top" Click="BottonAdd_Click" Margin="0,12,0,0"/>
         </Grid>
     </Border>
 </Window>
