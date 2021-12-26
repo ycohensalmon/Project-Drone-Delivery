@@ -75,26 +75,27 @@ namespace PL
             this.DronesListView.ItemsSource = myBl.GetDrones();
         }
 
-        private void bottonExit_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
 
         private void DroneView_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            new DroneWindow(myBl, DronesListView.SelectedItem, DronesListView).ShowDialog();
             ButtonClearStatus_Click(sender, e);
             ButtonClearWeight_Click(sender, e);
-            DronesListView.ItemsSource = myBl.GetDrones();
 
-            //DroneWindow droneWindow = new(myBl, DronesListView.SelectedItem, DronesListView);
-            //droneWindow.Show();
-            //droneWindow.DroneChanged += UpdateDroneList;
+            DroneWindow droneWindow = new(myBl, DronesListView.SelectedItem);
+            droneWindow.Show();
+            droneWindow.bottonUpdate.Click += UpdateDroneList;
+            droneWindow.conectToParcel.Click += UpdateDroneList;
+
         }
 
         private void UpdateDroneList(object s, EventArgs e)
         {
             DronesListView.ItemsSource = myBl.GetDrones();
+        }
+
+        private void bottonExit_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
 
         private void ButtonClearStatus_Click(object sender, RoutedEventArgs e)

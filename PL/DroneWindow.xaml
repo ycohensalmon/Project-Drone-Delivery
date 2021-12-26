@@ -26,8 +26,10 @@
             <Setter Property="VerticalAlignment" Value="Bottom"/>
             <Setter Property="Foreground" Value="RoyalBlue"/>
         </Style>
+        <local:ButtonUpdateConverter x:Key="ButtonUpdateConverter"/>
+        <local:VisibilityUpdateConverter x:Key="VisibilityUpdateConverter"/>
     </Window.Resources>
-    
+
     <Grid x:Name="MainGrid">
         <Grid x:Name="AddDrone" Visibility="Hidden">
             <Border CornerRadius="42" MouseDown="UIElement_OnMouseDown">
@@ -115,13 +117,115 @@
                         <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="Drone" Foreground="Black"/>
                         <TextBlock x:Name="UpdateTextBlock" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" FontSize="22" Text="Update this drone"/>
                     </StackPanel>
-                    <StackPanel>
-                        <Label Name="DroneView" Width="318"/>
-                        <Button x:Name="bottonUpdate" Grid.Row ="1" Click="bottonUpdate_Click" Cursor="Hand" Background="#FF48A3C6" BorderBrush="{DynamicResource MaterialDesignDarkForeground}" Foreground="#FFFF9900" Margin="10,10,10,10" Width="325">
-                            <Button.Content>Update</Button.Content>
+                    <Grid x:Name="DroneView" HorizontalAlignment="Left" Margin="30,58,0,0" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <!--drone-->
+                        <Label Content="Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+                        <Label x:Name="idLabel" Content="{Binding Id}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" FontWeight="Normal"/>
+
+                        <Label Content="Model:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+                        <TextBox x:Name="modelTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" FontWeight="Normal" Text="{Binding Model, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" IsEnabled="False" VerticalAlignment="Center" Width="120" Opacity="1" BorderBrush="Transparent"/>
+                        <Button x:Name="UpdateModel" Grid.Row="1" Grid.Column="2" Margin="10 1" Width="35" Height="35" Style="{StaticResource MaterialDesignFloatingActionButton}" Background="DarkBlue" BorderBrush="DarkBlue" Click="UpdateModel_Click">
+                            <materialDesign:PackIcon x:Name="UpdateModelIcon" Width="30" Height="30" Kind="Update"/>
                         </Button>
-                        <Button x:Name="conectToParcel" Content="Send drone to parcel" Visibility="Hidden" Click="conectToParcel_Click" Margin="10,10,10,0" Background="#FF48A3C6" Foreground="#FFFF9900" Width="320"/>
+
+                        <Label Content="Max Weight:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+                        <Label x:Name="maxWeightLabel" Content="{Binding MaxWeight}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center" FontWeight="Normal"/>
+
+                        <Label Content="Status:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+                        <Label x:Name="statusLabel" Content="{Binding Status}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center" FontWeight="Normal"/>
+
+                        <Label Content="Battery:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+                        <Label x:Name="batteryLabel" Content="{Binding Battery}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center" FontWeight="Normal"/>
+
+                        <Label Content="Latitude:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
+                        <Label x:Name="latitudeLabel" Content="{Binding Location.Latitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center" FontWeight="Normal"/>
+                        <Button x:Name="ShowMap" Grid.Row="5" Grid.Column="2" Margin="10 1" Width="35" Height="35" Style="{StaticResource MaterialDesignFloatingActionButton}" Background="DarkBlue" BorderBrush="DarkBlue" Click="ShowMap_Click">
+                            <materialDesign:PackIcon Width="30" Height="30" Kind="GoogleMaps"/>
+                        </Button>
+
+                        
+                        <Label Content="Longitude:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
+                        <Label x:Name="longitudeLabel" Content="{Binding Location.Longitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center" FontWeight="Normal"/>
+
+                        <!--parcel-->
+                        <!--Label Content="Id Parcel:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
+                        <Label x:Name="idParcelLabel" Content="{Binding ParcelInTravel.Id}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
+                        
+                        <Label Content="In Travel:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>
+                        <CheckBox x:Name="inTravelCheckBox" Content="" Grid.Column="1" HorizontalAlignment="Left" IsChecked="{Binding ParcelInTravel.InTravel, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>
+                        
+                        <Label Content="Priorities:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="9" VerticalAlignment="Center"/>
+                        <Label x:Name="prioritiesLabel" Content="{Binding ParcelInTravel.Priorities}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="9" VerticalAlignment="Center"/>
+                        
+                        <Label Content="Weight:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="10" VerticalAlignment="Center"/>
+                        <Label x:Name="weightLabel" Content="{Binding ParcelInTravel.Weight}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="10" VerticalAlignment="Center"/>
+                        
+                        <Label Content="Distance:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="11" VerticalAlignment="Center"/>
+                        <Label x:Name="distanceLabel" Content="{Binding ParcelInTravel.Distance}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="11" VerticalAlignment="Center"/-->
+
+                        <!--sender-->
+                        <!--Label Content="Id Sender:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="12" VerticalAlignment="Center"/>
+                        <Label x:Name="idSenderLabel" Content="{Binding ParcelInTravel.Sender.Id}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="12" VerticalAlignment="Center"/>
+                        
+                        <Label Content="Name Sender:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="13" VerticalAlignment="Center"/>
+                        <Label x:Name="nameSenderLabel" Content="{Binding ParcelInTravel.Sender.Name}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="13" VerticalAlignment="Center"/>
+                        
+                        <Label Content="Latitudesource:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="14" VerticalAlignment="Center"/>
+                        <Label x:Name="latitudesourceLabel" Content="{Binding ParcelInTravel.source.Latitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="14" VerticalAlignment="Center"/>
+                        
+                        <Label Content="Longitudesource:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="15" VerticalAlignment="Center"/>
+                        <Label x:Name="longitudesourceLabel" Content="{Binding ParcelInTravel.source.Longitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="15" VerticalAlignment="Center"/-->
+
+                        <!--target-->
+                        <!--Label Content="Id Target:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="16" VerticalAlignment="Center"/>
+                        <Label x:Name="idTargetLabel" Content="{Binding ParcelInTravel.Target.Id}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="16" VerticalAlignment="Center"/>
+                        
+                        <Label Content="Name Target:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="17" VerticalAlignment="Center"/>
+                        <Label x:Name="nameTargetLabel" Content="{Binding ParcelInTravel.Target.Name}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="17" VerticalAlignment="Center"/>
+                        
+                        <Label Content="Latitude Destination:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="18" VerticalAlignment="Center"/>
+                        <Label x:Name="latitudeDestinationLabel" Content="{Binding ParcelInTravel.Destination.Latitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="18" VerticalAlignment="Center"/>
+                        
+                        <Label Content="Longitude Destination:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="19" VerticalAlignment="Center"/>
+                        <Label x:Name="longitudeDestinationLabel" Content="{Binding ParcelInTravel.Destination.Longitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="19" VerticalAlignment="Center"/-->
+                    </Grid>
+
+
+
+                    <StackPanel>
+                        <Button x:Name="ShowParcel" Content="Show Parcel In delivery" Foreground="#FFFF9900" Margin="10,10,10,10" Width="320" Background="#FF48A3C6" Click="ShowParcel_Click"/>
+                        <Button x:Name="bottonUpdate" Grid.Row ="1" Content="{Binding Path= drone.Status, Converter={StaticResource ButtonUpdateConverter}}" Click="bottonUpdate_Click" Cursor="Hand" Background="#FF48A3C6" BorderBrush="{DynamicResource MaterialDesignDarkForeground}" Foreground="#FFFF9900" Margin="10,10,10,10" Width="320">
+                        </Button>
+                        <Button x:Name="conectToParcel" Content="Send drone to parcel" Visibility="{Binding Path = Status, Converter={StaticResource VisibilityUpdateConverter}}" Click="conectToParcel_Click" Margin="10,10,10,0" Background="#FF48A3C6" Foreground="#FFFF9900" Width="320"/>
                     </StackPanel>
+                    
                 </StackPanel>
             </Border>
             <TextBox Visibility="Hidden" Name="WrongText" FontSize="15" TextAlignment="Left" Foreground="Red"/>
