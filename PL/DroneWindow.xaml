@@ -226,10 +226,13 @@
 
 
                     <StackPanel>
-                        <Button x:Name="ShowParcel" Content="Show Parcel In delivery"  Foreground="#FFFF9900" Margin="10,10,10,10" Width="320" Background="#FF48A3C6" Click="ShowParcel_Click" IsEnabled="{Binding Path= drone.Status, Converter={StaticResource VisibilityParcelInTravel}}"/>
-                        <Button x:Name="bottonUpdate" Grid.Row ="1" Content="{Binding Path= drone.Status, Converter={StaticResource ButtonUpdateConverter}}" Click="bottonUpdate_Click" Cursor="Hand" Background="#FF48A3C6" BorderBrush="{DynamicResource MaterialDesignDarkForeground}" Foreground="#FFFF9900" Margin="10,10,10,10" Width="320">
+                        <Button x:Name="ShowParcel" Content="Show Parcel In delivery"  Foreground="#FFFF9900" Margin="10,10,10,10" Width="320" Background="#FF48A3C6" Click="ShowParcel_Click"
+                                Visibility="Collapsed"/>
+                        <Button x:Name="bottonUpdate" Grid.Row ="1"  Click="bottonUpdate_Click" Cursor="Hand" Background="#FF48A3C6" Foreground="#FFFF9900" Margin="10,10,10,10" Width="320"
+                                BorderBrush="{DynamicResource MaterialDesignDarkForeground}">
                         </Button>
-                        <Button x:Name="conectToParcel" Content="Send drone to parcel" Visibility="{Binding Path = Status, Converter={StaticResource VisibilityUpdateConverter}}" Click="conectToParcel_Click" Margin="10,10,10,0" Background="#FF48A3C6" Foreground="#FFFF9900" Width="320"/>
+                        <Button x:Name="conectToParcel" Content="Send drone to parcel" Click="conectToParcel_Click" Margin="10,10,10,0" Background="#FF48A3C6" Foreground="#FFFF9900" Width="320"
+                                Visibility="Collapsed"/>
                     </StackPanel>
                     
                 </StackPanel>

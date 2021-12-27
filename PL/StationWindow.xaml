@@ -27,13 +27,12 @@
             <Setter Property="Foreground" Value="RoyalBlue"/>
         </Style>
     </Window.Resources>
-    <Grid>
-        <Grid x:Name="AddStation" Visibility="Visible">
-            <Border CornerRadius="42" MouseDown="UIElement_OnMouseDown">
-                <Border.Background>
-                    <ImageBrush Stretch="Fill" ImageSource="images\homescreen.png"/>
-                </Border.Background>
-
+    <Border CornerRadius="42" MouseDown="UIElement_OnMouseDown">
+        <Border.Background>
+            <ImageBrush Stretch="Fill" ImageSource="images\homescreen.png"/>
+        </Border.Background>
+        <Grid>
+            <Grid x:Name="AddStation" Visibility="Visible">
                 <StackPanel HorizontalAlignment="Center" Height="610">
                     <Grid Height="50" Margin="0,10,0,0">
                         <Grid.ColumnDefinitions>
@@ -102,7 +101,60 @@
                         </StackPanel>
                     </Grid>
                 </StackPanel>
-            </Border>
+            </Grid>
+            <Grid x:Name="UpdateStation" Visibility="Hidden">
+                <StackPanel>
+                    <Grid Height="50" Margin="0,40,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="Closee" Grid.Column="0" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="#FF111111">
+                            <materialDesign:PackIcon Kind="ArrowBack" Width="31" Height="30" VerticalAlignment="Center"/>
+                        </Button>
+                        <Image Source="images/logo1.png" Grid.Column="1" HorizontalAlignment="Center"/>
+                    </Grid>
+                    <StackPanel Orientation="Vertical">
+                        <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="FuelStation" Foreground="Black"/>
+                        <TextBlock x:Name="UpdateTextBlock" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" FontSize="22" Text="Update this Station"/>
+                    </StackPanel>
+                    <Grid x:Name="DroneView" HorizontalAlignment="Left" Margin="30,58,0,0" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <!--station-->
+                        <Label Content="Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+                        <Label x:Name="idLabel" Content="{Binding Id}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" FontWeight="Normal"/>
+
+                        <Label Content="Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+                        <Label x:Name="NameLabel" Content="{Binding Name}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center" FontWeight="Normal"/>
+
+                        <Label Content="Charge Available:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+                        <Label x:Name="ChargeSoltsLabel" Content="{Binding ChargeSolts}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center" FontWeight="Normal"/>
+
+                        <Label Content="Latitude:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+                        <Label x:Name="latitudeLabel" Content="{Binding Location.Latitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center" FontWeight="Normal"/>
+                        <Button x:Name="ShowMap" Grid.Row="3" Grid.Column="2" Margin="10 1" Width="35" Height="35" Style="{StaticResource MaterialDesignFloatingActionButton}" Background="DarkBlue" BorderBrush="DarkBlue" Click="ShowMap_Click">
+                            <materialDesign:PackIcon Width="30" Height="30" Kind="GoogleMaps"/>
+                        </Button>
+
+
+                        <Label Content="Longitude:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+                        <Label x:Name="longitudeLabel" Content="{Binding Location.Longitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center" FontWeight="Normal"/>
+
+                    </Grid>
+                        <Button x:Name="ShowDroneInCharge" Content="Show list of drone in charge"  Foreground="#FFFF9900" Margin="10,10,10,10" Width="320" Background="#FF48A3C6" Click="ShowDroneInCharge_Click"/>
+                </StackPanel>
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </Window>

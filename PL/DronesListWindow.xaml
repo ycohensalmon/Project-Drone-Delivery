@@ -11,6 +11,12 @@
         AllowsTransparency="True"
         WindowStyle="None"
         Title="DronesListWindow" Height="700" Width="365">
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="colorButton">
+            <Setter Property="Background" Value="DarkBlue"/>
+            <Setter Property="BorderBrush" Value="DarkBlue"/>
+        </Style>
+    </Window.Resources>
     <Border CornerRadius="42">
         <Border.Background>
             <ImageBrush Stretch="Fill" ImageSource="images\homescreen.png"/>
@@ -29,10 +35,11 @@
                 <ComboBox Name="ComboWeightSelector" HorizontalAlignment= "Left" ToolTip="choose a geight" FontWeight="Bold" FontStyle="Normal" FontFamily="Aharoni" HorizontalContentAlignment="Stretch" FontSize="14" SelectionChanged="ComboWeightSelector_SelectionChanged" Margin="188,61,0,8" Width="117"/>
                 <Label Content="Status drone:" HorizontalAlignment= "Left" VerticalAlignment="Top" Grid.Column="0" FontSize="15" Margin="88,15,0,0" Height="24"/>
                 <Label Content="Weight:" HorizontalAlignment= "Left" VerticalAlignment="Top" FontSize="15" Margin="124,61,0,0" Height="27"/>
-                <Button x:Name="ButtonClearStatus" Click="ButtonClearStatus_Click" Margin="315,20,25,56" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Height="25" Width="25">
+                <Button x:Name="ButtonClearStatus" Click="ButtonClearStatus_Click" Margin="315,20,25,40" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25">
                     <materialDesign:PackIcon Width="20" Height="20" Kind="DeleteCircle"/>
                 </Button>
-                <Button  x:Name="ButtonClearWeight" HorizontalAlignment="Left" VerticalAlignment="Center" Click="ButtonClearWeight_Click" Margin="315,64,0,0" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Height="25" Width="25">
+                <Button  x:Name="ButtonClearWeight" HorizontalAlignment="Left" VerticalAlignment="Center"  Height="25" Width="25" Click="ButtonClearWeight_Click" Margin="315,64,0,0"
+                         Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
                     <materialDesign:PackIcon Kind="DeleteCircle" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Button>
 
@@ -41,6 +48,44 @@
                 </Button>
             </Grid>
 
+            <!--<ScrollViewer Grid.Row="2" Margin="15,0,15,65">
+                <StackPanel>
+                    <TextBlock Text="Drones" Margin="10"/>
+                    <StackPanel Margin="10 0">
+                        <ItemsControl x:Name="DronesListView" ItemsSource="{Binding droneList}" DataContext="{Binding droneList}" MouseDoubleClick="DroneView_DoubleClick">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Width="110" Height="180" Margin="10"  x:Name="ddd">
+                                        <StackPanel >
+                                            <Border Width="100" Height="100" CornerRadius="5" Margin="5">
+                                                    <Border.Effect>
+                                                        <DropShadowEffect ShadowDepth="1"/>
+                                                    </Border.Effect>
+                                                    <Border.Background>
+                                                        <ImageBrush ImageSource="/images/logoparcels.png"/>
+                                                    </Border.Background>
+                                                </Border>
+                                            <TextBlock Margin="5" x:Name="Iddrone" Text="{Binding Path=Id}" FontSize="14" />
+                                            <TextBlock Margin="5 0" Text="{Binding Path=Model}" FontSize="13"/>
+                                            <TextBlock Margin="5 0" Text="{Binding Path=MaxWeight}" FontSize="13"/>
+                                            <TextBlock Margin="5 0" Text="{Binding Path=Battery}" FontSize="13"/>
+                                            <TextBlock Margin="5 0" Text="{Binding Path=Status}" FontSize="13"/>
+                                            <TextBlock Margin="5 0" Text="{Binding Path=Location.Latitude}" FontSize="13"/>
+                                            <TextBlock Margin="5 0" Text="{Binding Path=Location.Longitude}" FontSize="13"/>
+                                            <TextBlock Margin="5 0" Text="{Binding Path=NumParcel}" FontSize="13"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>-->
 
             <ListView x:Name="DronesListView" ItemsSource="{Binding}" Grid.Row="2" Margin="15 0" MouseDoubleClick="DroneView_DoubleClick">
                 <ListView.View>

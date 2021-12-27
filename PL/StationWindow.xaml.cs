@@ -99,5 +99,15 @@ namespace PL
                 MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void ShowMap_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ShowDroneInCharge_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

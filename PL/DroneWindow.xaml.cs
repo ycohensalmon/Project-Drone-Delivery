@@ -82,21 +82,32 @@ namespace PL
         #endregion
 
         #region update drone refresh
-        public DroneWindow(IBL myBl, object selectedItem)
-        {
-            this.myBl = myBl;
-            this.drone = myBl.GetDroneById(((DroneInList)selectedItem).Id);
-            InitializeComponent();
-            AddDrone.Visibility = Visibility.Hidden;
-            UpdateDrone.Visibility = Visibility.Visible;
-
-            RefreshButtonUpdate(myBl);
-        }
         private void RefreshButtonUpdate(IBL myBl)
         {
             DroneStatuses status = drone.Status;
-            bottonUpdate.DataContext = drone;
-            conectToParcel.DataContext = drone;
+            //bottonUpdate.DataContext = drone;
+            //conectToParcel.DataContext = drone;
+            switch (drone.Status)
+            {
+                case DroneStatuses.Available:
+                    bottonUpdate.Content = "Send to charge";
+                    conectToParcel.Visibility = Visibility.Visible;
+                    ShowParcel.Visibility = Visibility.Hidden;
+                    break;
+                case DroneStatuses.Maintenance:
+                    bottonUpdate.Content = "Release from charge";
+                    conectToParcel.Visibility = Visibility.Hidden;
+                    break;
+                case DroneStatuses.Delivery:
+                    ShowParcel.Visibility = Visibility.Visible;
+                    if (drone.ParcelInTravel.InTravel == true)
+                        bottonUpdate.Content = "Collect delivery";
+                    else
+                    {
+                        bottonUpdate.Content = "Delivered parcel by this drone";
+                    }
+                    break;
+            }
 
             try
             {
@@ -116,7 +127,17 @@ namespace PL
         }
         #endregion
 
-        #region buttons update
+        #region update
+        public DroneWindow(IBL myBl, object selectedItem)
+        {
+            this.myBl = myBl;
+            this.drone = myBl.GetDroneById(((DroneInList)selectedItem).Id);
+            InitializeComponent();
+            AddDrone.Visibility = Visibility.Hidden;
+            UpdateDrone.Visibility = Visibility.Visible;
+
+            RefreshButtonUpdate(myBl);
+        }
         private void bottonUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -130,7 +151,7 @@ namespace PL
                         myBl.ReleaseDroneFromCharging(drone.Id);
                         break;
                     case DroneStatuses.Delivery:
-                        if (drone.ParcelInTravel.InTravel == true)
+                        if (drone.ParcelInTravel.InTravel != true)
                             myBl.CollectParcelsByDrone(drone.Id);
                         else
                             myBl.DeliveredParcel(drone.Id);
@@ -152,10 +173,12 @@ namespace PL
         {
             try
             {
-                drone = myBl.GetDroneById(drone.Id);
                 myBl.ConnectDroneToParcel(drone.Id);
+                drone = myBl.GetDroneById(drone.Id);
+
                 MessageBox.Show("The drone was update successfully", "success", MessageBoxButton.OK, MessageBoxImage.Information);
                 conectToParcel.Visibility = Visibility.Hidden;
+                ShowParcel.Visibility = Visibility.Visible;
                 RefreshButtonUpdate(myBl);
             }
             catch (Exception ex)
@@ -163,19 +186,9 @@ namespace PL
                 MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private void updateName_Click(object sender, RoutedEventArgs e)
-        {
-
-            // Add this label to form
-
-            // Creating and setting the properties of TextBox1
-            TextBox Mytextbox = new TextBox();
-            Mytextbox.Name = "ModelUpdate";
-
-        }
         #endregion
 
-        #region somes buttons
+        #region click
         private void Close_OnClick(object sender, RoutedEventArgs e)
         {
             Close();
@@ -189,7 +202,6 @@ namespace PL
             if (e.LeftButton == MouseButtonState.Pressed)
                 DragMove();
         }
-        #endregion
 
         private void ShowMap_Click(object sender, RoutedEventArgs e)
         {
@@ -215,5 +227,6 @@ namespace PL
                 UpdateModelIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.Update;
             }
         }
+        #endregion
     }
 }
