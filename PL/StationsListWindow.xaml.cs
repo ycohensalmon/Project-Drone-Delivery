@@ -29,7 +29,7 @@ namespace PL
 
         private void StationView_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            new StationWindow(myBl,StasionsListView.SelectedItem).ShowDialog();
+            new StationWindow(myBl,StasionsListView.SelectedItem).Show();
         }
 
         private void bottonExit_Click(object sender, RoutedEventArgs e)
@@ -39,7 +39,7 @@ namespace PL
 
         private void bottonAdd_Click(object sender, RoutedEventArgs e)
         {
-            new StationWindow(myBl).Show();
+            new StationWindow(myBl).ShowDialog();
             StasionsListView.ItemsSource = myBl.GetStations();
         }
     }

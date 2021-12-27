@@ -22,61 +22,56 @@ namespace PL
     public partial class StationWindow : Window
     {
         BlApi.IBL myBl;
-        private object selectedItem;
+        public Station station;
 
+        #region add station
+        /// <summary>
+        /// add station constractor
+        /// </summary>
+        /// <param name="myBl">the sigelton from the BL layer</param>
         public StationWindow(BlApi.IBL myBl)
         {
             this.myBl = myBl;
             InitializeComponent();
+            AddStation.Visibility = Visibility.Visible;
+            UpdateStation.Visibility = Visibility.Hidden;
         }
-
-        public StationWindow(IBL myBl, object selectedItem) : this(myBl)
-        {
-            this.selectedItem = selectedItem;
-            InitializeComponent();
-        }
-
-        private void Close_OnClick(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        private void ChargeSlot_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void Model_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
         private void ChargeSlot_TextChanged(object sender, TextChangedEventArgs e)
         {
-
-        }
-
-        private void Id_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (Id.Text == "")
-                Id.Foreground = Brushes.Red;
-            else
-                Id.Foreground = Brushes.Black;
-        }
-
-        private void Id_TextInput(object sender, TextCompositionEventArgs e)
-        {
-
-        }
-
-        private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (Id.Text != "")
             {
-                DragMove();
+                // check if there are a lattres
+                if (Id.Text.Any(x => x < '0') == true || Id.Text.Any(x => x > '9') == true)
+                {
+                    Id.Foreground = Brushes.Red;
+                    return;
+                }
+
+                // if the id is nagative or less than 4 digits
+                if (Id.Text.Length > 3 || int.Parse(Id.Text) < 0)
+                    Id.Foreground = Brushes.Red;
+                else
+                    Id.Foreground = Brushes.Black;
             }
         }
+        private void Id_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Id.Text != "")
+            {
+                // check if there are a lattres
+                if (Id.Text.Any(x => x < '0') == true || Id.Text.Any(x => x > '9') == true)
+                {
+                    Id.Foreground = Brushes.Red;
+                    return;
+                }
 
+                // if the id is nagative or less than 4 digits
+                if (Id.Text.Length < 4 || int.Parse(Id.Text) < 0)
+                    Id.Foreground = Brushes.Red;
+                else
+                    Id.Foreground = Brushes.Black;
+            }
+        }
         private void AddStation_Click(object sender, MouseButtonEventArgs e)
         {
             try
@@ -99,6 +94,45 @@ namespace PL
                 MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        #endregion
+
+        #region update station
+        /// <summary>
+        /// uptade station constractor
+        /// </summary>
+        /// <param name="myBl">the sigelton from the BL layer</param>
+        /// <param name="selectedItem">the item that was selected from the list of stations</param>
+        public StationWindow(IBL myBl, object selectedItem)
+        {
+            this.myBl = myBl;
+            this.station = myBl.GetStationById(((StationList)selectedItem).Id);
+            InitializeComponent();
+
+            AddStation.Visibility = Visibility.Hidden;
+            UpdateStation.Visibility = Visibility.Visible;
+
+            RefreshUpdate(myBl);
+        }
+
+        private void RefreshUpdate(IBL myBl)
+        {
+            try
+            {
+                // update the Drone Window
+                station = myBl.GetStationById(station.Id);
+                this.StationView.DataContext = station;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        #endregion
+
+        private void Close_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
 
         private void ShowMap_Click(object sender, RoutedEventArgs e)
         {
@@ -108,6 +142,13 @@ namespace PL
         private void ShowDroneInCharge_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+        private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
         }
     }
 }
