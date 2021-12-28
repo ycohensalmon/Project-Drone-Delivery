@@ -151,10 +151,10 @@ namespace Dal
                     SenderId = senderID,
                     TargetId = GetTargetId(senderID),
                     DroneId = Drones[Config.rand.Next(Drones.Count())].Id,
-                    Requested = DateTime.Now,
-                    Scheduled = DateTime.Now,
-                    PickedUp = DateTime.Now,
-                    Delivered = DateTime.Now,
+                    Requested = DateTime.Now.AddMinutes(-(Config.rand.Next(455,500))),
+                    Scheduled = DateTime.Now.AddMinutes(-(Config.rand.Next(442, 450))),
+                    PickedUp = DateTime.Now.AddMinutes(-(Config.rand.Next(430, 441))),
+                    Delivered = DateTime.Now.AddMinutes(-(Config.rand.Next(415,429))),
                     Weight = (WeightCategory)Config.rand.Next(3),
                     Priorities = (Priority)Config.rand.Next(3)
                 });

@@ -114,6 +114,13 @@ namespace ConsoleUI_BL
                 "for create a new user - - - press 2:\n");
         }
 
+        private static void PrintLoginMenu()
+        {
+            Console.WriteLine(
+                "for login - - - - - - - - - press 1:\n" + //change
+                "for create a new user - - - press 2:\n");  //change
+        }
+
         /// <summary>
         /// press to continue
         /// </summary>

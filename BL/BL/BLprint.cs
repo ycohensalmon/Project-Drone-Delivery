@@ -283,6 +283,7 @@ namespace BL
                     TargetName = parcel.Target.Name,
                     Requested = parcel.Requested,
                     Scheduled = parcel.Scheduled,
+                    PickedUp = parcel.PickedUp,
                     Delivered = parcel.Delivered,
                     Weight = parcel.Weight,
                     Priorities = parcel.Priorities

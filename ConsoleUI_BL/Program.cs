@@ -30,11 +30,11 @@ namespace ConsoleUI_BL
                     {
                         switch (choises)
                         {
-                            case 1:
+                            case 1: 
                                 PrintLoginMenu();
                                 break;
                             case 2:
-                                printCreateUserMenu();
+                                //printCreateUserMenu();
                                 break;
                             case 3:
                                 break;
