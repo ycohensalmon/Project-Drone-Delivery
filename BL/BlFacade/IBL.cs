@@ -28,7 +28,8 @@ namespace BlApi
         public User GetUserById(int userId);
         public IEnumerable<string> GetNamesOfCustomer(Predicate<string> predicate = null);
         public IEnumerable<string> GetNamesOfAvailableChargeSolts();
-        public Station GetStationByName(string name);
+        public int GetStationIdByName(string name);
+        public int GetCustomerIdByName(string name);
         public IEnumerable<StationList> GetStations(Predicate<StationList> predicate = null);
         public IEnumerable<DroneInList> GetDrones(Predicate<DroneInList> predicate = null);
         public IEnumerable<CustumerInList> GetCustomers(Predicate<CustumerInList> predicate = null);

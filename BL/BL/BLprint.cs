@@ -313,10 +313,14 @@ namespace BL
             return names;
         }
 
-        public Station GetStationByName(string name)
+        public int GetStationIdByName(string name)
         {
-            int? id = dalObj.GetStations().FirstOrDefault(x => x.Name == name).Id;
-            return GetStationById((int)id);
+            return dalObj.GetStations().FirstOrDefault(x => x.Name == name).Id;
+        }
+
+        public int GetCustomerIdByName(string name)
+        {
+            return dalObj.GetCustomers().FirstOrDefault(x => x.Name == name).Id;
         }
 
         public IEnumerable<ParcelInList> GetParcelsWithoutDrone()
