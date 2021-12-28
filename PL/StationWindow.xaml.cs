@@ -105,10 +105,10 @@ namespace PL
         /// </summary>
         /// <param name="myBl">the sigelton from the BL layer</param>
         /// <param name="selectedItem">the item that was selected from the list of stations</param>
-        public StationWindow(IBL myBl, object selectedItem)
+        public StationWindow(IBL myBl, Station station)
         {
             this.myBl = myBl;
-            this.station = myBl.GetStationById(((StationList)selectedItem).Id);
+            this.station = station;
             InitializeComponent();
 
             AddStation.Visibility = Visibility.Hidden;

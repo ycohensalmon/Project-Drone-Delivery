@@ -15,22 +15,22 @@ using System.Windows.Shapes;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for StationsListWindow.xaml
+    /// Interaction logic for ParcelListWindow.xaml
     /// </summary>
-    public partial class StationsListWindow : Window
+    public partial class ParcelListWindow : Window
     {
         BlApi.IBL myBl;
-        public StationsListWindow(BlApi.IBL myBl)
+        public ParcelListWindow(BlApi.IBL myBl)
         {
             this.myBl = myBl;
             InitializeComponent();
-            StasionsListView.ItemsSource = myBl.GetStations();
+
+            parcelsView.ItemsSource = myBl.GetParcels();
         }
 
-        private void StationView_DoubleClick(object sender, MouseButtonEventArgs e)
+        private void parcelsView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var station = myBl.GetStationById(((BO.StationList)StasionsListView.SelectedItem).Id);
-            new StationWindow(myBl, station).Show();
+            new ParcelWindow(myBl, parcelsView.SelectedItem).Show();
         }
 
         private void bottonExit_Click(object sender, RoutedEventArgs e)
@@ -40,8 +40,7 @@ namespace PL
 
         private void bottonAdd_Click(object sender, RoutedEventArgs e)
         {
-            new StationWindow(myBl).ShowDialog();
-            StasionsListView.ItemsSource = myBl.GetStations();
+            new ParcelWindow(myBl).ShowDialog();
         }
     }
 }

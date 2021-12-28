@@ -23,10 +23,10 @@ namespace PL
         BO.Customer customer;
 
         #region update customer
-        public CustomerWindow(BlApi.IBL myBl, object selectedItem)
+        public CustomerWindow(BlApi.IBL myBl, BO.Customer customer)
         {
             this.myBl = myBl;
-            customer = myBl.GetCustomerById(((BO.CustumerInList)selectedItem).Id);
+            this.customer = customer;
             InitializeComponent();
             AddCustomer.Visibility = Visibility.Hidden;
             UpdateCustomer.Visibility = Visibility.Visible;
