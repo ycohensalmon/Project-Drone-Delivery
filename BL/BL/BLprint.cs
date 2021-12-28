@@ -280,11 +280,11 @@ namespace BL
             return parcels.Select(x => x);
         }
 
-        public IEnumerable<string> GetNamesOfCustomer(Predicate<string> predicate = null)
+        public IEnumerable<string> GetNamesOfCustomer()
         {
             IEnumerable<string> names = from x in dalObj.GetCustomers()
                                         select x.Name;
-            return (IEnumerable<string>)names.Select(x => predicate(x));
+            return (IEnumerable<string>)names.Select(x=>x);
         }
 
         public IEnumerable<string> GetNamesOfAvailableChargeSolts()

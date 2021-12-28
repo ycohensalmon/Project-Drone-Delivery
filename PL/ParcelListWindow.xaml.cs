@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BlApi;
+using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,12 +22,22 @@ namespace PL
     public partial class ParcelListWindow : Window
     {
         BlApi.IBL myBl;
+
         public ParcelListWindow(BlApi.IBL myBl)
         {
             this.myBl = myBl;
             InitializeComponent();
 
             parcelsView.ItemsSource = myBl.GetParcels();
+        }
+
+        public ParcelListWindow(IBL myBl, List<ParcelAtCustomer> parcels, string v)
+        {
+            this.myBl = myBl;
+            InitializeComponent();
+            customerLable.Content = $"Parcel(s) {v} customer";
+            parcelsView.ItemsSource = parcels;
+            parcelsView.IsEnabled = true;
         }
 
         private void parcelsView_MouseDoubleClick(object sender, MouseButtonEventArgs e)

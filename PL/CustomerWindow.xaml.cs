@@ -28,19 +28,32 @@ namespace PL
             this.myBl = myBl;
             this.customer = customer;
             InitializeComponent();
+
+            if (customer.ParcelsFromCustomer.Count != 0)
+                ParcelsFromCustomer.Visibility = Visibility.Visible;
+            else
+                ParcelsFromCustomer.Visibility = Visibility.Collapsed;
+
+            if (customer.ParcelsToCustomer.Count != 0)
+                ParcelsToCustomer.Visibility = Visibility.Visible;
+            else
+                ParcelsToCustomer.Visibility = Visibility.Collapsed;
+
             AddCustomer.Visibility = Visibility.Hidden;
             UpdateCustomer.Visibility = Visibility.Visible;
-            StationView.DataContext = customer;
+            CustomerView.DataContext = customer;
         }
 
         private void ShowParcelsFromCustomer_Click(object sender, RoutedEventArgs e)
         {
-
+            var from = customer.ParcelsFromCustomer;
+            new ParcelListWindow(myBl, from, "from").Show();
         }
 
         private void ShowParcelsToCustomer_Click(object sender, RoutedEventArgs e)
         {
-
+            var to = customer.ParcelsToCustomer;
+            new ParcelListWindow(myBl, to, "to").Show();
         }
 
         private void ShowMap_Click(object sender, RoutedEventArgs e)

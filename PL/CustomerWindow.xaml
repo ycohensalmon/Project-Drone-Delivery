@@ -32,7 +32,7 @@
             <ImageBrush Stretch="Fill" ImageSource="images\homescreen.png"/>
         </Border.Background>
         <Grid>
-            <Grid x:Name="AddCustomer" Visibility="Visible">
+            <Grid x:Name="AddCustomer" Visibility="Hidden">
                 <StackPanel HorizontalAlignment="Center" Height="610">
                     <Grid Height="50" Margin="0,10,0,0">
                         <Grid.ColumnDefinitions>
@@ -103,7 +103,7 @@
                     </Grid>
                 </StackPanel>
             </Grid>
-            <Grid x:Name="UpdateCustomer" Visibility="Hidden">
+            <Grid x:Name="UpdateCustomer" Visibility="Visible">
                 <StackPanel>
                     <Grid Height="50" Margin="0,40,0,0">
                         <Grid.ColumnDefinitions>
@@ -119,7 +119,7 @@
                         <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="HomeUser" Foreground="Black"/>
                         <TextBlock x:Name="UpdateTextBlock" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" FontSize="22" Text="Update Customer"/>
                     </StackPanel>
-                    <Grid x:Name="StationView" HorizontalAlignment="Left" Margin="30,58,0,0" VerticalAlignment="Top">
+                    <Grid x:Name="CustomerView" HorizontalAlignment="Left" Margin="30,58,0,0" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
