@@ -26,7 +26,7 @@ namespace BlApi
         public Customer GetCustomerById(int customerId);
         public Parcel GetParcelById(int parcelid);
         public User GetUserById(int userId);
-        public IEnumerable<string> GetNamesOfCustomer(Predicate<string> predicate = null);
+        public IEnumerable<string> GetNamesOfCustomer();
         public IEnumerable<string> GetNamesOfAvailableChargeSolts();
         public int GetStationIdByName(string name);
         public int GetCustomerIdByName(string name);
