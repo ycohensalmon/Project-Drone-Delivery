@@ -44,5 +44,15 @@ namespace PL
         {
             new StationsListWindow(myBl).ShowDialog();
         }
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void ClickCustomers(object sender, MouseButtonEventArgs e)
+        {
+            new CustomerListWindow(myBl).ShowDialog();
+        }
     }
 }

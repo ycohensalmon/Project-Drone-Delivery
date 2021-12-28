@@ -35,7 +35,7 @@
         </Border>
         <Label Content="Drones" Margin="49,120,0,560" FontFamily="San Francisco" Foreground="AliceBlue" FontWeight="DemiBold" HorizontalAlignment="Left"/>
 
-        <Border Height="60" CornerRadius="12,12,12,12" Margin="118,60,183,580">
+        <Border Height="60" CornerRadius="12,12,12,12" Margin="118,60,183,580" MouseDown="ClickCustomers">
             <Border.Background>
                 <ImageBrush ImageSource="/images/logoCustomer.png"  Stretch="Fill"/>
             </Border.Background>

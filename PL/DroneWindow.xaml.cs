@@ -205,7 +205,7 @@ namespace PL
 
         private void ShowMap_Click(object sender, RoutedEventArgs e)
         {
-            new ShowMapWindow(drone).ShowDialog();
+            new ShowMapWindow(drone.Location.Latitude, drone.Location.Longitude).ShowDialog();
         }
 
         private void ShowParcel_Click(object sender, RoutedEventArgs e)

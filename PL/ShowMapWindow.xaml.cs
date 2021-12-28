@@ -19,14 +19,10 @@ namespace PL
     /// </summary>
     public partial class ShowMapWindow : Window
     {
-        public ShowMapWindow(BO.Drone drone)
+        public ShowMapWindow(double latitude, double longitude)
         {
             InitializeComponent();
 
-            DataContext = drone;
-
-            var latitude = drone.Location.Latitude;
-            var longitude = drone.Location.Longitude;
             try
             {
                 var googleMapsAddress = $"https://www.google.co.il//maps/@{latitude},{longitude},18z?hl=iw";

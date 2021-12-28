@@ -1,4 +1,4 @@
-﻿<Window x:Class="PL.StationWindow"
+﻿<Window x:Class="PL.CustomerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -32,7 +32,7 @@
             <ImageBrush Stretch="Fill" ImageSource="images\homescreen.png"/>
         </Border.Background>
         <Grid>
-            <Grid x:Name="AddStation" Visibility="Hidden">
+            <Grid x:Name="AddCustomer" Visibility="Visible">
                 <StackPanel HorizontalAlignment="Center" Height="610">
                     <Grid Height="50" Margin="0,10,0,0">
                         <Grid.ColumnDefinitions>
@@ -46,8 +46,8 @@
                         <Image Source="images\logo1.png" HorizontalAlignment="Right" Grid.Column="1" Margin="0,0,15,0"/>
                     </Grid>
                     <StackPanel Orientation="Vertical">
-                        <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="Place" Opacity="1" Foreground="Black"/>
-                        <TextBlock x:Name="StationTextBlock" HorizontalAlignment="Center" FontSize="22" Text="Add a Station"/>
+                        <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="UserAdd" Opacity="1" Foreground="Black"/>
+                        <TextBlock x:Name="StationTextBlock" HorizontalAlignment="Center" FontSize="22" Text="Add Customer"/>
                     </StackPanel>
                     <Grid Margin="30">
                         <Grid.RowDefinitions>
@@ -69,7 +69,7 @@
                             <materialDesign:PackIcon Kind="User" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBox x:Name="StationName" Width="200" materialDesign:HintAssist.Hint="Station Name" materialDesign:HintAssist.IsFloating="True"/>
+                            <TextBox x:Name="Name" Width="200" materialDesign:HintAssist.Hint="Name" materialDesign:HintAssist.IsFloating="True"/>
                             <materialDesign:PackIcon Kind="RenameBox" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -86,8 +86,8 @@
                             <materialDesign:PackIcon Kind="Longitude" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="8" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBox x:Name="ChargeSlot" Width="200" materialDesign:HintAssist.Hint="Charge Slot" materialDesign:HintAssist.IsFloating="True" TextChanged="ChargeSlot_TextChanged"/>
-                            <materialDesign:PackIcon Kind="ElectricVehicleCharger" Style="{StaticResource SizeIcon}"/>
+                            <TextBox x:Name="Phone" Width="200" materialDesign:HintAssist.Hint="Phone number" materialDesign:HintAssist.IsFloating="True" TextChanged="Phone_TextChanged"/>
+                            <materialDesign:PackIcon Kind="Phone" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="10">
                             <Border Grid.Column="0" CornerRadius="30" Height="60" Margin="10" Opacity="0.8" BorderThickness="3" MouseDown="AddStation_Click">
@@ -103,7 +103,7 @@
                     </Grid>
                 </StackPanel>
             </Grid>
-            <Grid x:Name="UpdateStation" Visibility="Visible">
+            <Grid x:Name="UpdateCustomer" Visibility="Hidden">
                 <StackPanel>
                     <Grid Height="50" Margin="0,40,0,0">
                         <Grid.ColumnDefinitions>
@@ -116,14 +116,14 @@
                         <Image Source="images/logo1.png" Grid.Column="1" HorizontalAlignment="Center"/>
                     </Grid>
                     <StackPanel Orientation="Vertical">
-                        <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="FuelStation" Foreground="Black"/>
-                        <TextBlock x:Name="UpdateTextBlock" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" FontSize="22" Text="Update this Station"/>
+                        <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="HomeUser" Foreground="Black"/>
+                        <TextBlock x:Name="UpdateTextBlock" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" FontSize="22" Text="Update Customer"/>
                     </StackPanel>
                     <Grid x:Name="StationView" HorizontalAlignment="Left" Margin="30,58,0,0" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="160"/>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="55"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -132,15 +132,15 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <!--station-->
+                        <!--customer-->
                         <Label Content="Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
                         <Label x:Name="idLabel" Content="{Binding Id}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" FontWeight="Normal"/>
 
                         <Label Content="Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
                         <Label x:Name="NameLabel" Content="{Binding Name}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center" FontWeight="Normal"/>
 
-                        <Label Content="Charge Available:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-                        <Label x:Name="ChargeSoltsLabel" Content="{Binding ChargeSolts}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center" FontWeight="Normal"/>
+                        <Label Content="Phone:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+                        <Label x:Name="PhoneLabel" Content="{Binding Phone}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center" FontWeight="Normal"/>
 
                         <Label Content="Latitude:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
                         <Label x:Name="latitudeLabel" Content="{Binding Location.Latitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center" FontWeight="Normal"/>
@@ -148,12 +148,12 @@
                             <materialDesign:PackIcon Width="30" Height="30" Kind="GoogleMaps"/>
                         </Button>
 
-
                         <Label Content="Longitude:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
                         <Label x:Name="longitudeLabel" Content="{Binding Location.Longitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center" FontWeight="Normal"/>
 
                     </Grid>
-                        <Button x:Name="ShowDroneInCharge" Content="Show list of drone in charge"  Foreground="#FFFF9900" Margin="10,10,10,10" Width="320" Background="#FF48A3C6" Click="ShowDroneInCharge_Click"/>
+                    <Button x:Name="ParcelsToCustomer" Content="Show list parcels to customer"  Foreground="#FFFF9900" Margin="10,10,10,10" Width="320" Background="#FF48A3C6" Click="ShowParcelsToCustomer_Click"/>
+                    <Button x:Name="ParcelsFromCustomer" Content="Show list of parcels from customer"  Foreground="#FFFF9900" Margin="10,10,10,10" Width="320" Background="#FF48A3C6" Click="ShowParcelsFromCustomer_Click"/>
                 </StackPanel>
             </Grid>
         </Grid>
