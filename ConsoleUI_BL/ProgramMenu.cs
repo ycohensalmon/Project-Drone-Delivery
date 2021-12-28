@@ -114,11 +114,13 @@ namespace ConsoleUI_BL
                 "for create a new user - - - press 2:\n");
         }
 
-        private static void PrintLoginMenu()
+        private static void UserInterfacePrinting()
         {
             Console.WriteLine(
-                "for login - - - - - - - - - press 1:\n" + //change
-                "for create a new user - - - press 2:\n");  //change
+                "To send a packege - - - - - - - - - - - - - - - - - press 1:\n" + 
+                "To see your packege - - - - - - - - - - - - - - - - press 2:\n" +
+                "To confirmation of package collection by drone- - - press 3:\n" +
+                "To confirmation of receipt of package - - - - - - - press 4:\n");  
         }
 
         /// <summary>

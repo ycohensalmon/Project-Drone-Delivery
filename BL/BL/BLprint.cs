@@ -299,6 +299,26 @@ namespace BL
             return parcels.Select(x => x);
         }
 
+        public IEnumerable<string> GetNamesOfCustomer(Predicate<string> predicate = null)
+        {
+            IEnumerable<string> names = from x in dalObj.GetCustomers()
+                                        select x.Name;
+            return (IEnumerable<string>)names.Select(x => predicate(x));
+        }
+
+        public IEnumerable<string> GetNamesOfAvailableChargeSolts()
+        {
+            IEnumerable<string> names = from x in GetStationWithChargeSolts()
+                                        select x.Name;
+            return names;
+        }
+
+        public Station GetStationByName(string name)
+        {
+            int? id = dalObj.GetStations().FirstOrDefault(x => x.Name == name).Id;
+            return GetStationById((int)id);
+        }
+
         public IEnumerable<ParcelInList> GetParcelsWithoutDrone()
         {
             List<ParcelInList> parcels = new();

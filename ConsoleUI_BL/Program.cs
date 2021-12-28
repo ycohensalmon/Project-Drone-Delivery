@@ -31,7 +31,7 @@ namespace ConsoleUI_BL
                         switch (choises)
                         {
                             case 1: 
-                                PrintLoginMenu();
+                                UserInterfacePrinting();
                                 break;
                             case 2:
                                 //printCreateUserMenu();
