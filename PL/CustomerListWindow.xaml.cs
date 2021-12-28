@@ -41,7 +41,8 @@ namespace PL
 
         private void Customer_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            new CustomerWindow(myBl, customersView.SelectedItem).Show();
+            var customer = myBl.GetCustomerById(((BO.CustumerInList)customersView.SelectedItem).Id);
+            new CustomerWindow(myBl, customer).Show();
 
         }
     }

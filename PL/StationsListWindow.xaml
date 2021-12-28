@@ -8,9 +8,10 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
-        AllowsTransparency="False"
+        AllowsTransparency="True"
         WindowStyle="None"
-        Title="StationsListWindow" Height="450" Width="800">
+        Height="450" Width="800"
+        Title="StationsListWindow">
     <Border CornerRadius="40" BorderBrush="DarkBlue" BorderThickness="4" Background="White">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -35,10 +36,10 @@
             <ListView x:Name="StasionsListView" MouseDoubleClick="StationView_DoubleClick" Grid.Row="1" Grid.Column="1">
                 <ListView.View>
                     <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Information">
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="ID" Width="100"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="110"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=ChargeSoltsAvailable}" Header="Charge Solts Available" Width="200"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=ChargeSoltsBusy}" Header="Charge Solts Busy" Width="200"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="ID"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=ChargeSoltsAvailable}" Header="Charge Solts Available"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=ChargeSoltsBusy}" Header="Charge Solts Busy"/>
                     </GridView>
                 </ListView.View>
             </ListView>

@@ -1,0 +1,222 @@
+﻿<Window x:Class="PL.ParcelWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        FontFamily="San Francisco"
+        FontSize="15"
+        FontWeight="DemiBold"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Height="700" Width="365">
+    <Window.Resources>
+        <Style  x:Key="SizeIcon" TargetType="materialDesign:PackIcon">
+            <Setter Property="Width" Value="70"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Foreground" Value="RoyalBlue"/>
+        </Style>
+    </Window.Resources>
+    <Border CornerRadius="42" MouseDown="UIElement_OnMouseDown">
+        <Border.Background>
+            <ImageBrush Stretch="Fill" ImageSource="images\homescreen.png"/>
+        </Border.Background>
+        <Grid Margin="15,42,15,12">
+            <Grid x:Name="AddParcel" Visibility="Hidden">
+                <StackPanel HorizontalAlignment="Center" Height="610">
+                    <Grid Height="50" Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="Close" Margin="15,0,0,0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="Black">
+                            <materialDesign:PackIcon Kind="ArrowBack" Width="30" Height="30"/>
+                        </Button>
+                        <Image Source="images\logo1.png" HorizontalAlignment="Right" Grid.Column="1" Margin="0,0,15,0"/>
+                    </Grid>
+                    <StackPanel Orientation="Vertical">
+                        <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="PackageVariantAdd" Opacity="1" Foreground="Black"/>
+                        <TextBlock x:Name="StationTextBlock" HorizontalAlignment="Center" FontSize="22" Text="Add parcel"/>
+                    </StackPanel>
+                    <Grid Margin="30">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Border CornerRadius="40"/>
+                            <ComboBox x:Name="SenderName" Width="200" materialDesign:HintAssist.Hint="Sender" materialDesign:HintAssist.IsFloating="True"/>
+                            <materialDesign:PackIcon Kind="Send" Style="{StaticResource SizeIcon}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <ComboBox x:Name="ReceiverName" Width="200" materialDesign:HintAssist.Hint="Receiver" materialDesign:HintAssist.IsFloating="True"/>
+                            <materialDesign:PackIcon Kind="Send" Style="{StaticResource SizeIcon}" RenderTransformOrigin="0.5,0.5">
+                                <materialDesign:PackIcon.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="180"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </materialDesign:PackIcon.RenderTransform>
+                            </materialDesign:PackIcon>
+                        </StackPanel>
+                        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <ComboBox x:Name="Weight" Width="200" materialDesign:HintAssist.Hint="Weight" materialDesign:HintAssist.IsFloating="True"/>
+                            <materialDesign:PackIcon Kind="WeightKg" Style="{StaticResource SizeIcon}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <ComboBox x:Name="Priority" Width="200" materialDesign:HintAssist.Hint="Priority" materialDesign:HintAssist.IsFloating="True"/>
+                            <materialDesign:PackIcon Kind="PriorityHigh" Style="{StaticResource SizeIcon}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="8">
+                            <Border Grid.Column="0" CornerRadius="30" Height="60" Margin="10" Opacity="0.8" BorderThickness="3" MouseDown="AddParcel_Click">
+                                <Border.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="Black"/>
+                                        <GradientStop Color="#FFFF9900" Offset="0.634"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Label Content="Add" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="#111111"/>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+
+            <Grid x:Name="UpdateParcel" Visibility="Visible">
+                <StackPanel>
+                    <Grid Height="50" Visibility="Collapsed">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="Closee" Grid.Column="0" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="#FF111111">
+                            <materialDesign:PackIcon Kind="ArrowBack" Width="31" Height="30" VerticalAlignment="Center"/>
+                        </Button>
+                        <Image Source="images/logo1.png" Grid.Column="1" HorizontalAlignment="Center"/>
+                    </Grid>
+                    <StackPanel Orientation="Vertical">
+                        <Button Grid.Column="0" Margin="20,0,0,0" Width="25" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="#FF111111">
+                            <materialDesign:PackIcon Kind="ArrowBack" Width="20" Height="20" VerticalAlignment="Center"/>
+                        </Button>
+                        <materialDesign:PackIcon HorizontalAlignment="Center" Height="30" Width="30" Kind="PackageVariant" Foreground="Black"/>
+                        <TextBlock HorizontalAlignment="Center" FontSize="18" Text="Update this parcel"/>
+                    </StackPanel>
+
+                    <Grid x:Name="parcelInformation" HorizontalAlignment="Left" Margin="30,10,0,0" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="115"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+                        <Label x:Name="idLabel" Content="{Binding Id}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+
+                        <Label Content="Weight:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+                        <Label x:Name="weightLabel" Content="{Binding Weight}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+
+                        <Label Content="Priorities:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+                        <Label x:Name="prioritiesLabel" Content="{Binding Priorities}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+
+                        <Label Content="Requested:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+                        <Label x:Name="requestedLabel" Content="{Binding Requested}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+                        <Label Content="Scheduled:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+                        <Label x:Name="scheduledLabel" Content="{Binding Scheduled}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+                        <Label Content="Picked Up:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
+                        <Label x:Name="pickedUpLabel" Content="{Binding PickedUp}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
+                        <Label Content="Delivered:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
+                        <Label x:Name="deliveredLabel" Content="{Binding Delivered}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
+
+                        <Label Content="Sender Infornation:" Grid.Row="7" Margin="-30,0,0,0" FontWeight="Bold"/>
+                        <Button Grid.Column="1" Grid.Row="7" Width="25" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="SenderInformation_Click" Background="#FF111111">
+                            <materialDesign:PackIcon Kind="InformationVariant" Width="20" Height="20" VerticalAlignment="Center"/>
+                        </Button>
+
+                        <Label Content="Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>
+                        <Label Content="{Binding Sender.Id}" Grid.Column="8" HorizontalAlignment="Left" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>
+                        <Label Content="Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="9" VerticalAlignment="Center"/>
+                        <Label Content="{Binding Sender.Name}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="9" VerticalAlignment="Center"/>
+
+                        <Label Content="Target Infornation:" Grid.Row="10" Margin="-30,0,0,0" FontWeight="Bold"/>
+                        <Button Grid.Column="1" Grid.Row="10" Width="25" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="TargetInformation_Click" Background="#FF111111">
+                            <materialDesign:PackIcon Kind="InformationVariant" Width="20" Height="20" VerticalAlignment="Center"/>
+                        </Button>
+
+
+                        <Label Content="Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="11" VerticalAlignment="Center"/>
+                        <Label Content="{Binding Target.Id}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="11" VerticalAlignment="Center"/>
+                        <Label Content="Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="12"/>
+                        <Label Content="{Binding Target.Name}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="12" VerticalAlignment="Center"/>
+                    </Grid>
+                    <Grid x:Name="droneInformation" HorizontalAlignment="Left" Visibility="Visible" Margin="30,0,0,0" VerticalAlignment="Top">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="115"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Drone Information:" Grid.Row="0" Margin="-30,0,0,0" FontWeight="Bold"/>
+                        <Button Grid.Column="1" Grid.Row="0" Width="25" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="DroneInformation_Click" Background="#FF111111">
+                            <materialDesign:PackIcon Kind="InformationVariant" Width="20" Height="20" VerticalAlignment="Center"/>
+                        </Button>
+
+                        <Label Content="Id:" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+                        <Label Content="Battery:" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+                        <Label Content="Latitude:" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+                        <Label Content="Longitude:" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+
+                        <Label Content="{Binding Drone.Id}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+                        <Label Content="{Binding Drone.Battery}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+                        <Label Content="{Binding Drone.Location.Latitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+                        <Label Content="{Binding Drone.Location.Longitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+
+                        <Button x:Name="ShowMap" Grid.Row="4" Grid.Column="2" Width="25" Height="25" Style="{StaticResource MaterialDesignFloatingActionButton}" Background="DarkBlue" BorderBrush="DarkBlue" Click="ShowMap_Click">
+                            <materialDesign:PackIcon Width="20" Height="20" Kind="GoogleMaps"/>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

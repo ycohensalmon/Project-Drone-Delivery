@@ -82,7 +82,8 @@ namespace PL
             ButtonClearStatus_Click(sender, e);
             ButtonClearWeight_Click(sender, e);
 
-            DroneWindow droneWindow = new(myBl, DronesListView.SelectedItem);
+            var drone = myBl.GetDroneById(((DroneInList)DronesListView.SelectedItem).Id);
+            DroneWindow droneWindow = new(myBl, drone);
             droneWindow.Show();
             droneWindow.bottonUpdate.Click += UpdateDroneList;
             droneWindow.conectToParcel.Click += UpdateDroneList;

@@ -33,8 +33,7 @@ namespace PL
             UpdateDrone.Visibility = Visibility.Hidden;
             AddDrone.Visibility = Visibility.Visible;
             this.MaxWeight.ItemsSource = Enum.GetValues(typeof(BO.WeightCategory));
-            List<string> NameStations = new();
-            foreach (var item in myBl.GetStations(x => x.ChargeSoltsAvailable != 0)) NameStations.Add(item.Name);
+            var NameStations = myBl.GetNamesOfAvailableChargeSolts();
             this.Station.ItemsSource = NameStations;
         }
         private void Id_TextChanged(object sender, TextChangedEventArgs e)
@@ -128,10 +127,10 @@ namespace PL
         #endregion
 
         #region update
-        public DroneWindow(IBL myBl, object selectedItem)
+        public DroneWindow(IBL myBl, Drone drone)
         {
             this.myBl = myBl;
-            this.drone = myBl.GetDroneById(((DroneInList)selectedItem).Id);
+            this.drone = drone;
             InitializeComponent();
             AddDrone.Visibility = Visibility.Hidden;
             UpdateDrone.Visibility = Visibility.Visible;

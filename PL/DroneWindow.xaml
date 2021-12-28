@@ -168,7 +168,7 @@
                         <Label x:Name="statusLabel" Content="{Binding Status}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center" FontWeight="Normal"/>
 
                         <Label Content="Battery:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
-                        <Label x:Name="batteryLabel" Content="{Binding Battery, StringFormat=\{0:#0.00\}%}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center" FontWeight="Normal"/>
+                        <Label x:Name="batteryLabel" Content="{Binding Battery, StringFormat={}{#.0:F3}}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center" FontWeight="Normal"/>
 
                         <Label Content="Latitude:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
                         <Label x:Name="latitudeLabel" Content="{Binding Location.Latitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center" FontWeight="Normal"/>
