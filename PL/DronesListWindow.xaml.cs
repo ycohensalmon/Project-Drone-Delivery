@@ -22,6 +22,7 @@ namespace PL
     public partial class DronesListWindow : Window
     {
         IBL myBl;
+
         public DronesListWindow(IBL bl)
         {
             this.myBl = bl;
@@ -30,6 +31,11 @@ namespace PL
             this.ComboWeightSelector.ItemsSource = Enum.GetValues(typeof(BO.WeightCategory));
             var droneList = bl.GetDrones();
             this.DronesListView.ItemsSource = droneList;
+        }
+
+        public DronesListWindow(IBL bl, List<DroneCharge> droneCharges)
+        {
+            this.DronesListView.ItemsSource = droneCharges;
         }
 
         private void ComboStatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)

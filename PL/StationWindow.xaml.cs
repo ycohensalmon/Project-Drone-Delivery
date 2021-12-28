@@ -113,6 +113,11 @@ namespace PL
 
             AddStation.Visibility = Visibility.Hidden;
             UpdateStation.Visibility = Visibility.Visible;
+            if (station.DroneCharges.Count != 0)
+                ShowDroneInCharge.Visibility = Visibility.Visible;
+            else
+                ShowDroneInCharge.Visibility = Visibility.Hidden;
+
 
             RefreshUpdate(myBl);
         }
@@ -144,7 +149,7 @@ namespace PL
 
         private void ShowDroneInCharge_Click(object sender, RoutedEventArgs e)
         {
-
+            new DronesListWindow(myBl, station.DroneCharges).Show();
         }
         private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
         {

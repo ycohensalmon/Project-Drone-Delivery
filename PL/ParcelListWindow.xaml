@@ -37,6 +37,7 @@
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
 
+            <Label x:Name="customerLable" Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="San Francisco" FontSize="25" FontWeight="Bold" Foreground="DarkBlue"/>
             <Button x:Name="bottonExit" Grid.Column="2" BorderBrush="DarkRed" Background="DarkRed" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="bottonExit_Click" Margin="15,15,15,15">
                 <materialDesign:PackIcon Kind="Close" Width="31" Height="30" VerticalAlignment="Center"/>
             </Button>
