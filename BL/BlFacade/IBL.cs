@@ -30,6 +30,8 @@ namespace BlApi
         public IEnumerable<string> GetNamesOfAvailableChargeSolts();
         public int GetStationIdByName(string name);
         public int GetCustomerIdByName(string name);
+        public IEnumerable<ParcelAtCustomer> GetParcelFromCustomer(int customerId);
+        public IEnumerable<ParcelAtCustomer> GetParcelToCustomer(int customerId);
         public IEnumerable<StationList> GetStations(Predicate<StationList> predicate = null);
         public IEnumerable<DroneInList> GetDrones(Predicate<DroneInList> predicate = null);
         public IEnumerable<CustumerInList> GetCustomers(Predicate<CustumerInList> predicate = null);

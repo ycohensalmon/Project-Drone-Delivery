@@ -16,21 +16,14 @@ namespace BL
 
             Location temp = new Location { Latitude = station.Latitude, Longitude = station.Longitude };
 
-            List<DO.DroneCharge> droneChargeIDAL = dalObj.GetDroneCharges().ToList();
-            List<DroneCharge> droneChargesBL = new();
-
             //fill the List droneChargesBL
-            foreach (var item in droneChargeIDAL)
-            {
-                if (item.StationId == station.Id)
-                {
-                    droneChargesBL.Add(new DroneCharge
-                    {
-                        DroneId = item.DroneId,
-                        StationId = item.StationId
-                    });
-                }
-            }
+            var droneChargesBL = (from item in dalObj.GetDroneCharges()
+                                  where item.StationId == station.Id
+                                  select new DroneCharge
+                                  {
+                                      DroneId = item.DroneId,
+                                      StationId = item.StationId
+                                  }).ToList();
 
             return new Station
             {
@@ -89,58 +82,8 @@ namespace BL
         {
             //find the Customer and his parcels fron DL
             DO.Customer customer = dalObj.GetCustomerById(customerId);
-            List<DO.Parcel> parcels = dalObj.GetParcels().ToList();
 
             Location temp = new Location { Latitude = customer.Latitude, Longitude = customer.Longitude };
-
-            //build to the Parcels **From** Customer list
-            List<ParcelAtCustomer> FromCustomer = new();
-            List<ParcelAtCustomer> ToCustomer = new();
-            CustomerInParcel customerInParcel = new();
-            foreach (var item in parcels)
-            {
-                //if this parsel was sent by this customer
-                if (item.SenderId == customer.Id)
-                {
-                    //for build the CustomerInParcel method
-                    DO.Customer targetCustomer = dalObj.GetCustomerById(item.TargetId);
-
-                    //add to the ParcelAtCustomer list
-                    FromCustomer.Add(new ParcelAtCustomer
-                    {
-                        Id = item.Id,
-                        Requested = item.Requested,
-                        Scheduled = item.Scheduled,
-                        PickedUp = item.PickedUp,
-                        Delivered = item.Delivered,
-                        Weight = (WeightCategory)item.Weight,
-                        Priorities = (Priority)item.Priorities,
-                        CustomerInParcel = new CustomerInParcel { Id = item.TargetId, Name = targetCustomer.Name }
-                    });
-                }
-
-                //build to the Parcels **To** Customer list
-
-                //if this parsel was sent to this customer
-                if (item.TargetId == customer.Id)
-                {
-                    //for build the CustomerInParcel method
-                    DO.Customer senderCustomer = dalObj.GetCustomerById(item.SenderId);
-
-                    //add to the ParcelAtCustomer list
-                    ToCustomer.Add(new ParcelAtCustomer
-                    {
-                        Id = item.Id,
-                        Requested = item.Requested,
-                        Scheduled = item.Scheduled,
-                        PickedUp = item.PickedUp,
-                        Delivered = item.Delivered,
-                        Weight = (WeightCategory)item.Weight,
-                        Priorities = (Priority)item.Priorities,
-                        CustomerInParcel = new CustomerInParcel { Id = item.SenderId, Name = senderCustomer.Name }
-                    });
-                }
-            }
 
             return new Customer
             {
@@ -148,9 +91,51 @@ namespace BL
                 Name = customer.Name,
                 Phone = customer.Phone,
                 Location = temp,
-                ParcelsFromCustomer = FromCustomer,
-                ParcelsToCustomer = ToCustomer
+                ParcelsFromCustomer = GetParcelFromCustomer(customerId).ToList(),
+                ParcelsToCustomer = GetParcelToCustomer(customerId).ToList()
             };
+        }
+
+        public IEnumerable<ParcelAtCustomer> GetParcelFromCustomer(int customerId)
+        {
+            return from item in dalObj.GetParcels()
+                   where item.SenderId == customerId
+                   select new ParcelAtCustomer
+                   {
+                       Id = item.Id,
+                       Requested = item.Requested,
+                       Scheduled = item.Scheduled,
+                       PickedUp = item.PickedUp,
+                       Delivered = item.Delivered,
+                       Weight = (WeightCategory)item.Weight,
+                       Priorities = (Priority)item.Priorities,
+                       CustomerInParcel = new CustomerInParcel
+                       {
+                           Id = item.TargetId,
+                           Name = dalObj.GetCustomerById(item.TargetId).Name
+                       }
+                   };
+        }
+
+        public IEnumerable<ParcelAtCustomer> GetParcelToCustomer(int customerId)
+        {
+            return from item in dalObj.GetParcels()
+                   where item.TargetId == customerId
+                   select new ParcelAtCustomer
+                   {
+                       Id = item.Id,
+                       Requested = item.Requested,
+                       Scheduled = item.Scheduled,
+                       PickedUp = item.PickedUp,
+                       Delivered = item.Delivered,
+                       Weight = (WeightCategory)item.Weight,
+                       Priorities = (Priority)item.Priorities,
+                       CustomerInParcel = new CustomerInParcel
+                       {
+                           Id = item.SenderId,
+                           Name = dalObj.GetCustomerById(item.SenderId).Name
+                       }
+                   };
         }
 
         public Parcel GetParcelById(int parcelid)
