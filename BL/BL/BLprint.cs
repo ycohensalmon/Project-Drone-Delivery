@@ -190,22 +190,18 @@ namespace BL
 
         public IEnumerable<StationList> GetStations(Predicate<StationList> predicate = null)
         {
-            List<StationList> stations = new();
-
-            foreach (var item in dalObj.GetStations())
-            {
-                Station station = GetStationById(item.Id);
-                stations.Add(new StationList
-                {
-                    Id = station.Id,
-                    Name = station.Name,
-                    ChargeSoltsAvailable = station.ChargeSolts,
-                    ChargeSoltsBusy = station.DroneCharges.Count()
-                });
-            }
+            var stations = from item in dalObj.GetStations()
+                    let station = GetStationById(item.Id)
+                    select new StationList
+                    {
+                        Id = station.Id,
+                        Name = station.Name,
+                        ChargeSoltsAvailable = station.ChargeSolts,
+                        ChargeSoltsBusy = station.DroneCharges.Count()
+                    };
 
             if (predicate != null)
-                stations = stations.FindAll(x => predicate(x));
+                stations = stations.ToList().FindAll(x => predicate(x));
 
             if (!stations.Any()) 
                 throw new EmptyListException("stations");
@@ -288,19 +284,20 @@ namespace BL
         {
             IEnumerable<string> names = from x in dalObj.GetCustomers()
                                         select x.Name;
-            return (IEnumerable<string>)names.Select(x=>x);
+            return names.Count() == 0 ? throw new EmptyListException("customers") : names.Select(x => x);
         }
 
         public IEnumerable<string> GetNamesOfAvailableChargeSolts()
         {
             IEnumerable<string> names = from x in GetStationWithChargeSolts()
                                         select x.Name;
-            return names;
+            return names.Count() == 0 ? throw new EmptyListException("available chargeSolts") : names.Select(x => x);
         }
 
         public int GetStationIdByName(string name)
         {
-            return dalObj.GetStations().FirstOrDefault(x => x.Name == name).Id;
+            int id = dalObj.GetStations().FirstOrDefault(x => x.Name == name).Id;
+            return id == 0 ? throw new IncorectInputException("name of the station") : id;
         }
 
         public int GetCustomerIdByName(string name)
