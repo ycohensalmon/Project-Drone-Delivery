@@ -87,13 +87,15 @@ namespace PL
         {
             ButtonClearStatus_Click(sender, e);
             ButtonClearWeight_Click(sender, e);
-
-            var drone = myBl.GetDroneById(((DroneInList)DronesListView.SelectedItem).Id);
+            Border dataDrone = e.OriginalSource as Border;
+            
+            var drone = myBl.GetDroneById(((DroneInList)dataDrone.DataContext).Id);
             DroneWindow droneWindow = new(myBl, drone);
-            droneWindow.Show();
+
             droneWindow.bottonUpdate.Click += UpdateDroneList;
             droneWindow.conectToParcel.Click += UpdateDroneList;
             droneWindow.UpdateModel.Click += UpdateDroneList;
+            droneWindow.ShowDialog();
 
         }
 
