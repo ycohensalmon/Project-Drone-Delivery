@@ -33,6 +33,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalObject", "DalObject\DalO
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csproj", "{7EEA609F-8FF5-460B-B9AD-A4C9C9392296}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{8C9E5B52-2123-47C8-9050-155D06CBFFA9}"
+	ProjectSection(SolutionItems) = preProject
+		ConfigXml.xml = ConfigXml.xml
+		CustomerXml.xml = CustomerXml.xml
+		DroneChargeXml.xml = DroneChargeXml.xml
+		DroneXml.xml = DroneXml.xml
+		ParcelXml.xml = ParcelXml.xml
+		StationXml.xml = StationXml.xml
+		UserXml.xml = UserXml.xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,6 +95,7 @@ Global
 		{EC629310-E777-4C4C-839E-37DB691A7087} = {9D2ED901-E0DE-4642-ABA1-18C91E2E1CFE}
 		{E5D7749E-2CFF-438A-8F9E-5F9BEAC4FF8E} = {649F22CE-3DF8-4409-8516-1CF099939248}
 		{7EEA609F-8FF5-460B-B9AD-A4C9C9392296} = {649F22CE-3DF8-4409-8516-1CF099939248}
+		{8C9E5B52-2123-47C8-9050-155D06CBFFA9} = {D29D8A78-91A2-4B85-B19F-DC32ADA2A613}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D961A06C-6FDE-4CA7-804A-BF4FFEC36708}

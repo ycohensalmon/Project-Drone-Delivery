@@ -2,16 +2,71 @@
 using DO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Dal
 {
     internal class DalXml : IDal
     {
-        internal static IDal Instance { get; } = new DalXml();
-        DalXml() { }
+        #region singelton
+        // =null that if we dont need to create a "new bl" it will not create it
+        private static DalXml instance = null;
+        // for safty. So that if requests come from two places at the same time, it will not create it twice 
+        private static readonly object padlock = new object();
+
+        public static DalXml Instance
+        {
+            get
+            {
+                //if "instance" hasn`t yet been created, a new one will be created 
+                if (instance == null)
+                {
+                    //stops a request from two places at the same time
+                    lock (padlock)
+                    {
+                        if (instance == null)
+                        {
+                            instance = new DalXml();
+                        }
+                    }
+                }
+                return instance;
+            }
+        }
+        #endregion
+
+        #region Paths
+        readonly string dronePath;
+        readonly string droneChargePath;
+        readonly string stationsPath;
+        readonly string customerPath;
+        readonly string parcelPath;
+        readonly string userPath;
+        readonly string configPath;
+        public static string localPath;
+        DalXml()
+        {
+            string str = Assembly.GetExecutingAssembly().Location;
+            localPath = Path.GetDirectoryName(str);
+            for (int i = 0; i < 4; i++)
+                localPath = Path.GetDirectoryName(localPath);
+
+            localPath += @"\Data";
+
+            dronePath = localPath + @"\DroneXml.xml";
+            droneChargePath = localPath + @"\DroneChargeXml.xml";
+            stationsPath = localPath + @"\StationXml.xml";
+            customerPath = localPath + @"\CustomerXml.xml";
+            parcelPath = localPath + @"\ParcelXml.xml";
+            userPath = localPath + @"\UserXml.xml";
+            configPath = localPath + @"\configXml.xml";
+        }
+        #endregion
 
         public void NewStation(Station station)
         {
