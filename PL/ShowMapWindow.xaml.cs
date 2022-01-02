@@ -19,13 +19,25 @@ namespace PL
     /// </summary>
     public partial class ShowMapWindow : Window
     {
-        public ShowMapWindow(double latitude, double longitude)
+        public ShowMapWindow(double latitude, double? longitude = null)
         {
             InitializeComponent();
 
             try
             {
-                var googleMapsAddress = $"https://www.google.co.il//maps/@{latitude},{longitude},18z?hl=iw";
+                string a = latitude.ToString();
+                a = a.Replace(',', '.');
+
+                string b = longitude.ToString();
+                b = b.Replace(',', '.');
+                //if (b != null)
+                //{
+                //    b = ", " + longitude;
+                //}
+
+                //var googleMapsAddress = $"https://www.google.co.il//maps/@{latitude},{longitude},18z?hl=iw";
+                string googleMapsAddress = $"http://maps.google.co.il/maps?q=" + a + "," + b;
+                //var googleMapsAddress = $"https://www.google.co.il/maps/@" + a + b + " ,15z?hl=iw";
 
 
                 //var bingMapsAddress = $"https://www.bing.com/maps?cp={latitude}~{longitude}&lvl=18";
