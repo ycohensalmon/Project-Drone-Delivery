@@ -54,7 +54,6 @@ namespace Dal
         {
             string str = Assembly.GetExecutingAssembly().Location;
             localPath = Path.GetDirectoryName(str);
-            localPath = Path.GetDirectoryName(localPath);
 
             localPath += @"\Data";
 
@@ -213,15 +212,56 @@ namespace Dal
         // to do - Yossef
         public void UpdateBase(int stationId, string newName, string newChargeSolts, int result)
         {
-            throw new NotImplementedException();
+            var stationList = XmlTools.LoadListFromXMLSerializer<Station>(stationsPath);
+
+            Station station = GetStationById(stationId);
+            if (station.Id != stationId)
+                throw new IdNotFoundException(stationId, "Station");
+
+            stationList.Remove(station);
+
+            if (newName != "")
+                stationList.Add(station);
+
+            if (newChargeSolts != "")
+                station.ChargeSolts = result;
+
+            stationList.Add(station);
+            XmlTools.SaveListToXMLSerializer(stationList, stationsPath);
         }
+
         public void UpdateDrone(int droneId, string model)
         {
-            throw new NotImplementedException();
+            XElement droneRoot = XmlTools.LoadListFromXMLElement(dronePath);
+
+            Drone drone = GetDroneById(droneId);
+            if (drone.Id != droneId)
+                throw new IdNotFoundException(droneId, "Drone");
+
+            var droneNode = (from d in droneRoot.Elements()
+                           where d.Element("id").Value == droneId.ToString()
+                           select d).FirstOrDefault();
+
+            droneNode.Element("model").SetValue(model);
+            XmlTools.SaveListToXMLElement(droneRoot, dronePath);
         }
+
         public void UpdateCustomer(int customerID, string newName, string newPhone)
         {
-            throw new NotImplementedException();
+            var customerList = XmlTools.LoadListFromXMLSerializer<Customer>(customerPath);
+
+            Customer customer = GetCustomerById(customerID);
+
+            customerList.Remove(customer);
+
+            if (newName != "")
+                customer.Name = newName;
+
+            if (newPhone != "")
+                customer.Phone = int.Parse(newPhone);
+
+            customerList.Add(customer);
+            XmlTools.SaveListToXMLSerializer(customerList, customerPath);
         }
 
 
@@ -353,14 +393,15 @@ namespace Dal
 
         public double[] PowerConsumptionByDrone()
         {
+           //var d = XmlTools.LoadListFromXMLSerializer<double>(configPath).ToArray();
             double[] battery = new double[5];
-            battery[0] = 3.5;//DataSource.Config.Available;
-            battery[1] = 4.5;// DataSource.Config.LightParcel;
-            //battery[2] = DataSource.Config.MediumParcel;
-            //battery[3] = DataSource.Config.HeavyParcel;
-            //battery[4] = DataSource.Config.LoadingRate;
-            //return battery;
+            battery[0] = 0.2;// DataSource.Config.Available;
+            battery[1] = 1;// DataSource.Config.LightParcel;
+            battery[2] = 1.5;// DataSource.Config.MediumParcel;
+            battery[3] = 2;// DataSource.Config.HeavyParcel;
+            battery[4] = 60;// DataSource.Config.LoadingRate;
             return battery;
+            //return battery;
         }
     }
 }
