@@ -53,8 +53,7 @@ namespace Dal
         {
             string str = Assembly.GetExecutingAssembly().Location;
             localPath = Path.GetDirectoryName(str);
-            for (int i = 0; i < 4; i++)
-                localPath = Path.GetDirectoryName(localPath);
+            localPath = Path.GetDirectoryName(localPath);
 
             localPath += @"\Data";
 
@@ -70,8 +69,66 @@ namespace Dal
 
         public void NewStation(Station station)
         {
+            XElement stationRoot = XmlTools.LoadListFromXMLElement(stationsPath);
+            stationRoot.Add(createStation(station));
+            XmlTools.SaveListToXMLElement(stationRoot, stationsPath);
+        }
+
+        #region station in XML Element
+        XElement createStation(Station station)
+        {
+            return new XElement("station",
+                    new XElement("id", station.Id),
+                    new XElement("name", station.Name),
+                    new XElement("latitude", station.Latitude),
+                    new XElement("longitude", station.Longitude),
+                    new XElement("chargeSolts", station.ChargeSolts)
+            );
+        }
+        public void UpdateBase(int stationId, string newName, string newChargeSolts, int result)
+        {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Station> GetStations(Func<Station, bool> predicate = null)
+        {
+            try
+            {
+                XElement stationRoot = XmlTools.LoadListFromXMLElement(stationsPath);
+
+                return from s in stationRoot.Elements()
+                       select new Station()
+                       {
+                           Id = int.Parse(s.Element("Id").Value),
+                           Name = s.Element("Name").Value,
+                           Latitude = double.Parse(s.Element("Latitude").Value),
+                           Longitude = double.Parse(s.Element("Longitude").Value),
+                           ChargeSolts = int.Parse(s.Element("ChargeSolts").Value)
+                       };
+            }
+            catch { new EmptyListException("station"); }
+        }
+        public Station GetStationById(int id)
+        {
+            XElement stationRoot = XmlTools.LoadListFromXMLElement(stationsPath);
+
+            DO.Station? station = (from s in stationRoot.Elements()
+                          where int.Parse(s.Element("Id").Value) == id
+                          select new DO.Station()
+                          {
+                              Id = int.Parse(s.Element("Id").Value),
+                              Name = s.Element("Name").Value,
+                              Latitude = double.Parse(s.Element("Latitude").Value),
+                              Longitude = double.Parse(s.Element("Longitude").Value),
+                              ChargeSolts = int.Parse(s.Element("ChargeSolts").Value)
+                          }).FirstOrDefault();
+
+            if (station != null)
+                return (Station)station;
+            else
+                throw new DO.ItemNotFoundException("station");
+        }
+        #endregion
 
         public void NewDrone(Drone drone)
         {
@@ -118,10 +175,6 @@ namespace Dal
             throw new NotImplementedException();
         }
 
-        public void UpdateBase(int stationId, string newName, string newChargeSolts, int result)
-        {
-            throw new NotImplementedException();
-        }
 
         public void UpdateCustomer(int customerID, string newName, string newPhone)
         {
@@ -133,10 +186,6 @@ namespace Dal
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Station> GetStations(Func<Station, bool> predicate = null)
-        {
-            throw new NotImplementedException();
-        }
 
         public IEnumerable<Customer> GetCustomers(Func<Customer, bool> predicate = null)
         {
@@ -153,10 +202,6 @@ namespace Dal
             throw new NotImplementedException();
         }
 
-        public Station GetStationById(int id)
-        {
-            throw new NotImplementedException();
-        }
 
         public Drone GetDroneById(int id)
         {

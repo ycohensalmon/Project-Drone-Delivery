@@ -48,7 +48,7 @@ namespace Dal
         }
         #endregion
 
-        #region Save abd Load With XElement
+        #region Save and Load With XElement
         public static void SaveListToXMLElement(XElement rootElem, string filePath)
         {
             try
@@ -99,29 +99,6 @@ namespace Dal
             }
         }
 
-        public static T LoadCountersFromXMLSerializer<T>(string filePath)
-        {
-            try
-            {
-                if (File.Exists(filePath))
-                {
-                    T obj;
-                    XmlSerializer x = new XmlSerializer(typeof(T));
-                    FileStream file = new FileStream(filePath, FileMode.Open);
-                    obj = (T)x.Deserialize(file);
-                    file.Close();
-                    return obj;
-                }
-                else
-                    return default;
-            }
-            catch (DO.XmlFileLoadException)
-            {
-                throw new DO.XmlFileLoadException(filePath);
-            }
-        }
-
-
         public static List<T> LoadListFromXMLSerializer<T>(string filePath)
         {
             try
@@ -144,6 +121,5 @@ namespace Dal
             }
         }
         #endregion
-
     }
 }

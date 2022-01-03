@@ -212,7 +212,15 @@ namespace Dal
             => predicate == null ? DataSource.Drones.Select(item => item) : DataSource.Drones.Where(predicate).Select(item => item);
 
         public IEnumerable<Station> GetStations(Func<Station, bool> predicate = null)
-            => predicate == null ? DataSource.Stations.Select(item => item) : DataSource.Stations.Where(predicate).Select(item => item);
+        {
+            if (DataSource.Stations.Count == 0)
+                throw new EmptyListException("station");
+            if (predicate == null)
+                return DataSource.Stations.Select(item => item);
+            else
+                return DataSource.Stations.Where(predicate).Select(item => item);
+
+        }
 
         public IEnumerable<Customer> GetCustomers(Func<Customer, bool> predicate = null)
             => predicate == null ? DataSource.Customers.Select(item => item) : DataSource.Customers.Where(predicate).Select(item => item);
