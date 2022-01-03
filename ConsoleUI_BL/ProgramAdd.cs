@@ -20,7 +20,7 @@ namespace ConsoleUI_BL
         /// </summary>
         private static void AddStation()
         {
-            int id = AddId4(false, false);
+            int id = AddId4(false, false);   //change it
             string name = AddName();
             double latitude = Addlatitude();
             double longitude = AddLongitude();

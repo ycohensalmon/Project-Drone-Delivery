@@ -49,6 +49,7 @@ namespace Dal
         readonly string userPath;
         readonly string configPath;
         public static string localPath;
+             
         DalXml()
         {
             string str = Assembly.GetExecutingAssembly().Location;
@@ -84,13 +85,14 @@ namespace Dal
             }
             catch { return null; }
         }
+
         public Drone GetDroneById(int id)
         {
             XElement droneRoot = XmlTools.LoadListFromXMLElement(dronePath);
 
-            DO.Drone? drone = (from s in droneRoot.Elements()
+            Drone? drone = (from s in droneRoot.Elements()
                                where int.Parse(s.Element("Id").Value) == id
-                               select new DO.Drone()
+                               select new Drone()
                                {
                                    Id = int.Parse(s.Element("Id").Value),
                                    Model = s.Element("Model").Value,
@@ -102,12 +104,14 @@ namespace Dal
             else
                 throw new DO.ItemNotFoundException("drone");
         }
+
         public void NewDrone(Drone drone)
         {
             XElement droneRoot = XmlTools.LoadListFromXMLElement(dronePath);
             droneRoot.Add(createDrone(drone));
             XmlTools.SaveListToXMLElement(droneRoot, dronePath);
         }
+
         XElement createDrone(Drone drone)
         {
             return new XElement("drone",
@@ -120,7 +124,7 @@ namespace Dal
         #region drone charge
         public IEnumerable<DroneCharge> GetDroneCharges(Func<DroneCharge, bool> predicate = null)
         {
-            var droneChargeList = XmlTools.LoadListFromXMLSerializer<DO.DroneCharge>(droneChargePath);
+            var droneChargeList = XmlTools.LoadListFromXMLSerializer<DroneCharge>(droneChargePath);
             return from droneCh in droneChargeList
                    where predicate(droneCh)
                    select droneCh;
@@ -130,14 +134,16 @@ namespace Dal
         #region station
         public void NewStation(Station station)
         {
-            var stationList = XmlTools.LoadListFromXMLSerializer<DO.Station>(stationsPath);
-            var st = stationList.FirstOrDefault(s => s.Id == station.Id);
-            if (st.Id != station.Id /*&& !station.IsDeleted*/)
-                throw new DO.ItemAlreadyExistException("station", station.Id);
+            var stationList = XmlTools.LoadListFromXMLSerializer<Station>(stationsPath);
+
+            //check if it realy a new station
+            if (stationList.Exists(s => s.Id == station.Id))
+                throw new ItemAlreadyExistException("station", station.Id);
 
             stationList.Add(station);
             XmlTools.SaveListToXMLSerializer(stationList, stationsPath);
         }
+
 
         public IEnumerable<Station> GetStations(Func<Station, bool> predicate = null)
         {
@@ -223,47 +229,137 @@ namespace Dal
         // to do - Elhanan
         public int NewParcel(Parcel parcel)
         {
-            throw new NotImplementedException();
+            var parcelList = XmlTools.LoadListFromXMLSerializer<Parcel>(parcelPath);
+
+            //check if it realy a new parcel
+            if (parcelList.Exists(p => p.Id == parcel.Id))
+                throw new ItemAlreadyExistException("parcel", parcel.Id);
+
+            parcelList.Add(parcel);
+            XmlTools.SaveListToXMLSerializer(parcelList, parcelPath);
+
+            return parcel.Id;
         }
 
         public void ConnectDroneToParcel(int droneId, int parcelId)
         {
-            throw new NotImplementedException();
+            var droneList = XmlTools.LoadListFromXMLSerializer<Drone>(dronePath);
+
+            if (droneList.Exists(d => d.Id == droneId))
+                throw new IdNotFoundException(droneId, "Drone");
+
+            var parcelList = XmlTools.LoadListFromXMLSerializer<Parcel>(parcelPath);
+            Parcel parcel = GetParcelById(parcelId);
+            parcelList.Remove(parcel);
+
+            parcel.DroneId = droneId;
+            parcel.Scheduled = DateTime.Now;
+
+            parcelList.Add(parcel);
+            XmlTools.SaveListToXMLSerializer(parcelList, parcelPath);
         }
 
         public void CollectParcelByDrone(int parcelId)
         {
-            throw new NotImplementedException();
+            var parcelList = XmlTools.LoadListFromXMLSerializer<Parcel>(parcelPath);
+
+            Parcel parcel = GetParcelById(parcelId);
+            parcelList.Remove(parcel);
+
+            parcel.PickedUp = DateTime.Now;
+
+            parcelList.Add(parcel);
+            XmlTools.SaveListToXMLSerializer(parcelList, parcelPath);
         }
 
         public void DeliveredParcel(int parcelId)
         {
-            throw new NotImplementedException();
+            var parcelList = XmlTools.LoadListFromXMLSerializer<Parcel>(parcelPath);
+
+            Parcel parcel = GetParcelById(parcelId);
+            parcelList.Remove(parcel);
+
+            parcel.Delivered = DateTime.Now;
+            parcel.DroneId = 0;
+
+            parcelList.Add(parcel);
+            XmlTools.SaveListToXMLSerializer(parcelList, parcelPath);
         }
 
         public void SendDroneToBaseCharge(int droneId, int stationId)
         {
-            throw new NotImplementedException();
+            var stationList = XmlTools.LoadListFromXMLSerializer<Station>(stationsPath);
+            var droneChargeList = XmlTools.LoadListFromXMLSerializer<DroneCharge>(droneChargePath);
+
+            Drone drone = GetDroneById(droneId);
+            Station station = GetStationById(stationId);
+            stationList.Remove(station);
+
+            droneChargeList.Add(new DroneCharge
+            {
+                DroneId = drone.Id,
+                StationId = station.Id,
+                EnteryTime = DateTime.Now
+            });
+            station.ChargeSolts--;
+
+            stationList.Add(station);
+            XmlTools.SaveListToXMLSerializer(stationList, stationsPath);
+            XmlTools.SaveListToXMLSerializer(droneChargeList, droneChargePath);
         }
 
         public double ReleaseDroneFromCharging(int droneId)
         {
-            throw new NotImplementedException();
+            var droneChargeList = XmlTools.LoadListFromXMLSerializer<DroneCharge>(droneChargePath);
+            var stationList = XmlTools.LoadListFromXMLSerializer<Station>(stationsPath);
+
+            DroneCharge droneCharge = droneChargeList.FirstOrDefault(x => x.DroneId == droneId);
+            if (droneCharge.DroneId != droneId)
+                throw new IdNotFoundException(droneId, "Station charge");
+
+            int stationId = droneCharge.StationId;
+            Station station = GetStationById(stationId);
+            stationList.Remove(station);
+
+            station.ChargeSolts++;
+
+            stationList.Add(station);
+            droneChargeList.Remove(droneCharge);
+
+            XmlTools.SaveListToXMLSerializer(stationList, stationsPath);
+            XmlTools.SaveListToXMLSerializer(droneChargeList, droneChargePath);
+
+            //note: this return in the second, efter simulator change it to minute
+            return (DateTime.Now - droneCharge.EnteryTime).Value.TotalSeconds;
         }
 
         public IEnumerable<Parcel> GetParcels(Func<Parcel, bool> predicate = null)
         {
-            throw new NotImplementedException();
+            var parcelList = XmlTools.LoadListFromXMLSerializer<Parcel>(parcelPath);
+            return from item in parcelList
+                   where predicate(item)
+                   select item;
         }
 
         public Parcel GetParcelById(int id)
         {
-            throw new NotImplementedException();
+            var parcelList = XmlTools.LoadListFromXMLSerializer<Parcel>(parcelPath);
+
+            Parcel parcel = parcelList.FirstOrDefault(x => x.Id == id);
+            if (parcel.Id != id)
+                throw new IdNotFoundException(id, "parcel");
+            return parcel;
         }
 
         public double[] PowerConsumptionByDrone()
         {
-            throw new NotImplementedException();
+            double[] battery = new double[5];
+            battery[0] = DataSource.Config.Available;
+            battery[1] = DataSource.Config.LightParcel;
+            battery[2] = DataSource.Config.MediumParcel;
+            battery[3] = DataSource.Config.HeavyParcel;
+            battery[4] = DataSource.Config.LoadingRate;
+            return battery;
         }
     }
 }
