@@ -21,7 +21,8 @@ namespace BL
                     Name = station.Name,
                     Latitude = station.Location.Latitude,
                     Longitude = station.Location.Longitude,
-                    ChargeSolts = station.ChargeSolts
+                    ChargeSolts = station.ChargeSolts,
+                    IsDeleted = false
                 });
             }
             catch (Exception ex)
@@ -51,7 +52,8 @@ namespace BL
                 {
                     Id = drone.Id,
                     Model = drone.Model,
-                    MaxWeight = (DO.WeightCategory)drone.MaxWeight
+                    MaxWeight = (DO.WeightCategory)drone.MaxWeight,
+                    IsDeleted = false
                 });
 
                 dalObj.SendDroneToBaseCharge(drone.Id, stationId);
@@ -74,7 +76,8 @@ namespace BL
                     Name = customer.Name,
                     Phone = customer.Phone,
                     Latitude = customer.Location.Latitude,
-                    Longitude = customer.Location.Longitude
+                    Longitude = customer.Location.Longitude,
+                    IsDeleted = false
                 });
             }
             catch (Exception ex)

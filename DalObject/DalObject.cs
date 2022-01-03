@@ -209,7 +209,7 @@ namespace Dal
 
         #region Get Lists 
         public IEnumerable<Drone> GetDrones()
-            => (IEnumerable<Drone>)DataSource.Drones.Select(item => item.IsDeleted == false);
+            => (IEnumerable<Drone>)DataSource.Drones.Select(item => item/*.IsDeleted == false*/);
 
         public IEnumerable<Station> GetStations(Func<Station, bool> predicate = null)
         {
@@ -217,15 +217,15 @@ namespace Dal
                 throw new EmptyListException("station");
 
             return (predicate == null)
-                ? (IEnumerable<Station>)DataSource.Stations.Select(item => item.IsDeleted == false)
-                : (IEnumerable<Station>)DataSource.Stations.Where(predicate).Select(item => item.IsDeleted == false);
+                ? (IEnumerable<Station>)DataSource.Stations.Select(item => item/*.IsDeleted == false*/)
+                : (IEnumerable<Station>)DataSource.Stations.Where(predicate).Select(item => item/*.IsDeleted == false*/);
 
         }
 
         public IEnumerable<Customer> GetCustomers(Func<Customer, bool> predicate = null)
             => (IEnumerable<Customer>)(predicate == null
-            ? DataSource.Customers.Select(item => item.IsDeleted == false)
-            : DataSource.Customers.Where(predicate).Select(item => item.IsDeleted == false));
+            ? DataSource.Customers.Select(item => item/*.IsDeleted == false*/)
+            : DataSource.Customers.Where(predicate).Select(item => item/*.IsDeleted == false*/));
 
         public IEnumerable<Parcel> GetParcels(Func<Parcel, bool> predicate = null)
             => predicate == null ? DataSource.Parcels.Select(item => item) : DataSource.Parcels.Where(predicate).Select(item => item);
@@ -238,7 +238,7 @@ namespace Dal
         public Station GetStationById(int id)
         {
             Station station = DataSource.Stations.Find(x => x.Id == id);
-            if (station.Id != id || station.IsDeleted == true)
+            if (station.Id != id /*|| station.IsDeleted == true*/)
                 throw new IdNotFoundException(id, "Station");
             return station;
         }

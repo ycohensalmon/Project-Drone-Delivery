@@ -30,6 +30,7 @@ namespace Dal
 
         internal static void Initialize()
         {
+            //BuildXmlFromDS.BuildXmlFromDataSource();
             InitializeDrone();
             InitializeStation();
             InitializeCustomer();
@@ -66,7 +67,7 @@ namespace Dal
         /// <summary>
         /// add to the list of drones 5 drones
         /// </summary>
-        public static void InitializeDrone()
+        private static void InitializeDrone()
         {
             for (int i = 0; i < 5; i++)
             {
@@ -83,7 +84,7 @@ namespace Dal
         /// <summary>
         /// adds to the list of stations 5 stations
         /// </summary>
-        public static void InitializeStation()
+        private static void InitializeStation()
         {
             Stations.Add(new Station
             {
@@ -135,7 +136,7 @@ namespace Dal
         /// <summary>
         /// adds 10 customers to the list of customers
         /// </summary>
-        public static void InitializeCustomer()
+        private static void InitializeCustomer()
         {
             for (int i = 0; i < 10; i++)
             {
@@ -154,7 +155,7 @@ namespace Dal
         /// <summary>
         /// adds 10 parcels to the list of the parcels
         /// </summary>
-        public static void InitializeParsel()
+        private static void InitializeParsel()
         {
             DateTime newDate = DateTime.Now;
             int i = 0;
