@@ -354,11 +354,12 @@ namespace Dal
         public double[] PowerConsumptionByDrone()
         {
             double[] battery = new double[5];
-            battery[0] = DataSource.Config.Available;
-            battery[1] = DataSource.Config.LightParcel;
-            battery[2] = DataSource.Config.MediumParcel;
-            battery[3] = DataSource.Config.HeavyParcel;
-            battery[4] = DataSource.Config.LoadingRate;
+            battery[0] = 3.5;//DataSource.Config.Available;
+            battery[1] = 4.5;// DataSource.Config.LightParcel;
+            //battery[2] = DataSource.Config.MediumParcel;
+            //battery[3] = DataSource.Config.HeavyParcel;
+            //battery[4] = DataSource.Config.LoadingRate;
+            //return battery;
             return battery;
         }
     }
