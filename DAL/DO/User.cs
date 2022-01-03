@@ -12,6 +12,9 @@ namespace DO
         public string UserName { get; set; }
         public string SafePassword { get; set; }
         public string Photo { get; set; }
+        public bool IsAdmin { get; set; }
+        public bool IsDeleted { get; set; }
+
         public override string ToString()
         {
             return $"Id: {Id}, UserName:{UserName}, SafePassword:{SafePassword} photo:{Photo}";

@@ -13,6 +13,7 @@ namespace DO
         public Int32 Phone { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        public bool IsDeleted { get; set; }
         public override string ToString()
         {
             return $"Id: {Id}, Name:{Name}, Phone:{Phone},Latittude:{Utils.Sexagesimal(Latitude, 'N')}," +

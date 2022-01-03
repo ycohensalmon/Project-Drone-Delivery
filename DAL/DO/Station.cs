@@ -14,6 +14,8 @@ namespace DO
         private double latitude;  // 'N'
         private double longitude; // 'E'
         private int chargeSolts;
+        public bool IsDeleted { get; set; }
+
 
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }

@@ -34,6 +34,33 @@ namespace Dal
             InitializeStation();
             InitializeCustomer();
             InitializeParsel();
+            InitializeUser();
+        }
+
+        /// <summary>
+        /// initialize 2 user
+        /// </summary>
+        private static void InitializeUser()
+        {
+            Users.Add(new User
+            {
+                Id = 12345678,
+                UserName = "Elhanan",
+                IsAdmin = true,
+                IsDeleted = false,
+                SafePassword = "1234",
+                Photo = ""
+            });
+
+            Users.Add(new User
+            {
+                Id = 23456789,
+                UserName = "Yossef",
+                IsAdmin = false,
+                IsDeleted = false,
+                SafePassword = "4321",
+                Photo = ""
+            });
         }
 
         /// <summary>
@@ -48,6 +75,7 @@ namespace Dal
                     Id = Config.rand.Next(1000, 10000),
                     Model = Convert.ToString((ModelDrones)Config.rand.Next(5)),
                     MaxWeight = (WeightCategory)Config.rand.Next(3),
+                    IsDeleted = false
                 });
             }
         }
@@ -63,7 +91,8 @@ namespace Dal
                 Name = "Malcha Mall",
                 Latitude = 31.751716,
                 Longitude = 35.187202,
-                ChargeSolts = Config.rand.Next(10) +1
+                ChargeSolts = Config.rand.Next(10) + 1,
+                IsDeleted = false
             });
             Stations.Add(new Station
             {
@@ -71,7 +100,8 @@ namespace Dal
                 Name = "Hadar Mall",
                 Latitude = 31.753791,
                 Longitude = 35.213429,
-                ChargeSolts = Config.rand.Next(10)+1
+                ChargeSolts = Config.rand.Next(10) + 1,
+                IsDeleted = false
             });
             Stations.Add(new Station
             {
@@ -79,7 +109,8 @@ namespace Dal
                 Name = "Ramot Mall",
                 Latitude = 31.817627,
                 Longitude = 35.194476,
-                ChargeSolts = Config.rand.Next(10)+1
+                ChargeSolts = Config.rand.Next(10) + 1,
+                IsDeleted = false
             });
             Stations.Add(new Station
             {
@@ -87,7 +118,8 @@ namespace Dal
                 Name = "Jerusalem Central Station",
                 Latitude = 31.789061,
                 Longitude = 35.203100,
-                ChargeSolts = Config.rand.Next(10)+1
+                ChargeSolts = Config.rand.Next(10) + 1,
+                IsDeleted = false
             });
             Stations.Add(new Station
             {
@@ -95,7 +127,8 @@ namespace Dal
                 Name = "Mamila Mall",
                 Latitude = 31.777870,
                 Longitude = 35.224982,
-                ChargeSolts = Config.rand.Next(10)+1
+                ChargeSolts = Config.rand.Next(10) + 1,
+                IsDeleted = false
             });
         }
 
@@ -112,8 +145,9 @@ namespace Dal
                     Phone = Config.rand.Next(0500000000, 0590000000),
                     Name = Convert.ToString((Names)i),
                     Latitude = (double)Config.rand.Next(31737458, 31807238) / (double)1000000,
-                    Longitude = (double)Config.rand.Next(35174572, 35241141) / (double)1000000
-                }); 
+                    Longitude = (double)Config.rand.Next(35174572, 35241141) / (double)1000000,
+                    IsDeleted = false
+                });
             }
         }
 
@@ -151,10 +185,10 @@ namespace Dal
                     SenderId = senderID,
                     TargetId = GetTargetId(senderID),
                     DroneId = Drones[Config.rand.Next(Drones.Count())].Id,
-                    Requested = DateTime.Now.AddMinutes(-(Config.rand.Next(455,500))),
+                    Requested = DateTime.Now.AddMinutes(-(Config.rand.Next(455, 500))),
                     Scheduled = DateTime.Now.AddMinutes(-(Config.rand.Next(442, 450))),
                     PickedUp = DateTime.Now.AddMinutes(-(Config.rand.Next(430, 441))),
-                    Delivered = DateTime.Now.AddMinutes(-(Config.rand.Next(415,429))),
+                    Delivered = DateTime.Now.AddMinutes(-(Config.rand.Next(415, 429))),
                     Weight = (WeightCategory)Config.rand.Next(3),
                     Priorities = (Priority)Config.rand.Next(3)
                 });

@@ -209,21 +209,23 @@ namespace Dal
 
         #region Get Lists 
         public IEnumerable<Drone> GetDrones()
-            => DataSource.Drones.Select(item => item);
+            => (IEnumerable<Drone>)DataSource.Drones.Select(item => item.IsDeleted == false);
 
         public IEnumerable<Station> GetStations(Func<Station, bool> predicate = null)
         {
             if (DataSource.Stations.Count == 0)
                 throw new EmptyListException("station");
-            if (predicate == null)
-                return DataSource.Stations.Select(item => item);
-            else
-                return DataSource.Stations.Where(predicate).Select(item => item);
+
+            return (predicate == null)
+                ? (IEnumerable<Station>)DataSource.Stations.Select(item => item.IsDeleted == false)
+                : (IEnumerable<Station>)DataSource.Stations.Where(predicate).Select(item => item.IsDeleted == false);
 
         }
 
         public IEnumerable<Customer> GetCustomers(Func<Customer, bool> predicate = null)
-            => predicate == null ? DataSource.Customers.Select(item => item) : DataSource.Customers.Where(predicate).Select(item => item);
+            => (IEnumerable<Customer>)(predicate == null
+            ? DataSource.Customers.Select(item => item.IsDeleted == false)
+            : DataSource.Customers.Where(predicate).Select(item => item.IsDeleted == false));
 
         public IEnumerable<Parcel> GetParcels(Func<Parcel, bool> predicate = null)
             => predicate == null ? DataSource.Parcels.Select(item => item) : DataSource.Parcels.Where(predicate).Select(item => item);
@@ -236,7 +238,7 @@ namespace Dal
         public Station GetStationById(int id)
         {
             Station station = DataSource.Stations.Find(x => x.Id == id);
-            if (station.Id != id)
+            if (station.Id != id || station.IsDeleted == true)
                 throw new IdNotFoundException(id, "Station");
             return station;
         }
@@ -244,7 +246,7 @@ namespace Dal
         public Drone GetDroneById(int id)
         {
             Drone drone = DataSource.Drones.Find(x => x.Id == id);
-            if (drone.Id != id)
+            if (drone.Id != id || drone.IsDeleted == true)
                 throw new IdNotFoundException(id, "Drone");
             return drone;
         }
@@ -252,7 +254,7 @@ namespace Dal
         public Customer GetCustomerById(int id)
         {
             Customer customer = DataSource.Customers.Find(x => x.Id == id);
-            if (customer.Id != id)
+            if (customer.Id != id || customer.IsDeleted == true)
                 throw new IdNotFoundException(id, "Customer");
             return customer;
         }
@@ -268,7 +270,7 @@ namespace Dal
         public User GetUserById(int id)
         {
             User user = DataSource.Users.FirstOrDefault(x => x.Id == id);
-            if (user.Id != id)
+            if (user.Id != id || user.IsDeleted == true)
                 throw new IdNotFoundException(id, "user");
             return user;
         }
