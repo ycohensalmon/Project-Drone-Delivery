@@ -28,6 +28,12 @@ namespace DO
     [Serializable]
     public class ItemNotFoundException : Exception
     {
-        public ItemNotFoundException(string message) : base($"ERROR: the {message} was not found") { }
+        public ItemNotFoundException(string item) : base($"ERROR: the {item} was not found") { }
+    }
+
+    [Serializable]
+    public class ItemAlreadyExistException :Exception
+    {
+        public ItemAlreadyExistException(string item, int id) :base($"ERROR: the {item} with id - {id} already exist") { }
     }
 }

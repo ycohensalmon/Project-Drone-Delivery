@@ -67,79 +67,160 @@ namespace Dal
         }
         #endregion
 
+        #region drone in XML Element
+        public IEnumerable<Drone> GetDrones()
+        {
+            try
+            {
+                XElement droneRoot = XmlTools.LoadListFromXMLElement(dronePath);
+
+                return from s in droneRoot.Elements()
+                       select new Drone()
+                       {
+                           Id = int.Parse(s.Element("Id").Value),
+                           Model = s.Element("Model").Value,
+                           MaxWeight = (WeightCategory)Enum.Parse(typeof(WeightCategory), s.Element("MaxWeight").Value)
+                       };
+            }
+            catch { return null; }
+        }
+        public Drone GetDroneById(int id)
+        {
+            XElement droneRoot = XmlTools.LoadListFromXMLElement(dronePath);
+
+            DO.Drone? drone = (from s in droneRoot.Elements()
+                               where int.Parse(s.Element("Id").Value) == id
+                               select new DO.Drone()
+                               {
+                                   Id = int.Parse(s.Element("Id").Value),
+                                   Model = s.Element("Model").Value,
+                                   MaxWeight = (WeightCategory)Enum.Parse(typeof(WeightCategory), s.Element("MaxWeight").Value)
+                               }).FirstOrDefault();
+
+            if (drone != null)
+                return (Drone)drone;
+            else
+                throw new DO.ItemNotFoundException("drone");
+        }
+        public void NewDrone(Drone drone)
+        {
+            XElement droneRoot = XmlTools.LoadListFromXMLElement(dronePath);
+            droneRoot.Add(createDrone(drone));
+            XmlTools.SaveListToXMLElement(droneRoot, dronePath);
+        }
+        XElement createDrone(Drone drone)
+        {
+            return new XElement("drone",
+                    new XElement("id", drone.Id),
+                    new XElement("model", drone.Model),
+                    new XElement("maxWeight", drone.MaxWeight));
+        }
+        #endregion
+
+        #region drone charge
+        public IEnumerable<DroneCharge> GetDroneCharges(Func<DroneCharge, bool> predicate = null)
+        {
+            var droneChargeList = XmlTools.LoadListFromXMLSerializer<DO.DroneCharge>(droneChargePath);
+            return from droneCh in droneChargeList
+                   where predicate(droneCh)
+                   select droneCh;
+        }
+        #endregion
+
+        #region station
         public void NewStation(Station station)
         {
-            XElement stationRoot = XmlTools.LoadListFromXMLElement(stationsPath);
-            stationRoot.Add(createStation(station));
-            XmlTools.SaveListToXMLElement(stationRoot, stationsPath);
-        }
+            var stationList = XmlTools.LoadListFromXMLSerializer<DO.Station>(stationsPath);
+            var st = stationList.FirstOrDefault(s => s.Id == station.Id);
+            if (st.Id != station.Id /*&& !station.IsDeleted*/)
+                throw new DO.ItemAlreadyExistException("station", station.Id);
 
-        #region station in XML Element
-        XElement createStation(Station station)
-        {
-            return new XElement("station",
-                    new XElement("id", station.Id),
-                    new XElement("name", station.Name),
-                    new XElement("latitude", station.Latitude),
-                    new XElement("longitude", station.Longitude),
-                    new XElement("chargeSolts", station.ChargeSolts)
-            );
-        }
-        public void UpdateBase(int stationId, string newName, string newChargeSolts, int result)
-        {
-            throw new NotImplementedException();
+            stationList.Add(station);
+            XmlTools.SaveListToXMLSerializer(stationList, stationsPath);
         }
 
         public IEnumerable<Station> GetStations(Func<Station, bool> predicate = null)
         {
-            try
-            {
-                XElement stationRoot = XmlTools.LoadListFromXMLElement(stationsPath);
-
-                return from s in stationRoot.Elements()
-                       select new Station()
-                       {
-                           Id = int.Parse(s.Element("Id").Value),
-                           Name = s.Element("Name").Value,
-                           Latitude = double.Parse(s.Element("Latitude").Value),
-                           Longitude = double.Parse(s.Element("Longitude").Value),
-                           ChargeSolts = int.Parse(s.Element("ChargeSolts").Value)
-                       };
-            }
-            catch { new EmptyListException("station"); }
+            var stationList = XmlTools.LoadListFromXMLSerializer<DO.Station>(stationsPath);
+            return from station in stationList
+                   where predicate(station)
+                   select station;
         }
+
         public Station GetStationById(int id)
         {
-            XElement stationRoot = XmlTools.LoadListFromXMLElement(stationsPath);
+            var stationList = XmlTools.LoadListFromXMLSerializer<DO.Station>(stationsPath);
 
-            DO.Station? station = (from s in stationRoot.Elements()
-                          where int.Parse(s.Element("Id").Value) == id
-                          select new DO.Station()
-                          {
-                              Id = int.Parse(s.Element("Id").Value),
-                              Name = s.Element("Name").Value,
-                              Latitude = double.Parse(s.Element("Latitude").Value),
-                              Longitude = double.Parse(s.Element("Longitude").Value),
-                              ChargeSolts = int.Parse(s.Element("ChargeSolts").Value)
-                          }).FirstOrDefault();
-
-            if (station != null)
-                return (Station)station;
+            var station = stationList.FirstOrDefault(s => s.Id == id);
+            if (station.Id == id)
+                return station;
             else
-                throw new DO.ItemNotFoundException("station");
+                throw new DO.ItemNotFoundException("Station");
         }
         #endregion
 
-        public void NewDrone(Drone drone)
-        {
-            throw new NotImplementedException();
-        }
-
+        #region customer
         public void NewCostumer(Customer customer)
         {
+            var customerList = XmlTools.LoadListFromXMLSerializer<DO.Customer>(customerPath);
+            var st = customerList.FirstOrDefault(s => s.Id == customer.Id);
+            if (st.Id != customer.Id /*&& !customer.IsDeleted*/)
+                throw new DO.ItemAlreadyExistException("customer", customer.Id);
+
+            customerList.Add(customer);
+            XmlTools.SaveListToXMLSerializer(customerList, customerPath);
+        }
+
+        public IEnumerable<Customer> GetCustomers(Func<Customer, bool> predicate = null)
+        {
+            var customerList = XmlTools.LoadListFromXMLSerializer<DO.Customer>(customerPath);
+            return from customer in customerList
+                   where predicate(customer)
+                   select customer;
+        }
+
+        public Customer GetCustomerById(int id)
+        {
+            var customerList = XmlTools.LoadListFromXMLSerializer<DO.Customer>(customerPath);
+
+            var customer = customerList.FirstOrDefault(s => s.Id == id);
+            if (customer.Id == id)
+                return customer;
+            else
+                throw new DO.ItemNotFoundException("customer");
+        }
+        #endregion
+
+        #region user
+        public User GetUserById(int id)
+        {
+            var userList = XmlTools.LoadListFromXMLSerializer<DO.User>(userPath);
+
+            var user = userList.FirstOrDefault(s => s.Id == id);
+            if (user.Id == id)
+                return user;
+            else
+                throw new DO.ItemNotFoundException("user");
+        }
+        #endregion
+
+        // to do - Yossef
+        public void UpdateBase(int stationId, string newName, string newChargeSolts, int result)
+        {
+            throw new NotImplementedException();
+        }
+        public void UpdateDrone(int droneId, string model)
+        {
+            throw new NotImplementedException();
+        }
+        public void UpdateCustomer(int customerID, string newName, string newPhone)
+        {
             throw new NotImplementedException();
         }
 
+
+
+        // to do - Elhanan
         public int NewParcel(Parcel parcel)
         {
             throw new NotImplementedException();
@@ -170,45 +251,7 @@ namespace Dal
             throw new NotImplementedException();
         }
 
-        public void UpdateDrone(int droneId, string model)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public void UpdateCustomer(int customerID, string newName, string newPhone)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Drone> GetDrones(Func<Drone, bool> predicate = null)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public IEnumerable<Customer> GetCustomers(Func<Customer, bool> predicate = null)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Parcel> GetParcels(Func<Parcel, bool> predicate = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<DroneCharge> GetDroneCharges(Func<DroneCharge, bool> predicate = null)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public Drone GetDroneById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Customer GetCustomerById(int id)
         {
             throw new NotImplementedException();
         }
@@ -219,11 +262,6 @@ namespace Dal
         }
 
         public double[] PowerConsumptionByDrone()
-        {
-            throw new NotImplementedException();
-        }
-
-        public User GetUserById(int id)
         {
             throw new NotImplementedException();
         }

@@ -208,8 +208,8 @@ namespace Dal
         #endregion
 
         #region Get Lists 
-        public IEnumerable<Drone> GetDrones(Func<Drone, bool> predicate = null)
-            => predicate == null ? DataSource.Drones.Select(item => item) : DataSource.Drones.Where(predicate).Select(item => item);
+        public IEnumerable<Drone> GetDrones()
+            => DataSource.Drones.Select(item => item);
 
         public IEnumerable<Station> GetStations(Func<Station, bool> predicate = null)
         {

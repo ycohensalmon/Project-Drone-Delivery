@@ -93,9 +93,8 @@ namespace DalApi
         /// <summary>
         /// Get the Drones
         /// </summary>
-        /// <param name="predicate">can be</param>
         /// <returns>the lists of the Drones </returns>
-        public IEnumerable<Drone> GetDrones(Func<Drone, bool> predicate = null);
+        public IEnumerable<Drone> GetDrones();
 
         /// <summary>
         /// Get the Stations
