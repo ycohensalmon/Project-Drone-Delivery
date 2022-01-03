@@ -9,29 +9,12 @@ namespace DalApi
 {
     public interface IDal
     {
-        /// <summary>
-        /// add new station to the list
-        /// </summary>
-        /// <param name="station">the paraneter to adding</param>
-        public void NewStation(Station station);
-
+        #region Drone
         /// <summary>
         /// adds a drone to the list of Drones
         /// </summary>
         /// <param name="drone">the paraneter to adding</param>
         public void NewDrone(Drone drone);
-
-        /// <summary>
-        /// adds a customer to list of Customers
-        /// </summary>
-        /// <param name="customer">the paraneter to adding</param>
-        public void NewCostumer(Customer customer);
-
-        /// <summary>
-        /// adds a parcel to the list of Parcels
-        /// </summary>
-        /// <param name="parcel">the paraneter to adding</param>
-        public int NewParcel(Parcel parcel);
 
         /// <summary>
         /// assign a drone to a parcel and update the scheduled time
@@ -73,49 +56,10 @@ namespace DalApi
         public void UpdateDrone(int droneId, string model);
 
         /// <summary>
-        /// Update the name of the base station or the number of charge slot available or together
-        /// </summary>
-        /// <param name="stationId">Id of the base station that we want to change his name</param>
-        /// <param name="newName">the new name</param>
-        /// <param name="newChargeSolts">the new chagre slot available in string</param>
-        /// <param name="result">the new chagre slot available in int</param>
-        public void UpdateBase(int stationId, string newName, string newChargeSolts, int result);
-
-        /// <summary>
-        /// update the name or phone of the customer
-        /// </summary>
-        /// <param name="customerID">Id of the customer that we want to modified</param>
-        /// <param name="newName">the new name</param>
-        /// <param name="newPhone">the new phone</param>
-        public void UpdateCustomer(int customerID, string newName, string newPhone);
-
-
-        /// <summary>
         /// Get the Drones
         /// </summary>
         /// <returns>the lists of the Drones </returns>
         public IEnumerable<Drone> GetDrones();
-
-        /// <summary>
-        /// Get the Stations
-        /// </summary>
-        /// <param name="predicate"></param>
-        /// <returns>the lists of the Stations</returns>
-        public IEnumerable<Station> GetStations(Func<Station, bool> predicate = null);
-
-        /// <summary>
-        /// Get the Customers
-        /// </summary>
-        /// <param name="predicate"></param>
-        /// <returns>the lists of the Customers </returns>
-        public IEnumerable<Customer> GetCustomers(Func<Customer, bool> predicate = null);
-
-        /// <summary>
-        /// Get the Parcels
-        /// </summary>
-        /// <param name="predicate"></param>
-        /// <returns>the lists of the Parcels </returns>
-        public IEnumerable<Parcel> GetParcels(Func<Parcel, bool> predicate = null);
 
         /// <summary>
         /// Get the Drones charge
@@ -125,18 +69,69 @@ namespace DalApi
         public IEnumerable<DroneCharge> GetDroneCharges(Func<DroneCharge, bool> predicate = null);
 
         /// <summary>
+        /// get drone with this id and if no, error is thrown
+        /// </summary>
+        /// <param name="id">the id of the drone</param>
+        /// <returns>drone cwith this id</returns>
+        public Drone GetDroneById(int id);
+
+        #endregion
+
+        #region Station
+
+        /// <summary>
+        /// add new station to the list
+        /// </summary>
+        /// <param name="station">the paraneter to adding</param>
+        public void NewStation(Station station);
+
+        /// <summary>
+        /// Update the name of the base station or the number of charge slot available or together
+        /// </summary>
+        /// <param name="stationId">Id of the base station that we want to change his name</param>
+        /// <param name="newName">the new name</param>
+        /// <param name="newChargeSolts">the new chagre slot available in string</param>
+        /// <param name="result">the new chagre slot available in int</param>
+        public void UpdateBase(int stationId, string newName, string newChargeSolts, int result);
+
+        /// <summary>
+        /// Get the Stations
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns>the lists of the Stations</returns>
+        public IEnumerable<Station> GetStations(Func<Station, bool> predicate = null);
+
+        /// <summary>
         /// get station with this id and if no, error is thrown
         /// </summary>
         /// <param name="id">the id of the Stations</param>
         /// <returns>station with this id</returns>
         public Station GetStationById(int id);
 
+        #endregion
+
+        #region Costomer
+
         /// <summary>
-        /// get drone with this id and if no, error is thrown
+        /// adds a customer to list of Customers
         /// </summary>
-        /// <param name="id">the id of the drone</param>
-        /// <returns>drone cwith this id</returns>
-        public Drone GetDroneById(int id);
+        /// <param name="customer">the paraneter to adding</param>
+        public void NewCostumer(Customer customer);
+
+        /// <summary>
+        /// update the name or phone of the customer
+        /// </summary>
+        /// <param name="customerID">Id of the customer that we want to modified</param>
+        /// <param name="newName">the new name</param>
+        /// <param name="newPhone">the new phone</param>
+        public void UpdateCustomer(int customerID, string newName, string newPhone);
+
+        /// <summary>
+        /// Get the Customers
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns>the lists of the Customers </returns>
+        public IEnumerable<Customer> GetCustomers(Func<Customer, bool> predicate = null);
 
         /// <summary>
         /// get customer with this id and if no, error is thrown
@@ -145,12 +140,33 @@ namespace DalApi
         /// <returns>customer with this id</returns>
         public Customer GetCustomerById(int id);
 
+        #endregion
+
+        #region Parcel
+
+        /// <summary>
+        /// adds a parcel to the list of Parcels
+        /// </summary>
+        /// <param name="parcel">the paraneter to adding</param>
+        public int NewParcel(Parcel parcel);
+
+        /// <summary>
+        /// Get the Parcels
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns>the lists of the Parcels </returns>
+        public IEnumerable<Parcel> GetParcels(Func<Parcel, bool> predicate = null);
+
         /// <summary>
         /// get parcel with this id and if no, error is thrown
         /// </summary>
         /// <param name="id">the id of the Parcels</param>
         /// <returns>parcel with this id</returns>
         public Parcel GetParcelById(int id);
+
+        #endregion
+
+        #region Others
 
         /// <summary>
         /// get customer with this id and if no, error is thrown
@@ -165,5 +181,7 @@ namespace DalApi
         /// </summary>
         /// <returns>Array with percentage of battery consumption all types of weights</returns>
         public double[] PowerConsumptionByDrone();
+
+        #endregion
     }
 }
