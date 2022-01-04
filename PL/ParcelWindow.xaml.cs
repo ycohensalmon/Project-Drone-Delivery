@@ -37,6 +37,7 @@ namespace PL
             SenderName.ItemsSource = NamesCustomer;
             ReceiverName.ItemsSource = NamesCustomer;
         }
+
         private void AddParcel_Click(object sender, MouseButtonEventArgs e)
         {
             try
@@ -49,7 +50,7 @@ namespace PL
                 BO.Parcel parcel = new() { Weight = weight, Priorities = priority };
 
                 myBl.NewParcel(parcel, senderID, targetID);
-                MessageBox.Show("The drone was added successfully", "success", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("The parcel was added successfully", "success", MessageBoxButton.OK, MessageBoxImage.Information);
                 Close();
             }
             catch (Exception ex)

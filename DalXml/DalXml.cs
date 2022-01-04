@@ -182,10 +182,10 @@ namespace Dal
         #region customer
         public void NewCostumer(Customer customer)
         {
-            var customerList = XmlTools.LoadListFromXMLSerializer<DO.Customer>(customerPath);
-            var st = customerList.FirstOrDefault(s => s.Id == customer.Id);
-            if (st.Id != customer.Id /*&& !customer.IsDeleted*/)
-                throw new DO.ItemAlreadyExistException("customer", customer.Id);
+            var customerList = XmlTools.LoadListFromXMLSerializer<Customer>(customerPath);
+
+            if (customerList.Exists(x => x.Id == customer.Id)/*&& !customer.IsDeleted*/)
+                throw new ItemAlreadyExistException("customer", customer.Id);
 
             customerList.Add(customer);
             XmlTools.SaveListToXMLSerializer(customerList, customerPath);
@@ -298,9 +298,9 @@ namespace Dal
 
         public void ConnectDroneToParcel(int droneId, int parcelId)
         {
-            var droneList = XmlTools.LoadListFromXMLSerializer<Drone>(dronePath);
-
-            if (droneList.Exists(d => d.Id == droneId))
+            var droneList = GetDrones();
+            
+            if (!droneList.Any(d => d.Id == droneId))
                 throw new IdNotFoundException(droneId, "Drone");
 
             var parcelList = XmlTools.LoadListFromXMLSerializer<Parcel>(parcelPath);
