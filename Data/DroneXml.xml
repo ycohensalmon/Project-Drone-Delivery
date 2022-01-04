@@ -2,7 +2,7 @@
 <Drones>
   <Drone>
     <Id>5912</Id>
-    <Model>Magic</Model>
+    <Model>yossef</Model>
     <MaxWeight>Heavy</MaxWeight>
     <IsDeleted>false</IsDeleted>
   </Drone>

@@ -182,6 +182,11 @@ namespace DalApi
         /// <returns>Array with percentage of battery consumption all types of weights</returns>
         public double[] PowerConsumptionByDrone();
 
+        /// <summary>
+        /// clear the list of drone in charging from DroneCharge.xml
+        /// </summary>
+        public void ClearDroneCharge();
+
         #endregion
     }
 }

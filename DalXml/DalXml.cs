@@ -67,17 +67,17 @@ namespace Dal
             parcelPath = localPath + @"\ParcelXml.xml";
             userPath = localPath + @"\UserXml.xml";
             configPath = localPath + @"\configXml.xml";
-
-
-            //List<DroneCharge> droneCharge = XmlTools.LoadListFromXMLSerializer<DroneCharge>(droneChargePath);
-            //foreach (var item in droneCharge)
-            //{
-            //    UpdatePluseChargeSlots(item.StationId);
-            //}
-            //droneCharge.Clear();
-            //XmlTools.SaveListToXMLSerializer(droneCharge, droneChargePath);
         }
         #endregion
+
+        public void ClearDroneCharge()
+        {
+            List<DroneCharge> droneCharge = XmlTools.LoadListFromXMLSerializer<DroneCharge>(droneChargePath);
+            foreach (var item in droneCharge) ReleaseDroneFromCharging(item.DroneId);
+
+            droneCharge.Clear();
+            XmlTools.SaveListToXMLSerializer(droneCharge, droneChargePath);
+        }
 
         #region drone in XML Element
         public IEnumerable<Drone> GetDrones()
@@ -254,10 +254,10 @@ namespace Dal
                 throw new IdNotFoundException(droneId, "Drone");
 
             var droneNode = (from d in droneRoot.Elements()
-                             where d.Element("id").Value == droneId.ToString()
+                             where int.Parse(d.Element("Id").Value) == droneId
                              select d).FirstOrDefault();
 
-            droneNode.Element("model").SetValue(model);
+            droneNode.Element("Model").SetValue(model);
             XmlTools.SaveListToXMLElement(droneRoot, dronePath);
         }
 

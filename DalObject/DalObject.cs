@@ -287,5 +287,10 @@ namespace Dal
             battery[4] = DataSource.Config.LoadingRate;
             return battery;
         }
+
+        /// <summary>
+        /// this func need to clear the list only on the xml file, not on the dalObject
+        /// </summary>
+        public void ClearDroneCharge() { }
     }
 }

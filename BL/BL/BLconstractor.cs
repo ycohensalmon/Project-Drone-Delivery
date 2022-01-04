@@ -80,5 +80,7 @@ namespace BL
                 });
             }
         }
+
+        public void ClearDroneCharge() { dalObj.ClearDroneCharge(); }
     }
 }

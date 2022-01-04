@@ -39,5 +39,7 @@ namespace BlApi
         public IEnumerable<ParcelInList> GetParcelsWithoutDrone(); 
         public IEnumerable<StationList> GetStationWithChargeSolts();
         public DO.Parcel GetParcelWasConnectToParcel(int droneId, out DroneInList drone);
+        public void ClearDroneCharge();
+
     }
 }
