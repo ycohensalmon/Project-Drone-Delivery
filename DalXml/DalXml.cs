@@ -127,10 +127,10 @@ namespace Dal
 
         XElement createDrone(Drone drone)
         {
-            return new XElement("drone",
-                    new XElement("id", drone.Id),
-                    new XElement("model", drone.Model),
-                    new XElement("maxWeight", drone.MaxWeight),
+            return new XElement("Drone",
+                    new XElement("Id", drone.Id),
+                    new XElement("Model", drone.Model),
+                    new XElement("MaxWeight", drone.MaxWeight),
                     new XElement("IsDeleted", drone.IsDeleted));
         }
         #endregion
@@ -140,7 +140,7 @@ namespace Dal
         {
             var droneChargeList = XmlTools.LoadListFromXMLSerializer<DroneCharge>(droneChargePath);
             return from droneCh in droneChargeList
-                   where predicate(droneCh)
+                   where predicate == null ? true : predicate(droneCh)
                    select droneCh;
         }
         #endregion
@@ -195,7 +195,7 @@ namespace Dal
         {
             var customerList = XmlTools.LoadListFromXMLSerializer<DO.Customer>(customerPath);
             return from customer in customerList
-                   where predicate(customer)
+                   where predicate == null ? true : predicate(customer)
                    select customer;
         }
 

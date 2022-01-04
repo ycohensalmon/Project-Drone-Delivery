@@ -40,4 +40,12 @@
     <Longitude>35.224982</Longitude>
     <ChargeSolts>2</ChargeSolts>
   </Station>
+  <Station>
+    <IsDeleted>false</IsDeleted>
+    <Id>1030</Id>
+    <Name>Ramot Mall</Name>
+    <Latitude>31.817627</Latitude>
+    <Longitude>35.194476</Longitude>
+    <ChargeSolts>4</ChargeSolts>
+  </Station>
 </ArrayOfStation>
