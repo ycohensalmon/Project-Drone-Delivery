@@ -30,4 +30,10 @@
     <MaxWeight>Light</MaxWeight>
     <IsDeleted>false</IsDeleted>
   </Drone>
+  <Drone>
+    <Id>7590</Id>
+    <Model>mavic_mini2</Model>
+    <MaxWeight>Light</MaxWeight>
+    <IsDeleted>false</IsDeleted>
+  </Drone>
 </Drones>
