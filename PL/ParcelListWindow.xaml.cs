@@ -29,6 +29,7 @@ namespace PL
             InitializeComponent();
 
             parcelsView.ItemsSource = myBl.GetParcels();
+            return;
         }
 
         public ParcelListWindow(IBL myBl, List<ParcelAtCustomer> parcels, string v)
@@ -53,6 +54,27 @@ namespace PL
         private void bottonAdd_Click(object sender, RoutedEventArgs e)
         {
             new ParcelWindow(myBl).ShowDialog();
+        }
+
+        private void GroupingWeigth_Click(object sender, RoutedEventArgs e)
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(parcelsView.ItemsSource);
+            PropertyGroupDescription groupDescription = new("Weight");
+            view.GroupDescriptions.Add(groupDescription);
+        }
+
+        private void GroupingSender_Click(object sender, RoutedEventArgs e)
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(parcelsView.ItemsSource);
+            PropertyGroupDescription groupDescription = new("SenderName");
+            view.GroupDescriptions.Add(groupDescription);
+        }
+
+        private void GroupingTarget_Click(object sender, RoutedEventArgs e)
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(parcelsView.ItemsSource);
+            PropertyGroupDescription groupDescription = new("TargetName");
+            view.GroupDescriptions.Add(groupDescription);
         }
     }
 }

@@ -56,9 +56,21 @@
                 <ListView.View>
                     <GridView AllowsColumnReorder="True">
                         <GridViewColumn x:Name="idColumn" Header="Id" DisplayMemberBinding="{Binding Id}"/>
-                        <GridViewColumn x:Name="senderNameColumn" Header="Sender Name" DisplayMemberBinding="{Binding SenderName}"/>
-                        <GridViewColumn x:Name="targetNameColumn" Header="Target Name" DisplayMemberBinding="{Binding TargetName}"/>
-                        <GridViewColumn x:Name="weightColumn" Header="Weight" DisplayMemberBinding="{Binding Weight}"/>
+                        <GridViewColumn x:Name="senderNameColumn" DisplayMemberBinding="{Binding SenderName}">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Content="Sender Name" Click="GroupingSender_Click" Cursor="Hand" ToolTip="Grouping by sender Name"/>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn x:Name="targetNameColumn" DisplayMemberBinding="{Binding TargetName}">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Content="Target Name" Click="GroupingTarget_Click" Cursor="Hand" ToolTip="Grouping by Target Name"/>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn x:Name="weightColumn" DisplayMemberBinding="{Binding Weight}">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Content="Weight" Click="GroupingWeigth_Click" ToolTip="Grouping by weight" Cursor="Hand"/>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
                         <GridViewColumn x:Name="prioritiesColumn" Header="Priorities" DisplayMemberBinding="{Binding Priorities}"/>
                         <GridViewColumn x:Name="requestedColumn" Header="Requested" DisplayMemberBinding="{Binding Requested}"/>
                         <GridViewColumn x:Name="scheduledColumn" Header="Scheduled" DisplayMemberBinding="{Binding Scheduled}"/>
