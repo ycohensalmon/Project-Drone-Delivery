@@ -42,7 +42,7 @@ namespace BL
         Random rand = new Random();
         internal List<DroneInList> drones;
         private double Available, LightParcel, MediumParcel, HeavyParcel, LoadingRate;
-        private int HelpSerialNum = 1011;
+        private int HelpSerialNum = 1010;
 
         public BL()
         {

@@ -101,7 +101,7 @@ namespace Dal
         public Drone GetDroneById(int id)
         {
             XElement droneRoot = XmlTools.LoadListFromXMLElement(dronePath);
-
+            
             Drone? drone = (from s in droneRoot.Elements()
                             where int.Parse(s.Element("Id").Value) == id
                             select new Drone()
@@ -115,7 +115,7 @@ namespace Dal
             if (drone != null)
                 return (Drone)drone;
             else
-                throw new DO.ItemNotFoundException("drone");
+                throw new ItemNotFoundException("drone");
         }
 
         public void NewDrone(Drone drone)
@@ -261,6 +261,16 @@ namespace Dal
             XmlTools.SaveListToXMLElement(droneRoot, dronePath);
         }
 
+        private int getSerialNum()
+        {
+            XElement serialNum = XmlTools.LoadListFromXMLElement(configPath);
+            int num = int.Parse(serialNum.Element("SerialNum").Value) + 1;
+            //serialNum.Remove();
+            serialNum.Element("SerialNum").SetValue(num.ToString());
+            XmlTools.SaveListToXMLElement(serialNum, configPath);
+            return num;
+        }
+
         public void UpdateCustomer(int customerID, string newName, string newPhone)
         {
             var customerList = XmlTools.LoadListFromXMLSerializer<Customer>(customerPath);
@@ -293,7 +303,7 @@ namespace Dal
             parcelList.Add(parcel);
             XmlTools.SaveListToXMLSerializer(parcelList, parcelPath);
 
-            return parcel.Id;
+            return getSerialNum();
         }
 
         public void ConnectDroneToParcel(int droneId, int parcelId)
