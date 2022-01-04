@@ -18,14 +18,6 @@
   </Station>
   <Station>
     <IsDeleted>false</IsDeleted>
-    <Id>1030</Id>
-    <Name>Ramot Mall</Name>
-    <Latitude>31.817627</Latitude>
-    <Longitude>35.194476</Longitude>
-    <ChargeSolts>5</ChargeSolts>
-  </Station>
-  <Station>
-    <IsDeleted>false</IsDeleted>
     <Id>1040</Id>
     <Name>Jerusalem Central Station</Name>
     <Latitude>31.789061</Latitude>
@@ -39,5 +31,13 @@
     <Latitude>31.77787</Latitude>
     <Longitude>35.224982</Longitude>
     <ChargeSolts>2</ChargeSolts>
+  </Station>
+  <Station>
+    <IsDeleted>false</IsDeleted>
+    <Id>1030</Id>
+    <Name>Ramot Mall</Name>
+    <Latitude>31.817627</Latitude>
+    <Longitude>35.194476</Longitude>
+    <ChargeSolts>4</ChargeSolts>
   </Station>
 </ArrayOfStation>

@@ -161,8 +161,9 @@ namespace Dal
         public IEnumerable<Station> GetStations(Func<Station, bool> predicate = null)
         {
             var stationList = XmlTools.LoadListFromXMLSerializer<DO.Station>(stationsPath);
+
             return from station in stationList
-                   where predicate(station)
+                   where predicate == null ? true : predicate(station)
                    select station;
         }
 
@@ -390,9 +391,8 @@ namespace Dal
         public IEnumerable<Parcel> GetParcels(Func<Parcel, bool> predicate = null)
         {
             var parcelList = XmlTools.LoadListFromXMLSerializer<Parcel>(parcelPath);
-            return from item in parcelList
-                   where predicate(item)
-                   select item;
+
+            return parcelList.FindAll(x => predicate == null ? true : predicate(x));
         }
 
         public Parcel GetParcelById(int id)
