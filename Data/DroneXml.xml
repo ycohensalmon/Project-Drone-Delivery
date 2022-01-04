@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Drones>
+  <Drone>
+    <Id>5912</Id>
+    <Model>Magic</Model>
+    <MaxWeight>Heavy</MaxWeight>
+    <IsDeleted>false</IsDeleted>
+  </Drone>
+  <Drone>
+    <Id>8561</Id>
+    <Model>Cobra</Model>
+    <MaxWeight>Light</MaxWeight>
+    <IsDeleted>false</IsDeleted>
+  </Drone>
+  <Drone>
+    <Id>7367</Id>
+    <Model>Magic</Model>
+    <MaxWeight>Heavy</MaxWeight>
+    <IsDeleted>false</IsDeleted>
+  </Drone>
+  <Drone>
+    <Id>2089</Id>
+    <Model>Cobra</Model>
+    <MaxWeight>Heavy</MaxWeight>
+    <IsDeleted>false</IsDeleted>
+  </Drone>
+  <Drone>
+    <Id>4832</Id>
+    <Model>Magic</Model>
+    <MaxWeight>Light</MaxWeight>
+    <IsDeleted>false</IsDeleted>
+  </Drone>
+</Drones>

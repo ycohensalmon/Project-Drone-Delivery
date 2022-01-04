@@ -49,11 +49,14 @@ namespace Dal
         readonly string userPath;
         readonly string configPath;
         public static string localPath;
-             
+
         DalXml()
         {
+
             string str = Assembly.GetExecutingAssembly().Location;
             localPath = Path.GetDirectoryName(str);
+            localPath = Path.GetDirectoryName(localPath);
+            localPath = Path.GetDirectoryName(localPath);
 
             localPath += @"\Data";
 
@@ -64,6 +67,15 @@ namespace Dal
             parcelPath = localPath + @"\ParcelXml.xml";
             userPath = localPath + @"\UserXml.xml";
             configPath = localPath + @"\configXml.xml";
+
+
+            //List<DroneCharge> droneCharge = XmlTools.LoadListFromXMLSerializer<DroneCharge>(droneChargePath);
+            //foreach (var item in droneCharge)
+            //{
+            //    UpdatePluseChargeSlots(item.StationId);
+            //}
+            //droneCharge.Clear();
+            //XmlTools.SaveListToXMLSerializer(droneCharge, droneChargePath);
         }
         #endregion
 
@@ -79,7 +91,8 @@ namespace Dal
                        {
                            Id = int.Parse(s.Element("Id").Value),
                            Model = s.Element("Model").Value,
-                           MaxWeight = (WeightCategory)Enum.Parse(typeof(WeightCategory), s.Element("MaxWeight").Value)
+                           MaxWeight = (WeightCategory)Enum.Parse(typeof(WeightCategory), s.Element("MaxWeight").Value),
+                           IsDeleted = bool.Parse(s.Element("IsDeleted").Value)
                        };
             }
             catch { return null; }
@@ -90,13 +103,14 @@ namespace Dal
             XElement droneRoot = XmlTools.LoadListFromXMLElement(dronePath);
 
             Drone? drone = (from s in droneRoot.Elements()
-                               where int.Parse(s.Element("Id").Value) == id
-                               select new Drone()
-                               {
-                                   Id = int.Parse(s.Element("Id").Value),
-                                   Model = s.Element("Model").Value,
-                                   MaxWeight = (WeightCategory)Enum.Parse(typeof(WeightCategory), s.Element("MaxWeight").Value)
-                               }).FirstOrDefault();
+                            where int.Parse(s.Element("Id").Value) == id
+                            select new Drone()
+                            {
+                                Id = int.Parse(s.Element("Id").Value),
+                                Model = s.Element("Model").Value,
+                                MaxWeight = (WeightCategory)Enum.Parse(typeof(WeightCategory), s.Element("MaxWeight").Value),
+                                IsDeleted = bool.Parse(s.Element("IsDeleted").Value)
+                            }).FirstOrDefault();
 
             if (drone != null)
                 return (Drone)drone;
@@ -116,7 +130,8 @@ namespace Dal
             return new XElement("drone",
                     new XElement("id", drone.Id),
                     new XElement("model", drone.Model),
-                    new XElement("maxWeight", drone.MaxWeight));
+                    new XElement("maxWeight", drone.MaxWeight),
+                    new XElement("IsDeleted", drone.IsDeleted));
         }
         #endregion
 
@@ -142,7 +157,6 @@ namespace Dal
             stationList.Add(station);
             XmlTools.SaveListToXMLSerializer(stationList, stationsPath);
         }
-
 
         public IEnumerable<Station> GetStations(Func<Station, bool> predicate = null)
         {
@@ -239,8 +253,8 @@ namespace Dal
                 throw new IdNotFoundException(droneId, "Drone");
 
             var droneNode = (from d in droneRoot.Elements()
-                           where d.Element("id").Value == droneId.ToString()
-                           select d).FirstOrDefault();
+                             where d.Element("id").Value == droneId.ToString()
+                             select d).FirstOrDefault();
 
             droneNode.Element("model").SetValue(model);
             XmlTools.SaveListToXMLElement(droneRoot, dronePath);
@@ -393,7 +407,7 @@ namespace Dal
 
         public double[] PowerConsumptionByDrone()
         {
-           //var d = XmlTools.LoadListFromXMLSerializer<double>(configPath).ToArray();
+            //var d = XmlTools.LoadListFromXMLSerializer<double>(configPath).ToArray();
             double[] battery = new double[5];
             battery[0] = 0.2;// DataSource.Config.Available;
             battery[1] = 1;// DataSource.Config.LightParcel;
