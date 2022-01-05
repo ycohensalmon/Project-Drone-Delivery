@@ -8,7 +8,7 @@ namespace BO
 {
     public class DroneInList
     {
-
+        public string Image { get; set; }
         public int Id { get; set; }
         public string Model { get; set; }
         public WeightCategory MaxWeight { get; set; }
