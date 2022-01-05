@@ -121,5 +121,11 @@ namespace Dal
             }
         }
         #endregion
+
+        public class Battery
+        {
+            public string Statuse { get; set; }
+            public double lossBattery { get; set; }
+        }
     }
 }

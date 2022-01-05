@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<ArrayOfBattery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Battery>
+    <Statuse>Available</Statuse>
+    <lossBattery>0.4</lossBattery>
+  </Battery>
+  <Battery>
+    <Statuse>LightParcel</Statuse>
+    <lossBattery>2</lossBattery>
+  </Battery>
+  <Battery>
+    <Statuse>MediumParcel</Statuse>
+    <lossBattery>3.5</lossBattery>
+  </Battery>
+  <Battery>
+    <Statuse>HeavyParcel</Statuse>
+    <lossBattery>5</lossBattery>
+  </Battery>
+  <Battery>
+    <Statuse>LoadingRate</Statuse>
+    <lossBattery>60</lossBattery>
+  </Battery>
+</ArrayOfBattery>

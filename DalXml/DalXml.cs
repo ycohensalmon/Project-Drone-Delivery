@@ -48,11 +48,11 @@ namespace Dal
         readonly string parcelPath;
         readonly string userPath;
         readonly string configPath;
+        readonly string batteryPath;
         public static string localPath;
 
         DalXml()
         {
-
             string str = Assembly.GetExecutingAssembly().Location;
             localPath = Path.GetDirectoryName(str);
             localPath = Path.GetDirectoryName(localPath);
@@ -67,6 +67,7 @@ namespace Dal
             parcelPath = localPath + @"\ParcelXml.xml";
             userPath = localPath + @"\UserXml.xml";
             configPath = localPath + @"\configXml.xml";
+            batteryPath = localPath + @"\BattryXml.xml";
         }
         #endregion
 
@@ -261,15 +262,6 @@ namespace Dal
             XmlTools.SaveListToXMLElement(droneRoot, dronePath);
         }
 
-        private int getSerialNum()
-        {
-            XElement serialNum = XmlTools.LoadListFromXMLElement(configPath);
-            int num = int.Parse(serialNum.Element("SerialNum").Value) + 1;
-            //serialNum.Remove();
-            serialNum.Element("SerialNum").SetValue(num.ToString());
-            XmlTools.SaveListToXMLElement(serialNum, configPath);
-            return num;
-        }
 
         public void UpdateCustomer(int customerID, string newName, string newPhone)
         {
@@ -415,17 +407,26 @@ namespace Dal
             return parcel;
         }
 
+        private int getSerialNum()
+        {
+            XElement serialNum = XmlTools.LoadListFromXMLElement(configPath);
+            int num = int.Parse(serialNum.Element("SerialNum").Value) + 1;
+            serialNum.Element("SerialNum").SetValue(num.ToString());
+            XmlTools.SaveListToXMLElement(serialNum, configPath);
+            return num;
+        }
+
+       
         public double[] PowerConsumptionByDrone()
         {
-            //var d = XmlTools.LoadListFromXMLSerializer<double>(configPath).ToArray();
+            var getBatteries = XmlTools.LoadListFromXMLSerializer<XmlTools.Battery>(batteryPath).ToArray();
             double[] battery = new double[5];
-            battery[0] = 0.2;// DataSource.Config.Available;
-            battery[1] = 1;// DataSource.Config.LightParcel;
-            battery[2] = 1.5;// DataSource.Config.MediumParcel;
-            battery[3] = 2;// DataSource.Config.HeavyParcel;
-            battery[4] = 60;// DataSource.Config.LoadingRate;
+            battery[0] = getBatteries[0].lossBattery; // Available;
+            battery[1] = getBatteries[1].lossBattery; // LightParcel;
+            battery[2] = getBatteries[2].lossBattery; // MediumParcel;
+            battery[3] = getBatteries[3].lossBattery; // HeavyParcel;
+            battery[4] = getBatteries[4].lossBattery; // LoadingRate;
             return battery;
-            //return battery;
         }
     }
 }
