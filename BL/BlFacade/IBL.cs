@@ -12,6 +12,7 @@ namespace BlApi
         public void NewStation(Station x);
         public void NewCostumer(Customer x);
         public void NewParcel(Parcel x, int senderID, int receiveID);
+        //public void NewParcelOfUser(Parcel x, int receiveID);
         public void NewDroneInList(DroneInList temp, int numStation);
         public void ConnectDroneToParcel(int droneId);
         public void CollectParcelsByDrone(int droneId);
@@ -40,6 +41,7 @@ namespace BlApi
         public IEnumerable<StationList> GetStationWithChargeSolts();
         public DO.Parcel GetParcelWasConnectToParcel(int droneId, out DroneInList drone);
         public void ClearDroneCharge();
-
+        public bool checkUser(int userId, int password);
+        public void confirmPackage(int userId, int parcelId);
     }
 }

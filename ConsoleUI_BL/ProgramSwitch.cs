@@ -14,12 +14,14 @@ namespace ConsoleUI_BL
         //-----------------------------------------------------------------------------------------------------------//
         // Switchs //
         //-----------------------------------------------------------------------------------------------------------//
+
+        static int choises;
+
         /// <summary>
         /// options of switch1 
         /// </summary>
         private static void Switch1()
         {
-            int choises;
             int.TryParse(Console.ReadLine(), out choises);
 
             switch (choises)
@@ -46,7 +48,6 @@ namespace ConsoleUI_BL
         /// </summary>
         private static void Switch2()
         {
-            int choises;
             int.TryParse(Console.ReadLine(), out choises);
             switch (choises)
             {
@@ -84,7 +85,6 @@ namespace ConsoleUI_BL
         /// </summary>
         private static void Switch3()
         {
-            int choises;
             int.TryParse(Console.ReadLine(), out choises);
             switch (choises)
             {
@@ -110,7 +110,6 @@ namespace ConsoleUI_BL
         /// </summary>
         private static void Switch4()
         {
-            int choises;
             int.TryParse(Console.ReadLine(), out choises);
             switch (choises)
             {
@@ -134,6 +133,27 @@ namespace ConsoleUI_BL
                     break;
                 default:
                     throw new WrongEnumValuesException("Menu", 1, 6);
+            }
+        }
+
+        private static void SwitchUser(int userId)
+        {
+            int.TryParse(Console.ReadLine(), out choises);
+            switch (choises)
+            {
+                case 1:
+                    AddParcel(userId);
+                    break;
+                case 2:
+                    PrintUserById(userId);
+                    break;
+                case 3:
+                    confirmPackage(userId);
+                    break;
+                case 4:
+                    break;
+                default:
+                    throw new WrongEnumValuesException("Menu", 1, 4);
             }
         }
     }

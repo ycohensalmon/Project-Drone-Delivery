@@ -46,6 +46,26 @@ namespace ConsoleUI_BL
             Console.WriteLine(bl.GetCustomerById(customerId));
         }
 
+        private static void PrintUserById(int userId)
+        {
+            Console.WriteLine(bl.GetParcelFromCustomer(userId));
+            Console.WriteLine(bl.GetParcelToCustomer(userId));
+        }
+
+        private static void confirmPackage(int userId)
+        {
+            ///////////
+            Console.WriteLine("choose the parcel to confirm (id)\n");
+            var parcels = from x in bl.GetParcelToCustomer(userId)
+                          where x.Delivered == null
+                          select x;
+
+            Console.WriteLine(parcels);
+            int.TryParse(Console.ReadLine(), out int parcelId);
+
+            bl.confirmPackage(userId, parcelId);
+        }
+
         /// <summary>
         /// returns the object parcel that matches the id
         /// </summary>

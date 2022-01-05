@@ -215,7 +215,7 @@ namespace Dal
         #region user
         public User GetUserById(int id)
         {
-            var userList = XmlTools.LoadListFromXMLSerializer<DO.User>(userPath);
+            var userList = XmlTools.LoadListFromXMLSerializer<User>(userPath);
 
             var user = userList.FirstOrDefault(s => s.Id == id);
             if (user.Id == id)

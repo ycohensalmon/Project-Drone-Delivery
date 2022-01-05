@@ -32,13 +32,6 @@ namespace ConsoleUI_BL
                 Console.ForegroundColor = ConsoleColor.White;
         }
 
-        private static void PrintAskMenu()
-        {
-            Console.WriteLine(
-                "for login as user- - - - press 1:\n" +
-                "for login as manager - - press 2:\n" );
-        }
-
         /// <summary>
         /// Print main menu to user
         /// </summary>
@@ -107,18 +100,18 @@ namespace ConsoleUI_BL
                 "Display base stations with available charging stations - - - - - - - - - - press 6");
         }
 
-        private static void PrintUserMenu()
+        private static void PrintLoginMenu()
         {
             Console.WriteLine(
-                "for login - - - - - - - - - press 1:\n" +
-                "for create a new user - - - press 2:\n");
+                "for login as user or manager- - - - press 1:\n" +
+                "for create a new user - - - - - - - press 2:\n");
         }
 
         private static void UserInterfacePrinting()
         {
             Console.WriteLine(
                 "To send a packege - - - - - - - - - - - - - - - - - press 1:\n" + 
-                "To see your packege - - - - - - - - - - - - - - - - press 2:\n" +
+                "To see your packeges- - - - - - - - - - - - - - - - press 2:\n" +
                 "To confirmation of package collection by drone- - - press 3:\n" +
                 "To confirmation of receipt of package - - - - - - - press 4:\n");  
         }

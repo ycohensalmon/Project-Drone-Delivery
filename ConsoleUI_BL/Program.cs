@@ -20,18 +20,21 @@ namespace ConsoleUI_BL
 
             do
             {
-                PrintAskMenu();
-                int.TryParse(Console.ReadLine(), out choises);
                 if (choises == 1)
                 {
-                    PrintUserMenu();
+                    PrintLoginMenu();
                     int.TryParse(Console.ReadLine(), out choises);
+                    Console.WriteLine("add Id: (9 digits)");
+                    int id = AddId9(true, true);
                     try
                     {
                         switch (choises)
                         {
-                            case 1: 
+                            case 1:
+                                if (CheckLoginAsManagerOrUser(id))
+                                    continue;
                                 UserInterfacePrinting();
+                                SwitchUser(id);
                                 break;
                             case 2:
                                 //printCreateUserMenu();

@@ -93,11 +93,15 @@ namespace ConsoleUI_BL
         }
 
         /// <summary>
-        /// add parcel to the list
+        /// add pacel to the list
         /// </summary>
-        private static void AddParcel()
+        /// <param name="senderId">if it a user "senderId" = user id. else: "senderId" = 0.</param>
+        private static void AddParcel(int senderId = 0)
         {
-            int senderID = AddId9(true, false);
+            int senderID = senderId;
+
+            if (senderId == 0) //it`s not a user
+                senderID = AddId9(true, false);
             int receiveID = AddId9(false, true);
             int priorities = AddPriorities();
             int weight = AddWeigth();
@@ -211,6 +215,7 @@ namespace ConsoleUI_BL
             } while (id < 0);
             return id;
         }
+
         private static int AddPhone()
         {
             int phone;

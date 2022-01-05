@@ -156,5 +156,13 @@ namespace BL
         {
             return parcel.FirstOrDefault(parcel => parcel.DroneId == droneId);
         }
+
+        public bool checkUser(int userId, int password)
+        {
+            BO.User check = GetUserById(userId);
+            if (check.SafePassword != password)
+                throw new IncorectInputException("password");
+            return check.IsAdmin;
+        }
     }
 }

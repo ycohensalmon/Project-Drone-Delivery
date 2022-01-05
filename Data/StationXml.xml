@@ -2,35 +2,27 @@
 <ArrayOfStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Station>
     <IsDeleted>false</IsDeleted>
-    <Id>1030</Id>
-    <Name>Ramot Mall</Name>
-    <Latitude>31.817627</Latitude>
-    <Longitude>35.194476</Longitude>
-    <ChargeSolts>1</ChargeSolts>
-  </Station>
-  <Station>
-    <IsDeleted>false</IsDeleted>
-    <Id>1030</Id>
-    <Name>Ramot Mall</Name>
-    <Latitude>31.817627</Latitude>
-    <Longitude>35.194476</Longitude>
-    <ChargeSolts>10</ChargeSolts>
-  </Station>
-  <Station>
-    <IsDeleted>false</IsDeleted>
-    <Id>1040</Id>
-    <Name>Jerusalem Central Station</Name>
-    <Latitude>31.789061</Latitude>
-    <Longitude>35.2031</Longitude>
-    <ChargeSolts>5</ChargeSolts>
-  </Station>
-  <Station>
-    <IsDeleted>false</IsDeleted>
     <Id>1020</Id>
     <Name>Hadar Mall</Name>
     <Latitude>31.753791</Latitude>
     <Longitude>35.213429</Longitude>
     <ChargeSolts>4</ChargeSolts>
+  </Station>
+  <Station>
+    <IsDeleted>false</IsDeleted>
+    <Id>1050</Id>
+    <Name>Mamila Mall</Name>
+    <Latitude>31.77787</Latitude>
+    <Longitude>35.224982</Longitude>
+    <ChargeSolts>2</ChargeSolts>
+  </Station>
+  <Station>
+    <IsDeleted>false</IsDeleted>
+    <Id>1030</Id>
+    <Name>Ramot Mall</Name>
+    <Latitude>31.817627</Latitude>
+    <Longitude>35.194476</Longitude>
+    <ChargeSolts>0</ChargeSolts>
   </Station>
   <Station>
     <IsDeleted>false</IsDeleted>
@@ -42,10 +34,18 @@
   </Station>
   <Station>
     <IsDeleted>false</IsDeleted>
-    <Id>1050</Id>
-    <Name>Mamila Mall</Name>
-    <Latitude>31.77787</Latitude>
-    <Longitude>35.224982</Longitude>
-    <ChargeSolts>2</ChargeSolts>
+    <Id>1040</Id>
+    <Name>Jerusalem Central Station</Name>
+    <Latitude>31.789061</Latitude>
+    <Longitude>35.2031</Longitude>
+    <ChargeSolts>5</ChargeSolts>
+  </Station>
+  <Station>
+    <IsDeleted>false</IsDeleted>
+    <Id>1030</Id>
+    <Name>Ramot Mall</Name>
+    <Latitude>31.817627</Latitude>
+    <Longitude>35.194476</Longitude>
+    <ChargeSolts>11</ChargeSolts>
   </Station>
 </ArrayOfStation>

@@ -10,8 +10,10 @@ namespace BO
     {
         public Int32 Id { get; set; }
         public string UserName { get; set; }
-        public string SafePassword { get; set; }
+        public int SafePassword { get; set; }
         public string Photo { get; set; }
+        public bool IsAdmin { get; set; }
+        public bool IsDeleted { get; set; } = false;
         public Customer customer { get; set; }
         public override string ToString()
         {

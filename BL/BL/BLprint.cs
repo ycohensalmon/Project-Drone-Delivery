@@ -184,6 +184,8 @@ namespace BL
                 UserName = user.UserName,
                 SafePassword = user.SafePassword,
                 Photo = user.Photo,
+                IsAdmin = user.IsAdmin,
+                IsDeleted = user.IsDeleted,
                 customer = GetCustomerById(userId)
             };
         }

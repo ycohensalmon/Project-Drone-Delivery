@@ -256,6 +256,13 @@ namespace BL
             return dalObj.GetParcelById(drone.NumParcel);
         }
 
+        public void confirmPackage(int userId, int parcelId)
+        {
+           dalObj.
+
+
+        }
+
         public void SendDroneToCharge(int droneId)
         {
             //getting the drone
