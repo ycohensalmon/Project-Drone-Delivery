@@ -420,12 +420,28 @@ namespace Dal
         public double[] PowerConsumptionByDrone()
         {
             var getBatteries = XmlTools.LoadListFromXMLSerializer<XmlTools.Battery>(batteryPath).ToArray();
+
             double[] battery = new double[5];
-            battery[0] = getBatteries[0].lossBattery; // Available;
-            battery[1] = getBatteries[1].lossBattery; // LightParcel;
-            battery[2] = getBatteries[2].lossBattery; // MediumParcel;
-            battery[3] = getBatteries[3].lossBattery; // HeavyParcel;
-            battery[4] = getBatteries[4].lossBattery; // LoadingRate;
+            battery[0] = (from index in getBatteries
+                          where index.Statuse == "Available"
+                          select index.lossBattery).FirstOrDefault();
+                        
+            battery[1] = (from index in getBatteries
+                          where index.Statuse == "LightParcel"
+                          select index.lossBattery).FirstOrDefault();
+
+            battery[2] = (from index in getBatteries
+                          where index.Statuse == "MediumParcel"
+                          select index.lossBattery).FirstOrDefault();
+
+            battery[3] = (from index in getBatteries
+                          where index.Statuse == "HeavyParcel"
+                          select index.lossBattery).FirstOrDefault();
+
+            battery[4] = (from index in getBatteries
+                          where index.Statuse == "LoadingRate"
+                          select index.lossBattery).FirstOrDefault();
+
             return battery;
         }
     }
