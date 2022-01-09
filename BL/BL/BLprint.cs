@@ -49,20 +49,30 @@ namespace BL
                 Parcel parcel = GetParcelById(droneInList.NumParcel);
 
                 parcelInTravel.Id = parcel.Id;
+
                 if (parcel.PickedUp != null)
+                {
                     parcelInTravel.InTravel = true;
+                    //Getting distance from the drone to target
+                    parcelInTravel.Distance = Distance.GetDistanceFromLatLonInKm(
+                        droneInList.Location.Latitude, droneInList.Location.Longitude,
+                        GetCustomerById(parcel.Target.Id).Location.Latitude, GetCustomerById(parcel.Target.Id).Location.Longitude);
+                }
                 else
+                {
                     parcelInTravel.InTravel = false;
+                    //Getting distance from the drone to Sender
+                    parcelInTravel.Distance = Distance.GetDistanceFromLatLonInKm(
+                        droneInList.Location.Latitude, droneInList.Location.Longitude,
+                        GetCustomerById(parcel.Sender.Id).Location.Latitude, GetCustomerById(parcel.Sender.Id).Location.Longitude);
+                }
+
                 parcelInTravel.Weight = parcel.Weight;
                 parcelInTravel.Priorities = parcel.Priorities;
                 parcelInTravel.Sender = parcel.Sender;
                 parcelInTravel.Target = parcel.Target;
                 parcelInTravel.source = GetCustomerById(parcel.Sender.Id).Location;
                 parcelInTravel.Destination = GetCustomerById(parcel.Target.Id).Location;
-                //Getting distance from the drone to target
-                parcelInTravel.Distance = Distance.GetDistanceFromLatLonInKm(
-                    droneInList.Location.Latitude, droneInList.Location.Longitude,
-                    GetCustomerById(parcel.Sender.Id).Location.Latitude, GetCustomerById(parcel.Sender.Id).Location.Longitude);
             }
 
             return new Drone
