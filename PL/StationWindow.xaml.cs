@@ -29,9 +29,9 @@ namespace PL
         /// add station constractor
         /// </summary>
         /// <param name="myBl">the sigelton from the BL layer</param>
-        public StationWindow(BlApi.IBL myBl)
+        public StationWindow()
         {
-            this.myBl = myBl;
+            this.myBl = BlApi.BlFactory.GetBl();
             InitializeComponent();
             AddStation.Visibility = Visibility.Visible;
             UpdateStation.Visibility = Visibility.Hidden;
@@ -105,9 +105,9 @@ namespace PL
         /// </summary>
         /// <param name="myBl">the sigelton from the BL layer</param>
         /// <param name="selectedItem">the item that was selected from the list of stations</param>
-        public StationWindow(IBL myBl, Station station)
+        public StationWindow(Station station)
         {
-            this.myBl = myBl;
+            this.myBl = BlApi.BlFactory.GetBl();
             this.station = station;
             InitializeComponent();
 

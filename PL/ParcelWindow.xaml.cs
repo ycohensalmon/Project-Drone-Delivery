@@ -24,9 +24,9 @@ namespace PL
         object selectedItem;
 
         #region add parcel
-        public ParcelWindow(BlApi.IBL myBl)
+        public ParcelWindow()
         {
-            this.myBl = myBl;
+            this.myBl = BlApi.BlFactory.GetBl();
             InitializeComponent();
             UpdateParcel.Visibility = Visibility.Hidden;
             AddParcel.Visibility = Visibility.Visible;
@@ -61,9 +61,9 @@ namespace PL
         #endregion
 
         #region update parcel
-        public ParcelWindow(BlApi.IBL myBl, object selectedItem)
+        public ParcelWindow(object selectedItem)
         {
-            this.myBl = myBl;
+            this.myBl = BlApi.BlFactory.GetBl();
             this.selectedItem = selectedItem;
             this.parcel = myBl.GetParcelById(((BO.ParcelInList)selectedItem).Id);
             InitializeComponent();
@@ -86,19 +86,19 @@ namespace PL
         private void DroneInformation_Click(object sender, RoutedEventArgs e)
         {
             var drone = myBl.GetDroneById(parcel.Drone.Id);
-            new DroneWindow(myBl, drone);
+            new DroneWindow(drone);
         }
 
         private void TargetInformation_Click(object sender, RoutedEventArgs e)
         {
             var customer = myBl.GetCustomerById(parcel.Sender.Id);
-            new CustomerWindow(myBl, customer).Show();
+            new CustomerWindow(customer).Show();
         }
 
         private void SenderInformation_Click(object sender, RoutedEventArgs e)
         {
             var customer = myBl.GetCustomerById(parcel.Target.Id);
-            new CustomerWindow(myBl, customer).Show();
+            new CustomerWindow(customer).Show();
         }
         #endregion
 

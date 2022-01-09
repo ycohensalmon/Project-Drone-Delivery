@@ -20,9 +20,10 @@ namespace PL
     public partial class LoginWindow : Window
     {
         MainWindow wnd = (MainWindow)Application.Current.MainWindow;
-
+        BlApi.IBL myBl;
         public LoginWindow()
         {
+            myBl = BlApi.BlFactory.GetBl();
             InitializeComponent();
         }
 
@@ -34,10 +35,12 @@ namespace PL
 
         private void UIElement_OnMouseLeave(object sender, MouseEventArgs e)
         {
-            if (UserNameTextBox.Text == "admin" && PasswordBox.Password == "123")
-                Close();
-            else
-                WrongPassword.Text = "username or password are incorrect";
+            //if (UserNameTextBox.Text == "admin" && PasswordBox.Password == "123")
+            //    Close();
+            //else
+            //    WrongPassword.Text = "username or password are incorrect";
+            new MainWindow().Show();
+            Close();
         }
 
         private void UserNameTextBox_OnTextChanged(object sender, TextChangedEventArgs e)

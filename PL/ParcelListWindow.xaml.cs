@@ -23,9 +23,9 @@ namespace PL
     {
         BlApi.IBL myBl;
 
-        public ParcelListWindow(BlApi.IBL myBl)
+        public ParcelListWindow()
         {
-            this.myBl = myBl;
+            this.myBl = BlApi.BlFactory.GetBl();
             InitializeComponent();
 
             parcelsView.ItemsSource = myBl.GetParcels();
@@ -43,7 +43,7 @@ namespace PL
 
         private void parcelsView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            new ParcelWindow(myBl, parcelsView.SelectedItem).Show();
+            new ParcelWindow(parcelsView.SelectedItem).Show();
         }
 
         private void bottonExit_Click(object sender, RoutedEventArgs e)
@@ -53,7 +53,7 @@ namespace PL
 
         private void bottonAdd_Click(object sender, RoutedEventArgs e)
         {
-            new ParcelWindow(myBl).ShowDialog();
+            new ParcelWindow().ShowDialog();
         }
 
         private void GroupingWeigth_Click(object sender, RoutedEventArgs e)

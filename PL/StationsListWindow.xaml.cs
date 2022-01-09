@@ -20,9 +20,9 @@ namespace PL
     public partial class StationsListWindow : Window
     {
         BlApi.IBL myBl;
-        public StationsListWindow(BlApi.IBL myBl)
+        public StationsListWindow()
         {
-            this.myBl = myBl;
+            this.myBl = BlApi.BlFactory.GetBl();
             InitializeComponent();
             StasionsListView.ItemsSource = myBl.GetStations();
         }
@@ -30,7 +30,7 @@ namespace PL
         private void StationView_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             var station = myBl.GetStationById(((BO.StationList)StasionsListView.SelectedItem).Id);
-            new StationWindow(myBl, station).Show();
+            new StationWindow(station).Show();
         }
 
         private void bottonExit_Click(object sender, RoutedEventArgs e)
@@ -40,7 +40,7 @@ namespace PL
 
         private void bottonAdd_Click(object sender, RoutedEventArgs e)
         {
-            new StationWindow(myBl).ShowDialog();
+            new StationWindow().ShowDialog();
             StasionsListView.ItemsSource = myBl.GetStations();
         }
     }

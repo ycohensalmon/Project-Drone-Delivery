@@ -157,12 +157,18 @@ namespace BL
             return parcel.FirstOrDefault(parcel => parcel.DroneId == droneId);
         }
 
-        public bool checkUser(int userId, int password)
+        private ParcelStatuses GetParcelStatus(BO.Parcel parcel)
         {
-            BO.User check = GetUserById(userId);
-            if (int.Parse(check.SafePassword) != password)
-                throw new IncorectInputException("password");
-            return check.IsAdmin;
+            if (parcel.Requested != null && parcel.Scheduled == null)
+                return ParcelStatuses.Requested;
+
+            if (parcel.Scheduled != null && parcel.PickedUp == null)
+                return ParcelStatuses.Scheduled;
+
+            if (parcel.PickedUp != null && parcel.Delivered == null)
+                return ParcelStatuses.PickedUp;
+
+            return ParcelStatuses.Delivered;
         }
     }
 }

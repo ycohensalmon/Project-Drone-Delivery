@@ -22,14 +22,14 @@ namespace PL
     public partial class DronesListWindow : Window
     {
         IBL myBl;
-
-        public DronesListWindow(IBL bl)
+        IEnumerable<DroneInList> droneList;
+        public DronesListWindow()
         {
-            this.myBl = bl;
+            this.myBl = BlApi.BlFactory.GetBl();
             InitializeComponent();
             this.ComboStatusSelector.ItemsSource = Enum.GetValues(typeof(BO.DroneStatuses));
             this.ComboWeightSelector.ItemsSource = Enum.GetValues(typeof(BO.WeightCategory));
-            var droneList = bl.GetDrones();
+            droneList = myBl.GetDrones();
             this.DronesListView.ItemsSource = droneList;
         }
 
@@ -44,15 +44,22 @@ namespace PL
             {
                 DroneStatuses status = (DroneStatuses)ComboStatusSelector.SelectedItem;
                 if (ComboWeightSelector.SelectedItem == null)
-                    this.DronesListView.ItemsSource = myBl.GetDrones().Where(x => x.Status == status);
+                {
+                    this.droneList = myBl.GetDrones().Where(x => x.Status == status);
+                    this.DronesListView.ItemsSource = droneList;
+                }
                 else
                 {
                     WeightCategory Weight = (WeightCategory)ComboWeightSelector.SelectedItem;
-                    this.DronesListView.ItemsSource = myBl.GetDrones().Where(x => x.Status == status && x.MaxWeight == Weight);
+                    this.droneList = myBl.GetDrones().Where(x => x.Status == status && x.MaxWeight == Weight);
+                    this.DronesListView.ItemsSource = droneList;
                 }
             }
             else
-                this.DronesListView.ItemsSource = myBl.GetDrones();
+            {
+                this.droneList = myBl.GetDrones();
+                this.DronesListView.ItemsSource = droneList;
+            }
         }
 
         private void ComboWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -62,20 +69,28 @@ namespace PL
                 WeightCategory Weight = (WeightCategory)ComboWeightSelector.SelectedItem;
 
                 if (ComboStatusSelector.SelectedItem == null)
-                    this.DronesListView.ItemsSource = myBl.GetDrones().Where(x => x.MaxWeight == Weight);
+                {
+                    droneList = myBl.GetDrones().Where(x => x.MaxWeight == Weight);
+                    this.DronesListView.ItemsSource = droneList;
+
+                }
                 else
                 {
                     DroneStatuses status = (DroneStatuses)ComboStatusSelector.SelectedItem;
-                    this.DronesListView.ItemsSource = myBl.GetDrones().Where(x => x.Status == status && x.MaxWeight == Weight);
+                    this.droneList = myBl.GetDrones().Where(x => x.Status == status && x.MaxWeight == Weight);
+                    this.DronesListView.ItemsSource = droneList;
                 }
             }
             else
-                this.DronesListView.ItemsSource = myBl.GetDrones();
+            {
+                this.droneList = myBl.GetDrones();
+                this.DronesListView.ItemsSource = droneList;
+            }
         }
 
         private void BottonAdd_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(myBl).ShowDialog();
+            new DroneWindow().ShowDialog();
 
             ButtonClearStatus_Click(sender, e);
             ButtonClearWeight_Click(sender, e);
@@ -90,7 +105,7 @@ namespace PL
             Border dataDrone = e.OriginalSource as Border;
             
             var drone = myBl.GetDroneById(((DroneInList)dataDrone.DataContext).Id);
-            DroneWindow droneWindow = new(myBl, drone);
+            DroneWindow droneWindow = new(drone);
 
             droneWindow.bottonUpdate.Click += UpdateDroneList;
             droneWindow.conectToParcel.Click += UpdateDroneList;
@@ -117,6 +132,25 @@ namespace PL
         private void ButtonClearWeight_Click(object sender, RoutedEventArgs e)
         {
             this.ComboWeightSelector.SelectedItem = null;
+        }
+
+
+        private void WeightGroupe_Click(object sender, RoutedEventArgs e)
+        {
+            var droneList = myBl.GetDrones();
+            this.DronesListView.ItemsSource = droneList;
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DronesListView.ItemsSource);
+            PropertyGroupDescription groupDescription = new("MaxWeight");
+            view.GroupDescriptions.Add(groupDescription);
+        }
+
+        private void StatusGroupe_Click(object sender, RoutedEventArgs e)
+        {
+            var droneList = myBl.GetDrones();
+            this.DronesListView.ItemsSource = droneList;
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DronesListView.ItemsSource);
+            PropertyGroupDescription groupDescription = new("Status");
+            view.GroupDescriptions.Add(groupDescription);
         }
     }
 }

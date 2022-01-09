@@ -49,7 +49,7 @@ namespace Dal
                 UserName = "Elhanan",
                 IsAdmin = true,
                 IsDeleted = false,
-                SafePassword = "1234",
+                SafePassword = 1234,
                 Photo = ""
             });
 
@@ -59,7 +59,7 @@ namespace Dal
                 UserName = "Yossef",
                 IsAdmin = false,
                 IsDeleted = false,
-                SafePassword = "4321",
+                SafePassword = 4321,
                 Photo = ""
             });
         }

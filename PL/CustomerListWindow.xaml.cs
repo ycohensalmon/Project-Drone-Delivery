@@ -21,9 +21,9 @@ namespace PL
     public partial class CustomerListWindow : Window
     {
         BlApi.IBL myBl;
-        public CustomerListWindow(BlApi.IBL myBl)
+        public CustomerListWindow()
         {
-            this.myBl = myBl;
+            this.myBl = BlApi.BlFactory.GetBl();
             InitializeComponent();
             var customerList = myBl.GetCustomers();
             this.customersView.ItemsSource = customerList;
@@ -36,14 +36,14 @@ namespace PL
 
         private void BottonAdd_Click(object sender, RoutedEventArgs e)
         {
-            new CustomerWindow(myBl).ShowDialog();
+            new CustomerWindow().ShowDialog();
             customersView.ItemsSource = myBl.GetCustomers();
         }
 
         private void Customer_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             var customer = myBl.GetCustomerById(((BO.CustumerInList)customersView.SelectedItem).Id);
-            new CustomerWindow(myBl, customer).Show();
+            new CustomerWindow(customer).Show();
 
         }
     }
