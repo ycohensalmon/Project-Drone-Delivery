@@ -160,7 +160,7 @@ namespace BL
         public bool checkUser(int userId, int password)
         {
             BO.User check = GetUserById(userId);
-            if (check.SafePassword != password)
+            if (int.Parse(check.SafePassword) != password)
                 throw new IncorectInputException("password");
             return check.IsAdmin;
         }

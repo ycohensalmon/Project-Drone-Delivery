@@ -10,7 +10,7 @@ namespace DO
     {
         public Int32 Id { get; set; }
         public string UserName { get; set; }
-        public int SafePassword { get; set; }
+        public string SafePassword { get; set; }
         public string Photo { get; set; }
         public bool IsAdmin { get; set; }
         public bool IsDeleted { get; set; }
