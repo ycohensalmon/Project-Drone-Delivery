@@ -26,9 +26,9 @@ namespace PL
         public Drone drone;
 
         #region add drone
-        public DroneWindow(IBL myBl)
+        public DroneWindow()
         {
-            this.myBl = myBl;
+            this.myBl = BlApi.BlFactory.GetBl();
             InitializeComponent();
             UpdateDrone.Visibility = Visibility.Hidden;
             AddDrone.Visibility = Visibility.Visible;
@@ -127,9 +127,9 @@ namespace PL
         #endregion
 
         #region update
-        public DroneWindow(IBL myBl, Drone drone)
+        public DroneWindow(Drone drone)
         {
-            this.myBl = myBl;
+            this.myBl = BlApi.BlFactory.GetBl();
             this.drone = drone;
             InitializeComponent();
             AddDrone.Visibility = Visibility.Hidden;

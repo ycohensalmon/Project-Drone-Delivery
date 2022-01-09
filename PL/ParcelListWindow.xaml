@@ -72,16 +72,7 @@
                             </GridViewColumn.Header>
                         </GridViewColumn>
                         <GridViewColumn x:Name="prioritiesColumn" Header="Priorities" DisplayMemberBinding="{Binding Priorities}"/>
-                        <GridViewColumn x:Name="requestedColumn" Header="Requested" DisplayMemberBinding="{Binding Requested}"/>
-                        <GridViewColumn x:Name="scheduledColumn" Header="Scheduled" DisplayMemberBinding="{Binding Scheduled}"/>
-                        <GridViewColumn x:Name="pickedUpColumn" Header="Picked Up" DisplayMemberBinding="{Binding PickedUp}"/>
-                        <GridViewColumn x:Name="deliveredColumn" Header="Delivered">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Label Content="{Binding Delivered}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                        <GridViewColumn x:Name="StatusColumn" Header="Status" DisplayMemberBinding="{Binding Status}"/>
                     </GridView>
                 </ListView.View>
             </ListView>

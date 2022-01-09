@@ -38,22 +38,22 @@ namespace PL
 
         private void ClickDrones(object sender, MouseButtonEventArgs e)
         {
-            new DronesListWindow(myBl).ShowDialog();
+            new DronesListWindow().ShowDialog();
         }
 
         private void StationsClick(object sender, MouseButtonEventArgs e)
         {
-            new StationsListWindow(myBl).ShowDialog();
+            new StationsListWindow().ShowDialog();
         }
 
         private void ClickCustomers(object sender, MouseButtonEventArgs e)
         {
-            new CustomerListWindow(myBl).ShowDialog();
+            new CustomerListWindow().ShowDialog();
         }
 
         private void ParcelClick(object sender, MouseButtonEventArgs e)
         {
-            new ParcelListWindow(myBl).ShowDialog();
+            new ParcelListWindow().ShowDialog();
         }
     }
 }

@@ -11,16 +11,13 @@ namespace BO
         public int Id { get; set; }
         public string SenderName { get; set; }
         public string TargetName { get; set; }
-        public DateTime? Requested { get; set; }
-        public DateTime? Scheduled { get; set; }
-        public DateTime? PickedUp { get; set; }
-        public DateTime? Delivered { get; set; }
+        public ParcelStatuses Status { get; set; }
         public WeightCategory Weight { get; set; }
         public Priority Priorities { get; set; }
         public override string ToString()
         {
-            return $"Id: {Id} \nSenderName: {SenderName} \nTargetName: {TargetName}S\nRequested: {Requested} " +
-                $"\nScheduled: {Scheduled}\nPickedUp:  {PickedUp} \nDelivered: {Delivered}\nWeight: {Weight} \nPriorities:{Priorities}\n";
+            return $"Id: {Id} \nSenderName: {SenderName} \nTargetName: {TargetName}S\nStatus: {Status} " +
+                $"\nWeight: {Weight} \nPriorities:{Priorities}\n";
         }
     }
 }

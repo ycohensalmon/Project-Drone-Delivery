@@ -23,9 +23,9 @@ namespace PL
         BO.Customer customer;
 
         #region update customer
-        public CustomerWindow(BlApi.IBL myBl, BO.Customer customer)
+        public CustomerWindow(BO.Customer customer)
         {
-            this.myBl = myBl;
+            this.myBl = BlApi.BlFactory.GetBl();
             this.customer = customer;
             InitializeComponent();
 
@@ -78,9 +78,9 @@ namespace PL
         #endregion
 
         #region add customer
-        public CustomerWindow(BlApi.IBL myBl)
+        public CustomerWindow()
         {
-            this.myBl = myBl;
+            this.myBl = BlApi.BlFactory.GetBl();
             InitializeComponent();
             UpdateCustomer.Visibility = Visibility.Hidden;
             AddCustomer.Visibility = Visibility.Visible;

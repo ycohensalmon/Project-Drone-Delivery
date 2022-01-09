@@ -193,19 +193,19 @@ namespace BL
         public IEnumerable<StationList> GetStations(Predicate<StationList> predicate = null)
         {
             var stations = from item in dalObj.GetStations()
-                    let station = GetStationById(item.Id)
-                    select new StationList
-                    {
-                        Id = station.Id,
-                        Name = station.Name,
-                        ChargeSoltsAvailable = station.ChargeSolts,
-                        ChargeSoltsBusy = station.DroneCharges.Count()
-                    };
+                           let station = GetStationById(item.Id)
+                           select new StationList
+                           {
+                               Id = station.Id,
+                               Name = station.Name,
+                               ChargeSoltsAvailable = station.ChargeSolts,
+                               ChargeSoltsBusy = station.DroneCharges.Count()
+                           };
 
             if (predicate != null)
                 stations = stations.ToList().FindAll(x => predicate(x));
 
-            if (!stations.Any()) 
+            if (!stations.Any())
                 throw new EmptyListException("stations");
 
             return stations;
@@ -264,10 +264,7 @@ namespace BL
                     Id = parcel.Id,
                     SenderName = parcel.Sender.Name,
                     TargetName = parcel.Target.Name,
-                    Requested = parcel.Requested,
-                    Scheduled = parcel.Scheduled,
-                    PickedUp = parcel.PickedUp,
-                    Delivered = parcel.Delivered,
+                    Status = GetParcelStatus(parcel),
                     Weight = parcel.Weight,
                     Priorities = parcel.Priorities
                 });
@@ -320,9 +317,7 @@ namespace BL
                     Id = parcel.Id,
                     SenderName = parcel.Sender.Name,
                     TargetName = parcel.Target.Name,
-                    Requested = parcel.Requested,
-                    Scheduled = parcel.Scheduled,
-                    Delivered = parcel.Delivered,
+                    Status = GetParcelStatus(parcel),
                     Weight = parcel.Weight,
                     Priorities = parcel.Priorities
                 });

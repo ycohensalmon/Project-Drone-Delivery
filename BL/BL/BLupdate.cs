@@ -258,9 +258,7 @@ namespace BL
 
         public void confirmPackage(int userId, int parcelId)
         {
-           dalObj.
-
-
+           //dalObj.
         }
 
         public void SendDroneToCharge(int droneId)
