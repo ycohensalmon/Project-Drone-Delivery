@@ -38,6 +38,13 @@ namespace BL
                                     myBL.ConnectDroneToParcel(d.Id);
                                 }
                             }
+                            catch (NotEnoughBatteryException)
+                            {
+                                lock (myBL)
+                                {
+                                    myBL.SendDroneToCharge(d.Id);
+                                }
+                            }
                             catch (NoParcelException)
                             {
 

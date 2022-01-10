@@ -90,14 +90,18 @@ namespace BL
                 if (!parcels.Any())
                     throw new NoParcelException("requested", "scheduled");
 
-                DO.Parcel worth = parcels.FirstOrDefault(x => CheckEnoughBattery(x, drone) > 0 && (int)x.Weight <= (int)drone.MaxWeight);
-                if (worth.Id == 0)
-                    throw new ParcelTooHeavyException(drone.MaxWeight);
+                DO.Parcel worth = parcels.First();
             
                 foreach (var x in parcels)
                 {
                     worth = GetWorthParcel((DO.Parcel)worth, x, drone);
                 }
+
+                if (CheckEnoughBattery(worth, drone) < 0)
+                    throw new NotEnoughBatteryException("take any parcel", drone.Battery);
+
+                if((int)worth.Weight > (int)drone.MaxWeight)
+                    throw new ParcelTooHeavyException(drone.MaxWeight);
 
                 //update the drone in BL
                 drone.Status = DroneStatuses.Delivery;
@@ -181,17 +185,17 @@ namespace BL
                 batteryIossAvailable = BatteryIossAvailable(drone.Location.Latitude, drone.Location.Longitude,
                     dalObj.GetCustomerById(parcel.SenderId).Latitude, dalObj.GetCustomerById(parcel.SenderId).Longitude);
 
+                //KM from sender lo target
+                batteryIossWithParcel = BatteryIossWithParcel(dalObj.GetCustomerById(parcel.SenderId).Latitude,
+                dalObj.GetCustomerById(parcel.SenderId).Longitude, dalObj.GetCustomerById(parcel.TargetId).Latitude,
+                dalObj.GetCustomerById(parcel.TargetId).Longitude, (int)parcel.Weight);
+
                 //base station closest to target
                 Location temp = GetLocationWithMinDistance(dalObj.GetStations(), dalObj.GetCustomerById(parcel.TargetId));
 
                 //loss from target to base station
                 batteryIossAvailable += BatteryIossAvailable(dalObj.GetCustomerById(parcel.TargetId).Latitude,
                 dalObj.GetCustomerById(parcel.TargetId).Longitude, temp.Latitude, temp.Longitude);
-
-                //KM from sender lo target
-                batteryIossWithParcel = BatteryIossWithParcel(dalObj.GetCustomerById(parcel.SenderId).Latitude,
-                dalObj.GetCustomerById(parcel.SenderId).Longitude, dalObj.GetCustomerById(parcel.TargetId).Latitude,
-                dalObj.GetCustomerById(parcel.TargetId).Longitude, (int)parcel.Weight);
 
                 allBatteryLoss = batteryIossAvailable + batteryIossWithParcel;
                 return (drone.Battery - allBatteryLoss);
@@ -285,7 +289,6 @@ namespace BL
             }
         }
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void SendDroneToCharge(int droneId)
@@ -363,8 +366,10 @@ namespace BL
 
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ClearDroneCharge() { lock (dalObj) { dalObj.ClearDroneCharge(); } }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ActivSimulator(int id, Action updateDelegate, Func<bool> stopDelegate)
         {
             new Simulator(id, updateDelegate, stopDelegate, this);
