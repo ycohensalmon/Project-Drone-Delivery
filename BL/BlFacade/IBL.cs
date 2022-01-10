@@ -43,5 +43,7 @@ namespace BlApi
         public void ClearDroneCharge();
         public bool checkUser(int userId, int password);
         public void confirmPackage(int userId, int parcelId);
+        public void ActivSimulator(int id, Action updateDelegate, Func<bool> stopDelegate);
+
     }
 }
