@@ -24,13 +24,20 @@ namespace PL
         {
             this.myBl = BlApi.BlFactory.GetBl();
             InitializeComponent();
-            StasionsListView.ItemsSource = myBl.GetStations();
+            var stationList = myBl.GetStations();
+            StasionsListView.ItemsSource = stationList;
         }
 
         private void StationView_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var station = myBl.GetStationById(((BO.StationList)StasionsListView.SelectedItem).Id);
-            new StationWindow(station).Show();
+            Border datatation = e.OriginalSource as Border;
+
+            var station = myBl.GetStationById(((BO.StationList)datatation.DataContext).Id);
+            StationWindow stationWindow = new(station);
+
+            stationWindow.ShowDialog();
+            //var station = myBl.GetStationById(((BO.StationList)StasionsListView.SelectedItem).Id);
+            //new StationWindow(station).Show();
         }
 
         private void bottonExit_Click(object sender, RoutedEventArgs e)
@@ -42,6 +49,15 @@ namespace PL
         {
             new StationWindow().ShowDialog();
             StasionsListView.ItemsSource = myBl.GetStations();
+        }
+
+        private void ChargeGroupe_Click(object sender, RoutedEventArgs e)
+        {
+            var StationList = myBl.GetStations();
+            this.StasionsListView.ItemsSource = StationList;
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(StasionsListView.ItemsSource);
+            PropertyGroupDescription groupDescription = new("ChargeSoltsAvailable");
+            view.GroupDescriptions.Add(groupDescription);
         }
     }
 }

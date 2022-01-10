@@ -21,7 +21,6 @@ namespace PL
     {
         BlApi.IBL myBl;
         BO.Parcel parcel;
-        object selectedItem;
 
         #region add parcel
         public ParcelWindow()
@@ -61,11 +60,10 @@ namespace PL
         #endregion
 
         #region update parcel
-        public ParcelWindow(object selectedItem)
+        public ParcelWindow(BO.Parcel parcel)
         {
             this.myBl = BlApi.BlFactory.GetBl();
-            this.selectedItem = selectedItem;
-            this.parcel = myBl.GetParcelById(((BO.ParcelInList)selectedItem).Id);
+            this.parcel = parcel;
             InitializeComponent();
             AddParcel.Visibility = Visibility.Hidden;
             UpdateParcel.Visibility = Visibility.Visible;
@@ -112,8 +110,5 @@ namespace PL
             if (e.LeftButton == MouseButtonState.Pressed)
                 DragMove();
         }
-
-
-
     }
 }
