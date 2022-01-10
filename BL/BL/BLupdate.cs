@@ -286,12 +286,6 @@ namespace BL
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void confirmPackage(int userId, int parcelId)
-        {
-          // dalObj.
-
-
-        }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void SendDroneToCharge(int droneId)
@@ -362,6 +356,18 @@ namespace BL
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
+        public void confirmPackage(int userId, int parcelId)
+        {
+          // dalObj.
+
+
+        }
+
         public void ClearDroneCharge() { lock (dalObj) { dalObj.ClearDroneCharge(); } }
+
+        public void ActivSimulator(int id, Action updateDelegate, Func<bool> stopDelegate)
+        {
+            new Simulator(id, updateDelegate, stopDelegate, this);
+        }
     }
 }
