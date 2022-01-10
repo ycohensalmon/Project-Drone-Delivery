@@ -31,6 +31,11 @@
     <None Remove="images\logoAmazon.png" />
     <None Remove="images\logoCustomer.png" />
     <None Remove="images\logoparcels.png" />
+    <None Remove="images\stations\CentralStation.png" />
+    <None Remove="images\stations\haddarMall.jpg" />
+    <None Remove="images\stations\MalhaMall.jpg" />
+    <None Remove="images\stations\MamilaMall.jpg" />
+    <None Remove="images\stations\RamotMall.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,6 +69,11 @@
     <Resource Include="images\logoamazon.png" />
     <Resource Include="images\logoCustomer.png" />
     <Resource Include="images\logoparcels.png" />
+    <Resource Include="images\stations\CentralStation.png" />
+    <Resource Include="images\stations\haddarMall.jpg" />
+    <Resource Include="images\stations\MalhaMall.jpg" />
+    <Resource Include="images\stations\MamilaMall.jpg" />
+    <Resource Include="images\stations\RamotMall.jpg" />
   </ItemGroup>
 
 </Project>
