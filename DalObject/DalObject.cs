@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DalApi;
 using DO;
+using System.Runtime.CompilerServices;
 
 namespace Dal
 {
@@ -43,6 +44,8 @@ namespace Dal
         #endregion
 
         #region Add fonctions
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void NewStation(Station station)
         {
             foreach (var item in GetStations())
@@ -54,6 +57,7 @@ namespace Dal
 
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void NewDrone(Drone drone)
         {
             foreach (var item in GetDrones())
@@ -64,6 +68,7 @@ namespace Dal
             DataSource.Drones.Add(drone);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void NewCostumer(Customer customer)
         {
             foreach (var item in GetCustomers())
@@ -74,6 +79,7 @@ namespace Dal
             DataSource.Customers.Add(customer);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int NewParcel(Parcel parcel)
         {
             DataSource.Parcels.Add(parcel);
@@ -82,6 +88,8 @@ namespace Dal
         #endregion
 
         #region Uptade fonctions
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ConnectDroneToParcel(int droneId, int parcelId)
         {
             if (GetDrones().FirstOrDefault(drone => drone.Id == droneId).Id != droneId)
@@ -96,6 +104,7 @@ namespace Dal
             DataSource.Parcels.Add(parcel);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void CollectParcelByDrone(int parcelId)
         {
             Parcel parcel = GetParcelById(parcelId);
@@ -106,6 +115,7 @@ namespace Dal
             DataSource.Parcels.Add(parcel);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeliveredParcel(int parcelId)
         {
             Parcel parcel = GetParcelById(parcelId);
@@ -117,6 +127,7 @@ namespace Dal
             DataSource.Parcels.Add(parcel);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void SendDroneToBaseCharge(int droneId, int stationId)
         {
             Drone drone = GetDroneById(droneId);
@@ -134,6 +145,7 @@ namespace Dal
             DataSource.Stations.Add(station);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double ReleaseDroneFromCharging(int droneId)
         {
             DroneCharge droneCharge = DataSource.DroneCharges.FirstOrDefault(x => x.DroneId == droneId);
@@ -153,6 +165,7 @@ namespace Dal
             return (DateTime.Now - droneCharge.EnteryTime).Value.TotalSeconds;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(int droneId, string model)
         {
             Drone drone = GetDroneById(droneId);
@@ -166,6 +179,7 @@ namespace Dal
             DataSource.Drones.Add(drone);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateBase(int stationId, string newName, string newChargeSolts, int result)
         {
             Station station = GetStationById(stationId);
@@ -187,6 +201,7 @@ namespace Dal
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomer(int customerID, string newName, string newPhone)
         {
             Customer customer = GetCustomerById(customerID);
@@ -208,9 +223,12 @@ namespace Dal
         #endregion
 
         #region Get Lists 
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> GetDrones()
             => (IEnumerable<Drone>)DataSource.Drones.Select(item => item/*.IsDeleted == false*/);
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Station> GetStations(Func<Station, bool> predicate = null)
         {
             if (DataSource.Stations.Count == 0)
@@ -222,19 +240,24 @@ namespace Dal
 
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> GetCustomers(Func<Customer, bool> predicate = null)
             => (IEnumerable<Customer>)(predicate == null
             ? DataSource.Customers.Select(item => item/*.IsDeleted == false*/)
             : DataSource.Customers.Where(predicate).Select(item => item/*.IsDeleted == false*/));
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> GetParcels(Func<Parcel, bool> predicate = null)
             => predicate == null ? DataSource.Parcels.Select(item => item) : DataSource.Parcels.Where(predicate).Select(item => item);
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> GetDroneCharges(Func<DroneCharge, bool> predicate = null)
             => predicate == null ? DataSource.DroneCharges.Select(item => item) : DataSource.DroneCharges.Where(predicate).Select(item => item);
         #endregion
 
         #region get objects by id
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Station GetStationById(int id)
         {
             Station station = DataSource.Stations.Find(x => x.Id == id);
@@ -243,6 +266,7 @@ namespace Dal
             return station;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDroneById(int id)
         {
             Drone drone = DataSource.Drones.Find(x => x.Id == id);
@@ -251,6 +275,7 @@ namespace Dal
             return drone;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomerById(int id)
         {
             Customer customer = DataSource.Customers.Find(x => x.Id == id);
@@ -259,6 +284,7 @@ namespace Dal
             return customer;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcelById(int id)
         {
             Parcel parcel = DataSource.Parcels.FirstOrDefault(x => x.Id == id);
@@ -267,6 +293,7 @@ namespace Dal
             return parcel;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public User GetUserById(int id)
         {
             User user = DataSource.Users.FirstOrDefault(x => x.Id == id);
@@ -277,6 +304,7 @@ namespace Dal
 
         #endregion
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] PowerConsumptionByDrone()
         {
             double[] battery = new double[5];
@@ -288,6 +316,7 @@ namespace Dal
             return battery;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         /// <summary>
         /// this func need to clear the list only on the xml file, not on the dalObject
         /// </summary>

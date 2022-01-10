@@ -9,7 +9,7 @@ using BlApi;
 
 namespace BL
 {
-    internal partial class BL : IBL
+    internal partial class BL //: IBL
     {
         #region singelton
         // =null that if we dont need to create a "new bl" it will not create it
@@ -81,7 +81,5 @@ namespace BL
                 });
             }
         }
-
-        public void ClearDroneCharge() { dalObj.ClearDroneCharge(); }
     }
 }

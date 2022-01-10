@@ -5,36 +5,39 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 using BlApi;
+using System.Runtime.CompilerServices;
 
 namespace BL
 {
     internal partial class BL : IBL
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Station GetStationById(int stationId)
         {
+            lock (dalObj)
+            {
             DO.Station station = dalObj.GetStationById(stationId);
 
             Location temp = new Location { Latitude = station.Latitude, Longitude = station.Longitude };
 
-            //fill the List droneChargesBL
-            var droneChargesBL = (from item in dalObj.GetDroneCharges()
-                                  where item.StationId == station.Id
-                                  select new DroneCharge
-                                  {
-                                      DroneId = item.DroneId,
-                                      StationId = item.StationId
-                                  }).ToList();
-
-            return new Station
-            {
-                Id = station.Id,
-                Name = station.Name,
-                Location = temp,
-                ChargeSolts = station.ChargeSolts,
-                DroneCharges = droneChargesBL
-            };
+                return new Station
+                {
+                    Id = station.Id,
+                    Name = station.Name,
+                    Location = temp,
+                    ChargeSolts = station.ChargeSolts,
+                    DroneCharges = (from item in dalObj.GetDroneCharges()
+                                    where item.StationId == station.Id
+                                    select new DroneCharge
+                                    {
+                                        DroneId = item.DroneId,
+                                        StationId = item.StationId
+                                    }).ToList()
+                };
+            }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDroneById(int droneId)
         {
             DroneInList droneInList = drones.Find(x => x.Id == droneId);
@@ -87,140 +90,164 @@ namespace BL
             };
         }
 
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomerById(int customerId)
         {
-            //find the Customer and his parcels fron DL
-            DO.Customer customer = dalObj.GetCustomerById(customerId);
-
-            Location temp = new Location { Latitude = customer.Latitude, Longitude = customer.Longitude };
-
-            return new Customer
+            lock (dalObj)
             {
-                Id = customer.Id,
-                Name = customer.Name,
-                Phone = customer.Phone,
-                Location = temp,
-                ParcelsFromCustomer = GetParcelFromCustomer(customerId).ToList(),
-                ParcelsToCustomer = GetParcelToCustomer(customerId).ToList()
-            };
+                //find the Customer and his parcels fron DL
+                DO.Customer customer = dalObj.GetCustomerById(customerId);
+
+                Location temp = new Location { Latitude = customer.Latitude, Longitude = customer.Longitude };
+
+                return new Customer
+                {
+                    Id = customer.Id,
+                    Name = customer.Name,
+                    Phone = customer.Phone,
+                    Location = temp,
+                    ParcelsFromCustomer = GetParcelFromCustomer(customerId).ToList(),
+                    ParcelsToCustomer = GetParcelToCustomer(customerId).ToList()
+                };
+            }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelAtCustomer> GetParcelFromCustomer(int customerId)
         {
-            return from item in dalObj.GetParcels()
-                   where item.SenderId == customerId
-                   select new ParcelAtCustomer
-                   {
-                       Id = item.Id,
-                       Requested = item.Requested,
-                       Scheduled = item.Scheduled,
-                       PickedUp = item.PickedUp,
-                       Delivered = item.Delivered,
-                       Weight = (WeightCategory)item.Weight,
-                       Priorities = (Priority)item.Priorities,
-                       CustomerInParcel = new CustomerInParcel
+            lock (dalObj)
+            {
+                return from item in dalObj.GetParcels()
+                       where item.SenderId == customerId
+                       select new ParcelAtCustomer
                        {
-                           Id = item.TargetId,
-                           Name = dalObj.GetCustomerById(item.TargetId).Name
-                       }
-                   };
+                           Id = item.Id,
+                           Requested = item.Requested,
+                           Scheduled = item.Scheduled,
+                           PickedUp = item.PickedUp,
+                           Delivered = item.Delivered,
+                           Weight = (WeightCategory)item.Weight,
+                           Priorities = (Priority)item.Priorities,
+                           CustomerInParcel = new CustomerInParcel
+                           {
+                               Id = item.TargetId,
+                               Name = dalObj.GetCustomerById(item.TargetId).Name
+                           }
+                       };
+            }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelAtCustomer> GetParcelToCustomer(int customerId)
         {
-            return from item in dalObj.GetParcels()
-                   where item.TargetId == customerId
-                   select new ParcelAtCustomer
-                   {
-                       Id = item.Id,
-                       Requested = item.Requested,
-                       Scheduled = item.Scheduled,
-                       PickedUp = item.PickedUp,
-                       Delivered = item.Delivered,
-                       Weight = (WeightCategory)item.Weight,
-                       Priorities = (Priority)item.Priorities,
-                       CustomerInParcel = new CustomerInParcel
+            lock (dalObj)
+            {
+                return from item in dalObj.GetParcels()
+                       where item.TargetId == customerId
+                       select new ParcelAtCustomer
                        {
-                           Id = item.SenderId,
-                           Name = dalObj.GetCustomerById(item.SenderId).Name
-                       }
-                   };
+                           Id = item.Id,
+                           Requested = item.Requested,
+                           Scheduled = item.Scheduled,
+                           PickedUp = item.PickedUp,
+                           Delivered = item.Delivered,
+                           Weight = (WeightCategory)item.Weight,
+                           Priorities = (Priority)item.Priorities,
+                           CustomerInParcel = new CustomerInParcel
+                           {
+                               Id = item.SenderId,
+                               Name = dalObj.GetCustomerById(item.SenderId).Name
+                           }
+                       };
+            }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcelById(int parcelid)
         {
-            DO.Parcel parcel = dalObj.GetParcelById(parcelid);
-            CustomerInParcel senderOfParcel = new();
-            CustomerInParcel targelOfParcel = new();
-
-            senderOfParcel.Id = dalObj.GetCustomerById(parcel.SenderId).Id; ;
-            senderOfParcel.Name = dalObj.GetCustomerById(parcel.SenderId).Name;
-
-            targelOfParcel.Id = dalObj.GetCustomerById(parcel.TargetId).Id;
-            targelOfParcel.Name = dalObj.GetCustomerById(parcel.TargetId).Name;
-
-            DroneInParcel droneInParcel = new();
-            if (parcel.DroneId != 0)
+            lock (dalObj)
             {
-                DroneInList droneInList = drones.FirstOrDefault(x => x.Id == parcel.DroneId);
-                droneInParcel.Id = droneInList.Id;
-                droneInParcel.Battery = droneInList.Battery;
-                droneInParcel.Location = droneInList.Location;
+                DO.Parcel parcel = dalObj.GetParcelById(parcelid);
+                CustomerInParcel senderOfParcel = new();
+                CustomerInParcel targelOfParcel = new();
+
+                senderOfParcel.Id = dalObj.GetCustomerById(parcel.SenderId).Id; ;
+                senderOfParcel.Name = dalObj.GetCustomerById(parcel.SenderId).Name;
+
+                targelOfParcel.Id = dalObj.GetCustomerById(parcel.TargetId).Id;
+                targelOfParcel.Name = dalObj.GetCustomerById(parcel.TargetId).Name;
+
+                DroneInParcel droneInParcel = new();
+                if (parcel.DroneId != 0)
+                {
+                    DroneInList droneInList = drones.FirstOrDefault(x => x.Id == parcel.DroneId);
+                    droneInParcel.Id = droneInList.Id;
+                    droneInParcel.Battery = droneInList.Battery;
+                    droneInParcel.Location = droneInList.Location;
+                }
+
+                return new Parcel
+                {
+                    Id = parcel.Id,
+                    Sender = senderOfParcel,
+                    Target = targelOfParcel,
+                    Drone = droneInParcel,
+                    Requested = parcel.Requested,
+                    Scheduled = parcel.Scheduled,
+                    PickedUp = parcel.PickedUp,
+                    Delivered = parcel.Delivered,
+                    Weight = (WeightCategory)parcel.Weight,
+                    Priorities = (Priority)parcel.Priorities
+                };
             }
-
-            return new Parcel
-            {
-                Id = parcel.Id,
-                Sender = senderOfParcel,
-                Target = targelOfParcel,
-                Drone = droneInParcel,
-                Requested = parcel.Requested,
-                Scheduled = parcel.Scheduled,
-                PickedUp = parcel.PickedUp,
-                Delivered = parcel.Delivered,
-                Weight = (WeightCategory)parcel.Weight,
-                Priorities = (Priority)parcel.Priorities
-            };
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public User GetUserById(int userId)
         {
-            DO.User user = dalObj.GetUserById(userId);
-
-            return new User
+            lock (dalObj)
             {
-                Id = user.Id,
-                UserName = user.UserName,
-                SafePassword = user.SafePassword,
-                Photo = user.Photo,
-                IsAdmin = user.IsAdmin,
-                IsDeleted = user.IsDeleted,
-                customer = GetCustomerById(userId)
-            };
+                DO.User user = dalObj.GetUserById(userId);
+
+                return new User
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    SafePassword = user.SafePassword,
+                    Photo = user.Photo,
+                    IsAdmin = user.IsAdmin,
+                    IsDeleted = user.IsDeleted,
+                    customer = GetCustomerById(userId)
+                };
+            }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<StationList> GetStations(Predicate<StationList> predicate = null)
         {
-            var stations = from item in dalObj.GetStations()
-                           let station = GetStationById(item.Id)
-                           select new StationList
-                           {
-                               Id = station.Id,
-                               Name = station.Name,
-                               ChargeSoltsAvailable = station.ChargeSolts,
-                               ChargeSoltsBusy = station.DroneCharges.Count()
-                           };
+            lock (dalObj)
+            {
+                var stations = from item in dalObj.GetStations()
+                               let station = GetStationById(item.Id)
+                               select new StationList
+                               {
+                                   Id = station.Id,
+                                   Name = station.Name,
+                                   ChargeSoltsAvailable = station.ChargeSolts,
+                                   ChargeSoltsBusy = station.DroneCharges.Count()
+                               };
 
-            if (predicate != null)
-                stations = stations.ToList().FindAll(x => predicate(x));
+                if (predicate != null)
+                    stations = stations.ToList().FindAll(x => predicate(x));
 
-            if (!stations.Any())
-                throw new EmptyListException("stations");
+                if (!stations.Any())
+                    throw new EmptyListException("stations");
 
-            return stations;
+                return stations;
+            }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneInList> GetDrones(Predicate<DroneInList> predicate = null)
         {
             if (predicate != null)
@@ -232,70 +259,83 @@ namespace BL
             return !drones.Any() ? throw new EmptyListException("drones") : drones.Select(x => x);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<CustumerInList> GetCustomers(Predicate<CustumerInList> predicate = null)
         {
-            List<CustumerInList> customers = new();
-
-            foreach (var item in dalObj.GetCustomers())
+            lock (dalObj)
             {
-                Customer customer = GetCustomerById(item.Id);
+                List<CustumerInList> customers = new();
 
-                customers.Add(new CustumerInList
+                foreach (var item in dalObj.GetCustomers())
                 {
-                    Id = customer.Id,
-                    Name = customer.Name,
-                    Phone = customer.Phone,
-                    ParcelsShippedAndDelivered = customer.ParcelsFromCustomer.Count(x => x.Delivered != null),
-                    ParcelsShippedAndNotDelivered = customer.ParcelsFromCustomer.Count(x => x.Delivered == null),
-                    ParcelsHeRecieved = customer.ParcelsToCustomer.Count(x => x.Delivered != null),
-                    ParcelsOnTheWay = customer.ParcelsToCustomer.Count(x => x.Delivered == null)
-                });
+                    Customer customer = GetCustomerById(item.Id);
+
+                    customers.Add(new CustumerInList
+                    {
+                        Id = customer.Id,
+                        Name = customer.Name,
+                        Phone = customer.Phone,
+                        ParcelsShippedAndDelivered = customer.ParcelsFromCustomer.Count(x => x.Delivered != null),
+                        ParcelsShippedAndNotDelivered = customer.ParcelsFromCustomer.Count(x => x.Delivered == null),
+                        ParcelsHeRecieved = customer.ParcelsToCustomer.Count(x => x.Delivered != null),
+                        ParcelsOnTheWay = customer.ParcelsToCustomer.Count(x => x.Delivered == null)
+                    });
+                }
+
+                if (predicate != null)
+                    customers = customers.FindAll(x => predicate(x));
+
+                if (!customers.Any())
+                    throw new EmptyListException("customers");
+
+                return customers;
             }
-
-            if (predicate != null)
-                customers = customers.FindAll(x => predicate(x));
-
-            if (!customers.Any())
-                throw new EmptyListException("customers");
-
-            return customers;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelInList> GetParcels(Predicate<ParcelInList> predicate = null)
         {
-            List<ParcelInList> parcels = new();
-
-            foreach (var item in dalObj.GetParcels())
+            lock (dalObj)
             {
-                Parcel parcel = GetParcelById(item.Id);
+                List<ParcelInList> parcels = new();
 
-                parcels.Add(new ParcelInList
+                foreach (var item in dalObj.GetParcels())
                 {
-                    Id = parcel.Id,
-                    SenderName = parcel.Sender.Name,
-                    TargetName = parcel.Target.Name,
-                    Status = GetParcelStatus(parcel),
-                    Weight = parcel.Weight,
-                    Priorities = parcel.Priorities
-                });
+                    Parcel parcel = GetParcelById(item.Id);
+
+                    parcels.Add(new ParcelInList
+                    {
+                        Id = parcel.Id,
+                        SenderName = parcel.Sender.Name,
+                        TargetName = parcel.Target.Name,
+                        Status = GetParcelStatus(parcel),
+                        Weight = parcel.Weight,
+                        Priorities = parcel.Priorities
+                    });
+                }
+
+                if (predicate != null)
+                    parcels = parcels.FindAll(x => predicate(x));
+
+                if (!parcels.Any())
+                    throw new EmptyListException("parcels");
+
+                return parcels.Select(x => x);
             }
-
-            if (predicate != null)
-                parcels = parcels.FindAll(x => predicate(x));
-
-            if (!parcels.Any())
-                throw new EmptyListException("parcels");
-
-            return parcels.Select(x => x);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<string> GetNamesOfCustomer()
         {
-            IEnumerable<string> names = from x in dalObj.GetCustomers()
-                                        select x.Name;
-            return names.Count() == 0 ? throw new EmptyListException("customers") : names.Select(x => x);
+            lock (dalObj)
+            {
+                IEnumerable<string> names = from x in dalObj.GetCustomers()
+                                            select x.Name;
+                return names.Count() == 0 ? throw new EmptyListException("customers") : names.Select(x => x);
+            }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<string> GetNamesOfAvailableChargeSolts()
         {
             IEnumerable<string> names = from x in GetStationWithChargeSolts()
@@ -303,63 +343,78 @@ namespace BL
             return names.Count() == 0 ? throw new EmptyListException("available chargeSolts") : names.Select(x => x);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int GetStationIdByName(string name)
         {
-            int id = dalObj.GetStations().FirstOrDefault(x => x.Name == name).Id;
-            return id == 0 ? throw new IncorectInputException("name of the station") : id;
+            lock (dalObj)
+            {
+                int id = dalObj.GetStations().FirstOrDefault(x => x.Name == name).Id;
+                return id == 0 ? throw new IncorectInputException("name of the station") : id;
+            }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int GetCustomerIdByName(string name)
         {
-            return dalObj.GetCustomers().FirstOrDefault(x => x.Name == name).Id;
+            lock (dalObj)
+            {
+                return dalObj.GetCustomers().FirstOrDefault(x => x.Name == name).Id;
+            }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelInList> GetParcelsWithoutDrone()
         {
-            List<ParcelInList> parcels = new();
-
-            foreach (var item in dalObj.GetParcels(x => x.DroneId == 0))
+            lock (dalObj)
             {
-                Parcel parcel = GetParcelById(item.Id);
+                List<ParcelInList> parcels = new();
 
-                parcels.Add(new ParcelInList
+                foreach (var item in dalObj.GetParcels(x => x.DroneId == 0))
                 {
-                    Id = parcel.Id,
-                    SenderName = parcel.Sender.Name,
-                    TargetName = parcel.Target.Name,
-                    Status = GetParcelStatus(parcel),
-                    Weight = parcel.Weight,
-                    Priorities = parcel.Priorities
-                });
+                    Parcel parcel = GetParcelById(item.Id);
+
+                    parcels.Add(new ParcelInList
+                    {
+                        Id = parcel.Id,
+                        SenderName = parcel.Sender.Name,
+                        TargetName = parcel.Target.Name,
+                        Status = GetParcelStatus(parcel),
+                        Weight = parcel.Weight,
+                        Priorities = parcel.Priorities
+                    });
+                }
+
+                if (!parcels.Any())
+                    throw new EmptyListException("parcels without drone");
+
+                return parcels;
             }
-
-            if (!parcels.Any())
-                throw new EmptyListException("parcels without drone");
-
-            return parcels;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<StationList> GetStationWithChargeSolts()
         {
-            List<StationList> stations = new();
-
-            foreach (var item in dalObj.GetStations(x => x.ChargeSolts != 0))
+            lock (dalObj)
             {
-                Station station = GetStationById(item.Id);
-                stations.Add(new StationList
+                List<StationList> stations = new();
+
+                foreach (var item in dalObj.GetStations(x => x.ChargeSolts != 0))
                 {
-                    Id = station.Id,
-                    Name = station.Name,
-                    ChargeSoltsAvailable = station.ChargeSolts,
-                    ChargeSoltsBusy = station.DroneCharges.Count()
-                });
+                    Station station = GetStationById(item.Id);
+                    stations.Add(new StationList
+                    {
+                        Id = station.Id,
+                        Name = station.Name,
+                        ChargeSoltsAvailable = station.ChargeSolts,
+                        ChargeSoltsBusy = station.DroneCharges.Count()
+                    });
+                }
+
+                if (!stations.Any())
+                    throw new EmptyListException("station with charge solts available");
+
+                return stations;
             }
-
-            if (!stations.Any())
-                throw new EmptyListException("station with charge solts available");
-
-            return stations;
-
         }
     }
 }

@@ -68,29 +68,30 @@ namespace BL
 
             if (statuses == DroneStatuses.Maintenance)
             {
-                int randIndexStation;
-                do
+                lock (dalObj)
                 {
-                    randIndexStation = rand.Next(station.Count());
-                } while (station.ElementAt(randIndexStation).ChargeSolts == 0);
+                    int randIndexStation;
+                    do
+                    {
+                        randIndexStation = rand.Next(station.Count());
+                    } while (station.ElementAt(randIndexStation).ChargeSolts == 0);
 
-                int stasionID = station.ElementAt(randIndexStation).Id;
-                dalObj.SendDroneToBaseCharge(droneId, stasionID);
+                    int stasionID = station.ElementAt(randIndexStation).Id;
 
-                return GetLocationStation(station, stasionID);
+                    dalObj.SendDroneToBaseCharge(droneId, stasionID);
+
+                    return GetLocationStation(station, stasionID);
+                }
             }
 
             if (statuses == DroneStatuses.Available)
             {
                 List<Location> locations = new();
                 foreach (var item in parcel) if (item.Delivered != null)
-                    {
                         locations.Add(GetCustomerById(item.TargetId).Location);
-                    }
+                    
                 if (locations.Count != 0)
-                {
                     return locations[rand.Next(locations.Count())];
-                }
             }
             Location location = new();
             return location;
@@ -98,16 +99,21 @@ namespace BL
 
         private Location GetLocationStation(IEnumerable<DO.Station> station, int stationID)
         {
-            return new Location
+            lock (dalObj)
             {
-                Latitude = dalObj.GetStationById(stationID).Latitude,
-                Longitude = dalObj.GetStationById(stationID).Longitude
-            };
+                return new Location
+                {
+                    Latitude = dalObj.GetStationById(stationID).Latitude,
+                    Longitude = dalObj.GetStationById(stationID).Longitude
+
+                };
+            }
         }
 
         private Location GetLocationWithMinDistance(IEnumerable<DO.Station> station, DO.Customer tempCustomer)
         {
-            double tempDistance, min = Distance.GetDistanceFromLatLonInKm(tempCustomer.Latitude, tempCustomer.Longitude, station.First().Latitude, station.First().Longitude);
+            double tempDistance; 
+            double min = Distance.GetDistanceFromLatLonInKm(tempCustomer.Latitude, tempCustomer.Longitude, station.First().Latitude, station.First().Longitude);
             Location location = new() { Latitude = station.First().Latitude, Longitude = station.First().Longitude };
 
             foreach (var item in station)
