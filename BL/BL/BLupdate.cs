@@ -83,6 +83,7 @@ namespace BL
                 throw new StatusDroneException("the drone does`nt exist");
             if (drone.Status != DroneStatuses.Available)
                 throw new StatusDroneException("connect drone to parcel", drone.Status, DroneStatuses.Available);
+
             lock (dalObj)
             {
                 //getting the list of parcels that are not Scheduled 
@@ -289,7 +290,6 @@ namespace BL
             }
         }
 
-
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void SendDroneToCharge(int droneId)
         {
@@ -297,21 +297,44 @@ namespace BL
             DroneInList drone = drones.FirstOrDefault(x => x.Id == droneId);
             if (drone.Status != DroneStatuses.Available)
                 throw new StatusDroneException("send drone to charge", drone.Status, DroneStatuses.Available);
+
             lock (dalObj)
             {
                 //getting the stations that available
-                List<DO.Station> station = dalObj.GetStations(x => x.ChargeSolts != 0).ToList();
+                var station = from s in dalObj.GetStations()
+                              where s.ChargeSolts > 0
+                              select s;
+
+                //List<DO.Station> station = dalObj.GetStations(x => x.ChargeSolts != 0).ToList();
                 if (!station.Any())
-                    throw new NoChargeSlotException();
+                    station = dalObj.GetStations();
+                //throw new NoChargeSlotException();
 
                 //order the station by closest
-                station = station.OrderBy(s => Distance.GetDistanceFromLatLonInKm(s.Latitude, s.Longitude, drone.Location.Latitude, drone.Location.Longitude)).ToList();
+                station = station.OrderBy(s => Distance.GetDistanceFromLatLonInKm(s.Latitude, s.Longitude, drone.Location.Latitude, drone.Location.Longitude));
 
-                //checking if the drone can go to the closest station
+                //checking if the drone can go to the closest station with available ChargeSolts 
                 double battryLoss = BatteryIossAvailable(drone.Location.Latitude, drone.Location.Longitude,
                     station.First().Latitude, station.First().Longitude);
+
+                //the drone can`t go to base charge with available ChargeSolts 
+                //we send the drone to the closest base charge and we`ll take out a drone (with maximum battery) from charge 
                 if (drone.Battery - battryLoss < 0)
-                    throw new NotEnoughBatteryException("go to the base charge");
+                {
+                    station = dalObj.GetStations();
+                    //order the station by closest
+                    station = station.OrderBy(s => Distance.GetDistanceFromLatLonInKm
+                    (s.Latitude, s.Longitude, drone.Location.Latitude, drone.Location.Longitude));
+
+                    //checking if the drone can go to the closest station
+                    battryLoss = BatteryIossAvailable(drone.Location.Latitude, drone.Location.Longitude,
+                    station.First().Latitude, station.First().Longitude);
+                    if (drone.Battery - battryLoss < 0)
+                        throw new NotEnoughBatteryException("go to the base charge");
+
+                    //releasing the drone with maximum battery, end insert this drone
+                    ReleaseMaxDrone(dalObj.GetDroneCharges(x => x.StationId == station.First().Id));
+                }
 
                 //update drone
                 drone.Battery -= battryLoss;
@@ -329,6 +352,27 @@ namespace BL
                     throw new DalException(ex);
                 }
             }
+        }
+
+        /// <summary>
+        /// the function checks which is the drone with maximum battery and release it from charge
+        /// </summary>
+        /// <param name="droneChargeList">the list of the droneCharge from certain station</param>
+        private void ReleaseMaxDrone(IEnumerable<DO.DroneCharge> droneChargeList)
+        {
+            int droneId = 0;
+            double maxBattery = 0, temp;
+
+            foreach (var d in droneChargeList)
+            {
+                temp = (DateTime.Now - d.EnteryTime).Value.TotalSeconds * (LoadingRate / 60);
+                if (temp > maxBattery)
+                {
+                    maxBattery = temp;
+                    droneId = d.DroneId;
+                }
+            }
+            ReleaseDroneFromCharging(droneId);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

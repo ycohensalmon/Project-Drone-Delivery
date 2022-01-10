@@ -17,50 +17,78 @@ namespace BL
         double speed = 0.75;
 
         Drone d;
-        
+
         public Simulator(int id, Action updateDelegate, Func<bool> stopDelegate, BL myBL)
         {
+            lock (myBL)
             {
-                lock (myBL)
-                {
-                    d = myBL.GetDroneById(id);
-                }
+                d = myBL.GetDroneById(id);
+            }
 
-                while (!stopDelegate())
+            while (!stopDelegate())
+            {
+                switch (d.Status)
                 {
-                    switch (d.Status)
-                    {
-                        case DroneStatuses.Available:
-                            try
+                    case DroneStatuses.Available:
+                        try
+                        {
+                            lock (myBL)
                             {
-                                lock (myBL)
-                                {
-                                    myBL.ConnectDroneToParcel(d.Id);
-                                }
+                                myBL.ConnectDroneToParcel(id);
                             }
-                            catch (NotEnoughBatteryException)
+                        }
+                        catch (NotEnoughBatteryException)
+                        {
+                            lock (myBL)
                             {
-                                lock (myBL)
-                                {
-                                    myBL.SendDroneToCharge(d.Id);
-                                }
+                                myBL.SendDroneToCharge(id);
                             }
-                            catch (NoParcelException)
-                            {
-
-                                throw;
-                            }
-                           
-                            break;
-                        case DroneStatuses.Maintenance:
-                            break;
-                        case DroneStatuses.Delivery:
-                            break;
-                        default:
-                            break;
-                    }
+                        }
+                        catch (NoParcelException)
+                        {
+                            //wait
+                        }
+                        catch (ParcelTooHeavyException)
+                        {
+                            //stop
+                        }
+                        break;
+                    case DroneStatuses.Maintenance:
+                        lock (myBL)
+                        {
+                            if (checkFullBattery(id, myBL))
+                                myBL.ReleaseDroneFromCharging(id);
+                        }
+                        break;
+                    case DroneStatuses.Delivery:
+                        checkStatusParcelOfDelivery(d.ParcelInTravel.Id);
+                        DoContinueDelivery(d.ParcelInTravel.Id);
+                        break;
+                    default:
+                        break;
                 }
             }
+        }
+
+        private bool checkFullBattery(int id, BL myBL)
+        {
+            lock (myBL)
+            {
+                var drone = myBL.dalObj.GetDroneCharges(x => x.DroneId == id).First();
+                if ((DateTime.Now - drone.EnteryTime).Value.TotalSeconds * (myBL.getLoadingRate() / 60) >= 100)
+                    return true;
+                return false;
+            }
+        }
+
+        private void checkStatusParcelOfDelivery(int id)
+        {
+
+        }
+
+        private void DoContinueDelivery(int id)
+        {
+
         }
     }
 }
