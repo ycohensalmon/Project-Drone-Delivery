@@ -18,8 +18,8 @@ namespace BlApi
         public void CollectParcelsByDrone(int droneId);
         public void DeliveredParcel(int droneId);
         public void SendDroneToCharge(int droneId);
-        public void UpdateDrone(int droneId, string model);
         public void ReleaseDroneFromCharging(int droneId);
+        public void UpdateDrone(int droneId, string model);
         public void UpdateBase(int num, string newName, string newChargeSolts);
         public void UpdateCustomer(int customerID, string newName, string newPhone);
         public Station GetStationById(int stationId);
@@ -43,6 +43,7 @@ namespace BlApi
         public void ClearDroneCharge();
         public bool checkUser(int userId, int password);
         public void confirmPackage(int userId, int parcelId);
+        public double getLoadingRate();
         public void ActivSimulator(int id, Action updateDelegate, Func<bool> stopDelegate);
 
     }

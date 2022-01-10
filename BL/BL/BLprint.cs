@@ -416,5 +416,7 @@ namespace BL
                 return stations;
             }
         }
+
+        public double getLoadingRate() => LoadingRate; 
     }
 }

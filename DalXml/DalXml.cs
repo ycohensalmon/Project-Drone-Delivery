@@ -72,16 +72,6 @@ namespace Dal
         }
         #endregion
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void ClearDroneCharge()
-        {
-            List<DroneCharge> droneCharge = XmlTools.LoadListFromXMLSerializer<DroneCharge>(droneChargePath);
-            foreach (var item in droneCharge) ReleaseDroneFromCharging(item.DroneId);
-
-            droneCharge.Clear();
-            XmlTools.SaveListToXMLSerializer(droneCharge, droneChargePath);
-        }
-
         #region drone in XML Element
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -141,129 +131,6 @@ namespace Dal
                     new XElement("MaxWeight", drone.MaxWeight),
                     new XElement("IsDeleted", drone.IsDeleted));
         }
-        #endregion
-
-        #region drone charge
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<DroneCharge> GetDroneCharges(Func<DroneCharge, bool> predicate = null)
-        {
-            var droneChargeList = XmlTools.LoadListFromXMLSerializer<DroneCharge>(droneChargePath);
-            return from droneCh in droneChargeList
-                   where predicate == null ? true : predicate(droneCh)
-                   select droneCh;
-        }
-        #endregion
-
-        #region station
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void NewStation(Station station)
-        {
-            var stationList = XmlTools.LoadListFromXMLSerializer<Station>(stationsPath);
-
-            //check if it realy a new station
-            if (stationList.Exists(s => s.Id == station.Id))
-                throw new ItemAlreadyExistException("station", station.Id);
-
-            stationList.Add(station);
-            XmlTools.SaveListToXMLSerializer(stationList, stationsPath);
-        }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<Station> GetStations(Func<Station, bool> predicate = null)
-        {
-            var stationList = XmlTools.LoadListFromXMLSerializer<DO.Station>(stationsPath);
-
-            return from station in stationList
-                   where predicate == null ? true : predicate(station)
-                   select station;
-        }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public Station GetStationById(int id)
-        {
-            var stationList = XmlTools.LoadListFromXMLSerializer<DO.Station>(stationsPath);
-
-            var station = stationList.FirstOrDefault(s => s.Id == id);
-            if (station.Id == id)
-                return station;
-            else
-                throw new DO.ItemNotFoundException("Station");
-        }
-        #endregion
-
-        #region customer
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void NewCostumer(Customer customer)
-        {
-            var customerList = XmlTools.LoadListFromXMLSerializer<Customer>(customerPath);
-
-            if (customerList.Exists(x => x.Id == customer.Id)/*&& !customer.IsDeleted*/)
-                throw new ItemAlreadyExistException("customer", customer.Id);
-
-            customerList.Add(customer);
-            XmlTools.SaveListToXMLSerializer(customerList, customerPath);
-        }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public IEnumerable<Customer> GetCustomers(Func<Customer, bool> predicate = null)
-        {
-            var customerList = XmlTools.LoadListFromXMLSerializer<DO.Customer>(customerPath);
-            return from customer in customerList
-                   where predicate == null ? true : predicate(customer)
-                   select customer;
-        }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public Customer GetCustomerById(int id)
-        {
-            var customerList = XmlTools.LoadListFromXMLSerializer<DO.Customer>(customerPath);
-
-            var customer = customerList.FirstOrDefault(s => s.Id == id);
-            if (customer.Id == id)
-                return customer;
-            else
-                throw new DO.ItemNotFoundException("customer");
-        }
-        #endregion
-
-        #region user
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public User GetUserById(int id)
-        {
-            var userList = XmlTools.LoadListFromXMLSerializer<User>(userPath);
-
-            var user = userList.FirstOrDefault(s => s.Id == id);
-            if (user.Id == id)
-                return user;
-            else
-                throw new DO.ItemNotFoundException("user");
-        }
-        #endregion
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateBase(int stationId, string newName, string newChargeSolts, int result)
-        {
-            var stationList = XmlTools.LoadListFromXMLSerializer<Station>(stationsPath);
-
-            Station station = GetStationById(stationId);
-            if (station.Id != stationId)
-                throw new IdNotFoundException(stationId, "Station");
-
-            stationList.Remove(station);
-
-            if (newName != "")
-                stationList.Add(station);
-
-            if (newChargeSolts != "")
-                station.ChargeSolts = result;
-
-            stationList.Add(station);
-            XmlTools.SaveListToXMLSerializer(stationList, stationsPath);
-        }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(int droneId, string model)
@@ -281,40 +148,9 @@ namespace Dal
             droneNode.Element("Model").SetValue(model);
             XmlTools.SaveListToXMLElement(droneRoot, dronePath);
         }
+        #endregion
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateCustomer(int customerID, string newName, string newPhone)
-        {
-            var customerList = XmlTools.LoadListFromXMLSerializer<Customer>(customerPath);
-
-            Customer customer = GetCustomerById(customerID);
-
-            customerList.Remove(customer);
-
-            if (newName != "")
-                customer.Name = newName;
-
-            if (newPhone != "")
-                customer.Phone = int.Parse(newPhone);
-
-            customerList.Add(customer);
-            XmlTools.SaveListToXMLSerializer(customerList, customerPath);
-        }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public int NewParcel(Parcel parcel)
-        {
-            var parcelList = XmlTools.LoadListFromXMLSerializer<Parcel>(parcelPath);
-
-            //check if it realy a new parcel
-            if (parcelList.Exists(p => p.Id == parcel.Id))
-                throw new ItemAlreadyExistException("parcel", parcel.Id);
-
-            parcelList.Add(parcel);
-            XmlTools.SaveListToXMLSerializer(parcelList, parcelPath);
-
-            return getSerialNum();
-        }
+        #region updateDrone
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void ConnectDroneToParcel(int droneId, int parcelId)
@@ -413,6 +249,176 @@ namespace Dal
             return (DateTime.Now - droneCharge.EnteryTime).Value.TotalSeconds;
         }
 
+        #endregion
+
+        #region drone charge
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<DroneCharge> GetDroneCharges(Func<DroneCharge, bool> predicate = null)
+        {
+            var droneChargeList = XmlTools.LoadListFromXMLSerializer<DroneCharge>(droneChargePath);
+            return from droneCh in droneChargeList
+                   where predicate == null ? true : predicate(droneCh)
+                   select droneCh;
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void ClearDroneCharge()
+        {
+            List<DroneCharge> droneCharge = XmlTools.LoadListFromXMLSerializer<DroneCharge>(droneChargePath);
+            foreach (var item in droneCharge) ReleaseDroneFromCharging(item.DroneId);
+
+            droneCharge.Clear();
+            XmlTools.SaveListToXMLSerializer(droneCharge, droneChargePath);
+        }
+        #endregion
+
+        #region station
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void NewStation(Station station)
+        {
+            var stationList = XmlTools.LoadListFromXMLSerializer<Station>(stationsPath);
+
+            //check if it realy a new station
+            if (stationList.Exists(s => s.Id == station.Id))
+                throw new ItemAlreadyExistException("station", station.Id);
+
+            stationList.Add(station);
+            XmlTools.SaveListToXMLSerializer(stationList, stationsPath);
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<Station> GetStations(Func<Station, bool> predicate = null)
+        {
+            var stationList = XmlTools.LoadListFromXMLSerializer<DO.Station>(stationsPath);
+
+            return from station in stationList
+                   where predicate == null ? true : predicate(station)
+                   select station;
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public Station GetStationById(int id)
+        {
+            var stationList = XmlTools.LoadListFromXMLSerializer<DO.Station>(stationsPath);
+
+            var station = stationList.FirstOrDefault(s => s.Id == id);
+            if (station.Id == id)
+                return station;
+            else
+                throw new DO.ItemNotFoundException("Station");
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void UpdateBase(int stationId, string newName, string newChargeSolts, int result)
+        {
+            var stationList = XmlTools.LoadListFromXMLSerializer<Station>(stationsPath);
+
+            Station station = GetStationById(stationId);
+            if (station.Id != stationId)
+                throw new IdNotFoundException(stationId, "Station");
+
+            stationList.Remove(station);
+
+            if (newName != "")
+                stationList.Add(station);
+
+            if (newChargeSolts != "")
+                station.ChargeSolts = result;
+
+            stationList.Add(station);
+            XmlTools.SaveListToXMLSerializer(stationList, stationsPath);
+        }
+        #endregion
+
+        #region customer
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void NewCostumer(Customer customer)
+        {
+            var customerList = XmlTools.LoadListFromXMLSerializer<Customer>(customerPath);
+
+            if (customerList.Exists(x => x.Id == customer.Id)/*&& !customer.IsDeleted*/)
+                throw new ItemAlreadyExistException("customer", customer.Id);
+
+            customerList.Add(customer);
+            XmlTools.SaveListToXMLSerializer(customerList, customerPath);
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<Customer> GetCustomers(Func<Customer, bool> predicate = null)
+        {
+            var customerList = XmlTools.LoadListFromXMLSerializer<DO.Customer>(customerPath);
+            return from customer in customerList
+                   where predicate == null ? true : predicate(customer)
+                   select customer;
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public Customer GetCustomerById(int id)
+        {
+            var customerList = XmlTools.LoadListFromXMLSerializer<DO.Customer>(customerPath);
+
+            var customer = customerList.FirstOrDefault(s => s.Id == id);
+            if (customer.Id == id)
+                return customer;
+            else
+                throw new DO.ItemNotFoundException("customer");
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void UpdateCustomer(int customerID, string newName, string newPhone)
+        {
+            var customerList = XmlTools.LoadListFromXMLSerializer<Customer>(customerPath);
+
+            Customer customer = GetCustomerById(customerID);
+
+            customerList.Remove(customer);
+
+            if (newName != "")
+                customer.Name = newName;
+
+            if (newPhone != "")
+                customer.Phone = int.Parse(newPhone);
+
+            customerList.Add(customer);
+            XmlTools.SaveListToXMLSerializer(customerList, customerPath);
+        }
+        #endregion
+
+        #region user
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public User GetUserById(int id)
+        {
+            var userList = XmlTools.LoadListFromXMLSerializer<User>(userPath);
+
+            var user = userList.FirstOrDefault(s => s.Id == id);
+            if (user.Id == id)
+                return user;
+            else
+                throw new DO.ItemNotFoundException("user");
+        }
+        #endregion
+
+        #region parcel
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public int NewParcel(Parcel parcel)
+        {
+            var parcelList = XmlTools.LoadListFromXMLSerializer<Parcel>(parcelPath);
+
+            //check if it realy a new parcel
+            if (parcelList.Exists(p => p.Id == parcel.Id))
+                throw new ItemAlreadyExistException("parcel", parcel.Id);
+
+            parcelList.Add(parcel);
+            XmlTools.SaveListToXMLSerializer(parcelList, parcelPath);
+
+            return getSerialNum();
+        }
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> GetParcels(Func<Parcel, bool> predicate = null)
         {
@@ -431,6 +437,9 @@ namespace Dal
                 throw new IdNotFoundException(id, "parcel");
             return parcel;
         }
+        #endregion
+
+        #region tools
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] PowerConsumptionByDrone()
@@ -469,5 +478,6 @@ namespace Dal
             XmlTools.SaveListToXMLElement(serialNum, configPath);
             return num;
         }
+        #endregion
     }
 }
