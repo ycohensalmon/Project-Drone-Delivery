@@ -22,11 +22,17 @@
     <Border CornerRadius="55" Background="{StaticResource imageIphone}">
 
         <Grid>
-            <StackPanel Orientation="Horizontal" Margin="35,50,35,610">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="35,50,35,610">
+                
                 <Label Content="Drone air" FontFamily="Arial Black" Foreground="White" FontSize="28"/>
                 <materialDesign:PackIcon Kind="Drone" Foreground="White" Margin="10 0" Width="40" Height="40"/>
             </StackPanel>
 
+            <Button Cursor="Hand" Height="40" Width="40" Margin="25,50,300,610" Background="Transparent" BorderBrush="Transparent"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="bottonExit_Click" >
+                <materialDesign:PackIcon Kind="ChevronLeft" Width="35" Height="35" Foreground="White"/>
+            </Button>
+            
             <Border Margin="17,100,17.5,17" CornerRadius="0,0,35,35" Background="White">
 
                 <TabControl TabStripPlacement="Bottom">
@@ -83,21 +89,17 @@
 
                                 </StackPanel>
 
-
-                                <Button Cursor="Hand" Height="40" Width="40" Margin="10,10,280,35" Background="Transparent" BorderBrush="Transparent" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="bottonExit_Click" >
-                                    <materialDesign:PackIcon Kind="ChevronLeft" Width="35" Height="35" Foreground="#354b67"/>
-                                </Button>
                             </Grid>
 
                             <!--lis of drones-->
-                            <ScrollViewer Grid.Row="1" Margin="15,0,15,10">
+                            <ScrollViewer Grid.Row="1">
                                 <StackPanel>
-                                    <TextBlock Text="List of drones" HorizontalAlignment="Center" Margin="10"/>
+                                    <TextBlock Text="List of drones" HorizontalAlignment="Center" Margin="5"/>
                                     <StackPanel Margin="10 0">
                                         <ItemsControl x:Name="DronesListView" ItemsSource="{Binding droneList}" DataContext="{Binding droneList}" MouseDoubleClick="DroneView_DoubleClick">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                    <Border Margin="0 10"  BorderBrush="#172d42" CornerRadius="10" BorderThickness="1">
+                                                    <Border Margin="0 7"  BorderBrush="#172d42" CornerRadius="10" BorderThickness="1" Width="287">
                                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                                                             <Border Width="90" Height="70" CornerRadius="5" Margin="5">
                                                                 <Border.Effect>
@@ -107,7 +109,7 @@
                                                                     <ImageBrush ImageSource="{Binding Path=Image}"/>
                                                                 </Border.Background>
                                                             </Border>
-                                                            <StackPanel Orientation="Vertical">
+                                                            <StackPanel Orientation="Vertical" Width="150">
                                                                 <StackPanel Orientation="Horizontal" Margin="0 -5">
                                                                     <Label Content="ID:" FontSize="13"/>
                                                                     <TextBlock x:Name="Iddrone" Text="{Binding Path=Id}" FontSize="13" VerticalAlignment="Center"/>
@@ -135,12 +137,15 @@
                                                                     <TextBlock Text="{Binding Path=NumParcel}" FontSize="13" VerticalAlignment="Center"/>
                                                                 </StackPanel>
                                                             </StackPanel>
-                                                            <Button x:Name="ButtonEdit" ToolTip="Edit drone" Margin="5 0" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25">
+                                                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Center">
+
+                                                                <Button x:Name="ButtonEdit" ToolTip="Edit drone" Margin="0,0,0,10" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25">
                                                                 <materialDesign:PackIcon Kind="Edit" Width="20" Height="20"/>
                                                             </Button>
                                                             <Button x:Name="ButtonDelete" ToolTip="Delete drone" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25">
                                                                 <materialDesign:PackIcon Kind="Delete" Width="20" Height="20"/>
                                                             </Button>
+                                                            </StackPanel>
                                                         </StackPanel>
                                                     </Border>
                                                 </DataTemplate>
@@ -178,11 +183,6 @@
                             <!--drid with solectors and filtres-->
                             <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
 
-                                <Button x:Name="bottonExit" Cursor="Hand" Height="40" Width="40" Margin="10,10,280,10" Background="Transparent" BorderBrush="Transparent"
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="bottonExit_Click" >
-                                    <materialDesign:PackIcon Kind="ChevronLeft" Width="35" Height="35" Foreground="#354b67"/>
-                                </Button>
-                                
                                 <StackPanel  Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10">
                                     <TextBlock Text="Groupe" VerticalAlignment="Center" Style="{StaticResource StyleFont}"/>
                                     <materialDesign:PopupBox HorizontalAlignment="Left" StaysOpen="False" PlacementMode="BottomAndAlignRightEdges" PopupMode="Click" Foreground="#354b67">
@@ -195,15 +195,15 @@
                             </Grid>
 
                             <!--list of the stations-->
-                            <TextBlock Text="List of stations" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Top"/>
                             
                             <ScrollViewer Grid.Row="1">
                                 <StackPanel>
+                            <TextBlock Text="List of stations" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                                     <StackPanel Margin="5 0">
                                         <ItemsControl x:Name="StasionsListView" ItemsSource="{Binding stationList}" DataContext="{Binding stationList}" MouseDoubleClick="StationView_DoubleClick" Cursor="Hand">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                    <Border Margin="0 10" BorderBrush="#354b67" CornerRadius="10" BorderThickness="2" Width="300">
+                                                    <Border Margin="0 10" BorderBrush="#354b67" CornerRadius="10" BorderThickness="2" Width="296">
                                                         <StackPanel>
                                                             <StackPanel Orientation="Horizontal">
                                                                 <Border Width="90" Height="70" CornerRadius="5" Margin="5">
@@ -214,7 +214,7 @@
                                                                         <ImageBrush ImageSource="images\stations\CentralStation.png"/>
                                                                     </Border.Background>
                                                                 </Border>
-                                                                <StackPanel Orientation="Vertical">
+                                                                <StackPanel Orientation="Vertical" Width="160">
                                                                     <StackPanel Orientation="Horizontal">
                                                                         <Label Content="ID:" FontSize="15"/>
                                                                         <TextBlock Text="{Binding Path=Id}" FontSize="15" VerticalAlignment="Center"/>
@@ -229,11 +229,11 @@
                                                                     </StackPanel>
                                                                 </StackPanel>
 
-                                                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0">
+                                                                <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right">
                                                                     <Button x:Name="ButtonEdit" ToolTip="Edit station" Margin="0 5" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25">
                                                                         <materialDesign:PackIcon Kind="Edit" Width="20" Height="20"/>
                                                                     </Button>
-                                                                    <Button x:Name="ButtonDelete" ToolTip="Delete station"  Margin="0 5" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25">
+                                                                    <Button x:Name="ButtonDelete" ToolTip="Delete station"  Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25">
                                                                         <materialDesign:PackIcon Kind="Delete" Width="20" Height="20"/>
                                                                     </Button>
                                                                 </StackPanel>
@@ -310,22 +310,17 @@
 
                                 </StackPanel>
 
-
-                                <Button Cursor="Hand" Height="40" Width="40" Margin="10,10,280,40" Background="Transparent" BorderBrush="Transparent"
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="bottonExit_Click" >
-                                    <materialDesign:PackIcon Kind="ChevronLeft" Width="35" Height="35" Foreground="#354b67"/>
-                                </Button>
                             </Grid>
 
-                            <ScrollViewer Grid.Row="1" Margin="15,0,15,10">
+                            <ScrollViewer Grid.Row="1">
                                 <StackPanel>
                                     <TextBlock Text="List of parcels" HorizontalAlignment="Center" Margin="10"/>
                                     <StackPanel Margin="10 0">
                                         <ItemsControl x:Name="parcelsView" ItemsSource="{Binding pacelsList}" DataContext="{Binding pacelsList}" MouseDoubleClick="ParcelView_DoubleClick">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                    <Border Margin="0 10" BorderBrush="#172d42" CornerRadius="10" BorderThickness="1">
-                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                                    <Border Margin="0 6" BorderBrush="#172d42" CornerRadius="10" BorderThickness="1">
+                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Width="295">
                                                             <!--<Border Width="90" Height="70" CornerRadius="5" Margin="5">
                                                 <Border.Effect>
                                                     <DropShadowEffect ShadowDepth="1"/>
@@ -334,7 +329,7 @@
                                                     <ImageBrush ImageSource="{Binding Path=Image}"/>
                                                 </Border.Background>
                                             </Border>-->
-                                                            <StackPanel Orientation="Vertical">
+                                                            <StackPanel Orientation="Vertical" Width="253">
                                                                 <StackPanel Orientation="Horizontal" Margin="0 -5">
                                                                     <Label Content="ID:" FontSize="13"/>
                                                                     <TextBlock x:Name="IDhabibi" Text="{Binding Path=Id}" FontSize="13" VerticalAlignment="Center" IsEnabled="False"/>
@@ -360,12 +355,16 @@
                                                                     <TextBlock Text="{Binding Path=Status}" FontSize="13" VerticalAlignment="Center"/>
                                                                 </StackPanel>
                                                             </StackPanel>
-                                                            <Button x:Name="ButtonEdit" ToolTip="Edit parcel" Margin="5 0" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25">
+
+                                                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                                
+                                                            <Button x:Name="ButtonEdit" ToolTip="Edit parcel" Margin="0 5" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25">
                                                                 <materialDesign:PackIcon Kind="Edit" Width="20" Height="20"/>
                                                             </Button>
                                                             <Button x:Name="ButtonDelete" ToolTip="Delete parcel" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25">
                                                                 <materialDesign:PackIcon Kind="Delete" Width="20" Height="20"/>
                                                             </Button>
+                                                            </StackPanel>
                                                         </StackPanel>
                                                     </Border>
                                                 </DataTemplate>
@@ -385,17 +384,121 @@
 
                     </TabItem>
 
-                    <TabItem Margin="25,0,-25,0"  Width="70">
+                    <TabItem Name="CustomerTab" Margin="25,0,-25,0"  Width="70">
                         
                         <TabItem.Header>
                             <StackPanel Orientation="Vertical">
                                 <materialDesign:PackIcon Kind="User" HorizontalAlignment="Center"/>
-                                <TextBlock Text="Customers"  HorizontalAlignment="Center" Margin="0 5"/>
+                                <TextBlock Text="Customers" HorizontalAlignment="Center" Margin="0 5"/>
                             </StackPanel>
                         </TabItem.Header>
-                        
-                        
-                        
+
+                        <Grid Name="MainGrid">
+                            <!--#region definition row and colons-->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="9*"/>
+                                <RowDefinition Height="2*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Height="auto" Grid.Row="0" Width="auto">
+                                <!--<ComboBox Name="ComboStatusSelector" HorizontalAlignment= "Left" ToolTip="choose a status" SelectionChanged="ComboStatusSelector_SelectionChanged" Width="117" Margin="188,14,0,50" />
+                <ComboBox Name="ComboWeightSelector" HorizontalAlignment= "Left" ToolTip="choose a geight" FontWeight="Bold" FontStyle="Normal" FontFamily="Aharoni" HorizontalContentAlignment="Stretch" FontSize="14" SelectionChanged="ComboWeightSelector_SelectionChanged" Margin="188,61,0,8" Width="117"/>
+                <Label Content="Status drone:" HorizontalAlignment= "Left" VerticalAlignment="Top" Grid.Column="0" FontSize="15" Margin="88,15,0,0" Height="24"/>
+                <Label Content="Weight:" HorizontalAlignment= "Left" VerticalAlignment="Top" FontSize="15" Margin="124,61,0,0" Height="27"/>
+                <Button x:Name="ButtonClearStatus" Click="ButtonClearStatus_Click" Margin="315,20,25,40" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25">
+                    <materialDesign:PackIcon Width="20" Height="20" Kind="DeleteCircle"/>
+                </Button>
+                <Button  x:Name="ButtonClearWeight" HorizontalAlignment="Left" VerticalAlignment="Center"  Height="25" Width="25" Click="ButtonClearWeight_Click" Margin="315,64,0,0"
+                         Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                    <materialDesign:PackIcon Kind="DeleteCircle" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Button>-->
+
+                            </Grid>
+
+                            <ListView x:Name="customersView" Grid.Row="1" Margin="5 0">
+                                <ListView.View>
+                                    <GridView AllowsColumnReorder="True">
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="ID" Width="100"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="120"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Phone}" Header="Name" Width="110"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=ParcelsHeRecieved}" Header="Parcels Recieved" Width="100"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=ParcelsOnTheWay}" Header="Parcels On Way" Width="100"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=ParcelsShippedAndNotDelivered}" Header="Not Delivered" Width="100"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=ParcelsShippedAndDelivered}" Header="Delivered" Width="100"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <!--<ListView x:Name="custumerInListListView" Grid.Row="2" Margin="15 0" SelectionMode="Single" ItemsSource="{Binding}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn x:Name="idColumn" Width="80">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Content="Id" HorizontalContentAlignment="Left" Background="Red"/>
+                            </GridViewColumn.Header>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Id}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn x:Name="nameColumn" Width="80">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Margin="-15 5" VerticalAlignment="Bottom" HorizontalAlignment="Left" FontSize="10" Content="Name" HorizontalContentAlignment="Left" Background="Blue"/>
+                            </GridViewColumn.Header>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Name}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn x:Name="parcelsHeRecievedColumn" Width="80" Header="Parcels He Recieved">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding ParcelsHeRecieved}" Margin="-6,-1"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn x:Name="parcelsOnTheWayColumn" Width="80" Header="Parcels On The Way">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding ParcelsOnTheWay}" Margin="-6,-1"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn x:Name="parcelsShippedAndDeliveredColumn" Width="80" Header="Parcels Shipped And Delivered">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding ParcelsShippedAndDelivered}" Margin="-6,-1"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn x:Name="parcelsShippedAndNotDeliveredColumn" Width="80" Header="Parcels Shipped And Not Delivered">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding ParcelsShippedAndNotDelivered}" Margin="-6,-1"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn x:Name="phoneColumn" Width="80" Header="Phone">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Phone}" Margin="-6,-1"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+                <ListView.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="Control.HorizontalContentAlignment" Value="Left"/>
+                        <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>-->
+
+                            <Button Content="add drone" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Click="BottonAdd_Click" Margin="0,12,0,0"/>
+                        </Grid>
+
                     </TabItem>
 
                 </TabControl>

@@ -24,6 +24,7 @@ namespace PL
         IEnumerable<DroneInList> droneList;
         IEnumerable<StationList> stationList;
         IEnumerable<ParcelInList> pacelsList;
+        IEnumerable<CustumerInList> customerList;
 
         public StationsListWindow()
         {
@@ -45,6 +46,10 @@ namespace PL
             parcelsView.ItemsSource = pacelsList;
             this.ParcelComboWeight.ItemsSource = Enum.GetValues(typeof(BO.WeightCategory));
             this.ParcelComboStatus.ItemsSource = Enum.GetValues(typeof(BO.ParcelStatuses));
+
+            // Customer tab
+            customerList = myBl.GetCustomers();
+            this.customersView.ItemsSource = customerList;
         }
 
 
@@ -291,6 +296,19 @@ namespace PL
         #endregion
         #endregion
 
+
+        private void BottonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            new CustomerWindow().ShowDialog();
+            customersView.ItemsSource = myBl.GetCustomers();
+        }
+
+        private void Customer_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var customer = myBl.GetCustomerById(((BO.CustumerInList)customersView.SelectedItem).Id);
+            new CustomerWindow(customer).Show();
+
+        }
 
         private void bottonExit_Click(object sender, RoutedEventArgs e)
         {
