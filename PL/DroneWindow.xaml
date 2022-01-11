@@ -114,7 +114,7 @@
                         <Button x:Name="Closee" Grid.Column="0" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="#FF111111">
                             <materialDesign:PackIcon Kind="ArrowBack" Width="31" Height="30" VerticalAlignment="Center"/>
                         </Button>
-                        <Image Source="images/logo1.png" Grid.Column="1" HorizontalAlignment="Center"/>
+                        <ToggleButton x:Name="btnPlayStop" Grid.Column="4" Grid.Row="3" Checked="btnPlayStop_Checked" Unchecked="btnPlayStop_Unchecked"/>
                     </Grid>
                     <StackPanel Orientation="Vertical">
                         <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="Drone" Foreground="Black"/>
@@ -168,7 +168,7 @@
                         <Label x:Name="statusLabel" Content="{Binding Status}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center" FontWeight="Normal"/>
 
                         <Label Content="Battery:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
-                        <Label x:Name="batteryLabel" Content="{Binding Battery, StringFormat={}{#.0:F3}}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center" FontWeight="Normal"/>
+                        <TextBlock x:Name="batteryLabel" Text="{Binding Battery, StringFormat=\{0:#0.0\}%}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center" FontWeight="Normal"/>
 
                         <Label Content="Latitude:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
                         <Label x:Name="latitudeLabel" Content="{Binding Location.Latitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center" FontWeight="Normal"/>

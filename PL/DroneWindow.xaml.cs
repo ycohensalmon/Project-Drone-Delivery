@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 using BO;
 using BlApi;
 using BL;
+using System.ComponentModel;
+using System.Diagnostics;
 
 namespace PL
 {
@@ -24,12 +26,14 @@ namespace PL
     {
         private IBL myBl;
         public Drone drone;
+        internal BackgroundWorker worker;
 
         #region add drone
         public DroneWindow()
         {
             this.myBl = BlApi.BlFactory.GetBl();
             InitializeComponent();
+
             UpdateDrone.Visibility = Visibility.Hidden;
             AddDrone.Visibility = Visibility.Visible;
             this.MaxWeight.ItemsSource = Enum.GetValues(typeof(BO.WeightCategory));
@@ -230,5 +234,78 @@ namespace PL
             }
         }
         #endregion
+
+
+        private void btnPlayStop_Checked(object sender, RoutedEventArgs e)
+        {
+            worker = new BackgroundWorker();
+
+            worker.WorkerReportsProgress = true;
+            worker.WorkerSupportsCancellation = true;
+
+            worker.DoWork += autoMode_DoWork;
+            worker.ProgressChanged += autoMode_ProgressChanged;
+            worker.RunWorkerCompleted += autoMode_RunWorkerCompleted;
+
+            //hiding the action buttons
+            //btnReleaseCharge.Visibility = Visibility.Hidden;
+            //btnCharge.Visibility = Visibility.Hidden;
+            //btnDroneToDelivery.Visibility = Visibility.Hidden;
+            //btnDronePickUp.Visibility = Visibility.Hidden;
+            //btnDroneDeliver.Visibility = Visibility.Hidden;
+            //modelToPrint.IsEnabled = false;
+            worker.RunWorkerAsync();
+
+        }
+
+        private void btnPlayStop_Unchecked(object sender, RoutedEventArgs e)
+        {
+            worker.CancelAsync();
+
+            //modelToPrint.IsEnabled = true;
+            //btnReleaseCharge.Visibility = Visibility.Visible;
+            //btnCharge.Visibility = Visibility.Visible;
+            //btnDroneToDelivery.Visibility = Visibility.Visible;
+            //btnDronePickUp.Visibility = Visibility.Visible;
+            //btnDroneDeliver.Visibility = Visibility.Visible;
+            //display();
+        }
+
+        private void autoMode_DoWork(object sender, DoWorkEventArgs e)
+        {
+            myBl.ActivSimulator(drone.Id, update, stop);
+        }
+
+        private void autoMode_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            drone = myBl.GetDroneById(drone.Id); //getting the updated drone from the bl
+            DataContext = drone;
+
+            //if (drone.InShipping.Id == 0)
+            //{
+            //    parcelExpander.IsExpanded = false;
+            //    parcelExpander.IsEnabled = false;
+            //}
+            //else
+            //{
+            //    parcelExpander.IsExpanded = true;
+            //    parcelExpander.IsEnabled = true;
+            //}
+
+            //if (droneList != null)
+            //    droneList.checkFilters(); //update according to filters
+        }
+
+        private void autoMode_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) { }
+
+        private void update()
+        {
+            worker.ReportProgress(0);
+        }
+
+        private bool stop()
+        {
+            return worker.CancellationPending;
+        }
     }
 }
