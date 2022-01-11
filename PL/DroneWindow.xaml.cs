@@ -138,6 +138,7 @@ namespace PL
             InitializeComponent();
             AddDrone.Visibility = Visibility.Hidden;
             UpdateDrone.Visibility = Visibility.Visible;
+            DroneView.DataContext = drone;
 
             RefreshButtonUpdate(myBl);
         }
@@ -279,7 +280,7 @@ namespace PL
         private void autoMode_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             drone = myBl.GetDroneById(drone.Id); //getting the updated drone from the bl
-            DataContext = drone;
+            DroneView.DataContext = drone;
 
             //if (drone.InShipping.Id == 0)
             //{
