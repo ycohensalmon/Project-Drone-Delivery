@@ -13,21 +13,23 @@ namespace BL
 {
     class Simulator
     {
-        int timer = 500;
+        int timer = 1000;
         double speed = 0.75;
 
-        Drone d;
+        Drone drone;
 
         public Simulator(int id, Action updateDelegate, Func<bool> stopDelegate, BL myBL)
         {
             lock (myBL)
             {
-                d = myBL.GetDroneById(id);
+                drone = myBL.GetDroneById(id);
             }
+
+            double distance;
 
             while (!stopDelegate())
             {
-                switch (d.Status)
+                switch (drone.Status)
                 {
                     case DroneStatuses.Available:
                         try
@@ -39,14 +41,21 @@ namespace BL
                         }
                         catch (NotEnoughBatteryException)
                         {
+                            Station station;
                             lock (myBL)
                             {
-                                myBL.SendDroneToCharge(id);
+                                //////drone = myBL.GetDroneById(id);
+                                int stationId = myBL.SendDroneToCharge(id);
+                                station = myBL.GetStationById(stationId);
                             }
+                            distance = Distance.GetDistanceFromLatLonInKm(drone.Location.Latitude, drone.Location.Longitude, 
+                                station.Location.Latitude, station.Location.Longitude);
+                            //time of way from his lication to base charge
+                            Thread.Sleep((int)(distance / speed));
                         }
                         catch (NoParcelException)
                         {
-                            //wait
+                            //wait //check
                         }
                         catch (ParcelTooHeavyException)
                         {
@@ -56,13 +65,27 @@ namespace BL
                     case DroneStatuses.Maintenance:
                         lock (myBL)
                         {
-                            if (checkFullBattery(id, myBL))
+                            drone.Battery += GetBatteryPercentages(id, myBL);
+                            if (drone.Battery >= 100)
                                 myBL.ReleaseDroneFromCharging(id);
+                            //way stop?
                         }
+
                         break;
                     case DroneStatuses.Delivery:
-                        checkStatusParcelOfDelivery(d.ParcelInTravel.Id);
-                        DoContinueDelivery(d.ParcelInTravel.Id);
+                        lock (myBL)
+                        {
+                            if (myBL.GetDroneById(id).ParcelInTravel.InTravel)
+                                myBL.DeliveredParcel(id);
+                            else
+                                myBL.CollectParcelsByDrone(id);
+
+                            /////////drone = myBL.GetDroneById(id);
+                        }
+
+                        distance = drone.ParcelInTravel.Distance;
+                        //From the beginning of the trip until reaching the destination
+                        Thread.Sleep((int)(distance / speed));
                         break;
                     default:
                         break;
@@ -70,14 +93,15 @@ namespace BL
             }
         }
 
-        private bool checkFullBattery(int id, BL myBL)
+        private double GetBatteryPercentages(int id, BL myBL)
         {
             lock (myBL)
             {
                 var drone = myBL.dalObj.GetDroneCharges(x => x.DroneId == id).First();
-                if ((DateTime.Now - drone.EnteryTime).Value.TotalSeconds * (myBL.getLoadingRate() / 60) >= 100)
-                    return true;
-                return false;
+                double presentOfCharge = (DateTime.Now - drone.EnteryTime).Value.TotalSeconds * 
+                    (myBL.getLoadingRate() / 60);
+                drone.EnteryTime = DateTime.Now;
+                return presentOfCharge;
             }
         }
 

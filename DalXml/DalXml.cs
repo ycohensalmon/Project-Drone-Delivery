@@ -162,9 +162,7 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void ConnectDroneToParcel(int droneId, int parcelId)
         {
-            var droneList = GetDrones();
-            
-            if (!droneList.Any(d => d.Id == droneId))
+            if (!GetDrones().Any(d => d.Id == droneId))
                 throw new IdNotFoundException(droneId, "Drone");
 
             var parcelList = XmlTools.LoadListFromXMLSerializer<Parcel>(parcelPath);

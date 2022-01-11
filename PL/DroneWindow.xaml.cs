@@ -144,7 +144,10 @@ namespace PL
                 switch (drone.Status)
                 {
                     case DroneStatuses.Available:
-                        myBl.SendDroneToCharge(drone.Id);
+                        int stationId = myBl.SendDroneToCharge(drone.Id);
+                        BO.Station station = myBl.GetStationById(stationId);
+                        MessageBox.Show($"The drone was sent for charging at {station.Name}", "success",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
                         break;
                     case DroneStatuses.Maintenance:
                         myBl.ReleaseDroneFromCharging(drone.Id);

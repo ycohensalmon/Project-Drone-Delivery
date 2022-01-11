@@ -52,6 +52,12 @@ namespace BL
                 Parcel parcel = GetParcelById(droneInList.NumParcel);
 
                 parcelInTravel.Id = parcel.Id;
+                parcelInTravel.Weight = parcel.Weight;
+                parcelInTravel.Priorities = parcel.Priorities;
+                parcelInTravel.Sender = parcel.Sender;
+                parcelInTravel.Target = parcel.Target;
+                parcelInTravel.source = GetCustomerById(parcel.Sender.Id).Location;
+                parcelInTravel.Destination = GetCustomerById(parcel.Target.Id).Location;
 
                 if (parcel.PickedUp != null)
                 {
@@ -69,13 +75,6 @@ namespace BL
                         droneInList.Location.Latitude, droneInList.Location.Longitude,
                         GetCustomerById(parcel.Sender.Id).Location.Latitude, GetCustomerById(parcel.Sender.Id).Location.Longitude);
                 }
-
-                parcelInTravel.Weight = parcel.Weight;
-                parcelInTravel.Priorities = parcel.Priorities;
-                parcelInTravel.Sender = parcel.Sender;
-                parcelInTravel.Target = parcel.Target;
-                parcelInTravel.source = GetCustomerById(parcel.Sender.Id).Location;
-                parcelInTravel.Destination = GetCustomerById(parcel.Target.Id).Location;
             }
 
             return new Drone

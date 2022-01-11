@@ -71,10 +71,7 @@ namespace BL
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        /// <summary>
-        /// the function receives drone and connect it to the most importent parcel
-        /// </summary>
-        /// <param name="droneId">the drone to connect</param>
+        
         public void ConnectDroneToParcel(int droneId)
         {
             //getting the drone and check if it exist and available
@@ -209,6 +206,7 @@ namespace BL
             DroneInList drone = drones.FirstOrDefault(x => x.Id == droneId);
             if (drone.Status != DroneStatuses.Delivery)
                 throw new StatusDroneException("collect parcel by drone", drone.Status, DroneStatuses.Delivery);
+
             lock (dalObj)
             {
                 DO.Parcel myParcel = dalObj.GetParcelById(drone.NumParcel);
@@ -291,7 +289,7 @@ namespace BL
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void SendDroneToCharge(int droneId)
+        public int SendDroneToCharge(int droneId)
         {
             //getting the drone
             DroneInList drone = drones.FirstOrDefault(x => x.Id == droneId);
@@ -308,7 +306,6 @@ namespace BL
                 //List<DO.Station> station = dalObj.GetStations(x => x.ChargeSolts != 0).ToList();
                 if (!station.Any())
                     station = dalObj.GetStations();
-                //throw new NoChargeSlotException();
 
                 //order the station by closest
                 station = station.OrderBy(s => Distance.GetDistanceFromLatLonInKm(s.Latitude, s.Longitude, drone.Location.Latitude, drone.Location.Longitude));
@@ -351,6 +348,7 @@ namespace BL
                 {
                     throw new DalException(ex);
                 }
+                return station.First().Id;
             }
         }
 

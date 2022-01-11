@@ -14,10 +14,19 @@ namespace BlApi
         public void NewParcel(Parcel x, int senderID, int receiveID);
         //public void NewParcelOfUser(Parcel x, int receiveID);
         public void NewDroneInList(DroneInList temp, int numStation);
+        /// <summary>
+        /// the function receives drone and connect it to the most importent parcel
+        /// </summary>
+        /// <param name="droneId">the drone to connect</param>
         public void ConnectDroneToParcel(int droneId);
         public void CollectParcelsByDrone(int droneId);
         public void DeliveredParcel(int droneId);
-        public void SendDroneToCharge(int droneId);
+        /// <summary>
+        /// the function send the drone to base charge
+        /// </summary>
+        /// <param name="droneId">the drone we want send</param>
+        /// <returns>the function return the id of the base station that the drone was sent to there</returns>
+        public int SendDroneToCharge(int droneId);
         public void ReleaseDroneFromCharging(int droneId);
         public void UpdateDrone(int droneId, string model);
         public void UpdateBase(int num, string newName, string newChargeSolts);

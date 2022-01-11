@@ -10,14 +10,6 @@
   </Station>
   <Station>
     <IsDeleted>false</IsDeleted>
-    <Id>1020</Id>
-    <Name>Hadar Mall</Name>
-    <Latitude>31.753791</Latitude>
-    <Longitude>35.213429</Longitude>
-    <ChargeSolts>4</ChargeSolts>
-  </Station>
-  <Station>
-    <IsDeleted>false</IsDeleted>
     <Id>1010</Id>
     <Name>Malcha Mall</Name>
     <Latitude>31.751716</Latitude>
@@ -26,11 +18,11 @@
   </Station>
   <Station>
     <IsDeleted>false</IsDeleted>
-    <Id>1030</Id>
-    <Name>Ramot Mall</Name>
-    <Latitude>31.817627</Latitude>
-    <Longitude>35.194476</Longitude>
-    <ChargeSolts>3</ChargeSolts>
+    <Id>1020</Id>
+    <Name>Hadar Mall</Name>
+    <Latitude>31.753791</Latitude>
+    <Longitude>35.213429</Longitude>
+    <ChargeSolts>4</ChargeSolts>
   </Station>
   <Station>
     <IsDeleted>false</IsDeleted>
@@ -39,5 +31,13 @@
     <Latitude>31.789061</Latitude>
     <Longitude>35.2031</Longitude>
     <ChargeSolts>5</ChargeSolts>
+  </Station>
+  <Station>
+    <IsDeleted>false</IsDeleted>
+    <Id>1030</Id>
+    <Name>Ramot Mall</Name>
+    <Latitude>31.817627</Latitude>
+    <Longitude>35.194476</Longitude>
+    <ChargeSolts>3</ChargeSolts>
   </Station>
 </ArrayOfStation>
