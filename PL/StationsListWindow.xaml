@@ -101,7 +101,7 @@
                                                 <DataTemplate>
                                                     <Border Margin="0 7"  BorderBrush="#172d42" CornerRadius="10" BorderThickness="1" Width="287">
                                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                                            <Border Width="90" Height="70" CornerRadius="5" Margin="5">
+                                                            <Border Width="90" Height="70" CornerRadius="5" Margin="5" Cursor="Hand">
                                                                 <Border.Effect>
                                                                     <DropShadowEffect ShadowDepth="1"/>
                                                                 </Border.Effect>
@@ -109,32 +109,32 @@
                                                                     <ImageBrush ImageSource="{Binding Path=Image}"/>
                                                                 </Border.Background>
                                                             </Border>
-                                                            <StackPanel Orientation="Vertical" Width="150">
+                                                            <StackPanel Orientation="Vertical" Width="150" IsEnabled="False">
                                                                 <StackPanel Orientation="Horizontal" Margin="0 -5">
-                                                                    <Label Content="ID:" FontSize="13"/>
-                                                                    <TextBlock x:Name="Iddrone" Text="{Binding Path=Id}" FontSize="13" VerticalAlignment="Center"/>
+                                                                    <Label Content="ID:" FontSize="13" IsEnabled="False" Style="{StaticResource StyleFontL}"/>
+                                                                    <Label Content="{Binding Path=Id}" FontSize="13" VerticalAlignment="Center" Style="{StaticResource StyleFontL}"/>
                                                                 </StackPanel>
                                                                 <StackPanel Orientation="Horizontal" Margin="0 -5">
-                                                                    <Label Content="Model:" FontSize="13"/>
-                                                                    <TextBlock Text="{Binding Path=Model}" FontSize="13" VerticalAlignment="Center"/>
+                                                                    <Label Content="Model:" FontSize="13" Style="{StaticResource StyleFontL}"/>
+                                                                    <Label Content="{Binding Path=Model}" Style="{StaticResource StyleFontL}" FontSize="13" VerticalAlignment="Center"/>
                                                                 </StackPanel>
                                                                 <StackPanel Orientation="Horizontal" Margin="0 -5">
-                                                                    <Label Content="Max Weight:" FontSize="13"/>
-                                                                    <TextBlock Text="{Binding Path=MaxWeight}" FontSize="13" VerticalAlignment="Center"/>
+                                                                    <Label Content="Max Weight:" FontSize="13" Style="{StaticResource StyleFontL}"/>
+                                                                    <Label Content="{Binding Path=MaxWeight}" Style="{StaticResource StyleFontL}" FontSize="13" VerticalAlignment="Center"/>
                                                                 </StackPanel>
                                                                 <StackPanel Orientation="Horizontal" Margin="0 -5">
-                                                                    <Label Content="Battery:" FontSize="13"/>
-                                                                    <TextBlock Text="{Binding Path=Battery}" FontSize="13" VerticalAlignment="Center"/>
+                                                                    <Label Content="Battery:" FontSize="13" Style="{StaticResource StyleFontL}"/>
+                                                                    <Label Content="{Binding Path=Battery}" Style="{StaticResource StyleFontL}" FontSize="13" VerticalAlignment="Center"/>
                                                                 </StackPanel>
                                                                 <StackPanel Orientation="Horizontal" Margin="0 -5">
-                                                                    <Label Content="Status:" FontSize="13"/>
-                                                                    <TextBlock Text="{Binding Path=Status}" FontSize="13" VerticalAlignment="Center"/>
+                                                                    <Label Content="Status:" FontSize="13" Style="{StaticResource StyleFontL}"/>
+                                                                    <Label Content="{Binding Path=Status}" Style="{StaticResource StyleFontL}" FontSize="13" VerticalAlignment="Center"/>
                                                                 </StackPanel>
                                                                 <!--<TextBlock Margin="5 0" Text="{Binding Path=Location.Latitude}" FontSize="13"/>
                                             <TextBlock Margin="5 0" Text="{Binding Path=Location.Longitude}" FontSize="13"/>-->
                                                                 <StackPanel Orientation="Horizontal" Margin="0 -5">
-                                                                    <Label Content="Parcel id:" FontSize="13"/>
-                                                                    <TextBlock Text="{Binding Path=NumParcel}" FontSize="13" VerticalAlignment="Center"/>
+                                                                    <Label Content="Parcel id:" FontSize="13" Style="{StaticResource StyleFontL}"/>
+                                                                    <Label Content="{Binding Path=NumParcel}" Style="{StaticResource StyleFontL}" FontSize="13" VerticalAlignment="Center"/>
                                                                 </StackPanel>
                                                             </StackPanel>
                                                             <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Center">
@@ -216,16 +216,16 @@
                                                                 </Border>
                                                                 <StackPanel Orientation="Vertical" Width="160">
                                                                     <StackPanel Orientation="Horizontal">
-                                                                        <Label Content="ID:" FontSize="15"/>
-                                                                        <TextBlock Text="{Binding Path=Id}" FontSize="15" VerticalAlignment="Center"/>
+                                                                        <Label Content="ID:" FontSize="15" IsEnabled="False" />
+                                                                        <Label Content="{Binding Path=Id}" FontSize="15" IsEnabled="False" VerticalAlignment="Center"/>
                                                                     </StackPanel>
                                                                     <StackPanel Orientation="Horizontal">
-                                                                        <Label Content="Charge available:" FontSize="15"/>
-                                                                        <TextBlock Text="{Binding Path=ChargeSoltsAvailable}" FontSize="15" VerticalAlignment="Center"/>
+                                                                        <Label Content="Charge available:" FontSize="15" IsEnabled="False" />
+                                                                        <Label Content="{Binding Path=ChargeSoltsAvailable}" FontSize="15" IsEnabled="False"  VerticalAlignment="Center"/>
                                                                     </StackPanel>
                                                                     <StackPanel Orientation="Horizontal">
-                                                                        <Label Content="Charge busy:" FontSize="15"/>
-                                                                        <TextBlock Text="{Binding Path=ChargeSoltsBusy}" FontSize="15" VerticalAlignment="Center"/>
+                                                                        <Label Content="Charge busy:" FontSize="15" IsEnabled="False" />
+                                                                        <Label Content="{Binding Path=ChargeSoltsBusy}" FontSize="15" IsEnabled="False"  VerticalAlignment="Center"/>
                                                                     </StackPanel>
                                                                 </StackPanel>
 
@@ -240,8 +240,8 @@
                                                             </StackPanel>
 
                                                             <StackPanel Orientation="Horizontal">
-                                                                <Label Content="Name:" FontSize="15"/>
-                                                                <TextBlock Text="{Binding Path=Name}" FontSize="15" VerticalAlignment="Center"/>
+                                                                <Label Content="Name:" FontSize="15" IsEnabled="False"/>
+                                                                <Label Content="{Binding Path=Name}" FontSize="15" IsEnabled="False" VerticalAlignment="Center"/>
                                                             </StackPanel>
                                                         </StackPanel>
 

@@ -141,9 +141,21 @@ namespace PL
         {
             ButtonDroneClearStatus_Click(sender, e);
             ButtonDroneClearWeight_Click(sender, e);
-            Border dataDrone = e.OriginalSource as Border;
+            MessageBox.Show(e.OriginalSource.GetType().ToString());
 
-            var drone = myBl.GetDroneById(((DroneInList)dataDrone.DataContext).Id);
+            int id = 0;
+            if (e.OriginalSource is Border)
+            {
+                Border dataDrone = e.OriginalSource as Border;
+                id = ((DroneInList)dataDrone.DataContext).Id;
+            }
+            if (e.OriginalSource is StackPanel)
+            {
+                StackPanel dataDrone = e.OriginalSource as StackPanel;
+                id = ((DroneInList)dataDrone.DataContext).Id;
+            }
+            
+            var drone = myBl.GetDroneById(id);
             DroneWindow droneWindow = new(drone);
 
             droneWindow.bottonUpdate.Click += UpdateDroneList;
@@ -174,14 +186,22 @@ namespace PL
         #region station click
         private void StationView_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            Border datatation = e.OriginalSource as Border;
+            int id = 0;
+            if (e.OriginalSource is Border)
+            {
+                Border dataDrone = e.OriginalSource as Border;
+                id = ((StationList)dataDrone.DataContext).Id;
+            }
+            if (e.OriginalSource is StackPanel)
+            {
+                StackPanel dataDrone = e.OriginalSource as StackPanel;
+                id = ((StationList)dataDrone.DataContext).Id;
+            }
 
-            var station = myBl.GetStationById(((BO.StationList)datatation.DataContext).Id);
+            var station = myBl.GetStationById(id);
             StationWindow stationWindow = new(station);
 
             stationWindow.ShowDialog();
-            //var station = myBl.GetStationById(((BO.StationList)StasionsListView.SelectedItem).Id);
-            //new StationWindow(station).Show();
         }
         private void bottonAddStation_Click(object sender, RoutedEventArgs e)
         {
