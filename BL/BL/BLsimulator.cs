@@ -71,6 +71,7 @@ namespace BL
                             drone.Battery += GetBatteryPercentages(id, myBL);
                             if (drone.Battery >= 100)
                                 myBL.ReleaseDroneFromCharging(id);
+                            drone = myBL.GetDroneById(id);
                         }
                         Thread.Sleep(timer);
                         break;
