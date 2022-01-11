@@ -19,16 +19,22 @@
         WindowStyle="None"
         Height="700" Width="365"
         Title="MainWindow">
-    <Grid>
-        <!--#region background-->
-        <Border CornerRadius="55">
-            <Border.Background>
-                <ImageBrush Stretch="Fill" ImageSource="images/homescrenn (1).png" />
-            </Border.Background>
-        </Border>
-        <!--#endregion-->
 
-        <Border Height="60" CornerRadius="12,12,12,12" Margin="40,60,260,580" MouseDown="ClickDrones">
+    <Border CornerRadius="55">
+        <Border.Background>
+            <ImageBrush Stretch="Fill" ImageSource="images/homescrenn (1).png" />
+        </Border.Background>
+
+        <Grid>
+
+
+            <Border CornerRadius="20,20,20,20"  MouseDown="StationsClick" Margin="34,72,33,488">
+                <Border.Background>
+                    <ImageBrush ImageSource="/images/meteo.png"  Stretch="Fill"/>
+                </Border.Background>
+            </Border>
+
+            <!--<Border Height="60" CornerRadius="12,12,12,12" Margin="40,60,260,580" MouseDown="ClickDrones">
             <Border.Background>
                 <ImageBrush ImageSource="/images/logoamazon.png"  Stretch="Fill"/>
             </Border.Background>
@@ -42,25 +48,29 @@
         </Border>
         <Label Content="Custumers" Margin="117,120,0,560" FontFamily="San Francisco" Foreground="AliceBlue" FontWeight="DemiBold" HorizontalAlignment="Left"/>
 
-        <Border Height="60" CornerRadius="12,12,12,12" Margin="195,60,105,580" MouseDown="StationsClick">
-            <Border.Background>
-                <ImageBrush ImageSource="/images/logoamazon.png"  Stretch="Fill"/>
-            </Border.Background>
-        </Border>
-        <Label Content="Stations" Margin="202,120,0,560" FontFamily="San Francisco" Foreground="AliceBlue" FontWeight="DemiBold" HorizontalAlignment="Left"/>
-
         <Border Height="60" CornerRadius="14,14,14,14" Margin="275,60,30,580" MouseDown="ParcelClick">
             <Border.Background>
                 <ImageBrush ImageSource="/images/logoparcels.png"  Stretch="Fill"/>
             </Border.Background>
         </Border>
-        <Label Content="Parcels" Margin="280,120,0,560" FontFamily="San Francisco" Foreground="AliceBlue" FontWeight="DemiBold" HorizontalAlignment="Left"/>
+        <Label Content="Parcels" Margin="280,120,0,560" FontFamily="San Francisco" Foreground="AliceBlue" FontWeight="DemiBold" HorizontalAlignment="Left"/>-->
+
+            <StackPanel Orientation="Vertical" Margin="34,237,266,380">
+                <Border Height="60" CornerRadius="12,12,12,12"  MouseDown="StationsClick">
+                    <Border.Background>
+                        <ImageBrush ImageSource="/images/dronelogo.png"  Stretch="Fill"/>
+                    </Border.Background>
+                </Border>
+                <Label Content="Delivery" FontFamily="San Francisco" Foreground="AliceBlue" FontWeight="DemiBold" HorizontalAlignment="Center"/>
+            </StackPanel>
 
 
-        <Button x:Name="Close" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="DarkRed" BorderBrush="DarkRed" Margin="0,17,111,0">
-            <materialDesign:PackIcon Kind="Close" Width="18" Height="18"/>
-        </Button>
 
-        <!--{StaticResource MaterialDesignDarkForeground}-->
-    </Grid>
+            <Button x:Name="Close" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="DarkRed" BorderBrush="DarkRed" Margin="0,17,111,0">
+                <materialDesign:PackIcon Kind="Close" Width="18" Height="18"/>
+            </Button>
+
+            <!--{StaticResource MaterialDesignDarkForeground}-->
+        </Grid>
+    </Border>
 </Window>
