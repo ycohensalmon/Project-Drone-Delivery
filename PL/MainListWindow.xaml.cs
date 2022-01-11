@@ -141,7 +141,6 @@ namespace PL
         {
             ButtonDroneClearStatus_Click(sender, e);
             ButtonDroneClearWeight_Click(sender, e);
-            MessageBox.Show(e.OriginalSource.GetType().ToString());
 
             int id = 0;
             if (e.OriginalSource is Border)
@@ -333,6 +332,13 @@ namespace PL
         private void bottonExit_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void DroneEdit_Click(object sender, RoutedEventArgs e)
+        {
+            Button drone = sender as Button;
+            MessageBox.Show(sender.GetType().ToString());
+            MessageBox.Show(e.GetType().ToString());
         }
     }
 }
