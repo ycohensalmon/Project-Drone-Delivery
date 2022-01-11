@@ -7,7 +7,7 @@ using BO;
 using BlApi;
 using System.Threading;
 using static BL.BL;
- 
+
 
 namespace BL
 {
@@ -45,33 +45,36 @@ namespace BL
                             Station station;
                             lock (myBL)
                             {
+                                /////////// station = 
                                 //////drone = myBL.GetDroneById(id);
                                 int stationId = myBL.SendDroneToCharge(id);
                                 station = myBL.GetStationById(stationId);
                             }
-                            distance = Distance.GetDistanceFromLatLonInKm(drone.Location.Latitude, 
+                            distance = Distance.GetDistanceFromLatLonInKm(drone.Location.Latitude,
                                 drone.Location.Longitude, station.Location.Latitude, station.Location.Longitude);
                             //time of way from his lication to base charge
                             Thread.Sleep((int)(distance / speed));
                         }
                         catch (NoParcelException)
                         {
-                            //wait //check
+                            Thread.Sleep(timer);
                         }
                         catch (ParcelTooHeavyException)
                         {
-                            //stop
+                            Thread.Sleep(timer);
                         }
                         break;
+
                     case DroneStatuses.Maintenance:
                         lock (myBL)
                         {
                             drone.Battery += GetBatteryPercentages(id, myBL);
                             if (drone.Battery >= 100)
                                 myBL.ReleaseDroneFromCharging(id);
-                            Thread.Sleep(timer);
                         }
+                        Thread.Sleep(timer);
                         break;
+
                     case DroneStatuses.Delivery:
                         distance = myBL.GetDroneById(id).ParcelInTravel.Distance;
                         //From the beginning of the trip until reaching the destination
@@ -85,6 +88,7 @@ namespace BL
                                 myBL.CollectParcelsByDrone(id);
                             /////////drone = myBL.GetDroneById(id);
                         }
+                        Thread.Sleep(timer);
                         break;
                     default:
                         break;
@@ -98,21 +102,40 @@ namespace BL
             lock (myBL)
             {
                 var drone = myBL.dalObj.GetDroneCharges(x => x.DroneId == id).First();
-                double presentOfCharge = (DateTime.Now - drone.EnteryTime).Value.TotalSeconds * 
+                double presentOfCharge = (DateTime.Now - drone.EnteryTime).Value.TotalSeconds *
                     (myBL.getLoadingRate() / 60);
                 drone.EnteryTime = DateTime.Now;
                 return presentOfCharge;
             }
         }
-
-        private void checkStatusParcelOfDelivery(int id)
-        {
-
-        }
-
-        private void DoContinueDelivery(int id)
-        {
-
-        }
     }
 }
+        
+//        case DroneStatuses.Available:
+//                        lock (myBL)
+//                        {
+//            try
+//            {
+//                myBL.AssignDroneToParcel(drone.Id);
+//                drone = myBL.GetDrone(drone.Id);
+//            }
+//            catch (EmptyListException) { }
+//            catch (NoBatteryException) //if there is not enough battery to make a delivery for any of the parcels
+//            {
+//                try
+//                {
+//                    myBL.ChargeDrone(drone.Id);
+//                    var tmp = myBL.GetDrone(drone.Id).CurrentLocation;
+//                    Thread.Sleep((int)(BL.getDistance(tmp, drone.CurrentLocation) / speed)); //update the drone only after the drone has reached the station
+//                    drone = myBL.GetDrone(drone.Id);
+//                }
+//                //in both cases, the drone will wait for the next cycle and try again to see if there is 
+//                //an available station for him to reach
+//                //(there might be a case where there was a new parcel that the drone is able to carry)
+//                catch (EmptyListException) { } //if there is no available charge slots try again in the next cycle
+//                catch (NoBatteryException) { } //if there is not enough battery to get to the nearest station with available charge slots
+//            }
+//        }
+//                        break;
+//    }
+//}
