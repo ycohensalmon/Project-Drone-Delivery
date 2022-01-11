@@ -13,8 +13,8 @@ namespace BL
 {
     class Simulator
     {
-        int timer = 1000;
-        double speed = 0.75;
+        const int timer = 1000;
+        const double speed = 0.75;
 
         Drone drone;
 
@@ -38,6 +38,7 @@ namespace BL
                             {
                                 myBL.ConnectDroneToParcel(id);
                             }
+                            Thread.Sleep(timer);
                         }
                         catch (NotEnoughBatteryException)
                         {
@@ -48,8 +49,8 @@ namespace BL
                                 int stationId = myBL.SendDroneToCharge(id);
                                 station = myBL.GetStationById(stationId);
                             }
-                            distance = Distance.GetDistanceFromLatLonInKm(drone.Location.Latitude, drone.Location.Longitude, 
-                                station.Location.Latitude, station.Location.Longitude);
+                            distance = Distance.GetDistanceFromLatLonInKm(drone.Location.Latitude, 
+                                drone.Location.Longitude, station.Location.Latitude, station.Location.Longitude);
                             //time of way from his lication to base charge
                             Thread.Sleep((int)(distance / speed));
                         }
@@ -68,28 +69,27 @@ namespace BL
                             drone.Battery += GetBatteryPercentages(id, myBL);
                             if (drone.Battery >= 100)
                                 myBL.ReleaseDroneFromCharging(id);
-                            //way stop?
+                            Thread.Sleep(timer);
                         }
-
                         break;
                     case DroneStatuses.Delivery:
+                        distance = myBL.GetDroneById(id).ParcelInTravel.Distance;
+                        //From the beginning of the trip until reaching the destination
+                        Thread.Sleep((int)(distance / speed));
+
                         lock (myBL)
                         {
-                            if (myBL.GetDroneById(id).ParcelInTravel.InTravel)
+                            if (drone.ParcelInTravel.InTravel)
                                 myBL.DeliveredParcel(id);
                             else
                                 myBL.CollectParcelsByDrone(id);
-
                             /////////drone = myBL.GetDroneById(id);
                         }
-
-                        distance = drone.ParcelInTravel.Distance;
-                        //From the beginning of the trip until reaching the destination
-                        Thread.Sleep((int)(distance / speed));
                         break;
                     default:
                         break;
                 }
+                updateDelegate();
             }
         }
 
