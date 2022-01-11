@@ -14,8 +14,9 @@ namespace BL
     class Simulator
     {
         const int timer = 1000;
-        const double speed = 0.75;
+        const double speed = 0.5;
 
+        TimeSpan TimeSpan;
         Drone drone;
 
         public Simulator(int id, Action updateDelegate, Func<bool> stopDelegate, BL myBL)
@@ -25,7 +26,7 @@ namespace BL
                 drone = myBL.GetDroneById(id);
             }
 
-            double distance;
+            double distance, lossBattery;
 
             while (!stopDelegate())
             {
@@ -46,13 +47,15 @@ namespace BL
                             Station station;
                             lock (myBL)
                             {
-                                /////////// station = 
-                                //////drone = myBL.GetDroneById(id);
                                 int stationId = myBL.SendDroneToCharge(id);
                                 station = myBL.GetStationById(stationId);
                             }
+                            //distance fron drone location to base charge
                             distance = Distance.GetDistanceFromLatLonInKm(drone.Location.Latitude,
                                 drone.Location.Longitude, station.Location.Latitude, station.Location.Longitude);
+
+                            lossBattery = myBL.GetBatteryIossAvailable() * distance;
+                            SetBattery(lossBattery, distance);
                             //time of way from his lication to base charge
                             Thread.Sleep((int)(distance / speed));
                         }
@@ -79,19 +82,19 @@ namespace BL
                         break;
 
                     case DroneStatuses.Delivery:
-                        distance = myBL.GetDroneById(id).ParcelInTravel.Distance;
-                        //From the beginning of the trip until reaching the destination
-                        Thread.Sleep((int)(distance / speed));
-
                         lock (myBL)
                         {
                             if (drone.ParcelInTravel.InTravel)
                                 myBL.DeliveredParcel(id);
                             else
                                 myBL.CollectParcelsByDrone(id);
-                            /////////drone = myBL.GetDroneById(id);
+                            Location temp = myBL.GetDroneById(id).Location;
+                            distance = Distance.GetDistanceFromLatLonInKm(drone.Location.Latitude, drone.Location.Longitude, temp.Latitude, temp.Longitude);
+                            drone = myBL.GetDroneById(id);
                         }
-                        Thread.Sleep(timer);
+
+                        //From the beginning of the trip until reaching the destination
+                        Thread.Sleep((int)(distance / speed));
                         break;
                     default:
                         break;
@@ -109,6 +112,14 @@ namespace BL
                     (myBL.getLoadingRate() / 60);
                 drone.EnteryTime = DateTime.Now;
                 return presentOfCharge;
+            }
+        }
+
+        private void SetBattery(double lossBattery, double distance, DateTime dateTime)
+        {
+            while ((TimeSpan)(DateTime.Now - dateTime).TotalSeconds < (distance / speed))
+            {
+
             }
         }
     }

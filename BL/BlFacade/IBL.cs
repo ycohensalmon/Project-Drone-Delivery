@@ -53,6 +53,10 @@ namespace BlApi
         public bool checkUser(int userId, int password);
         public void confirmPackage(int userId, int parcelId);
         public double getLoadingRate();
+        public double GetBatteryIossAvailable();
+        public double GetBatteryIossLightParcel();
+        public double GetBatteryIossMediumParcel();
+        public double GetBatteryIossHeavyParcel();
         public void ActivSimulator(int id, Action updateDelegate, Func<bool> stopDelegate);
 
     }

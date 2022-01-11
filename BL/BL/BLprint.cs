@@ -416,6 +416,10 @@ namespace BL
             }
         }
 
-        public double getLoadingRate() => LoadingRate; 
+        public double getLoadingRate() => LoadingRate;
+        public double GetBatteryIossAvailable() => Available;
+        public double GetBatteryIossLightParcel() => LightParcel;
+        public double GetBatteryIossMediumParcel() => MediumParcel;
+        public double GetBatteryIossHeavyParcel() => HeavyParcel;
     }
 }
