@@ -153,7 +153,12 @@ namespace PL
                 StackPanel dataDrone = e.OriginalSource as StackPanel;
                 id = ((DroneInList)dataDrone.DataContext).Id;
             }
-            
+
+            NewDroneWindow(id);
+        }
+
+        private void NewDroneWindow(int id)
+        {
             var drone = myBl.GetDroneById(id);
             DroneWindow droneWindow = new(drone);
 
@@ -161,6 +166,14 @@ namespace PL
             droneWindow.conectToParcel.Click += UpdateDroneList;
             droneWindow.UpdateModel.Click += UpdateDroneList;
             droneWindow.ShowDialog();
+        }
+
+        private void DroneEdit_Click(object sender, RoutedEventArgs e)
+        {
+            Button drone = sender as Button;
+            int id = ((DroneInList)drone.DataContext).Id;
+
+            NewDroneWindow(id);
         }
 
         private void UpdateDroneList(object s, EventArgs e)
@@ -197,11 +210,25 @@ namespace PL
                 id = ((StationList)dataDrone.DataContext).Id;
             }
 
+            NewStationWindow(id);
+        }
+
+        private void StationEdit_Click(object sender, RoutedEventArgs e)
+        {
+            Button station = sender as Button;
+            int id = ((StationList)station.DataContext).Id;
+
+            NewStationWindow(id);
+        }
+
+        private void NewStationWindow(int id)
+        {
             var station = myBl.GetStationById(id);
             StationWindow stationWindow = new(station);
 
             stationWindow.ShowDialog();
         }
+
         private void bottonAddStation_Click(object sender, RoutedEventArgs e)
         {
             new StationWindow().ShowDialog();
@@ -234,8 +261,30 @@ namespace PL
             ButtonParcelClearWeight_Click(sender, e);
             ButtonParcelClearWeight_Click(sender, e);
 
-            Border dataParcel = e.OriginalSource as Border;
-            var parcel = myBl.GetParcelById(((ParcelInList)dataParcel.DataContext).Id);
+            int id = -1;
+            if (e.OriginalSource is Border)
+            {
+                Border dataParcel = e.OriginalSource as Border;
+                id = ((ParcelInList)dataParcel.DataContext).Id;
+            }
+            if (e.OriginalSource is StackPanel)
+            {
+                StackPanel dataParcel = e.OriginalSource as StackPanel;
+                id = ((ParcelInList)dataParcel.DataContext).Id;
+            }
+
+            NewParcelWindow(id);
+        }
+        private void ParcelEdit_Click(object sender, RoutedEventArgs e)
+        {
+            Button parcel = sender as Button;
+            int id = ((ParcelInList)parcel.DataContext).Id;
+
+            NewParcelWindow(id);
+        }
+        private void NewParcelWindow(int id)
+        {
+            var parcel = myBl.GetParcelById(id);
             ParcelWindow parcelWindow = new(parcel);
 
             parcelWindow.ShowDialog();
@@ -315,8 +364,10 @@ namespace PL
         #endregion
         #endregion
 
+        #region Customer
 
-        private void BottonAdd_Click(object sender, RoutedEventArgs e)
+        #region customer click
+        private void CustomerBottonAdd_Click(object sender, RoutedEventArgs e)
         {
             new CustomerWindow().ShowDialog();
             customersView.ItemsSource = myBl.GetCustomers();
@@ -325,20 +376,29 @@ namespace PL
         private void Customer_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             var customer = myBl.GetCustomerById(((BO.CustumerInList)customersView.SelectedItem).Id);
-            new CustomerWindow(customer).Show();
 
+            NewCustomerWindow(customer);
         }
+
+        private static void NewCustomerWindow(Customer customer)
+        {
+            CustomerWindow customerWindow = new(customer);
+            customerWindow.ShowDialog();
+        }
+
+        private void CustomerEdit_Click(object sender, RoutedEventArgs e)
+        {
+            Button customer = sender as Button;
+            var cust = myBl.GetCustomerById(((CustumerInList)customer.DataContext).Id);
+
+            NewCustomerWindow(cust);
+        }
+        #endregion
+        #endregion
 
         private void bottonExit_Click(object sender, RoutedEventArgs e)
         {
             Close();
-        }
-
-        private void DroneEdit_Click(object sender, RoutedEventArgs e)
-        {
-            Button drone = sender as Button;
-            MessageBox.Show(sender.GetType().ToString());
-            MessageBox.Show(e.GetType().ToString());
         }
     }
 }

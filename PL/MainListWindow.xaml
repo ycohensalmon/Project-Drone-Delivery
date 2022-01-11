@@ -24,7 +24,7 @@
         <Grid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="35,50,35,610">
                 
-                <Label Content="Drone air" FontFamily="Arial Black" Foreground="White" FontSize="28"/>
+                <Label Content="Prime air" FontFamily="Arial Black" Foreground="White" FontSize="28"/>
                 <materialDesign:PackIcon Kind="Drone" Foreground="White" Margin="10 0" Width="40" Height="40"/>
             </StackPanel>
 
@@ -112,23 +112,23 @@
                                                             <StackPanel Orientation="Vertical" Width="150" IsEnabled="False">
                                                                 <StackPanel Orientation="Horizontal" Margin="0 -5">
                                                                     <Label Content="ID:" FontSize="13" IsEnabled="False" Style="{StaticResource StyleFontL}"/>
-                                                                    <Label Content="{Binding Path=Id}" FontSize="13" VerticalAlignment="Center" Style="{StaticResource StyleFontL}"/>
+                                                                    <Label Content="{Binding Path=Id}" IsEnabled="False" FontSize="13" VerticalAlignment="Center" Style="{StaticResource StyleFontL}"/>
                                                                 </StackPanel>
                                                                 <StackPanel Orientation="Horizontal" Margin="0 -5">
-                                                                    <Label Content="Model:" FontSize="13" Style="{StaticResource StyleFontL}"/>
-                                                                    <Label Content="{Binding Path=Model}" Style="{StaticResource StyleFontL}" FontSize="13" VerticalAlignment="Center"/>
+                                                                    <Label Content="Model:" FontSize="13" IsEnabled="False" Style="{StaticResource StyleFontL}"/>
+                                                                    <Label Content="{Binding Path=Model}" IsEnabled="False" Style="{StaticResource StyleFontL}" FontSize="13" VerticalAlignment="Center"/>
                                                                 </StackPanel>
                                                                 <StackPanel Orientation="Horizontal" Margin="0 -5">
-                                                                    <Label Content="Max Weight:" FontSize="13" Style="{StaticResource StyleFontL}"/>
-                                                                    <Label Content="{Binding Path=MaxWeight}" Style="{StaticResource StyleFontL}" FontSize="13" VerticalAlignment="Center"/>
+                                                                    <Label Content="Max Weight:" FontSize="13" IsEnabled="False" Style="{StaticResource StyleFontL}"/>
+                                                                    <Label Content="{Binding Path=MaxWeight}" IsEnabled="False" Style="{StaticResource StyleFontL}" FontSize="13" VerticalAlignment="Center"/>
                                                                 </StackPanel>
                                                                 <StackPanel Orientation="Horizontal" Margin="0 -5">
-                                                                    <Label Content="Battery:" FontSize="13" Style="{StaticResource StyleFontL}"/>
-                                                                    <Label x:Name="batteryUsed" Content="{Binding Path=Battery, StringFormat='0.00'}" Style="{StaticResource StyleFontL}" FontSize="13" VerticalAlignment="Center"/>
+                                                                    <Label Content="Battery:" FontSize="13" IsEnabled="False" Style="{StaticResource StyleFontL}"/>
+                                                                    <Label x:Name="batteryUsed" IsEnabled="False" Content="{Binding Path=Battery}" Style="{StaticResource StyleFontL}" FontSize="13" VerticalAlignment="Center"/>
                                                                 </StackPanel>
                                                                 <StackPanel Orientation="Horizontal" Margin="0 -5">
-                                                                    <Label Content="Status:" FontSize="13" Style="{StaticResource StyleFontL}"/>
-                                                                    <Label Content="{Binding Path=Status}" Style="{StaticResource StyleFontL}" FontSize="13" VerticalAlignment="Center"/>
+                                                                    <Label Content="Status:" FontSize="13" IsEnabled="False" Style="{StaticResource StyleFontL}"/>
+                                                                    <Label Content="{Binding Path=Status}" IsEnabled="False" Style="{StaticResource StyleFontL}" FontSize="13" VerticalAlignment="Center"/>
                                                                 </StackPanel>
                                                                 <!--<TextBlock Margin="5 0" Text="{Binding Path=Location.Latitude}" FontSize="13"/>
                                             <TextBlock Margin="5 0" Text="{Binding Path=Location.Longitude}" FontSize="13"/>-->
@@ -159,8 +159,8 @@
                                     </StackPanel>
                                 </StackPanel>
                             </ScrollViewer>
-                            
-                            <Button Content="add drone" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Click="BottonAddDrone_Click" Margin="0,12,0,0"/>
+
+                            <Button Content="add drone" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Click="BottonAddDrone_Click" Margin="0,12,0,0" Background="#1a3144" BorderBrush="#1a3144"/>
                         </Grid>
                     </TabItem>
 
@@ -230,7 +230,7 @@
                                                                 </StackPanel>
 
                                                                 <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                                                                    <Button x:Name="ButtonEdit" ToolTip="Edit station" Margin="0 5" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25">
+                                                                    <Button x:Name="ButtonEdit" ToolTip="Edit station" Margin="0 5" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25" Click="StationEdit_Click">
                                                                         <materialDesign:PackIcon Kind="Edit" Width="20" Height="20"/>
                                                                     </Button>
                                                                     <Button x:Name="ButtonDelete" ToolTip="Delete station"  Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25">
@@ -266,7 +266,7 @@
                         <TabItem.Header>
                             <StackPanel Orientation="Vertical">
                                 <materialDesign:PackIcon Kind="PackageVariant" HorizontalAlignment="Center"/>
-                                <TextBlock Text="Paecels" HorizontalAlignment="Center" Margin="0 5"/>
+                                <TextBlock Text="Parcels" HorizontalAlignment="Center" Margin="0 5"/>
                             </StackPanel>
                         </TabItem.Header>
 
@@ -330,35 +330,33 @@
                                                 </Border.Background>
                                             </Border>-->
                                                             <StackPanel Orientation="Vertical" Width="253">
-                                                                <StackPanel Orientation="Horizontal" Margin="0 -5">
-                                                                    <Label Content="ID:" FontSize="13"/>
-                                                                    <TextBlock x:Name="IDhabibi" Text="{Binding Path=Id}" FontSize="13" VerticalAlignment="Center" IsEnabled="False"/>
+                                                                <StackPanel Orientation="Horizontal" Margin="0 -4">
+                                                                    <Label Content="From" FontSize="13" Foreground="Blue" IsEnabled="False"/>
+                                                                    <TextBlock Text="{Binding Path=SenderName}" FontSize="13" IsEnabled="False" VerticalAlignment="Center"/>
+                                                                    <Label Content="->" FontSize="13" Foreground="Blue" IsEnabled="False"/>
+                                                                    <TextBlock Text="{Binding Path=TargetName}" FontSize="13" IsEnabled="False" VerticalAlignment="Center"/>
                                                                 </StackPanel>
-                                                                <StackPanel Orientation="Horizontal" Margin="0 -5">
-                                                                    <Label Content="Sender name:" FontSize="13"/>
-                                                                    <TextBlock Text="{Binding Path=SenderName}" FontSize="13" VerticalAlignment="Center"/>
+                                                                <StackPanel Orientation="Horizontal" Margin="0 -4">
+                                                                    <Label Content="ID:" FontSize="15" IsEnabled="False"/>
+                                                                    <TextBlock Text="{Binding Path=Id}" FontSize="15" VerticalAlignment="Center" IsEnabled="False"/>
                                                                 </StackPanel>
-                                                                <StackPanel Orientation="Horizontal" Margin="0 -5">
-                                                                    <Label Content="Target name:" FontSize="13"/>
-                                                                    <TextBlock Text="{Binding Path=TargetName}" FontSize="13" VerticalAlignment="Center"/>
+                                                                <StackPanel Orientation="Horizontal" Margin="0 -4">
+                                                                    <Label Content="Weight:" FontSize="15" IsEnabled="False"/>
+                                                                    <TextBlock Text="{Binding Path=Weight}" IsEnabled="False" FontSize="15" VerticalAlignment="Center"/>
                                                                 </StackPanel>
-                                                                <StackPanel Orientation="Horizontal" Margin="0 -5">
-                                                                    <Label Content="Weight:" FontSize="13"/>
-                                                                    <TextBlock Text="{Binding Path=Weight}" FontSize="13" VerticalAlignment="Center"/>
+                                                                <StackPanel Orientation="Horizontal" Margin="0 -4">
+                                                                    <Label Content="Priorities:" FontSize="15" IsEnabled="False"/>
+                                                                    <TextBlock Text="{Binding Path=Priorities}" FontSize="15" IsEnabled="False" VerticalAlignment="Center"/>
                                                                 </StackPanel>
-                                                                <StackPanel Orientation="Horizontal" Margin="0 -5">
-                                                                    <Label Content="Priorities:" FontSize="13"/>
-                                                                    <TextBlock Text="{Binding Path=Priorities}" FontSize="13" VerticalAlignment="Center"/>
-                                                                </StackPanel>
-                                                                <StackPanel Orientation="Horizontal" Margin="0 -5">
-                                                                    <Label Content="Status:" FontSize="13"/>
-                                                                    <TextBlock Text="{Binding Path=Status}" FontSize="13" VerticalAlignment="Center"/>
+                                                                <StackPanel Orientation="Horizontal" Margin="0 -4">
+                                                                    <Label Content="Status:" FontSize="15" IsEnabled="False"/>
+                                                                    <TextBlock Text="{Binding Path=Status}" FontSize="15" IsEnabled="False" VerticalAlignment="Center"/>
                                                                 </StackPanel>
                                                             </StackPanel>
 
                                                             <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Center">
                                                                 
-                                                            <Button x:Name="ButtonEdit" ToolTip="Edit parcel" Margin="0 5" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25">
+                                                            <Button x:Name="ButtonEdit" ToolTip="Edit parcel" Margin="0 5" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25" Click="ParcelEdit_Click">
                                                                 <materialDesign:PackIcon Kind="Edit" Width="20" Height="20"/>
                                                             </Button>
                                                             <Button x:Name="ButtonDelete" ToolTip="Delete parcel" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25">
@@ -379,7 +377,7 @@
                                 </StackPanel>
                             </ScrollViewer>
 
-                            <Button Content="add parcel" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Click="bottonAddParcel_Click" Margin="0,12,0,0"/>
+                            <Button Content="add parcel" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Click="bottonAddParcel_Click" Margin="0,12,0,0" Background="#1a3144" BorderBrush="#1a3144"/>
                         </Grid>
 
                     </TabItem>
@@ -415,88 +413,58 @@
 
                             </Grid>
 
-                            <ListView x:Name="customersView" Grid.Row="1" Margin="5 0">
+                            <ListView x:Name="customersView" Grid.Row="1" MouseDoubleClick="Customer_DoubleClick">
                                 <ListView.View>
                                     <GridView AllowsColumnReorder="True">
-                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="ID" Width="100"/>
-                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="120"/>
-                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Phone}" Header="Name" Width="110"/>
-                                        <GridViewColumn DisplayMemberBinding="{Binding Path=ParcelsHeRecieved}" Header="Parcels Recieved" Width="100"/>
-                                        <GridViewColumn DisplayMemberBinding="{Binding Path=ParcelsOnTheWay}" Header="Parcels On Way" Width="100"/>
-                                        <GridViewColumn DisplayMemberBinding="{Binding Path=ParcelsShippedAndNotDelivered}" Header="Not Delivered" Width="100"/>
-                                        <GridViewColumn DisplayMemberBinding="{Binding Path=ParcelsShippedAndDelivered}" Header="Delivered" Width="100"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Id}" Header="ID" />
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}">
+                                            <GridViewColumn.Header>
+                                                <GridViewColumnHeader Content="Name" Style="{StaticResource MaterialDesignFlatDarkButton}"/>
+                                            </GridViewColumn.Header>
+                                        </GridViewColumn>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Phone}" Header="Phone"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=ParcelsHeRecieved}" Width="120">
+                                            <GridViewColumn.Header>
+                                                <GridViewColumnHeader Content="Parcels Recieved" ToolTip="Parcels Recieved" HorizontalContentAlignment="Left" Style="{StaticResource MaterialDesignFlatDarkButton}"/>
+                                            </GridViewColumn.Header>
+                                        </GridViewColumn>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=ParcelsOnTheWay}" Width="120">
+                                            <GridViewColumn.Header>
+                                                <GridViewColumnHeader Content="Parcels On Way" ToolTip="Parcels On Way" HorizontalContentAlignment="Left" Style="{StaticResource MaterialDesignFlatDarkButton}"/>
+                                            </GridViewColumn.Header>
+                                        </GridViewColumn>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=ParcelsShippedAndNotDelivered}" Width="100">
+                                            <GridViewColumn.Header>
+                                                <GridViewColumnHeader Content="Not Delivered" ToolTip="Not Delivered" HorizontalContentAlignment="Left" Style="{StaticResource MaterialDesignFlatDarkButton}"/>
+                                            </GridViewColumn.Header>
+                                        </GridViewColumn>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=ParcelsShippedAndDelivered}" Width="80">
+                                            <GridViewColumn.Header>
+                                                <GridViewColumnHeader Content="Delivered" ToolTip="Delivered" HorizontalContentAlignment="Left" Style="{StaticResource MaterialDesignFlatDarkButton}"/>
+                                            </GridViewColumn.Header>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Edit">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button x:Name="ButtonEdit" ToolTip="Edit parcel" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="20" Height="20" Click="CustomerEdit_Click">
+                                                        <materialDesign:PackIcon Kind="Edit" Width="17" Height="17"/>
+                                                    </Button>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Edit">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button x:Name="ButtonDelete" ToolTip="Delete parcel" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="20" Height="20">
+                                                        <materialDesign:PackIcon Kind="Delete" Width="17" Height="17"/>
+                                                    </Button>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                             </ListView>
-                            <!--<ListView x:Name="custumerInListListView" Grid.Row="2" Margin="15 0" SelectionMode="Single" ItemsSource="{Binding}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn x:Name="idColumn" Width="80">
-                            <GridViewColumn.Header>
-                                <GridViewColumnHeader Content="Id" HorizontalContentAlignment="Left" Background="Red"/>
-                            </GridViewColumn.Header>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Label Content="{Binding Id}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn x:Name="nameColumn" Width="80">
-                            <GridViewColumn.Header>
-                                <GridViewColumnHeader Margin="-15 5" VerticalAlignment="Bottom" HorizontalAlignment="Left" FontSize="10" Content="Name" HorizontalContentAlignment="Left" Background="Blue"/>
-                            </GridViewColumn.Header>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Label Content="{Binding Name}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn x:Name="parcelsHeRecievedColumn" Width="80" Header="Parcels He Recieved">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Label Content="{Binding ParcelsHeRecieved}" Margin="-6,-1"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn x:Name="parcelsOnTheWayColumn" Width="80" Header="Parcels On The Way">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Label Content="{Binding ParcelsOnTheWay}" Margin="-6,-1"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn x:Name="parcelsShippedAndDeliveredColumn" Width="80" Header="Parcels Shipped And Delivered">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Label Content="{Binding ParcelsShippedAndDelivered}" Margin="-6,-1"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn x:Name="parcelsShippedAndNotDeliveredColumn" Width="80" Header="Parcels Shipped And Not Delivered">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Label Content="{Binding ParcelsShippedAndNotDelivered}" Margin="-6,-1"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn x:Name="phoneColumn" Width="80" Header="Phone">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Label Content="{Binding Phone}" Margin="-6,-1"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-                <ListView.ItemContainerStyle>
-                    <Style>
-                        <Setter Property="Control.HorizontalContentAlignment" Value="Left"/>
-                        <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>-->
-
-                            <Button Content="add drone" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Click="BottonAdd_Click" Margin="0,12,0,0"/>
+                            <Button Content="add customer" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Click="CustomerBottonAdd_Click" Margin="0,25,0,0" Background="#1a3144" BorderBrush="#1a3144"/>
                         </Grid>
 
                     </TabItem>
