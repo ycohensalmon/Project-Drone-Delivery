@@ -165,6 +165,7 @@ namespace PL
             droneWindow.bottonUpdate.Click += UpdateDroneList;
             droneWindow.conectToParcel.Click += UpdateDroneList;
             droneWindow.UpdateModel.Click += UpdateDroneList;
+            droneWindow.UpdateList.TextChanged += UpdateDroneList;
             droneWindow.ShowDialog();
         }
 

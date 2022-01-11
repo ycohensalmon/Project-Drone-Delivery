@@ -237,6 +237,8 @@
                     
                 </StackPanel>
             </Border>
+            <TextBox Text=" " x:Name="UpdateList" IsEnabled="False" Margin="365,700,0,0"/>
+
             <TextBox Visibility="Hidden" Name="WrongText" FontSize="15" TextAlignment="Left" Foreground="Red"/>
         </Grid>
     </Grid>
