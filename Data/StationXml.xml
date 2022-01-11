@@ -30,7 +30,7 @@
     <Name>Ramot Mall</Name>
     <Latitude>31.817627</Latitude>
     <Longitude>35.194476</Longitude>
-    <ChargeSolts>-1</ChargeSolts>
+    <ChargeSolts>12</ChargeSolts>
   </Station>
   <Station>
     <IsDeleted>false</IsDeleted>
@@ -38,14 +38,6 @@
     <Name>Malcha Mall</Name>
     <Latitude>31.751716</Latitude>
     <Longitude>35.187202</Longitude>
-    <ChargeSolts>1</ChargeSolts>
-  </Station>
-  <Station>
-    <IsDeleted>false</IsDeleted>
-    <Id>1030</Id>
-    <Name>Ramot Mall</Name>
-    <Latitude>31.817627</Latitude>
-    <Longitude>35.194476</Longitude>
-    <ChargeSolts>12</ChargeSolts>
+    <ChargeSolts>3</ChargeSolts>
   </Station>
 </ArrayOfStation>

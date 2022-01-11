@@ -40,7 +40,7 @@ namespace Dal
             }
         }
         #endregion
-
+            
         #region Paths
         readonly string dronePath;
         readonly string droneChargePath;
@@ -69,7 +69,14 @@ namespace Dal
             userPath = localPath + @"\UserXml.xml";
             configPath = localPath + @"\configXml.xml";
             batteryPath = localPath + @"\BattryXml.xml";
+
+            var droneCharge = XmlTools.LoadListFromXMLSerializer<DroneCharge>(droneChargePath);
+            foreach (var drone in droneCharge)
+                ReleaseDroneFromCharging(drone.DroneId);
+            droneCharge.Clear();
+            XmlTools.SaveListToXMLSerializer(droneCharge, droneChargePath);
         }
+    
         #endregion
 
         #region drone in XML Element
