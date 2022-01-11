@@ -120,7 +120,7 @@
                         <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="Drone" Foreground="Black"/>
                         <TextBlock x:Name="UpdateTextBlock" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" FontSize="22" Text="Update this drone"/>
                     </StackPanel>
-                    <Grid x:Name="DroneView" HorizontalAlignment="Left" Margin="30,58,0,0" VerticalAlignment="Top">
+                    <Grid x:Name="DroneView" HorizontalAlignment="Left" Margin="30,58,0,0" VerticalAlignment="Top" DataContext="{Binding drone}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>

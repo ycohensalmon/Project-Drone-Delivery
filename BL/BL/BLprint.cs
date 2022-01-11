@@ -40,7 +40,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDroneById(int droneId)
         {
-            DroneInList droneInList = drones.Find(x => x.Id == droneId);
+            DroneInList droneInList = drones.FirstOrDefault(x => x.Id == droneId);
             if (droneInList == null)
                 throw new ItemNotFoundException(droneId, "Drone");
 
