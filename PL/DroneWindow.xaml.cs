@@ -252,7 +252,8 @@ namespace PL
             conectToParcel.Visibility = Visibility.Hidden;
             bottonUpdate.Visibility = Visibility.Hidden;
             ShowParcel.Visibility = Visibility.Hidden;
-            
+
+            worker.ReportProgress(0);
             worker.RunWorkerAsync();
 
         }
@@ -279,10 +280,12 @@ namespace PL
 
         private void autoMode_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+            UpdateList.Text = "   ";
             drone = myBl.GetDroneById(drone.Id); //getting the updated drone from the bl
             DroneView.DataContext = drone;
             batteryLabel.Text = drone.Battery.ToString();
-            MessageBox.Show("success");
+            UpdateList.Text = " ";
+           // MessageBox.Show("success");
 
             //if (drone.InShipping.Id == 0)
             //{
