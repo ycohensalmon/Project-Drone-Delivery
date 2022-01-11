@@ -249,12 +249,10 @@ namespace PL
             worker.RunWorkerCompleted += autoMode_RunWorkerCompleted;
 
             //hiding the action buttons
-            //btnReleaseCharge.Visibility = Visibility.Hidden;
-            //btnCharge.Visibility = Visibility.Hidden;
-            //btnDroneToDelivery.Visibility = Visibility.Hidden;
-            //btnDronePickUp.Visibility = Visibility.Hidden;
-            //btnDroneDeliver.Visibility = Visibility.Hidden;
-            //modelToPrint.IsEnabled = false;
+            conectToParcel.Visibility = Visibility.Hidden;
+            bottonUpdate.Visibility = Visibility.Hidden;
+            ShowParcel.Visibility = Visibility.Hidden;
+            
             worker.RunWorkerAsync();
 
         }
@@ -263,6 +261,7 @@ namespace PL
         {
             worker.CancelAsync();
 
+
             //modelToPrint.IsEnabled = true;
             //btnReleaseCharge.Visibility = Visibility.Visible;
             //btnCharge.Visibility = Visibility.Visible;
@@ -270,6 +269,7 @@ namespace PL
             //btnDronePickUp.Visibility = Visibility.Visible;
             //btnDroneDeliver.Visibility = Visibility.Visible;
             //display();
+            RefreshButtonUpdate(myBl);
         }
 
         private void autoMode_DoWork(object sender, DoWorkEventArgs e)
@@ -281,6 +281,8 @@ namespace PL
         {
             drone = myBl.GetDroneById(drone.Id); //getting the updated drone from the bl
             DroneView.DataContext = drone;
+            batteryLabel.Text = drone.Battery.ToString();
+            MessageBox.Show("success");
 
             //if (drone.InShipping.Id == 0)
             //{
