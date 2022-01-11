@@ -37,6 +37,7 @@ namespace BL
                             lock (myBL)
                             {
                                 myBL.ConnectDroneToParcel(id);
+                                drone = myBL.GetDroneById(id);
                             }
                             Thread.Sleep(timer);
                         }
@@ -68,9 +69,10 @@ namespace BL
                     case DroneStatuses.Maintenance:
                         lock (myBL)
                         {
-                            drone.Battery += GetBatteryPercentages(id, myBL);
-                            if (drone.Battery >= 100)
+                            if (drone.Battery + GetBatteryPercentages(id, myBL) >= 100)
                                 myBL.ReleaseDroneFromCharging(id);
+                            else
+                                myBL.drones.FirstOrDefault(x => x.Id == id).Battery += GetBatteryPercentages(id, myBL);
                             drone = myBL.GetDroneById(id);
                         }
                         Thread.Sleep(timer);
