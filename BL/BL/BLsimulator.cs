@@ -55,9 +55,8 @@ namespace BL
                                 drone.Location.Longitude, station.Location.Latitude, station.Location.Longitude);
 
                             lossBattery = myBL.GetBatteryIossAvailable() * distance;
-                            SetBattery(lossBattery, distance);
-                            //time of way from his lication to base charge
-                            Thread.Sleep((int)(distance / speed));
+                            DoTravel(lossBattery, distance, DateTime.Now, id, myBL, updateDelegate);
+                            drone = myBL.GetDroneById(id);
                         }
                         catch (NoParcelException)
                         {
@@ -115,12 +114,31 @@ namespace BL
             }
         }
 
-        private void SetBattery(double lossBattery, double distance, DateTime dateTime)
+        /// <summary>
+        /// the function set the battery of the drone when it travel end finished when the drone reaches his destination
+        /// </summary>
+        /// <param name="lossBattery">loss battery of all travel</param>
+        /// <param name="distance">the distance from sourse and destination</param>
+        /// <param name="dateTime">the time was the function called</param>
+        /// <param name="id">the id of the drone</param>
+        /// <param name="myBL">object of BL</param>
+        /// <param name="updateDelegate">action</param>
+        private void DoTravel(double lossBattery, double distance, DateTime dateTime, int id, BL myBL, Action updateDelegate)
         {
-            while ((TimeSpan)(DateTime.Now - dateTime).TotalSeconds < (distance / speed))
-            {
+            DroneInList droneInList = myBL.drones.FirstOrDefault(x => x.Id == id);
+            Location temp = droneInList.Location;
+            droneInList.Battery += lossBattery;
+            droneInList.Location = drone.Location;
 
+            while ((DateTime.Now - dateTime).TotalSeconds < (distance / speed))
+            {
+                droneInList.Battery -= lossBattery / (distance / speed);
+                Thread.Sleep(timer);
+                updateDelegate();
             }
+
+            droneInList.Location = temp;
+            updateDelegate();
         }
     }
 }
