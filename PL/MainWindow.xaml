@@ -27,8 +27,7 @@
 
         <Grid>
 
-
-            <Border CornerRadius="20,20,20,20"  MouseDown="StationsClick" Margin="34,72,33,488">
+            <Border CornerRadius="20,20,20,20" Margin="34,72,33,488">
                 <Border.Background>
                     <ImageBrush ImageSource="/images/meteo.png"  Stretch="Fill"/>
                 </Border.Background>
@@ -55,13 +54,13 @@
         </Border>
         <Label Content="Parcels" Margin="280,120,0,560" FontFamily="San Francisco" Foreground="AliceBlue" FontWeight="DemiBold" HorizontalAlignment="Left"/>-->
 
-            <StackPanel Orientation="Vertical" Margin="34,237,266,380">
-                <Border Height="60" CornerRadius="12,12,12,12"  MouseDown="StationsClick">
+            <StackPanel Orientation="Vertical" Margin="34,255,266,362">
+                <Border Height="55" Width="55" CornerRadius="12,12,12,12"  MouseDown="StationsClick">
                     <Border.Background>
                         <ImageBrush ImageSource="/images/dronelogo.png"  Stretch="Fill"/>
                     </Border.Background>
                 </Border>
-                <Label Content="Delivery" FontFamily="San Francisco" Foreground="AliceBlue" FontWeight="DemiBold" HorizontalAlignment="Center"/>
+                <Label Content="Prime Air" FontFamily="San Francisco" Foreground="AliceBlue" FontWeight="DemiBold" HorizontalAlignment="Center"/>
             </StackPanel>
 
 
