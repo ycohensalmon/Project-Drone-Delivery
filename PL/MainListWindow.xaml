@@ -124,7 +124,7 @@
                                                                 </StackPanel>
                                                                 <StackPanel Orientation="Horizontal" Margin="0 -5">
                                                                     <Label Content="Battery:" FontSize="13" IsEnabled="False" Style="{StaticResource StyleFontL}"/>
-                                                                    <Label x:Name="batteryUsed" IsEnabled="False" Content="{Binding Path=Battery}" Style="{StaticResource StyleFontL}" FontSize="13" VerticalAlignment="Center"/>
+                                                                    <TextBlock x:Name="batteryUsed" IsEnabled="False" Text="{Binding Path=Battery, StringFormat={}{0:0}%}" FontSize="13" VerticalAlignment="Center"/>
                                                                 </StackPanel>
                                                                 <StackPanel Orientation="Horizontal" Margin="0 -5">
                                                                     <Label Content="Status:" FontSize="13" IsEnabled="False" Style="{StaticResource StyleFontL}"/>
@@ -399,18 +399,7 @@
                                 <RowDefinition Height="2*"/>
                             </Grid.RowDefinitions>
                             <Grid Height="auto" Grid.Row="0" Width="auto">
-                                <!--<ComboBox Name="ComboStatusSelector" HorizontalAlignment= "Left" ToolTip="choose a status" SelectionChanged="ComboStatusSelector_SelectionChanged" Width="117" Margin="188,14,0,50" />
-                <ComboBox Name="ComboWeightSelector" HorizontalAlignment= "Left" ToolTip="choose a geight" FontWeight="Bold" FontStyle="Normal" FontFamily="Aharoni" HorizontalContentAlignment="Stretch" FontSize="14" SelectionChanged="ComboWeightSelector_SelectionChanged" Margin="188,61,0,8" Width="117"/>
-                <Label Content="Status drone:" HorizontalAlignment= "Left" VerticalAlignment="Top" Grid.Column="0" FontSize="15" Margin="88,15,0,0" Height="24"/>
-                <Label Content="Weight:" HorizontalAlignment= "Left" VerticalAlignment="Top" FontSize="15" Margin="124,61,0,0" Height="27"/>
-                <Button x:Name="ButtonClearStatus" Click="ButtonClearStatus_Click" Margin="315,20,25,40" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25">
-                    <materialDesign:PackIcon Width="20" Height="20" Kind="DeleteCircle"/>
-                </Button>
-                <Button  x:Name="ButtonClearWeight" HorizontalAlignment="Left" VerticalAlignment="Center"  Height="25" Width="25" Click="ButtonClearWeight_Click" Margin="315,64,0,0"
-                         Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                    <materialDesign:PackIcon Kind="DeleteCircle" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </Button>-->
-
+                                <Label x:Name="TitleParcel" Margin="0,20,0,20" HorizontalContentAlignment="Center"/>
                             </Grid>
 
                             <ListView x:Name="customersView" Grid.Row="1" MouseDoubleClick="Customer_DoubleClick">

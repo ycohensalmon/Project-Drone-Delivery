@@ -121,10 +121,7 @@ namespace BL
                        select new ParcelAtCustomer
                        {
                            Id = item.Id,
-                           Requested = item.Requested,
-                           Scheduled = item.Scheduled,
-                           PickedUp = item.PickedUp,
-                           Delivered = item.Delivered,
+                           Status = GetParcelStatus(GetParcelById(item.Id)),
                            Weight = (WeightCategory)item.Weight,
                            Priorities = (Priority)item.Priorities,
                            CustomerInParcel = new CustomerInParcel
@@ -146,10 +143,7 @@ namespace BL
                        select new ParcelAtCustomer
                        {
                            Id = item.Id,
-                           Requested = item.Requested,
-                           Scheduled = item.Scheduled,
-                           PickedUp = item.PickedUp,
-                           Delivered = item.Delivered,
+                           Status = GetParcelStatus(GetParcelById(item.Id)),
                            Weight = (WeightCategory)item.Weight,
                            Priorities = (Priority)item.Priorities,
                            CustomerInParcel = new CustomerInParcel
@@ -177,13 +171,13 @@ namespace BL
                 targelOfParcel.Name = dalObj.GetCustomerById(parcel.TargetId).Name;
 
                 DroneInParcel droneInParcel = new();
-                if (parcel.DroneId != 0)
-                {
-                    DroneInList droneInList = drones.FirstOrDefault(x => x.Id == parcel.DroneId);
-                    droneInParcel.Id = droneInList.Id;
-                    droneInParcel.Battery = droneInList.Battery;
-                    droneInParcel.Location = droneInList.Location;
-                }
+                //if (parcel.DroneId != 0)
+                //{
+                //    DroneInList droneInList = drones.FirstOrDefault(x => x.Id == parcel.DroneId);
+                //    droneInParcel.Id = droneInList.Id;
+                //    droneInParcel.Battery = droneInList.Battery;
+                //    droneInParcel.Location = droneInList.Location;
+                //}
 
                 return new Parcel
                 {
@@ -274,10 +268,10 @@ namespace BL
                         Id = customer.Id,
                         Name = customer.Name,
                         Phone = customer.Phone,
-                        ParcelsShippedAndDelivered = customer.ParcelsFromCustomer.Count(x => x.Delivered != null),
-                        ParcelsShippedAndNotDelivered = customer.ParcelsFromCustomer.Count(x => x.Delivered == null),
-                        ParcelsHeRecieved = customer.ParcelsToCustomer.Count(x => x.Delivered != null),
-                        ParcelsOnTheWay = customer.ParcelsToCustomer.Count(x => x.Delivered == null)
+                        ParcelsShippedAndDelivered = customer.ParcelsFromCustomer.Count(x => x.Status == ParcelStatuses.Delivered),
+                        ParcelsShippedAndNotDelivered = customer.ParcelsFromCustomer.Count(x => x.Status != ParcelStatuses.Delivered),
+                        ParcelsHeRecieved = customer.ParcelsToCustomer.Count(x => x.Status == ParcelStatuses.Delivered),
+                        ParcelsOnTheWay = customer.ParcelsToCustomer.Count(x => x.Status != ParcelStatuses.Delivered)
                     });
                 }
 

@@ -149,7 +149,8 @@ namespace PL
 
         private void ShowDroneInCharge_Click(object sender, RoutedEventArgs e)
         {
-            new DronesListWindow(myBl, station.DroneCharges).Show();
+            DroneChargeList.Visibility = Visibility.Visible;
+            DroneChargeList.ItemsSource = station.DroneCharges;
         }
         private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -157,6 +158,19 @@ namespace PL
             {
                 DragMove();
             }
+        }
+
+        private void DroneCharge_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var droneInCharge = myBl.GetDroneById(((BO.DroneCharge)DroneChargeList.SelectedItem).DroneId);
+            DroneWindow droneWindow = new DroneWindow(droneInCharge);
+            droneWindow.bottonUpdate.Visibility = Visibility.Collapsed;
+            droneWindow.conectToParcel.Visibility = Visibility.Collapsed;
+            droneWindow.UpdateModel.Visibility = Visibility.Collapsed;
+            droneWindow.btnPlayStop.Visibility = Visibility.Hidden;
+            droneWindow.TextToggleButton.Visibility = Visibility.Hidden;
+
+            droneWindow.ShowDialog();
         }
     }
 }
