@@ -16,6 +16,7 @@ using BlApi;
 using BL;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Threading;
 
 namespace PL
 {
@@ -27,6 +28,7 @@ namespace PL
         private IBL myBl;
         public Drone drone;
         internal BackgroundWorker worker;
+        ParcelInDeliveryWindow parcel;
 
         #region add drone
         public DroneWindow()
@@ -217,7 +219,11 @@ namespace PL
 
         private void ShowParcel_Click(object sender, RoutedEventArgs e)
         {
-
+            ParcelInDeliveryWindow parcel = new(drone.Id);
+            parcel.WindowStartupLocation = WindowStartupLocation.Manual;
+            parcel.Top = 60;
+            parcel.Left = 222;
+            parcel.ShowDialog();
         }
 
         private void UpdateModel_Click(object sender, RoutedEventArgs e)
@@ -243,6 +249,7 @@ namespace PL
             conectToParcel.Visibility = Visibility.Hidden;
             bottonUpdate.Visibility = Visibility.Hidden;
             ShowParcel.Visibility = Visibility.Hidden;
+            TextToggleButton.Text = "Manual Mode";
 
             worker = new BackgroundWorker();
 
@@ -259,7 +266,7 @@ namespace PL
         private void btnPlayStop_Unchecked(object sender, RoutedEventArgs e)
         {
             worker.CancelAsync();
-
+            TextToggleButton.Text = "Auto Mode";
 
             //modelToPrint.IsEnabled = true;
             //btnReleaseCharge.Visibility = Visibility.Visible;
@@ -284,6 +291,25 @@ namespace PL
             DroneView.DataContext = drone;
             UpdateList.Text = " ";
 
+            
+
+            if (drone.Status == DroneStatuses.Delivery && drone.ParcelInTravel.InTravel == false)
+            {
+                ParcelInDeliveryWindow parcel = new(drone.Id);
+                parcel.WindowStartupLocation = WindowStartupLocation.Manual;
+                parcel.Top = 60;
+                parcel.Left = 222;
+                this.parcel = parcel;
+                parcel.Show();
+            }
+            if (drone.ParcelInTravel.InTravel == true)
+            {
+                parcel.refresh(drone.Id);
+            }
+            if (drone.Status == DroneStatuses.Available && drone.Battery != 100)
+                if (parcel.IsActive == true)
+                    parcel.Close();
+
             //if (drone.InShipping.Id == 0)
             //{
             //    parcelExpander.IsExpanded = false;
@@ -299,7 +325,15 @@ namespace PL
             //    droneList.checkFilters(); //update according to filters
         }
 
-        private void autoMode_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) { }
+        private void autoMode_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled == true)
+            {
+                while (drone.Status == DroneStatuses.Delivery)
+                    btnPlayStop.Cursor = Cursors.Arrow;
+                // e.Result throw System.InvalidOperationException
+            }
+        }
 
         private void update()
         {

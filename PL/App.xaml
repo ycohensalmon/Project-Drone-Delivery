@@ -40,6 +40,8 @@
             <Style x:Key="ColorButton" TargetType="Button">
                 <Setter Property="BorderBrush" Value="#172d42"/>
                 <Setter Property="Background" Value="#172d42"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Cursor" Value="Hand"/>
             </Style>
             
             
