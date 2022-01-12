@@ -18,14 +18,29 @@ namespace BL
 
         TimeSpan TimeSpan;
         Drone drone;
+        int id;
+        Action updateDelegate;
+        Func<bool> stopDelegate;
+        BL myBL;
 
         public Simulator(int id, Action updateDelegate, Func<bool> stopDelegate, BL myBL)
         {
+
+            this.id = id;
+            this.updateDelegate = updateDelegate;
+            this.stopDelegate = stopDelegate;
+            this.myBL = myBL;
+
             lock (myBL)
             {
                 drone = myBL.GetDroneById(id);
             }
 
+            new Thread(LoopThread).Start();
+        }
+
+        private void LoopThread()
+        {
             double distance, lossBattery;
 
             while (!stopDelegate())
