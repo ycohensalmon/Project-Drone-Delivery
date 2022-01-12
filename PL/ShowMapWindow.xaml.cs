@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BlApi;
+using Microsoft.Maps.MapControl.WPF;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,40 +21,29 @@ namespace PL
     /// </summary>
     public partial class ShowMapWindow : Window
     {
-        public ShowMapWindow(double latitude, double? longitude = null)
+        private IBL myBl;
+        public ShowMapWindow(double latitude, double longitude)
         {
             InitializeComponent();
+            this.myBl = BlApi.BlFactory.GetBl();
 
-            try
-            {
-                string a = latitude.ToString();
-                a = a.Replace(',', '.');
+            Pushpin pin;
+            pin = new();
+            pin.Location = new(latitude, longitude);
+            myMap.Children.Add(pin);
 
-                string b = longitude.ToString();
-                b = b.Replace(',', '.');
-                //if (b != null)
-                //{
-                //    b = ", " + longitude;
-                //}
-
-                //var googleMapsAddress = $"https://www.google.co.il//maps/@{latitude},{longitude},18z?hl=iw";
-                string googleMapsAddress = $"http://maps.google.co.il/maps?q=" + a + "," + b;
-                //var googleMapsAddress = $"https://www.google.co.il/maps/@" + a + b + " ,15z?hl=iw";
-
-
-                //var bingMapsAddress = $"https://www.bing.com/maps?cp={latitude}~{longitude}&lvl=18";
-
-                ShowMap.Source = new Uri(googleMapsAddress);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Can't load the map of station! \n" + ex.Message, "map Loading Error!");
-            }
-
-            #region K
-            //var k = "AtbpkGlznerExttC1tAEa7wPmubvzBDQa4Byq33BCkde0PKsuOV2PelJw_Zvnx1-";
-            //ShowMap.Source = new Uri($@"http://dev.virtualearth.net/REST/v1/Locations/{latitude},{longitude}?includeEntityTypes=countryRegion&o=xml&key={k}");
-            #endregion
+            //foreach (var item in myBl.GetAllDroneLocations())
+            //{
+            //    pin = new();
+            //    pin.Location = new(item.Longitude, item.Latitude);
+            //    myMap.Children.Add(pin);
+            //}
+            //foreach (var item in myBl.GetAllStationsLocations())
+            //{
+            //    pin = new();
+            //    pin.Location = new(item.Longitude, item.Latitude);
+            //    myMap.Children.Add(pin);
+            //}
         }
     }
 }

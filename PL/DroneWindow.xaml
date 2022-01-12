@@ -24,7 +24,7 @@
             <Setter Property="Width" Value="70"/>
             <Setter Property="Height" Value="30"/>
             <Setter Property="VerticalAlignment" Value="Bottom"/>
-            <Setter Property="Foreground" Value="RoyalBlue"/>
+            <Setter Property="Foreground" Value="#172d42"/>
         </Style>
         <local:ButtonUpdateDroneConverter x:Key="ButtonUpdateConverter"/>
         <local:VisibilityUpdateDroneConverter x:Key="VisibilityUpdateConverter"/>
@@ -114,7 +114,11 @@
                         <Button x:Name="Closee" Grid.Column="0" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="#FF111111">
                             <materialDesign:PackIcon Kind="ArrowBack" Width="31" Height="30" VerticalAlignment="Center"/>
                         </Button>
-                        <ToggleButton x:Name="btnPlayStop" Grid.Column="4" Grid.Row="3" Checked="btnPlayStop_Checked" Unchecked="btnPlayStop_Unchecked"/>
+                        <StackPanel Grid.Column="1" Margin="20,8,40,0">
+                            
+                        <TextBlock x:Name="TextToggleButton" Text="Simulator" HorizontalAlignment="Center"/>
+                        <ToggleButton x:Name="btnPlayStop"  Height="20" Width="40" Checked="btnPlayStop_Checked" Unchecked="btnPlayStop_Unchecked" Background="Green"/>
+                        </StackPanel>
                     </Grid>
                     <StackPanel Orientation="Vertical">
                         <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="Drone" Foreground="Black"/>
@@ -176,7 +180,7 @@
                             <materialDesign:PackIcon Width="30" Height="30" Kind="GoogleMaps"/>
                         </Button>
 
-                        
+
                         <Label Content="Longitude:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
                         <Label x:Name="longitudeLabel" Content="{Binding Location.Longitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center" FontWeight="Normal"/>
 
@@ -226,20 +230,14 @@
 
 
                     <StackPanel>
-                        <Button x:Name="ShowParcel" Content="Show Parcel In delivery"  Foreground="#FFFF9900" Margin="10,10,10,10" Width="320" Background="#FF48A3C6" Click="ShowParcel_Click"
-                                Visibility="Collapsed"/>
-                        <Button x:Name="bottonUpdate" Grid.Row ="1"  Click="bottonUpdate_Click" Cursor="Hand" Background="#FF48A3C6" Foreground="#FFFF9900" Margin="10,10,10,10" Width="320"
-                                BorderBrush="{DynamicResource MaterialDesignDarkForeground}">
-                        </Button>
-                        <Button x:Name="conectToParcel" Content="Send drone to parcel" Click="conectToParcel_Click" Margin="10,10,10,0" Background="#FF48A3C6" Foreground="#FFFF9900" Width="320"
-                                Visibility="Collapsed"/>
+                        <Button x:Name="ShowParcel" Content="Show Parcel In delivery" Margin="10,10,10,10" Width="320" Click="ShowParcel_Click" Visibility="Collapsed" Style="{StaticResource ColorButton}"/>
+                        <Button x:Name="bottonUpdate" Grid.Row ="1"  Click="bottonUpdate_Click" Margin="10,10,10,10" Width="320" Height="35" Style="{StaticResource ColorButton}"/>
+                        <Button x:Name="conectToParcel" Content="Send drone to parcel" Click="conectToParcel_Click" Margin="10,10,10,0" Style="{StaticResource ColorButton}" Width="320" Visibility="Collapsed"/>
                     </StackPanel>
-                    
+
                 </StackPanel>
             </Border>
             <TextBox Text=" " x:Name="UpdateList" IsEnabled="False" Margin="365,700,0,0"/>
-
-            <TextBox Visibility="Hidden" Name="WrongText" FontSize="15" TextAlignment="Left" Foreground="Red"/>
         </Grid>
     </Grid>
 </Window>
