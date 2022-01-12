@@ -19,7 +19,7 @@ namespace BL
         //TimeSpan TimeSpan;
         Drone drone;
         double distance, lossBattery, tempLocationLat, tempLocationLon, check = 0, sumLat, sumLon;
-        
+        Station station;
 
         public Simulator(int id, Action updateDelegate, Func<bool> stopDelegate, BL myBL)
         {
@@ -42,30 +42,72 @@ namespace BL
                                 drone = myBL.GetDroneById(id);
                             }
                         }
-                        catch (NotEnoughBatteryException)
+
+                        catch (NoParcelException) { }  //the drone will wait for new parcel
+                        catch (ParcelTooHeavyException) { } //the drone will wait for new parcel
+                        
+                        catch (Exception)
                         {
-                            Station station;
                             
                             lock (myBL)
                             {
-                                //save the location
-                                tempLocationLat = drone.Location.Latitude;
-                                tempLocationLon = drone.Location.Longitude;
+                                DroneInList droneInList = myBL.drones.FirstOrDefault(x => x.Id == id);
+                                if (droneInList.Status == DroneStatuses.Available)
+                                {
+                                    //save the location
+                                    tempLocationLat = drone.Location.Latitude;
+                                    tempLocationLon = drone.Location.Longitude;
 
-                                int stationId = myBL.SendDroneToCharge(id);
-                                station = myBL.GetStationById(stationId);
-                                //distance fron drone location to base charge
-                                distance = Distance.GetDistanceFromLatLonInKm(tempLocationLat,
-                                    tempLocationLon, station.Location.Latitude, station.Location.Longitude);
+                                    int stationId = myBL.SendDroneToCharge(id);
+                                    station = myBL.GetStationById(stationId);
 
-                                lossBattery = myBL.GetBatteryIossAvailable() * distance;
-                                //func to show the changing of battery when drone travel to base station
-                                DoTravel(DateTime.Now, id, myBL, updateDelegate);
+                                    droneInList.Location.Latitude = tempLocationLat;
+                                    droneInList.Location.Longitude = tempLocationLon;
+
+                                    //distance fron drone location to base charge
+                                    distance = Distance.GetDistanceFromLatLonInKm(tempLocationLat,
+                                        tempLocationLon, station.Location.Latitude, station.Location.Longitude);
+
+                                    lossBattery = myBL.GetBatteryIossAvailable() * distance;
+                                    droneInList.Battery += lossBattery;
+                                }
+
+                                check += (timer / 1000);
+                                if (check < (distance / speed))
+                                {
+                                    if (tempLocationLat > station.Location.Latitude)
+                                    {
+                                        sumLat = tempLocationLat - station.Location.Latitude;
+                                        droneInList.Location.Latitude -= sumLat / (distance / speed);
+                                        tempLocationLat -= sumLat / (distance / speed);
+                                    }
+                                    else
+                                    {
+                                        sumLat = station.Location.Latitude - tempLocationLat;
+                                        droneInList.Location.Latitude += sumLat / (distance / speed);
+                                        tempLocationLat += sumLat / (distance / speed);
+                                    }
+
+                                    if (tempLocationLon > station.Location.Longitude)
+                                    {
+                                        sumLon = tempLocationLon - station.Location.Longitude;
+                                        droneInList.Location.Longitude -= sumLon / (distance / speed);
+                                        tempLocationLon -= sumLon / (distance / speed);
+                                    }
+                                    else
+                                    {
+                                        sumLon = station.Location.Longitude - tempLocationLon;
+                                        droneInList.Location.Longitude += sumLon / (distance / speed);
+                                        tempLocationLon += sumLon / (distance / speed);
+                                    }
+                                    droneInList.Battery -= lossBattery / (distance / speed);
+                                    break;
+                                }
+                                check = -(timer / 1000);
+
                                 drone = myBL.GetDroneById(id);
                             }
                         }
-                        catch (NoParcelException) { }  //the drone will wait for new parcel
-                        catch (ParcelTooHeavyException) { } //the drone will wait for new parcel
                         break;
 
                     case DroneStatuses.Maintenance:
@@ -119,6 +161,7 @@ namespace BL
                                 check = -(timer / 1000);
                                 myBL.DeliveredParcel(id);
                                 droneInList.Battery += lossBattery;
+                                drone = myBL.GetDroneById(id);
                             }
                             else
                             {
@@ -160,8 +203,9 @@ namespace BL
                                 check = -(timer / 1000);
                                 myBL.CollectParcelsByDrone(id);
                                 droneInList.Battery += lossBattery;
+                                drone = myBL.GetDroneById(id);
                             }
-                            drone = myBL.GetDroneById(id);
+                            //drone = myBL.GetDroneById(id);
                         }
                         break;
                     default:
