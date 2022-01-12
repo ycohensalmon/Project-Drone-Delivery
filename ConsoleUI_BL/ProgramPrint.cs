@@ -57,7 +57,7 @@ namespace ConsoleUI_BL
             ///////////
             Console.WriteLine("choose the parcel to confirm (id)\n");
             var parcels = from x in bl.GetParcelToCustomer(userId)
-                          where x.Delivered == null
+                          where x.Status != ParcelStatuses.Delivered
                           select x;
 
             Console.WriteLine(parcels);

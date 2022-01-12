@@ -24,7 +24,7 @@
             <Setter Property="Width" Value="70"/>
             <Setter Property="Height" Value="35"/>
             <Setter Property="VerticalAlignment" Value="Bottom"/>
-            <Setter Property="Foreground" Value="RoyalBlue"/>
+            <Setter Property="Foreground" Value="#172d42"/>
         </Style>
     </Window.Resources>
     <Border CornerRadius="42" MouseDown="UIElement_OnMouseDown">
@@ -32,7 +32,7 @@
             <ImageBrush Stretch="Fill" ImageSource="images\homescreen.png"/>
         </Border.Background>
         <Grid>
-            <Grid x:Name="AddStation" Visibility="Hidden">
+            <Grid x:Name="AddStation" Visibility="Visible">
                 <StackPanel HorizontalAlignment="Center" Height="610">
                     <Grid Height="50" Margin="0,10,0,0">
                         <Grid.ColumnDefinitions>
@@ -40,14 +40,13 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Button x:Name="Close" Margin="15,0,0,0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                                Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="Black">
+                                Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="#172d42">
                             <materialDesign:PackIcon Kind="ArrowBack" Width="30" Height="30"/>
                         </Button>
-                        <Image Source="images\logo1.png" HorizontalAlignment="Right" Grid.Column="1" Margin="0,0,15,0"/>
                     </Grid>
                     <StackPanel Orientation="Vertical">
-                        <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="Place" Opacity="1" Foreground="Black"/>
-                        <TextBlock x:Name="StationTextBlock" HorizontalAlignment="Center" FontSize="22" Text="Add a Station"/>
+                        <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="Place" Opacity="1" Foreground="#172d42"/>
+                        <TextBlock x:Name="StationTextBlock" HorizontalAlignment="Center" FontSize="22" Text="Add station"/>
                     </StackPanel>
                     <Grid Margin="30">
                         <Grid.RowDefinitions>
@@ -90,20 +89,14 @@
                             <materialDesign:PackIcon Kind="ElectricVehicleCharger" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="10">
-                            <Border Grid.Column="0" CornerRadius="30" Height="60" Margin="10" Opacity="0.8" BorderThickness="3" MouseDown="AddStation_Click">
-                                <Border.Background>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="Black"/>
-                                        <GradientStop Color="#FFFF9900" Offset="0.634"/>
-                                    </LinearGradientBrush>
-                                </Border.Background>
-                                <Label Content="Add" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="#111111"/>
+                            <Border Grid.Column="0" CornerRadius="30" Height="60" Margin="10" BorderThickness="3" MouseDown="AddStation_Click" Background="{StaticResource colorBlue}">
+                                <Label Content="Add" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="White"/>
                             </Border>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
             </Grid>
-            <Grid x:Name="UpdateStation" Visibility="Visible">
+            <Grid x:Name="UpdateStation" Visibility="Hidden">
                 <StackPanel>
                     <Grid Height="50" Margin="0,40,0,0">
                         <Grid.ColumnDefinitions>
@@ -113,7 +106,7 @@
                         <Button x:Name="Closee" Grid.Column="0" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="#FF111111">
                             <materialDesign:PackIcon Kind="ArrowBack" Width="31" Height="30" VerticalAlignment="Center"/>
                         </Button>
-                        <Image Source="images/logo1.png" Grid.Column="1" HorizontalAlignment="Center"/>
+
                     </Grid>
                     <StackPanel Orientation="Vertical">
                         <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="FuelStation" Foreground="Black"/>
@@ -153,7 +146,17 @@
                         <Label x:Name="longitudeLabel" Content="{Binding Location.Longitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center" FontWeight="Normal"/>
 
                     </Grid>
-                        <Button x:Name="ShowDroneInCharge" Content="Show list of drone in charge"  Foreground="#FFFF9900" Margin="10,10,10,10" Width="320" Background="#FF48A3C6" Click="ShowDroneInCharge_Click"/>
+                    <Button x:Name="ShowDroneInCharge" Content="Show list of drone in charge" Style="{StaticResource ColorButton}" Margin="20,10,20,10" Width="320" Height="40" Click="ShowDroneInCharge_Click"/>
+
+                    <ListView x:Name="DroneChargeList" Margin="30 0" DataContext="{Binding}" Visibility="Collapsed" MouseDoubleClick="DroneCharge_DoubleClick">
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="True">
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=DroneId}" Header="Drone Id" Width="120"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=StationId}" Header="Station Id" Width="120"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
                 </StackPanel>
             </Grid>
         </Grid>

@@ -49,11 +49,10 @@
                         <Button x:Name="Close" Margin="15,0,0,0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="Black" BorderBrush="Black">
                             <materialDesign:PackIcon Kind="ArrowBack" Width="30" Height="30"/>
                         </Button>
-                        <Image Source="images\logo1.png" HorizontalAlignment="Right" Grid.Column="1" Margin="0,0,15,0"/>
                     </Grid>
                     <StackPanel Orientation="Vertical">
-                        <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="Drone" Opacity="1" Foreground="Black"/>
-                        <TextBlock x:Name="DroneTextBlock"  HorizontalAlignment="Center"  Text="Add a drone"/>
+                        <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="Drone" Opacity="1" Foreground="#172d42"/>
+                        <TextBlock x:Name="DroneTextBlock"  HorizontalAlignment="Center"  Text="Add a drone" Foreground="#172d42"/>
                     </StackPanel>
                     <Grid Margin="30">
                         <Grid.RowDefinitions>
@@ -85,14 +84,9 @@
                             <materialDesign:PackIcon Kind="Place" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="8">
-                            <Border Grid.Column="0" CornerRadius="30" Height="60" Margin="10" Opacity="0.8" BorderThickness="3" MouseDown="AddDrone_Click">
-                                <Border.Background>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="Black"/>
-                                        <GradientStop Color="#FFFF9900" Offset="0.634"/>
-                                    </LinearGradientBrush>
-                                </Border.Background>
-                                <Label Content="Add" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="#111111"/>
+                            <Border Grid.Column="0" CornerRadius="30" Height="60" Margin="10" BorderThickness="3" MouseDown="AddDrone_Click" Background="{StaticResource colorBlue}">
+
+                                <Label Content="Add" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="White"/>
                             </Border>
                         </StackPanel>
                     </Grid>
@@ -115,9 +109,9 @@
                             <materialDesign:PackIcon Kind="ArrowBack" Width="31" Height="30" VerticalAlignment="Center"/>
                         </Button>
                         <StackPanel Grid.Column="1" Margin="20,8,40,0">
-                            
-                        <TextBlock x:Name="TextToggleButton" Text="Simulator" HorizontalAlignment="Center"/>
-                        <ToggleButton x:Name="btnPlayStop"  Height="20" Width="40" Checked="btnPlayStop_Checked" Unchecked="btnPlayStop_Unchecked" Background="Green"/>
+
+                            <TextBlock x:Name="TextToggleButton" Text="Simulator" HorizontalAlignment="Center"/>
+                            <ToggleButton x:Name="btnPlayStop"  Height="20" Width="40" Checked="btnPlayStop_Checked" Unchecked="btnPlayStop_Unchecked" Background="Green"/>
                         </StackPanel>
                     </Grid>
                     <StackPanel Orientation="Vertical">
@@ -184,47 +178,6 @@
                         <Label Content="Longitude:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
                         <Label x:Name="longitudeLabel" Content="{Binding Location.Longitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center" FontWeight="Normal"/>
 
-                        <!--parcel-->
-                        <!--Label Content="Id Parcel:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
-                        <Label x:Name="idParcelLabel" Content="{Binding ParcelInTravel.Id}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
-                        
-                        <Label Content="In Travel:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>
-                        <CheckBox x:Name="inTravelCheckBox" Content="" Grid.Column="1" HorizontalAlignment="Left" IsChecked="{Binding ParcelInTravel.InTravel, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>
-                        
-                        <Label Content="Priorities:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="9" VerticalAlignment="Center"/>
-                        <Label x:Name="prioritiesLabel" Content="{Binding ParcelInTravel.Priorities}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="9" VerticalAlignment="Center"/>
-                        
-                        <Label Content="Weight:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="10" VerticalAlignment="Center"/>
-                        <Label x:Name="weightLabel" Content="{Binding ParcelInTravel.Weight}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="10" VerticalAlignment="Center"/>
-                        
-                        <Label Content="Distance:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="11" VerticalAlignment="Center"/>
-                        <Label x:Name="distanceLabel" Content="{Binding ParcelInTravel.Distance}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="11" VerticalAlignment="Center"/-->
-
-                        <!--sender-->
-                        <!--Label Content="Id Sender:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="12" VerticalAlignment="Center"/>
-                        <Label x:Name="idSenderLabel" Content="{Binding ParcelInTravel.Sender.Id}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="12" VerticalAlignment="Center"/>
-                        
-                        <Label Content="Name Sender:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="13" VerticalAlignment="Center"/>
-                        <Label x:Name="nameSenderLabel" Content="{Binding ParcelInTravel.Sender.Name}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="13" VerticalAlignment="Center"/>
-                        
-                        <Label Content="Latitudesource:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="14" VerticalAlignment="Center"/>
-                        <Label x:Name="latitudesourceLabel" Content="{Binding ParcelInTravel.source.Latitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="14" VerticalAlignment="Center"/>
-                        
-                        <Label Content="Longitudesource:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="15" VerticalAlignment="Center"/>
-                        <Label x:Name="longitudesourceLabel" Content="{Binding ParcelInTravel.source.Longitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="15" VerticalAlignment="Center"/-->
-
-                        <!--target-->
-                        <!--Label Content="Id Target:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="16" VerticalAlignment="Center"/>
-                        <Label x:Name="idTargetLabel" Content="{Binding ParcelInTravel.Target.Id}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="16" VerticalAlignment="Center"/>
-                        
-                        <Label Content="Name Target:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="17" VerticalAlignment="Center"/>
-                        <Label x:Name="nameTargetLabel" Content="{Binding ParcelInTravel.Target.Name}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="17" VerticalAlignment="Center"/>
-                        
-                        <Label Content="Latitude Destination:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="18" VerticalAlignment="Center"/>
-                        <Label x:Name="latitudeDestinationLabel" Content="{Binding ParcelInTravel.Destination.Latitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="18" VerticalAlignment="Center"/>
-                        
-                        <Label Content="Longitude Destination:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="19" VerticalAlignment="Center"/>
-                        <Label x:Name="longitudeDestinationLabel" Content="{Binding ParcelInTravel.Destination.Longitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="19" VerticalAlignment="Center"/-->
                     </Grid>
 
 

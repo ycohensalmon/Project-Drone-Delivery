@@ -97,11 +97,11 @@ namespace PL
                 case DroneStatuses.Available:
                     bottonUpdate.Content = "Send to charge";
                     conectToParcel.Visibility = Visibility.Visible;
-                    ShowParcel.Visibility = Visibility.Hidden;
+                    ShowParcel.Visibility = Visibility.Collapsed;
                     break;
                 case DroneStatuses.Maintenance:
                     bottonUpdate.Content = "Release from charge";
-                    conectToParcel.Visibility = Visibility.Hidden;
+                    conectToParcel.Visibility = Visibility.Collapsed;
                     break;
                 case DroneStatuses.Delivery:
                     ShowParcel.Visibility = Visibility.Visible;
@@ -268,13 +268,6 @@ namespace PL
             worker.CancelAsync();
             TextToggleButton.Text = "Auto Mode";
 
-            //modelToPrint.IsEnabled = true;
-            //btnReleaseCharge.Visibility = Visibility.Visible;
-            //btnCharge.Visibility = Visibility.Visible;
-            //btnDroneToDelivery.Visibility = Visibility.Visible;
-            //btnDronePickUp.Visibility = Visibility.Visible;
-            //btnDroneDeliver.Visibility = Visibility.Visible;
-            //display();
             RefreshButtonUpdate(myBl);
         }
 
@@ -291,9 +284,9 @@ namespace PL
             DroneView.DataContext = drone;
             UpdateList.Text = " ";
 
-            
 
-            if (drone.Status == DroneStatuses.Delivery && drone.ParcelInTravel.InTravel == false)
+
+            if (drone.Status == DroneStatuses.Delivery && drone.ParcelInTravel.InTravel == false && parcel == null)
             {
                 ParcelInDeliveryWindow parcel = new(drone.Id);
                 parcel.WindowStartupLocation = WindowStartupLocation.Manual;
@@ -302,37 +295,27 @@ namespace PL
                 this.parcel = parcel;
                 parcel.Show();
             }
-            if (drone.ParcelInTravel.InTravel == true)
+            if (drone.Status == DroneStatuses.Delivery && drone.ParcelInTravel.InTravel == true)
             {
                 parcel.refresh(drone.Id);
             }
-            if (drone.Status == DroneStatuses.Available && drone.Battery != 100)
-                if (parcel.IsActive == true)
-                    parcel.Close();
-
-            //if (drone.InShipping.Id == 0)
-            //{
-            //    parcelExpander.IsExpanded = false;
-            //    parcelExpander.IsEnabled = false;
-            //}
-            //else
-            //{
-            //    parcelExpander.IsExpanded = true;
-            //    parcelExpander.IsEnabled = true;
-            //}
-
-            //if (droneList != null)
-            //    droneList.checkFilters(); //update according to filters
+            if (drone.Status == DroneStatuses.Available && drone.Battery != 100 && parcel != null)
+            {
+                parcel.Close();
+                parcel = null;
+            }
         }
 
         private void autoMode_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (e.Cancelled == true)
+
+            if (parcel != null)
             {
-                while (drone.Status == DroneStatuses.Delivery)
-                    btnPlayStop.Cursor = Cursors.Arrow;
-                // e.Result throw System.InvalidOperationException
+                parcel.Close();
+                parcel = null;
             }
+            // e.Result throw System.InvalidOperationException
+
         }
 
         private void update()

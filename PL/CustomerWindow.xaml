@@ -24,7 +24,7 @@
             <Setter Property="Width" Value="70"/>
             <Setter Property="Height" Value="35"/>
             <Setter Property="VerticalAlignment" Value="Bottom"/>
-            <Setter Property="Foreground" Value="RoyalBlue"/>
+            <Setter Property="Foreground" Value="#172d42"/>
         </Style>
     </Window.Resources>
     <Border CornerRadius="42" MouseDown="UIElement_OnMouseDown">
@@ -110,14 +110,13 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="Closee" Grid.Column="0" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="#FF111111">
+                        <Button x:Name="Closee" Grid.Column="0" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="#172d42">
                             <materialDesign:PackIcon Kind="ArrowBack" Width="31" Height="30" VerticalAlignment="Center"/>
                         </Button>
-                        <Image Source="images/logo1.png" Grid.Column="1" HorizontalAlignment="Center"/>
                     </Grid>
                     <StackPanel Orientation="Vertical">
-                        <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="HomeUser" Foreground="Black"/>
-                        <TextBlock x:Name="UpdateTextBlock" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" FontSize="22" Text="Update Customer"/>
+                        <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="HomeUser" Style="{StaticResource SizeIcon}"/>
+                        <TextBlock x:Name="UpdateTextBlock" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" Foreground="#172d42" FontSize="22" Text="Update Customer"/>
                     </StackPanel>
                     <Grid x:Name="CustomerView" HorizontalAlignment="Left" Margin="30,58,0,0" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
@@ -152,8 +151,8 @@
                         <Label x:Name="longitudeLabel" Content="{Binding Location.Longitude}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center" FontWeight="Normal"/>
 
                     </Grid>
-                    <Button x:Name="ParcelsToCustomer" Content="Show list parcels to customer"  Foreground="#FFFF9900" Margin="10,10,10,10" Width="320" Background="#FF48A3C6" Click="ShowParcelsToCustomer_Click"/>
-                    <Button x:Name="ParcelsFromCustomer" Content="Show list of parcels from customer"  Foreground="#FFFF9900" Margin="10,10,10,10" Width="320" Background="#FF48A3C6" Click="ShowParcelsFromCustomer_Click"/>
+                    <Button x:Name="ParcelsToCustomer" Content="Show list parcels to customer" Style="{StaticResource ColorButton}" Margin="10,10,10,10" Width="320" Height="30" Click="ShowParcelsToCustomer_Click"/>
+                    <Button x:Name="ParcelsFromCustomer" Content="Show list parcels from customer" Style="{StaticResource ColorButton}" Margin="10,0,10,10" Width="320" Height="30" Click="ShowParcelsFromCustomer_Click"/>
                 </StackPanel>
             </Grid>
         </Grid>

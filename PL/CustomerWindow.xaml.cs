@@ -47,13 +47,13 @@ namespace PL
         private void ShowParcelsFromCustomer_Click(object sender, RoutedEventArgs e)
         {
             var from = customer.ParcelsFromCustomer;
-            new ParcelListWindow(myBl, from, "from").Show();
+            new ParcelAtCustomerWindow(from, "from").Show();
         }
 
         private void ShowParcelsToCustomer_Click(object sender, RoutedEventArgs e)
         {
             var to = customer.ParcelsToCustomer;
-            new ParcelListWindow(myBl, to, "to").Show();
+            new ParcelAtCustomerWindow(to, "to").Show();
         }
 
         private void ShowMap_Click(object sender, RoutedEventArgs e)
