@@ -36,24 +36,9 @@ namespace PL
             Close();
         }
 
-        private void ClickDrones(object sender, MouseButtonEventArgs e)
-        {
-            new DronesListWindow().ShowDialog();
-        }
-
         private void StationsClick(object sender, MouseButtonEventArgs e)
         {
-            new StationsListWindow().ShowDialog();
-        }
-
-        private void ClickCustomers(object sender, MouseButtonEventArgs e)
-        {
-            new CustomerListWindow().ShowDialog();
-        }
-
-        private void ParcelClick(object sender, MouseButtonEventArgs e)
-        {
-            new ParcelListWindow().ShowDialog();
+            new LoginWindow().ShowDialog();
         }
     }
 }
