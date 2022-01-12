@@ -18,7 +18,7 @@ namespace BL
 
         //TimeSpan TimeSpan;
         Drone drone;
-        double distance, lossBattery, tempLocationLat, tempLocationLon, check = 0;
+        double distance, lossBattery, tempLocationLat, tempLocationLon, check = 0, sumLat, sumLon;
         
 
         public Simulator(int id, Action updateDelegate, Func<bool> stopDelegate, BL myBL)
@@ -89,8 +89,29 @@ namespace BL
                                 lossBattery = GetBatteryIossWithParcel(myBL) * distance;
                                 DroneInList droneInList = myBL.drones.FirstOrDefault(x => x.Id == id);
                                 check += (timer / 1000);
-                                if(check < (distance / speed))
+                                if (check < (distance / speed))
                                 {
+                                    if (drone.Location.Latitude > drone.ParcelInTravel.Destination.Latitude)
+                                    {
+                                        sumLat = drone.Location.Latitude - drone.ParcelInTravel.Destination.Latitude;
+                                        droneInList.Location.Latitude -= sumLat / (distance / speed);
+                                    }
+                                    else
+                                    {
+                                        sumLat = drone.ParcelInTravel.Destination.Latitude - drone.Location.Latitude;
+                                        droneInList.Location.Latitude += sumLat / (distance / speed);
+                                    }
+
+                                    if (drone.Location.Longitude > drone.ParcelInTravel.Destination.Longitude)
+                                    {
+                                        sumLon = drone.Location.Longitude - drone.ParcelInTravel.Destination.Longitude;
+                                        droneInList.Location.Longitude -= sumLon / (distance / speed);
+                                    }
+                                    else
+                                    {
+                                        sumLon = drone.ParcelInTravel.Destination.Longitude - drone.Location.Longitude;
+                                        droneInList.Location.Longitude += sumLon / (distance / speed);
+                                    }
                                     droneInList.Battery -= lossBattery / (distance / speed);
                                     break;
                                 }
@@ -105,9 +126,33 @@ namespace BL
                                     drone.ParcelInTravel.source.Latitude, drone.ParcelInTravel.source.Longitude);
                                 lossBattery = myBL.GetBatteryIossAvailable() * distance;
                                 DroneInList droneInList = myBL.drones.FirstOrDefault(x => x.Id == id);
+                                //calculate location
+
                                 check += (timer / 1000);
                                 if (check < (distance / speed))
                                 {
+                                    if (drone.Location.Latitude > drone.ParcelInTravel.source.Latitude)
+                                    {
+                                        sumLat = drone.Location.Latitude - drone.ParcelInTravel.source.Latitude;
+                                        droneInList.Location.Latitude -= sumLat / (distance / speed);
+                                    }
+                                    else
+                                    {
+                                        sumLat = drone.ParcelInTravel.source.Latitude - drone.Location.Latitude;
+                                        droneInList.Location.Latitude += sumLat / (distance / speed);
+                                    }
+
+                                    if (drone.Location.Longitude > drone.ParcelInTravel.source.Longitude)
+                                    {
+                                        sumLon = drone.Location.Longitude - drone.ParcelInTravel.source.Longitude;
+                                        droneInList.Location.Longitude -= sumLon / (distance / speed);
+                                    }
+                                    else
+                                    {
+                                        sumLon = drone.ParcelInTravel.source.Longitude - drone.Location.Longitude;
+                                        droneInList.Location.Longitude += sumLon / (distance / speed);
+                                    }
+
                                     droneInList.Battery -= lossBattery / (distance / speed);
                                     break;
                                 }
