@@ -166,7 +166,7 @@ namespace PL
             droneWindow.conectToParcel.Click += UpdateDroneList;
             droneWindow.UpdateModel.Click += UpdateDroneList;
             droneWindow.UpdateList.TextChanged += UpdateDroneList;
-            droneWindow.ShowDialog();
+            droneWindow.Show();
         }
 
         private void DroneEdit_Click(object sender, RoutedEventArgs e)
@@ -180,6 +180,9 @@ namespace PL
         private void UpdateDroneList(object s, EventArgs e)
         {
             DronesListView.ItemsSource = myBl.GetDrones();
+            customersView.ItemsSource = myBl.GetCustomers();
+            parcelsView.ItemsSource = myBl.GetParcels();
+            StasionsListView.ItemsSource = myBl.GetStations();
         }
 
         private void BottonAddDrone_Click(object sender, RoutedEventArgs e)

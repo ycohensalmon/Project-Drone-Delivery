@@ -282,7 +282,6 @@ namespace PL
             UpdateList.Text = "   ";
             drone = myBl.GetDroneById(drone.Id); //getting the updated drone from the bl
             DroneView.DataContext = drone;
-            batteryLabel.Text = drone.Battery.ToString();
             UpdateList.Text = " ";
 
             //if (drone.InShipping.Id == 0)

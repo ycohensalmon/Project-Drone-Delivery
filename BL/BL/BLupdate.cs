@@ -411,7 +411,6 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void ClearDroneCharge() { lock (dalObj) { dalObj.ClearDroneCharge(); } }
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ActivSimulator(int id, Action updateDelegate, Func<bool> stopDelegate)
         {
             new Simulator(id, updateDelegate, stopDelegate, this);

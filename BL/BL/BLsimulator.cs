@@ -16,31 +16,17 @@ namespace BL
         const int timer = 1000;
         const double speed = 0.5;
 
-        TimeSpan TimeSpan;
+        //TimeSpan TimeSpan;
         Drone drone;
-        int id;
-        Action updateDelegate;
-        Func<bool> stopDelegate;
-        BL myBL;
+        
 
         public Simulator(int id, Action updateDelegate, Func<bool> stopDelegate, BL myBL)
         {
-
-            this.id = id;
-            this.updateDelegate = updateDelegate;
-            this.stopDelegate = stopDelegate;
-            this.myBL = myBL;
-
             lock (myBL)
             {
                 drone = myBL.GetDroneById(id);
             }
 
-            new Thread(LoopThread).Start();
-        }
-
-        private void LoopThread()
-        {
             double distance, lossBattery;
 
             while (!stopDelegate())
@@ -55,7 +41,6 @@ namespace BL
                                 myBL.ConnectDroneToParcel(id);
                                 drone = myBL.GetDroneById(id);
                             }
-                            Thread.Sleep(timer);
                         }
                         catch (NotEnoughBatteryException)
                         {
@@ -69,18 +54,13 @@ namespace BL
                                     drone.Location.Longitude, station.Location.Latitude, station.Location.Longitude);
 
                                 lossBattery = myBL.GetBatteryIossAvailable() * distance;
+                                //func to show the changing of battery when drone travel to base station
                                 DoTravel(lossBattery, distance, DateTime.Now, id, myBL, updateDelegate);
                                 drone = myBL.GetDroneById(id);
                             }
                         }
-                        catch (NoParcelException)
-                        {
-                            Thread.Sleep(timer);
-                        }
-                        catch (ParcelTooHeavyException)
-                        {
-                            Thread.Sleep(timer);
-                        }
+                        catch (NoParcelException) { }  //the drone will wait for new parcel
+                        catch (ParcelTooHeavyException) { } //the drone will wait for new parcel
                         break;
 
                     case DroneStatuses.Maintenance:
@@ -92,42 +72,48 @@ namespace BL
                                 myBL.drones.FirstOrDefault(x => x.Id == id).Battery += GetBatteryPercentages(id, myBL);
                             drone = myBL.GetDroneById(id);
                         }
-                        Thread.Sleep(timer);
                         break;
 
                     case DroneStatuses.Delivery:
                         lock (myBL)
                         {
                             if (drone.ParcelInTravel.InTravel)
+                            {
                                 myBL.DeliveredParcel(id);
+                                distance = Distance.GetDistanceFromLatLonInKm(drone.Location.Latitude, drone.Location.Longitude,
+                                   drone.ParcelInTravel.Destination.Latitude, drone.ParcelInTravel.Destination.Longitude);
+                                lossBattery = GetBatteryIossWithParcel(myBL) * distance;
+                            }
                             else
+                            {
                                 myBL.CollectParcelsByDrone(id);
-                            Location temp = myBL.GetDroneById(id).Location;
-                            distance = Distance.GetDistanceFromLatLonInKm(drone.Location.Latitude, drone.Location.Longitude,
-                                temp.Latitude, temp.Longitude);
+                                Location temp = myBL.GetDroneById(id).Location;
+                                distance = Distance.GetDistanceFromLatLonInKm(drone.Location.Latitude, drone.Location.Longitude,
+                                    temp.Latitude, temp.Longitude);
+                                lossBattery = myBL.GetBatteryIossAvailable() * distance;
+                            }
+                            DoTravel(lossBattery, distance, DateTime.Now, id, myBL, updateDelegate);
                             drone = myBL.GetDroneById(id);
                         }
-
-                        //From the beginning of the trip until reaching the destination
-                        Thread.Sleep((int)(distance / speed));
                         break;
                     default:
                         break;
                 }
                 updateDelegate();
+                Thread.Sleep(timer);
             }
         }
 
         private double GetBatteryPercentages(int id, BL myBL)
         {
-            lock (myBL) lock (myBL.dalObj)
-            {
-                var drone = myBL.dalObj.GetDroneCharges(x => x.DroneId == id).First();
-                double presentOfCharge = (DateTime.Now - drone.EnteryTime).Value.TotalSeconds *
-                    (myBL.getLoadingRate() / 60);
-                drone.EnteryTime = DateTime.Now;
-                return presentOfCharge;
-            }
+            lock (myBL) lock (myBL.dalObj) 
+                { 
+                    var drone = myBL.dalObj.GetDroneCharges(x => x.DroneId == id).First();
+                    double presentOfCharge = (DateTime.Now - drone.EnteryTime).Value.TotalSeconds *
+                        (myBL.getLoadingRate() / 60);
+                    drone.EnteryTime = DateTime.Now;
+                    return presentOfCharge;
+                }
         }
 
         /// <summary>
@@ -159,34 +145,20 @@ namespace BL
                 updateDelegate();
             }
         }
+
+        private double GetBatteryIossWithParcel(BL myBL)
+        {
+            switch (drone.ParcelInTravel.Weight)
+            {
+                case WeightCategory.Light:
+                    return myBL.GetBatteryIossLightParcel();
+                case WeightCategory.Medium:
+                    return myBL.GetBatteryIossMediumParcel();
+                case WeightCategory.Heavy:
+                    return myBL.GetBatteryIossHeavyParcel();
+                default:
+                    return myBL.GetBatteryIossAvailable();
+            }
+        }
     }
 }
-        
-//        case DroneStatuses.Available:
-//                        lock (myBL)
-//                        {
-//            try
-//            {
-//                myBL.AssignDroneToParcel(drone.Id);
-//                drone = myBL.GetDrone(drone.Id);
-//            }
-//            catch (EmptyListException) { }
-//            catch (NoBatteryException) //if there is not enough battery to make a delivery for any of the parcels
-//            {
-//                try
-//                {
-//                    myBL.ChargeDrone(drone.Id);
-//                    var tmp = myBL.GetDrone(drone.Id).CurrentLocation;
-//                    Thread.Sleep((int)(BL.getDistance(tmp, drone.CurrentLocation) / speed)); //update the drone only after the drone has reached the station
-//                    drone = myBL.GetDrone(drone.Id);
-//                }
-//                //in both cases, the drone will wait for the next cycle and try again to see if there is 
-//                //an available station for him to reach
-//                //(there might be a case where there was a new parcel that the drone is able to carry)
-//                catch (EmptyListException) { } //if there is no available charge slots try again in the next cycle
-//                catch (NoBatteryException) { } //if there is not enough battery to get to the nearest station with available charge slots
-//            }
-//        }
-//                        break;
-//    }
-//}
