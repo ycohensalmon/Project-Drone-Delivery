@@ -239,23 +239,21 @@ namespace PL
 
         private void btnPlayStop_Checked(object sender, RoutedEventArgs e)
         {
-            worker = new BackgroundWorker();
-
-            worker.WorkerReportsProgress = true;
-            worker.WorkerSupportsCancellation = true;
-
-            worker.DoWork += autoMode_DoWork;
-            worker.ProgressChanged += autoMode_ProgressChanged;
-            worker.RunWorkerCompleted += autoMode_RunWorkerCompleted;
-
             //hiding the action buttons
             conectToParcel.Visibility = Visibility.Hidden;
             bottonUpdate.Visibility = Visibility.Hidden;
             ShowParcel.Visibility = Visibility.Hidden;
 
-            worker.ReportProgress(0);
-            worker.RunWorkerAsync();
+            worker = new BackgroundWorker();
 
+            worker.DoWork += autoMode_DoWork;
+            worker.ProgressChanged += autoMode_ProgressChanged;
+            worker.RunWorkerCompleted += autoMode_RunWorkerCompleted;
+
+            worker.WorkerReportsProgress = true;
+            worker.WorkerSupportsCancellation = true;
+
+            worker.RunWorkerAsync();
         }
 
         private void btnPlayStop_Unchecked(object sender, RoutedEventArgs e)
@@ -276,6 +274,7 @@ namespace PL
         private void autoMode_DoWork(object sender, DoWorkEventArgs e)
         {
             myBl.ActivSimulator(drone.Id, update, stop);
+            worker.ReportProgress(0);
         }
 
         private void autoMode_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -285,7 +284,6 @@ namespace PL
             DroneView.DataContext = drone;
             batteryLabel.Text = drone.Battery.ToString();
             UpdateList.Text = " ";
-           // MessageBox.Show("success");
 
             //if (drone.InShipping.Id == 0)
             //{
