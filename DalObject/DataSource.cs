@@ -21,10 +21,10 @@ namespace Dal
             internal static int SerialNum = 1000;
 
             internal static Random rand = new Random();
-            public static double Available { get => 3.5; }    // 0.2% per KM
-            public static double LightParcel { get => 6.3; }  // 1%   per KM
-            public static double MediumParcel { get => 7.9; } // 1.5% per KM
-            public static double HeavyParcel { get => 9.9; }    // 2%   per KM
+            public static double Available { get => 2.5; }    // 0.2% per KM
+            public static double LightParcel { get => 4.3; }  // 1%   per KM
+            public static double MediumParcel { get => 5.9; } // 1.5% per KM
+            public static double HeavyParcel { get => 6.9; }    // 2%   per KM
             public static double LoadingRate { get => 60; }   // 40%  per hour
         }
 
