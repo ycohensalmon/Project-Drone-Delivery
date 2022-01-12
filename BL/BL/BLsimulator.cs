@@ -49,14 +49,14 @@ namespace BL
                             {
                                 int stationId = myBL.SendDroneToCharge(id);
                                 station = myBL.GetStationById(stationId);
-                            }
-                            //distance fron drone location to base charge
-                            distance = Distance.GetDistanceFromLatLonInKm(drone.Location.Latitude,
-                                drone.Location.Longitude, station.Location.Latitude, station.Location.Longitude);
+                                //distance fron drone location to base charge
+                                distance = Distance.GetDistanceFromLatLonInKm(drone.Location.Latitude,
+                                    drone.Location.Longitude, station.Location.Latitude, station.Location.Longitude);
 
-                            lossBattery = myBL.GetBatteryIossAvailable() * distance;
-                            DoTravel(lossBattery, distance, DateTime.Now, id, myBL, updateDelegate);
-                            drone = myBL.GetDroneById(id);
+                                lossBattery = myBL.GetBatteryIossAvailable() * distance;
+                                DoTravel(lossBattery, distance, DateTime.Now, id, myBL, updateDelegate);
+                                drone = myBL.GetDroneById(id);
+                            }
                         }
                         catch (NoParcelException)
                         {
@@ -88,7 +88,8 @@ namespace BL
                             else
                                 myBL.CollectParcelsByDrone(id);
                             Location temp = myBL.GetDroneById(id).Location;
-                            distance = Distance.GetDistanceFromLatLonInKm(drone.Location.Latitude, drone.Location.Longitude, temp.Latitude, temp.Longitude);
+                            distance = Distance.GetDistanceFromLatLonInKm(drone.Location.Latitude, drone.Location.Longitude,
+                                temp.Latitude, temp.Longitude);
                             drone = myBL.GetDroneById(id);
                         }
 
@@ -104,7 +105,7 @@ namespace BL
 
         private double GetBatteryPercentages(int id, BL myBL)
         {
-            lock (myBL)
+            lock (myBL) lock (myBL.dalObj)
             {
                 var drone = myBL.dalObj.GetDroneCharges(x => x.DroneId == id).First();
                 double presentOfCharge = (DateTime.Now - drone.EnteryTime).Value.TotalSeconds *
@@ -125,20 +126,23 @@ namespace BL
         /// <param name="updateDelegate">action</param>
         private void DoTravel(double lossBattery, double distance, DateTime dateTime, int id, BL myBL, Action updateDelegate)
         {
-            DroneInList droneInList = myBL.drones.FirstOrDefault(x => x.Id == id);
-            Location temp = droneInList.Location;
-            droneInList.Battery += lossBattery;
-            droneInList.Location = drone.Location;
-
-            while ((DateTime.Now - dateTime).TotalSeconds < (distance / speed))
+            lock (myBL)
             {
-                droneInList.Battery -= lossBattery / (distance / speed);
-                Thread.Sleep(timer);
+                DroneInList droneInList = myBL.drones.FirstOrDefault(x => x.Id == id);
+                Location temp = droneInList.Location;
+                droneInList.Battery += lossBattery;
+                droneInList.Location = drone.Location;
+
+                while ((DateTime.Now - dateTime).TotalSeconds < (distance / speed))
+                {
+                    droneInList.Battery -= lossBattery / (distance / speed);
+                    Thread.Sleep(timer);
+                    updateDelegate();
+                }
+
+                droneInList.Location = temp;
                 updateDelegate();
             }
-
-            droneInList.Location = temp;
-            updateDelegate();
         }
     }
 }
