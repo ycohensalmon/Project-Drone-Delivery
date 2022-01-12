@@ -42,16 +42,14 @@ namespace BL
                                 drone = myBL.GetDroneById(id);
                             }
                         }
-
-                        catch (NoParcelException) { }  //the drone will wait for new parcel
-                        catch (ParcelTooHeavyException) { } //the drone will wait for new parcel
-                        
                         catch (Exception)
                         {
-                            
                             lock (myBL)
                             {
                                 DroneInList droneInList = myBL.drones.FirstOrDefault(x => x.Id == id);
+                                if (droneInList.Battery == 100)
+                                    break;
+
                                 if (droneInList.Status == DroneStatuses.Available)
                                 {
                                     //save the location
@@ -226,40 +224,6 @@ namespace BL
                     drone.EnteryTime = DateTime.Now;
                     return presentOfCharge;
                 }
-        }
-
-        /// <summary>
-        /// the function set the battery of the drone when it travel end finished when the drone reaches his destination
-        /// </summary>
-        /// <param name="lossBattery">loss battery of all travel</param>
-        /// <param name="distance">the distance from sourse and destination</param>
-        /// <param name="dateTime">the time was the function called</param>
-        /// <param name="id">the id of the drone</param>
-        /// <param name="myBL">object of BL</param>
-        /// <param name="updateDelegate">action</param>
-        private void DoTravel(DateTime dateTime, int id, BL myBL, Action updateDelegate)
-        {
-            lock (myBL)
-            {
-                DroneInList droneInList = myBL.drones.FirstOrDefault(x => x.Id == id);
-                var targetLocationLat = droneInList.Location.Latitude;
-                var targetLocationLon = droneInList.Location.Longitude;
-                droneInList.Location.Latitude = tempLocationLat;
-                droneInList.Location.Longitude = tempLocationLon;
-                droneInList.Battery += lossBattery;
-                updateDelegate();
-
-                while ((DateTime.Now - dateTime).TotalSeconds < (distance / speed))
-                {
-                    droneInList.Battery -= lossBattery / (distance / speed);
-                    Thread.Sleep(timer);
-                    updateDelegate();
-                }
-
-                droneInList.Location.Latitude = targetLocationLat;
-                droneInList.Location.Longitude = targetLocationLon;
-                updateDelegate();
-            }
         }
 
         private double GetBatteryIossWithParcel(BL myBL)
