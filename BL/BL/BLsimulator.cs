@@ -167,7 +167,6 @@ namespace BL
                                     drone.ParcelInTravel.source.Latitude, drone.ParcelInTravel.source.Longitude);
                                 lossBattery = myBL.GetBatteryIossAvailable() * distance;
                                 DroneInList droneInList = myBL.drones.FirstOrDefault(x => x.Id == id);
-                                //calculate location
 
                                 check += (timer / 1000);
                                 if (check < (distance / speed))
