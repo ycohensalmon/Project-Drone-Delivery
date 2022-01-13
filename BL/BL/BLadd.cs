@@ -21,6 +21,7 @@ namespace BL
                 {
                     dalObj.NewStation(new DO.Station
                     {
+                        Image = @"images\stations\station" + rand.Next(8) + ".jpg",
                         Id = station.Id,
                         Name = station.Name,
                         Latitude = station.Location.Latitude,

@@ -34,7 +34,7 @@
     </Window.Resources>
 
     <Grid x:Name="MainGrid">
-        <Grid x:Name="AddDrone" Visibility="Hidden">
+        <Grid x:Name="AddDrone" Visibility="Visible">
             <Border CornerRadius="42" MouseDown="UIElement_OnMouseDown">
                 <Border.Background>
                     <ImageBrush Stretch="Fill" ImageSource="images\homescreen.png"/>
@@ -68,7 +68,7 @@
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
                             <Border CornerRadius="40"/>
-                            <TextBox x:Name="Id" Width="200" materialDesign:HintAssist.Hint="Id" materialDesign:HintAssist.IsFloating="True" TextChanged="Id_TextChanged"/>
+                            <TextBox x:Name="Id" Width="200" MaxLength="6" materialDesign:HintAssist.Hint="Id" materialDesign:HintAssist.IsFloating="True" TextChanged="Id_TextChanged"/>
                             <materialDesign:PackIcon Kind="User" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -94,7 +94,7 @@
             </Border>
         </Grid>
 
-        <Grid x:Name="UpdateDrone"  Visibility="Visible">
+        <Grid x:Name="UpdateDrone"  Visibility="Hidden">
             <Border CornerRadius="42" MouseDown="UIElement_OnMouseDown">
                 <Border.Background>
                     <ImageBrush Stretch="Fill" ImageSource="images\homescreen.png"/>

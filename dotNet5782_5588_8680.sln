@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Solution Items", ".Solutio
 	ProjectSection(SolutionItems) = preProject
 		dal-config.xml = dal-config.xml
 		README.md = README.md
+		..\..\..\..\Dropbox\מכון לב\שנה ב\סמסטר א\מיני פרויקט\תרגילים\תיאור הפרויקט ופירוט הבונוסים.docx = ..\..\..\..\Dropbox\מכון לב\שנה ב\סמסטר א\מיני פרויקט\תרגילים\תיאור הפרויקט ופירוט הבונוסים.docx
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI", "ConsoleUI\ConsoleUI.csproj", "{9C388440-742F-45D5-8250-23A325BB452E}"

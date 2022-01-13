@@ -211,7 +211,7 @@
                                                                         <DropShadowEffect ShadowDepth="1"/>
                                                                     </Border.Effect>
                                                                     <Border.Background>
-                                                                        <ImageBrush ImageSource="images\stations\CentralStation.png"/>
+                                                                        <ImageBrush ImageSource="{Binding Image}"/>
                                                                     </Border.Background>
                                                                 </Border>
                                                                 <StackPanel Orientation="Vertical" Width="160">

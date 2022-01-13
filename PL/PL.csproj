@@ -39,6 +39,14 @@
     <None Remove="images\stations\MalhaMall.jpg" />
     <None Remove="images\stations\MamilaMall.jpg" />
     <None Remove="images\stations\RamotMall.jpg" />
+    <None Remove="images\stations\station0.jpg" />
+    <None Remove="images\stations\station1.jpg" />
+    <None Remove="images\stations\station2.jpg" />
+    <None Remove="images\stations\station3.jpg" />
+    <None Remove="images\stations\station4.jpg" />
+    <None Remove="images\stations\station5.jpg" />
+    <None Remove="images\stations\station6.jpg" />
+    <None Remove="images\stations\station7.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -81,6 +89,14 @@
     <Resource Include="images\stations\MalhaMall.jpg" />
     <Resource Include="images\stations\MamilaMall.jpg" />
     <Resource Include="images\stations\RamotMall.jpg" />
+    <Resource Include="images\stations\station0.jpg" />
+    <Resource Include="images\stations\station1.jpg" />
+    <Resource Include="images\stations\station2.jpg" />
+    <Resource Include="images\stations\station3.jpg" />
+    <Resource Include="images\stations\station4.jpg" />
+    <Resource Include="images\stations\station5.jpg" />
+    <Resource Include="images\stations\station6.jpg" />
+    <Resource Include="images\stations\station7.jpg" />
   </ItemGroup>
 
 </Project>

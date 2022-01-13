@@ -224,6 +224,7 @@ namespace BL
                                let station = GetStationById(item.Id)
                                select new StationList
                                {
+                                   Image = item.Image,
                                    Id = station.Id,
                                    Name = station.Name,
                                    ChargeSoltsAvailable = station.ChargeSolts,
@@ -396,6 +397,7 @@ namespace BL
                     Station station = GetStationById(item.Id);
                     stations.Add(new StationList
                     {
+                        Image = item.Image,
                         Id = station.Id,
                         Name = station.Name,
                         ChargeSoltsAvailable = station.ChargeSolts,

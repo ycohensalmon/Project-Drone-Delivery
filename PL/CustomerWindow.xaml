@@ -65,7 +65,7 @@
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
                             <Border CornerRadius="40"/>
-                            <TextBox x:Name="Id" Width="200" materialDesign:HintAssist.Hint="Id" materialDesign:HintAssist.IsFloating="True" TextChanged="Id_TextChanged"/>
+                            <TextBox x:Name="Id" Width="200" materialDesign:HintAssist.Hint="Id" MaxLength="9" materialDesign:HintAssist.IsFloating="True" TextChanged="Id_TextChanged"/>
                             <materialDesign:PackIcon Kind="User" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -86,7 +86,7 @@
                             <materialDesign:PackIcon Kind="Longitude" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="8" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBox x:Name="Phone" Width="200" materialDesign:HintAssist.Hint="Phone number" materialDesign:HintAssist.IsFloating="True" TextChanged="Phone_TextChanged"/>
+                            <TextBox x:Name="Phone" Width="200" materialDesign:HintAssist.Hint="Phone number" MaxLength="10" materialDesign:HintAssist.IsFloating="True" TextChanged="Phone_TextChanged"/>
                             <materialDesign:PackIcon Kind="Phone" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="10">

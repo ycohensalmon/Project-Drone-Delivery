@@ -86,50 +86,57 @@ namespace Dal
         /// </summary>
         private static void InitializeStation()
         {
+            string pathImg = @"images\stations\";
+
             Stations.Add(new Station
             {
                 Id = 1010,
-                Name = "Malcha Mall",
                 Latitude = 31.751716,
                 Longitude = 35.187202,
                 ChargeSolts = Config.rand.Next(10) + 1,
-                IsDeleted = false
+                IsDeleted = false,
+                Name = "Malcha Mall",
+                Image = pathImg + "MalhaMall.jpg"
             });
             Stations.Add(new Station
             {
                 Id = 1020,
-                Name = "Hadar Mall",
                 Latitude = 31.753791,
                 Longitude = 35.213429,
                 ChargeSolts = Config.rand.Next(10) + 1,
-                IsDeleted = false
+                IsDeleted = false,
+                Name = "Hadar Mall",
+                Image = pathImg + "haddarMall.jpg"
             });
             Stations.Add(new Station
             {
                 Id = 1030,
-                Name = "Ramot Mall",
                 Latitude = 31.817627,
                 Longitude = 35.194476,
                 ChargeSolts = Config.rand.Next(10) + 1,
-                IsDeleted = false
+                IsDeleted = false,
+                Name = "Ramot Mall",
+                Image = pathImg + "RamotMall.jpg"
             });
             Stations.Add(new Station
             {
                 Id = 1040,
-                Name = "Jerusalem Central Station",
                 Latitude = 31.789061,
                 Longitude = 35.203100,
                 ChargeSolts = Config.rand.Next(10) + 1,
-                IsDeleted = false
+                IsDeleted = false,
+                Name = "Jerusalem Central Station",
+                Image = pathImg + "CentralStation.png"
             });
             Stations.Add(new Station
             {
                 Id = 1050,
-                Name = "Mamila Mall",
                 Latitude = 31.777870,
                 Longitude = 35.224982,
                 ChargeSolts = Config.rand.Next(10) + 1,
-                IsDeleted = false
+                IsDeleted = false,
+                Name = "Mamila Mall",
+                Image = pathImg + "MamilaMall.jpg"
             });
         }
 

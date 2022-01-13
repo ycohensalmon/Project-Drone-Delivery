@@ -64,7 +64,7 @@
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
                             <Border CornerRadius="40"/>
-                            <TextBox x:Name="Id" Width="200" materialDesign:HintAssist.Hint="Id" materialDesign:HintAssist.IsFloating="True" TextChanged="Id_TextChanged"/>
+                            <TextBox x:Name="Id" Width="200" materialDesign:HintAssist.Hint="Id" MaxLength="6" materialDesign:HintAssist.IsFloating="True" TextChanged="Id_TextChanged"/>
                             <materialDesign:PackIcon Kind="User" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -85,7 +85,7 @@
                             <materialDesign:PackIcon Kind="Longitude" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="8" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBox x:Name="ChargeSlot" Width="200" materialDesign:HintAssist.Hint="Charge Slot" materialDesign:HintAssist.IsFloating="True" TextChanged="ChargeSlot_TextChanged"/>
+                            <TextBox x:Name="ChargeSlot" Width="200" materialDesign:HintAssist.Hint="Charge Slot" MaxLength="3" materialDesign:HintAssist.IsFloating="True" TextChanged="ChargeSlot_TextChanged"/>
                             <materialDesign:PackIcon Kind="ElectricVehicleCharger" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="10">
