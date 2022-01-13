@@ -46,8 +46,10 @@ namespace BlApi
         public IEnumerable<StationList> GetStations(Predicate<StationList> predicate = null);
         public IEnumerable<StationList> GetStationWithChargeSolts();
         public IEnumerable<string> GetNamesOfAvailableChargeSolts();
+        public IEnumerable<Location> GetLocationsStation();
+
         #endregion
-        
+
         #region Costumer
         public void UpdateCustomer(int customerID, string newName, string newPhone);
         public void NewCostumer(Customer x);

@@ -419,6 +419,18 @@ namespace BL
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<Location> GetLocationsStation()
+        {
+            IEnumerable<Location> locations = from loc in dalObj.GetStations()
+                                              select new Location
+                                              {
+                                                  Latitude = loc.Latitude,
+                                                  Longitude = loc.Longitude
+                                              };
+            return locations;
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double getLoadingRate() => LoadingRate;
         [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetBatteryIossAvailable() => Available;
