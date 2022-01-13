@@ -412,10 +412,35 @@ namespace BL
             }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<Location> GetLocationsDrones()
+        {
+            IEnumerable<Location> locations = from loc in GetDrones()
+                                              select loc.Location;
+            return locations;
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<Location> GetLocationsStation()
+        {
+            IEnumerable<Location> locations = from loc in dalObj.GetStations()
+                                              select new Location
+                                              {
+                                                  Latitude = loc.Latitude,
+                                                  Longitude = loc.Longitude
+                                              };
+            return locations;
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double getLoadingRate() => LoadingRate;
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetBatteryIossAvailable() => Available;
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetBatteryIossLightParcel() => LightParcel;
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetBatteryIossMediumParcel() => MediumParcel;
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double GetBatteryIossHeavyParcel() => HeavyParcel;
     }
 }

@@ -9,11 +9,15 @@ namespace BlApi
 {
     public interface IBL
     {
-        public void NewStation(Station x);
-        public void NewCostumer(Customer x);
-        public void NewParcel(Parcel x, int senderID, int receiveID);
-        //public void NewParcelOfUser(Parcel x, int receiveID);
-        public void NewDroneInList(DroneInList temp, int numStation);
+        #region drone
+
+        #region getting
+        public Drone GetDroneById(int droneId);
+        public IEnumerable<DroneInList> GetDrones(Predicate<DroneInList> predicate = null);
+        public IEnumerable<Location> GetLocationsDrones();
+        #endregion
+
+        #region update drone
         /// <summary>
         /// the function receives drone and connect it to the most importent parcel
         /// </summary>
@@ -29,35 +33,57 @@ namespace BlApi
         public int SendDroneToCharge(int droneId);
         public void ReleaseDroneFromCharging(int droneId);
         public void UpdateDrone(int droneId, string model);
-        public void UpdateBase(int num, string newName, string newChargeSolts);
-        public void UpdateCustomer(int customerID, string newName, string newPhone);
-        public Station GetStationById(int stationId);
-        public Drone GetDroneById(int droneId);
-        public Customer GetCustomerById(int customerId);
-        public Parcel GetParcelById(int parcelid);
-        public User GetUserById(int userId);
-        public IEnumerable<string> GetNamesOfCustomer();
-        public IEnumerable<string> GetNamesOfAvailableChargeSolts();
+        public void NewDroneInList(DroneInList temp, int numStation);
+        #endregion
+
+        #endregion
+
+        #region station
+        public void NewStation(Station x);
         public int GetStationIdByName(string name);
+        public void UpdateBase(int num, string newName, string newChargeSolts);
+        public Station GetStationById(int stationId);
+        public IEnumerable<StationList> GetStations(Predicate<StationList> predicate = null);
+        public IEnumerable<StationList> GetStationWithChargeSolts();
+        public IEnumerable<string> GetNamesOfAvailableChargeSolts();
+        public IEnumerable<Location> GetLocationsStation();
+
+        #endregion
+
+        #region Costumer
+        public void UpdateCustomer(int customerID, string newName, string newPhone);
+        public void NewCostumer(Customer x);
+        public Customer GetCustomerById(int customerId);
+        public IEnumerable<CustumerInList> GetCustomers(Predicate<CustumerInList> predicate = null);
+        public IEnumerable<string> GetNamesOfCustomer();
         public int GetCustomerIdByName(string name);
+        #endregion
+        
+        #region parcel
+        public void NewParcel(Parcel x, int senderID, int receiveID);
+        public Parcel GetParcelById(int parcelid);
         public IEnumerable<ParcelAtCustomer> GetParcelFromCustomer(int customerId);
         public IEnumerable<ParcelAtCustomer> GetParcelToCustomer(int customerId);
-        public IEnumerable<StationList> GetStations(Predicate<StationList> predicate = null);
-        public IEnumerable<DroneInList> GetDrones(Predicate<DroneInList> predicate = null);
-        public IEnumerable<CustumerInList> GetCustomers(Predicate<CustumerInList> predicate = null);
         public IEnumerable<ParcelInList> GetParcels(Predicate<ParcelInList> predicate = null);
         public IEnumerable<ParcelInList> GetParcelsWithoutDrone(); 
-        public IEnumerable<StationList> GetStationWithChargeSolts();
         public DO.Parcel GetParcelWasConnectToParcel(int droneId, out DroneInList drone);
-        public void ClearDroneCharge();
+        #endregion
+
+        #region User
+        //public void NewParcelOfUser(Parcel x, int receiveID);
+        public User GetUserById(int userId);
         public bool checkUser(int userId, int password);
         public void confirmPackage(int userId, int parcelId);
+        #endregion
+
+        #region Tools
         public double getLoadingRate();
         public double GetBatteryIossAvailable();
         public double GetBatteryIossLightParcel();
         public double GetBatteryIossMediumParcel();
         public double GetBatteryIossHeavyParcel();
+        public void ClearDroneCharge();
         public void ActivSimulator(int id, Action updateDelegate, Func<bool> stopDelegate);
-
+        #endregion
     }
 }
