@@ -60,6 +60,7 @@ namespace ConsoleUI
         //-----------------------------------------------------------------------------------------------------------//
         // Print menu //
         //-----------------------------------------------------------------------------------------------------------//
+        #region print menu
         private static void PrintEnterToTheProject()
         {
             Console.BackgroundColor = ConsoleColor.DarkBlue;
@@ -156,11 +157,13 @@ namespace ConsoleUI
             Console.ReadKey();
             Console.Clear();
         }
+        #endregion
 
         //-----------------------------------------------------------------------------------------------------------//
         // Switchs //
         //-----------------------------------------------------------------------------------------------------------//
-
+        #region switchs
+        
         /// <summary>
         /// options of switch1 
         /// </summary>
@@ -275,11 +278,12 @@ namespace ConsoleUI
                     break;
             }
         }
-
+        #endregion
 
         //-----------------------------------------------------------------------------------------------------------//
         // switch 1 - Adds fonctions //
         //-----------------------------------------------------------------------------------------------------------//
+        #region switch1
         /// <summary>
         /// add stetion to the list 
         /// </summary>
@@ -393,11 +397,12 @@ namespace ConsoleUI
 
             dal.NewParcel(temp);
         }
+        #endregion
 
         //-----------------------------------------------------------------------------------------------------------//
         // switch 2 - Updates fonctions //
         //-----------------------------------------------------------------------------------------------------------//
-
+        #region switch2
         /// <summary>
         /// updates the drone that was assigned to a parcel to pick up the parcel
         /// </summary>
@@ -476,11 +481,12 @@ namespace ConsoleUI
 
             dal.ReleaseDroneFromCharging(droneId);
         }
+        #endregion
 
         //-----------------------------------------------------------------------------------------------------------//
         // switch 3 - print index in the list (by id) //
         //-----------------------------------------------------------------------------------------------------------//
-
+        #region switch3
         /// <summary>
         /// returns the object Station that matches the id
         /// </summary>
@@ -528,11 +534,12 @@ namespace ConsoleUI
 
             Console.WriteLine(dal.GetParcelById(parcelId));
         }
+        #endregion
 
         //-----------------------------------------------------------------------------------------------------------//
         // switch 4 - prints fonction //
         //-----------------------------------------------------------------------------------------------------------//
-
+        #region switch4
         /// <summary>
         /// print the list of stations
         /// </summary>
@@ -586,5 +593,6 @@ namespace ConsoleUI
             IEnumerable<Station> temp = dal.GetStations(x => x.ChargeSolts != 0);
             foreach (Station y in temp) { Console.WriteLine(y); }
         }
+        #endregion
     }
 }
