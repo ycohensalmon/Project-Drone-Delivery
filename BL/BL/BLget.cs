@@ -228,7 +228,8 @@ namespace BL
                                    Id = station.Id,
                                    Name = station.Name,
                                    ChargeSoltsAvailable = station.ChargeSolts,
-                                   ChargeSoltsBusy = station.DroneCharges.Count()
+                                   ChargeSoltsBusy = station.DroneCharges.Count(),
+                                   IsDeleted = item.IsDeleted
                                };
 
                 if (predicate != null)
@@ -272,7 +273,8 @@ namespace BL
                         ParcelsShippedAndDelivered = customer.ParcelsFromCustomer.Count(x => x.Status == ParcelStatuses.Delivered),
                         ParcelsShippedAndNotDelivered = customer.ParcelsFromCustomer.Count(x => x.Status != ParcelStatuses.Delivered),
                         ParcelsHeRecieved = customer.ParcelsToCustomer.Count(x => x.Status == ParcelStatuses.Delivered),
-                        ParcelsOnTheWay = customer.ParcelsToCustomer.Count(x => x.Status != ParcelStatuses.Delivered)
+                        ParcelsOnTheWay = customer.ParcelsToCustomer.Count(x => x.Status != ParcelStatuses.Delivered),
+                        IsDeleted = item.IsDeleted
                     });
                 }
 
@@ -304,7 +306,8 @@ namespace BL
                         TargetName = parcel.Target.Name,
                         Status = GetParcelStatus(parcel),
                         Weight = parcel.Weight,
-                        Priorities = parcel.Priorities
+                        Priorities = parcel.Priorities,
+                        IsDeleted = item.IsDeleted
                     });
                 }
 
@@ -374,7 +377,8 @@ namespace BL
                         TargetName = parcel.Target.Name,
                         Status = GetParcelStatus(parcel),
                         Weight = parcel.Weight,
-                        Priorities = parcel.Priorities
+                        Priorities = parcel.Priorities,
+                        IsDeleted = item.IsDeleted
                     });
                 }
 
@@ -401,7 +405,8 @@ namespace BL
                         Id = station.Id,
                         Name = station.Name,
                         ChargeSoltsAvailable = station.ChargeSolts,
-                        ChargeSoltsBusy = station.DroneCharges.Count()
+                        ChargeSoltsBusy = station.DroneCharges.Count(),
+                        IsDeleted = item.IsDeleted
                     });
                 }
 

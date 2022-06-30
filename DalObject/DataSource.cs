@@ -34,7 +34,7 @@ namespace Dal
             InitializeDrone();
             InitializeStation();
             InitializeCustomer();
-            InitializeParsel();
+            InitializeParcel();
             InitializeUser();
         }
 
@@ -76,7 +76,8 @@ namespace Dal
                     Id = Config.rand.Next(1000, 10000),
                     Model = Convert.ToString((ModelDrones)Config.rand.Next(5)),
                     MaxWeight = (WeightCategory)Config.rand.Next(3),
-                    IsDeleted = false
+                    IsDeleted = false,
+                    Image = @"images\drones\drone" + i + ".png"
                 });
             }
         }
@@ -162,7 +163,7 @@ namespace Dal
         /// <summary>
         /// adds 10 parcels to the list of the parcels
         /// </summary>
-        private static void InitializeParsel()
+        private static void InitializeParcel()
         {
             DateTime newDate = DateTime.Now;
             int i = 0;
@@ -180,7 +181,8 @@ namespace Dal
                     PickedUp = null,
                     Delivered = null,
                     Weight = (WeightCategory)Config.rand.Next(3),
-                    Priorities = (Priority)Config.rand.Next(3)
+                    Priorities = (Priority)Config.rand.Next(3),
+                    IsDeleted = false
                 });
             }
 
@@ -198,7 +200,8 @@ namespace Dal
                     PickedUp = DateTime.Now.AddMinutes(-(Config.rand.Next(430, 441))),
                     Delivered = DateTime.Now.AddMinutes(-(Config.rand.Next(415, 429))),
                     Weight = (WeightCategory)Config.rand.Next(3),
-                    Priorities = (Priority)Config.rand.Next(3)
+                    Priorities = (Priority)Config.rand.Next(3),
+                    IsDeleted = false
                 });
             }
         }
