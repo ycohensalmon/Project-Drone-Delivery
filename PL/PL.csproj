@@ -11,6 +11,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\appleIcon.png" />
+    <None Remove="images\appleIcon1.png" />
+    <None Remove="images\appleIcon2.jpg" />
     <None Remove="images\drone1.png" />
     <None Remove="images\drone2.png" />
     <None Remove="images\drone3.png" />
@@ -22,6 +25,7 @@
     <None Remove="images\dronelogo.png" />
     <None Remove="images\dronelogofill.jpg" />
     <None Remove="images\drones.jfif" />
+    <None Remove="images\drones\droneDef.png" />
     <None Remove="images\homescreen.png" />
     <None Remove="images\homescreenwithe.png" />
     <None Remove="images\homescrenn %281%29.png" />
@@ -50,6 +54,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="images\appleIcon2.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\appleIcon1.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\appleIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\drones\droneDef.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mapsui.Wpf" Version="3.0.2" />
     <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
     <PackageReference Include="Microsoft.Maps.MapControl.WPF" Version="1.0.0.3" />
   </ItemGroup>
@@ -68,21 +89,13 @@
     <Resource Include="images\drones\drone5.png" />
     <Resource Include="images\drones\drone6.png" />
     <Resource Include="images\drones\drone7.png" />
-    <Resource Include="images\drones\drone8.png" />
+    <Resource Include="images\drones\drone0.png" />
     <Resource Include="images\drones.jfif" />
     <Resource Include="images\homescreen.png" />
     <Resource Include="images\homescreenwithe.png" />
     <Resource Include="images\homescrenn (1).png" />
     <Resource Include="images\homescrenn.png" />
     <Resource Include="images\iPhone.jpg" />
-    <Resource Include="images\llogo.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="images\logo1.png" />
-    <Resource Include="images\logo11.png" />
-    <Resource Include="images\logoamazon.png" />
-    <Resource Include="images\logoCustomer.png" />
-    <Resource Include="images\logoparcels.png" />
     <Resource Include="images\meteo.png" />
     <Resource Include="images\stations\CentralStation.png" />
     <Resource Include="images\stations\haddarMall.jpg" />

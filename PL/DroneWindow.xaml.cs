@@ -17,6 +17,7 @@ using BL;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
+using Microsoft.Win32;
 
 namespace PL
 {
@@ -29,6 +30,7 @@ namespace PL
         public Drone drone;
         internal BackgroundWorker worker;
         ParcelInDeliveryWindow parcel;
+        OpenFileDialog op = new OpenFileDialog(); //for getting image input from user
 
         #region add drone
         public DroneWindow()
@@ -70,10 +72,10 @@ namespace PL
                 WeightCategory weight = (MaxWeight.SelectedItem == null) ? throw new EmptyInputException("weight") : (WeightCategory)MaxWeight.SelectedItem;
                 string nameStation = (Station.SelectedItem == null) ? throw new EmptyInputException("station") : (string)Station.SelectedItem;
                 StationList tempStation = myBl.GetStations().FirstOrDefault(x => x.Name == nameStation);
-
+                Random rand = new Random();
+                op.FileName = (op.FileName == "") ? @"images\drones\drone" + rand.Next(8) + ".png" : op.FileName;
                 int StationId = tempStation.Id;
-                DroneInList drone = new() { Id = droneID, Model = model, MaxWeight = weight };
-
+                DroneInList drone = new() { Id = droneID, Model = model, MaxWeight = weight, Image = op.FileName};
 
                 myBl.NewDroneInList(drone, StationId);
                 Close();
@@ -242,7 +244,7 @@ namespace PL
         }
         #endregion
 
-
+        #region simulator
         private void btnPlayStop_Checked(object sender, RoutedEventArgs e)
         {
             //hiding the action buttons
@@ -326,6 +328,24 @@ namespace PL
         private bool stop()
         {
             return worker.CancellationPending;
+        }
+        #endregion
+
+        private void UploadImage_Click(object sender, RoutedEventArgs e)
+        {
+            op.Title = "Select a picture";
+            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+              "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+              "Portable Network Graphic (*.png)|*.png";
+            if (op.ShowDialog() == true)
+            {
+                string s = op.FileName;
+                if (s.Contains("UserIcons"))
+                {
+                    s = s.Remove(0, s.IndexOf("UserIcons"));
+                }
+                imageDrone.Source = new BitmapImage(new Uri(op.FileName));
+            }
         }
     }
 }

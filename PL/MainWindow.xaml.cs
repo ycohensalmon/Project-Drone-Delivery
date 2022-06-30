@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BO;
 using BlApi;
+using System.Diagnostics;
 
 namespace PL
 {
@@ -39,6 +40,38 @@ namespace PL
         private void StationsClick(object sender, MouseButtonEventArgs e)
         {
             new LoginWindow().ShowDialog();
+        }
+
+        private void wathsappClick(object sender, RoutedEventArgs e)
+        {
+            openBrowser("https://web.whatsapp.com/");
+        }
+
+        private void safariClick(object sender, RoutedEventArgs e)
+        {
+            openBrowser("https://www.google.co.il/?hl=iw");
+        }
+
+        private void phoneClick(object sender, RoutedEventArgs e)
+        {
+            openBrowser("https://www.apple.com/il/iphone/");
+        }
+        private void cameraClick(object sender, RoutedEventArgs e)
+        {
+            openBrowser("https://webcamera.io/");
+        }
+        private void meteoClick(object sender, MouseButtonEventArgs e)
+        {
+            openBrowser("http://www.meteo-tech.co.il/%D7%AA%D7%97%D7%96%D7%99%D7%AA/");
+        }
+
+        private static void openBrowser(string url)
+        {
+            Process process = new Process();
+            process.StartInfo.UseShellExecute = true;
+            process.StartInfo.FileName = "chrome";
+            process.StartInfo.Arguments = url;
+            process.Start();
         }
     }
 }

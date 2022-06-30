@@ -32,23 +32,23 @@ namespace PL
             InitializeComponent();
 
             // Drone tab
-            droneList = myBl.GetDrones();
+            droneList = myBl.GetDrones(x => x.IsDeleted == false);
             this.DronesListView.ItemsSource = droneList;
             this.DroneComboStatus.ItemsSource = Enum.GetValues(typeof(BO.DroneStatuses));
             this.DroneComboWeight.ItemsSource = Enum.GetValues(typeof(BO.WeightCategory));
 
             // station tab
-            stationList = myBl.GetStations();
+            stationList = myBl.GetStations(x => x.IsDeleted == false);
             StasionsListView.ItemsSource = stationList;
 
             // Parcel tab
-            pacelsList = myBl.GetParcels();
+            pacelsList = myBl.GetParcels(x => x.IsDeleted == false);
             parcelsView.ItemsSource = pacelsList;
             this.ParcelComboWeight.ItemsSource = Enum.GetValues(typeof(BO.WeightCategory));
             this.ParcelComboStatus.ItemsSource = Enum.GetValues(typeof(BO.ParcelStatuses));
 
             // Customer tab
-            customerList = myBl.GetCustomers();
+            customerList = myBl.GetCustomers(x => x.IsDeleted == false);
             this.customersView.ItemsSource = customerList;
         }
 
@@ -58,7 +58,7 @@ namespace PL
         #region drone grouping
         private void DroneWeightGroupe_Click(object sender, RoutedEventArgs e)
         {
-            var droneList = myBl.GetDrones();
+            var droneList = myBl.GetDrones(x => x.IsDeleted == false);
             this.DronesListView.ItemsSource = droneList;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DronesListView.ItemsSource);
             PropertyGroupDescription groupDescription = new("MaxWeight");
@@ -67,7 +67,7 @@ namespace PL
 
         private void DroneStatusGroupe_Click(object sender, RoutedEventArgs e)
         {
-            var droneList = myBl.GetDrones();
+            var droneList = myBl.GetDrones(x => x.IsDeleted == false);
             this.DronesListView.ItemsSource = droneList;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DronesListView.ItemsSource);
             PropertyGroupDescription groupDescription = new("Status");
@@ -84,19 +84,19 @@ namespace PL
                 DroneStatuses status = (DroneStatuses)DroneComboStatus.SelectedItem;
                 if (DroneComboWeight.SelectedItem == null)
                 {
-                    this.droneList = myBl.GetDrones().Where(x => x.Status == status);
+                    this.droneList = myBl.GetDrones(x => x.IsDeleted == false).Where(x => x.Status == status);
                     this.DronesListView.ItemsSource = droneList;
                 }
                 else
                 {
                     WeightCategory Weight = (WeightCategory)DroneComboWeight.SelectedItem;
-                    this.droneList = myBl.GetDrones().Where(x => x.Status == status && x.MaxWeight == Weight);
+                    this.droneList = myBl.GetDrones(x => x.IsDeleted == false).Where(x => x.Status == status && x.MaxWeight == Weight);
                     this.DronesListView.ItemsSource = droneList;
                 }
             }
             else
             {
-                this.droneList = myBl.GetDrones();
+                this.droneList = myBl.GetDrones(x => x.IsDeleted == false);
                 this.DronesListView.ItemsSource = droneList;
             }
         }
@@ -108,20 +108,20 @@ namespace PL
 
                 if (DroneComboStatus.SelectedItem == null)
                 {
-                    droneList = myBl.GetDrones().Where(x => x.MaxWeight == Weight);
+                    droneList = myBl.GetDrones(x => x.IsDeleted == false).Where(x => x.MaxWeight == Weight);
                     this.DronesListView.ItemsSource = droneList;
 
                 }
                 else
                 {
                     DroneStatuses status = (DroneStatuses)DroneComboStatus.SelectedItem;
-                    this.droneList = myBl.GetDrones().Where(x => x.Status == status && x.MaxWeight == Weight);
+                    this.droneList = myBl.GetDrones(x => x.IsDeleted == false).Where(x => x.Status == status && x.MaxWeight == Weight);
                     this.DronesListView.ItemsSource = droneList;
                 }
             }
             else
             {
-                this.droneList = myBl.GetDrones();
+                this.droneList = myBl.GetDrones(x => x.IsDeleted == false);
                 this.DronesListView.ItemsSource = droneList;
             }
         }
@@ -179,10 +179,10 @@ namespace PL
 
         private void UpdateDroneList(object s, EventArgs e)
         {
-            DronesListView.ItemsSource = myBl.GetDrones();
-            customersView.ItemsSource = myBl.GetCustomers();
-            parcelsView.ItemsSource = myBl.GetParcels();
-            StasionsListView.ItemsSource = myBl.GetStations();
+            DronesListView.ItemsSource = myBl.GetDrones(x => x.IsDeleted == false);
+            customersView.ItemsSource = myBl.GetCustomers(x => x.IsDeleted == false);
+            parcelsView.ItemsSource = myBl.GetParcels(x => x.IsDeleted == false);
+            StasionsListView.ItemsSource = myBl.GetStations(x => x.IsDeleted == false);
         }
 
         private void BottonAddDrone_Click(object sender, RoutedEventArgs e)
@@ -191,7 +191,27 @@ namespace PL
 
             ButtonDroneClearStatus_Click(sender, e);
             ButtonDroneClearWeight_Click(sender, e);
-            this.DronesListView.ItemsSource = myBl.GetDrones();
+            this.DronesListView.ItemsSource = myBl.GetDrones(x => x.IsDeleted == false);
+        }
+
+        private void DroneDelete_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (MessageBox.Show("Are you sure that you want to delete this drone ??", "Warning"
+                                , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    Button drone = sender as Button;
+                    int id = ((DroneInList)drone.DataContext).Id;
+                    myBl.DeleteDrone(id);
+                    DronesListView.ItemsSource = myBl.GetDrones(x => x.IsDeleted == false);
+                }
+            }
+            catch (Exception ex)
+            {
+                DronesListView.ItemsSource = "";
+                MessageBox.Show(ex.Message, "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
         #endregion
         #endregion
@@ -236,14 +256,34 @@ namespace PL
         private void bottonAddStation_Click(object sender, RoutedEventArgs e)
         {
             new StationWindow().ShowDialog();
-            StasionsListView.ItemsSource = myBl.GetStations();
+            StasionsListView.ItemsSource = myBl.GetStations(x => x.IsDeleted == false);
+        }
+
+        private void StationDelete_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (MessageBox.Show("Are you sure that you want to delete this station ??", "Warning"
+                                , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    Button station = sender as Button;
+                    int id = ((StationList)station.DataContext).Id;
+                    myBl.DeleteStation(id);
+                    StasionsListView.ItemsSource = myBl.GetStations(x=>x.IsDeleted == false);
+                }
+            }
+            catch (Exception ex)
+            {
+                StasionsListView.ItemsSource = "";
+                MessageBox.Show(ex.Message, "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
         #endregion
 
         #region station grouping
         private void StationChargeGroupe_Click(object sender, RoutedEventArgs e)
         {
-            var StationList = myBl.GetStations();
+            var StationList = myBl.GetStations(x => x.IsDeleted == false);
             this.StasionsListView.ItemsSource = StationList;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(StasionsListView.ItemsSource);
             PropertyGroupDescription groupDescription = new("ChargeSoltsAvailable");
@@ -259,6 +299,7 @@ namespace PL
         private void bottonAddParcel_Click(object sender, RoutedEventArgs e)
         {
             new ParcelWindow().ShowDialog();
+            parcelsView.ItemsSource = myBl.GetParcels(x => x.IsDeleted == false);
         }
         private void ParcelView_DoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -293,12 +334,33 @@ namespace PL
 
             parcelWindow.ShowDialog();
         }
+
+        private void DeleteParcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (MessageBox.Show("Are you sure that you want to delete this parcel ??", "Warning"
+                                , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    Button parcel = sender as Button;
+                    int id = ((ParcelInList)parcel.DataContext).Id;
+                    myBl.DeleteParcel(id);
+                    parcelsView.ItemsSource = myBl.GetParcels(x => x.IsDeleted == false);
+                }
+            }
+            catch (Exception ex)
+            {
+                parcelsView.ItemsSource = "";
+                MessageBox.Show(ex.Message, "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
         #endregion
 
         #region parcel groiping
         private void GroupingSender_Click(object sender, RoutedEventArgs e)
         {
-            pacelsList = myBl.GetParcels();
+            pacelsList = myBl.GetParcels(x => x.IsDeleted == false);
             parcelsView.ItemsSource = pacelsList;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(parcelsView.ItemsSource);
             PropertyGroupDescription groupDescription = new("SenderName");
@@ -306,7 +368,7 @@ namespace PL
         }
         private void GroupingTarget_Click(object sender, RoutedEventArgs e)
         {
-            pacelsList = myBl.GetParcels();
+            pacelsList = myBl.GetParcels(x => x.IsDeleted == false);
             parcelsView.ItemsSource = pacelsList;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(parcelsView.ItemsSource);
             PropertyGroupDescription groupDescription = new("TargetName");
@@ -322,17 +384,17 @@ namespace PL
                 ParcelStatuses status = (ParcelStatuses)ParcelComboStatus.SelectedItem;
                 if (ParcelComboWeight.SelectedItem == null)
                 {
-                    this.parcelsView.ItemsSource = myBl.GetParcels().Where(x => x.Status == status);
+                    this.parcelsView.ItemsSource = myBl.GetParcels(x => x.IsDeleted == false).Where(x => x.Status == status);
                 }
                 else
                 {
                     WeightCategory Weight = (WeightCategory)ParcelComboWeight.SelectedItem;
-                    this.parcelsView.ItemsSource = myBl.GetParcels().Where(x => x.Status == status && x.Weight == Weight);
+                    this.parcelsView.ItemsSource = myBl.GetParcels(x => x.IsDeleted == false).Where(x => x.Status == status && x.Weight == Weight);
                 }
             }
             else
             {
-                this.parcelsView.ItemsSource = myBl.GetParcels();
+                this.parcelsView.ItemsSource = myBl.GetParcels(x => x.IsDeleted == false);
             }
         }
         private void ParcelComboWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -343,18 +405,18 @@ namespace PL
 
                 if (ParcelComboStatus.SelectedItem == null)
                 {
-                    this.parcelsView.ItemsSource = myBl.GetParcels().Where(x => x.Weight == Weight);
+                    this.parcelsView.ItemsSource = myBl.GetParcels(x => x.IsDeleted == false).Where(x => x.Weight == Weight);
 
                 }
                 else
                 {
                     ParcelStatuses status = (ParcelStatuses)ParcelComboStatus.SelectedItem;
-                    this.parcelsView.ItemsSource = myBl.GetParcels().Where(x => x.Status == status && x.Weight == Weight);
+                    this.parcelsView.ItemsSource = myBl.GetParcels(x => x.IsDeleted == false).Where(x => x.Status == status && x.Weight == Weight);
                 }
             }
             else
             {
-                this.parcelsView.ItemsSource = myBl.GetParcels();
+                this.parcelsView.ItemsSource = myBl.GetParcels(x => x.IsDeleted == false);
             }
         }
         private void ButtonParcelClearStatus_Click(object sender, RoutedEventArgs e)
@@ -374,7 +436,7 @@ namespace PL
         private void CustomerBottonAdd_Click(object sender, RoutedEventArgs e)
         {
             new CustomerWindow().ShowDialog();
-            customersView.ItemsSource = myBl.GetCustomers();
+            customersView.ItemsSource = myBl.GetCustomers(x => x.IsDeleted == false);
         }
 
         private void Customer_DoubleClick(object sender, MouseButtonEventArgs e)
@@ -397,6 +459,27 @@ namespace PL
 
             NewCustomerWindow(cust);
         }
+
+        private void DeleteCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (MessageBox.Show("Are you sure that you want to delete this customer ??", "Warning"
+                                , MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    Button customer = sender as Button;
+                    int id = ((CustumerInList)customer.DataContext).Id;
+                    myBl.DeleteCustomer(id);
+                    customersView.ItemsSource = myBl.GetCustomers(x => x.IsDeleted == false);
+                }
+            }
+            catch (Exception ex)
+            {
+                customersView.ItemsSource = "";
+                MessageBox.Show(ex.Message, "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
         #endregion
         #endregion
 
@@ -404,5 +487,7 @@ namespace PL
         {
             Close();
         }
+
+
     }
 }

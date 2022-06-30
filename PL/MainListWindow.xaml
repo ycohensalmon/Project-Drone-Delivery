@@ -142,7 +142,7 @@
                                                                 <Button x:Name="ButtonEdit" ToolTip="Edit drone" Margin="0,0,0,10" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25" Click="DroneEdit_Click">
                                                                 <materialDesign:PackIcon Kind="Edit" Width="20" Height="20"/>
                                                             </Button>
-                                                            <Button x:Name="ButtonDelete" ToolTip="Delete drone" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25">
+                                                            <Button x:Name="ButtonDelete" ToolTip="Delete drone" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25" Click="DroneDelete_Click">
                                                                 <materialDesign:PackIcon Kind="Delete" Width="20" Height="20"/>
                                                             </Button>
                                                             </StackPanel>
@@ -231,9 +231,9 @@
 
                                                                 <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right">
                                                                     <Button x:Name="ButtonEdit" ToolTip="Edit station" Margin="0 5" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25" Click="StationEdit_Click">
-                                                                        <materialDesign:PackIcon Kind="Edit" Width="20" Height="20"/>
+                                                                        <materialDesign:PackIcon Kind="Edit" Width="20" Height="20"/> 
                                                                     </Button>
-                                                                    <Button x:Name="ButtonDelete" ToolTip="Delete station"  Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25">
+                                                                    <Button x:Name="ButtonDelete" ToolTip="Delete station"  Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25" Click="StationDelete_Click">
                                                                         <materialDesign:PackIcon Kind="Delete" Width="20" Height="20"/>
                                                                     </Button>
                                                                 </StackPanel>
@@ -359,7 +359,7 @@
                                                             <Button x:Name="ButtonEdit" ToolTip="Edit parcel" Margin="0 5" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25" Click="ParcelEdit_Click">
                                                                 <materialDesign:PackIcon Kind="Edit" Width="20" Height="20"/>
                                                             </Button>
-                                                            <Button x:Name="ButtonDelete" ToolTip="Delete parcel" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25">
+                                                            <Button x:Name="ButtonDelete" ToolTip="Delete parcel" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="25" Height="25" Click="DeleteParcel_Click">
                                                                 <materialDesign:PackIcon Kind="Delete" Width="20" Height="20"/>
                                                             </Button>
                                                             </StackPanel>
@@ -444,7 +444,7 @@
                                         <GridViewColumn Header="Edit">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Button x:Name="ButtonDelete" ToolTip="Delete parcel" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="20" Height="20">
+                                                    <Button x:Name="ButtonDelete" ToolTip="Delete parcel" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Width="20" Height="20" Click="DeleteCustomer_Click">
                                                         <materialDesign:PackIcon Kind="Delete" Width="17" Height="17"/>
                                                     </Button>
                                                 </DataTemplate>
