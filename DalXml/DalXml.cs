@@ -94,7 +94,8 @@ namespace Dal
                            Id = int.Parse(s.Element("Id").Value),
                            Model = s.Element("Model").Value,
                            MaxWeight = (WeightCategory)Enum.Parse(typeof(WeightCategory), s.Element("MaxWeight").Value),
-                           IsDeleted = bool.Parse(s.Element("IsDeleted").Value)
+                           IsDeleted = bool.Parse(s.Element("IsDeleted").Value),
+                           Image = s.Element("Image").Value
                        };
             }
             catch { return null; }
@@ -112,7 +113,8 @@ namespace Dal
                                 Id = int.Parse(s.Element("Id").Value),
                                 Model = s.Element("Model").Value,
                                 MaxWeight = (WeightCategory)Enum.Parse(typeof(WeightCategory), s.Element("MaxWeight").Value),
-                                IsDeleted = bool.Parse(s.Element("IsDeleted").Value)
+                                IsDeleted = bool.Parse(s.Element("IsDeleted").Value),
+                                Image = s.Element("Image").Value
                             }).FirstOrDefault();
 
             if (drone != null)
@@ -136,7 +138,8 @@ namespace Dal
                     new XElement("Id", drone.Id),
                     new XElement("Model", drone.Model),
                     new XElement("MaxWeight", drone.MaxWeight),
-                    new XElement("IsDeleted", drone.IsDeleted));
+                    new XElement("IsDeleted", drone.IsDeleted),
+                    new XElement("Image", drone.Image));
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -158,6 +161,21 @@ namespace Dal
         #endregion
 
         #region updateDrone
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteDrone(int droneId)
+        {
+            var droneList = XmlTools.LoadListFromXMLSerializer<DO.Drone>(dronePath);
+            Drone drone = GetDroneById(droneId);
+
+            if (drone.Id != droneId)
+                throw new IdNotFoundException(droneId, "Drone");
+            droneList.Remove(drone);
+
+            drone.IsDeleted = false;
+
+            droneList.Add(drone);
+            XmlTools.SaveListToXMLSerializer(droneList, dronePath);
+        }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void ConnectDroneToParcel(int droneId, int parcelId)
@@ -335,6 +353,21 @@ namespace Dal
             stationList.Add(station);
             XmlTools.SaveListToXMLSerializer(stationList, stationsPath);
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteStation(int stationId)
+        {
+            var stationList = XmlTools.LoadListFromXMLSerializer<DO.Station>(stationsPath);
+            Station station = GetStationById(stationId);
+            if (station.Id != stationId)
+                throw new IdNotFoundException(stationId, "Station");
+            stationList.Remove(station);
+
+            station.IsDeleted = true;
+
+            stationList.Add(station);
+            XmlTools.SaveListToXMLSerializer(stationList, stationsPath);
+        }
         #endregion
 
         #region customer
@@ -390,6 +423,22 @@ namespace Dal
             customerList.Add(customer);
             XmlTools.SaveListToXMLSerializer(customerList, customerPath);
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteCustomer(int customerId)
+        {
+            var customerList = XmlTools.LoadListFromXMLSerializer<DO.Customer>(customerPath);
+            Customer customer = GetCustomerById(customerId);
+
+            if (customer.Id != customerId)
+                throw new IdNotFoundException(customerId, "Customer");
+            customerList.Remove(customer);
+
+            customer.IsDeleted = false;
+
+            customerList.Add(customer);
+            XmlTools.SaveListToXMLSerializer(customerList, customerPath);
+        }
         #endregion
 
         #region user
@@ -404,6 +453,22 @@ namespace Dal
                 return user;
             else
                 throw new DO.ItemNotFoundException("user");
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteUser(int userId)
+        {
+            var userList = XmlTools.LoadListFromXMLSerializer<DO.User>(userPath);
+            User user = GetUserById(userId);
+
+            if (user.Id != userId)
+                throw new IdNotFoundException(userId, "User");
+            userList.Remove(user);
+
+            user.IsDeleted = false;
+
+            userList.Add(user);
+            XmlTools.SaveListToXMLSerializer(userList, parcelPath);
         }
         #endregion
 
@@ -441,6 +506,22 @@ namespace Dal
             if (parcel.Id != id)
                 throw new IdNotFoundException(id, "parcel");
             return parcel;
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteParcel(int parcelId)
+        {
+            var parcelList = XmlTools.LoadListFromXMLSerializer<DO.Parcel>(parcelPath);
+            Parcel parcel = GetParcelById(parcelId);
+
+            if (parcel.Id != parcelId)
+                throw new IdNotFoundException(parcelId, "Parcel");
+            parcelList.Remove(parcel);
+
+            parcel.IsDeleted = false;
+
+            parcelList.Add(parcel);
+            XmlTools.SaveListToXMLSerializer(parcelList, parcelPath);
         }
         #endregion
 
