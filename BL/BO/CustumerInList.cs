@@ -15,6 +15,7 @@ using System.Threading.Tasks;
             public int ParcelsShippedAndNotDelivered { get; set; }
             public int ParcelsHeRecieved { get; set; }
             public int ParcelsOnTheWay { get; set; }
+            public bool IsDeleted { get; set; }
 
             public override string ToString()
             {

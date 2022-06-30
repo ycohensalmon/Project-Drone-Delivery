@@ -14,6 +14,8 @@ namespace BO
         public ParcelStatuses Status { get; set; }
         public WeightCategory Weight { get; set; }
         public Priority Priorities { get; set; }
+        public bool IsDeleted { get; set; }
+
         public override string ToString()
         {
             return $"Id: {Id} \nSenderName: {SenderName} \nTargetName: {TargetName}S\nStatus: {Status} " +
