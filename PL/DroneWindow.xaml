@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -31,10 +32,12 @@
         <local:EnableTextModelConverter x:Key="EnableTextModelConverter"/>
         <local:BrushTextModelConverter x:Key="BrushTextModelConverter"/>
         <local:VisibilityParcelInTravelConverter x:Key="VisibilityParcelInTravel"/>
+        <local:LocationDroneConverter x:Key="LocationDroneConverter"/>
+        <m:Location x:Key="PushpinLocation1"/>
     </Window.Resources>
 
     <Grid x:Name="MainGrid">
-        <Grid x:Name="AddDrone" Visibility="Visible">
+        <Grid x:Name="AddDrone" Visibility="Hidden">
             <Border CornerRadius="42" MouseDown="UIElement_OnMouseDown">
                 <Border.Background>
                     <ImageBrush Stretch="Fill" ImageSource="images\homescreen.png"/>
@@ -105,7 +108,7 @@
             </Border>
         </Grid>
 
-        <Grid x:Name="UpdateDrone"  Visibility="Hidden">
+        <Grid x:Name="UpdateDrone"  Visibility="Visible">
             <Border CornerRadius="42" MouseDown="UIElement_OnMouseDown">
                 <Border.Background>
                     <ImageBrush Stretch="Fill" ImageSource="images\homescreen.png"/>
@@ -129,7 +132,7 @@
                         <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="Drone" Foreground="Black"/>
                         <TextBlock x:Name="UpdateTextBlock" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" FontSize="22" Text="Update this drone"/>
                     </StackPanel>
-                    <Grid x:Name="DroneView" HorizontalAlignment="Left" Margin="30,58,0,0" VerticalAlignment="Top" DataContext="{Binding drone}">
+                    <Grid x:Name="DroneView" HorizontalAlignment="Left" Margin="30,20,0,0" VerticalAlignment="Top" DataContext="{Binding drone}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
@@ -199,6 +202,20 @@
                         <Button x:Name="conectToParcel" Content="Send drone to parcel" Click="conectToParcel_Click" Margin="10,10,10,0" Style="{StaticResource ColorButton}" Width="320" Visibility="Collapsed"/>
                     </StackPanel>
 
+                    <m:Map x:Name="myMap" Margin="30,0" DataContext="{Binding}"
+                        ZoomLevel="10" Center="{Binding Path=Location, Converter={StaticResource LocationDroneConverter}}"
+                    Mode="Road" Height="130"
+                    CredentialsProvider="AqTTbx5Fyl3jocqOWa8mxbnsv-7MqNqBPc5kVABd_psvOsnH-cxtzJ1wUdpdeCxE">
+                        <m:Pushpin x:Name="PinDrone" DataContext="{Binding}"  Background="Transparent">
+                            <Image Source="images\dronelogo.png"/>
+                        </m:Pushpin>
+                    </m:Map>
+
+                    <m:Pushpin x:Name="PinArrival" Background="Transparent" Visibility="Hidden">
+                        <Image Source="images\flag.png"/>
+                    </m:Pushpin>
+                    <m:Pushpin x:Name="PinDeparture" Background="Blue" Visibility="Hidden"/>
+                    
                 </StackPanel>
             </Border>
             <TextBox Text=" " x:Name="UpdateList" IsEnabled="False" Margin="365,700,0,0"/>
