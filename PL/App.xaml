@@ -109,7 +109,14 @@
                 <Setter Property="FontWeight" Value="DemiBold"/>
                 <Setter Property="Foreground" Value="#172d42"/>
             </Style>
-            
+
+            <Style  x:Key="SizeIcon" TargetType="materialDesign:PackIcon">
+                <Setter Property="Width" Value="70"/>
+                <Setter Property="Height" Value="35"/>
+                <Setter Property="VerticalAlignment" Value="Bottom"/>
+                <Setter Property="Foreground" Value="#172d42"/>
+            </Style>
+
             <Style x:Key="StyleFontL" TargetType="Label">
                 <Setter Property="FontFamily" Value="San Fransico"/>
                 <Setter Property="FontSize" Value="15"/>

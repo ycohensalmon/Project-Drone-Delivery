@@ -26,6 +26,7 @@
     <None Remove="images\dronelogofill.jpg" />
     <None Remove="images\drones.jfif" />
     <None Remove="images\drones\droneDef.png" />
+    <None Remove="images\flag.png" />
     <None Remove="images\homescreen.png" />
     <None Remove="images\homescreenwithe.png" />
     <None Remove="images\homescrenn %281%29.png" />
@@ -51,6 +52,10 @@
     <None Remove="images\stations\station5.jpg" />
     <None Remove="images\stations\station6.jpg" />
     <None Remove="images\stations\station7.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\flag.png" />
   </ItemGroup>
 
   <ItemGroup>

@@ -58,5 +58,10 @@ namespace PL
         {
             Close();
         }
+
+        private void NewUser_Click(object sender, MouseButtonEventArgs e)
+        {
+            new NewUserWindow().ShowDialog();
+        }
     }
 }

@@ -55,6 +55,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="20"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
 
                         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -71,6 +72,19 @@
 
                             <Border Grid.Column="0" CornerRadius="30" Height="60" Margin="10" BorderBrush="DarkBlue" Opacity="0.8" BorderThickness="3" Background="White" MouseDown="UIElement_OnMouseLeave">
                                 <Label Content="Login" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="DarkBlue"/>
+                            </Border>
+
+                        </Grid>
+
+                        <Grid Grid.Row="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2.4*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Content="Don't have account yet ?" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="DarkBlue"/>
+                            <Border Grid.Column="1" CornerRadius="20" Height="40" Width="80" BorderBrush="DarkBlue" Opacity="0.8" BorderThickness="3" Background="White" MouseDown="NewUser_Click">
+                                <Label Content="Registre" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Foreground="DarkBlue"/>
                             </Border>
 
                         </Grid>
