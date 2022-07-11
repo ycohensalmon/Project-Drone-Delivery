@@ -254,8 +254,27 @@ namespace BlApi
 
         #region User
         //public void NewParcelOfUser(Parcel x, int receiveID);
+        /// <summary>
+        /// add user to the list
+        /// </summary>
+        /// <param name="user">the user to add</param>
+        public void NewUser(User user);
+
+        /// <summary>
+        /// get the user by his id
+        /// </summary>
+        /// <param name="userId">id of the user</param>
+        /// <returns>the user</returns>
         public User GetUserById(int userId);
+
+        /// <summary>
+        /// cheak if the user exist
+        /// </summary>
+        /// <param name="userId">id of theuser</param>
+        /// <param name="password">password of the user</param>
+        /// <returns>true if the user exist</returns>
         public bool checkUser(int userId, int password);
+
         public void confirmPackage(int userId, int parcelId);
 
         /// <summary>
