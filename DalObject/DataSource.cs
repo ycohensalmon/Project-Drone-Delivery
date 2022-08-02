@@ -14,7 +14,6 @@ namespace Dal
         internal static List<Customer> Customers = new();
         internal static List<Parcel> Parcels = new();
         internal static List<DroneCharge> DroneCharges = new();
-        internal static List<User> Users = new();
 
         internal class Config
         {
@@ -35,33 +34,6 @@ namespace Dal
             InitializeStation();
             InitializeCustomer();
             InitializeParcel();
-            InitializeUser();
-        }
-
-        /// <summary>
-        /// initialize 2 user
-        /// </summary>
-        private static void InitializeUser()
-        {
-            Users.Add(new User
-            {
-                Id = 12345678,
-                UserName = "Elhanan",
-                IsAdmin = true,
-                IsDeleted = false,
-                SafePassword = "1234",
-                Photo = ""
-            });
-
-            Users.Add(new User
-            {
-                Id = 23456789,
-                UserName = "Yossef",
-                IsAdmin = false,
-                IsDeleted = false,
-                SafePassword = "4321",
-                Photo = ""
-            });
         }
 
         /// <summary>
@@ -155,7 +127,11 @@ namespace Dal
                     Name = Convert.ToString((Names)i),
                     Latitude = (double)Config.rand.Next(31737458, 31807238) / (double)1000000,
                     Longitude = (double)Config.rand.Next(35174572, 35241141) / (double)1000000,
-                    IsDeleted = false
+                    IsDeleted = false,
+
+                    IsAdmin = false,
+                    SafePassword = Utils.GetHashPassword("123"),
+                    Photo = ""
                 });
             }
         }

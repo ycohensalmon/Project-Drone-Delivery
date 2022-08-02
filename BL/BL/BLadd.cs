@@ -90,7 +90,10 @@ namespace BL
                         Phone = customer.Phone,
                         Latitude = customer.Location.Latitude,
                         Longitude = customer.Location.Longitude,
-                        IsDeleted = false
+                        IsDeleted = false,
+                        Photo = customer.Photo,
+                        IsAdmin = customer.IsAdmin,
+                        SafePassword = customer.SafePassword
                     });
                 }
             }
@@ -121,41 +124,6 @@ namespace BL
                         Delivered = null,
                         Weight = (DO.WeightCategory)parcel.Weight,
                         Priorities = (DO.Priority)parcel.Priorities,
-                        IsDeleted = false
-                    });
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new DalException(ex);
-            }
-        }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void NewUser(User user)
-        {
-            try
-            {
-                lock (dalObj)
-                {
-                    /*dalObj.NewUser(new DO.User
-                    {
-                        Id = user.Customer.Id,
-                        UserName = user.Customer.Name,
-                        SafePassword = user.SafePassword,
-                        Photo = user.Photo,
-                        IsAdmin = user.IsAdmin,
-                        IsDeleted = false,
-
-                    });*/
-
-                    dalObj.NewCostumer(new DO.Customer
-                    {
-                        Id = user.Customer.Id,
-                        Name = user.Customer.Name,
-                        Phone = user.Customer.Phone,
-                        Latitude = user.Customer.Location.Latitude,
-                        Longitude = user.Customer.Location.Longitude,
                         IsDeleted = false
                     });
                 }

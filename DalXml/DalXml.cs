@@ -441,37 +441,6 @@ namespace Dal
         }
         #endregion
 
-        #region user
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public User GetUserById(int id)
-        {
-            var userList = XmlTools.LoadListFromXMLSerializer<User>(userPath);
-
-            var user = userList.FirstOrDefault(s => s.Id == id);
-            if (user.Id == id)
-                return user;
-            else
-                throw new DO.ItemNotFoundException("user");
-        }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void DeleteUser(int userId)
-        {
-            var userList = XmlTools.LoadListFromXMLSerializer<DO.User>(userPath);
-            User user = GetUserById(userId);
-
-            if (user.Id != userId)
-                throw new IdNotFoundException(userId, "User");
-            userList.Remove(user);
-
-            user.IsDeleted = false;
-
-            userList.Add(user);
-            XmlTools.SaveListToXMLSerializer(userList, parcelPath);
-        }
-        #endregion
-
         #region parcel
 
         [MethodImpl(MethodImplOptions.Synchronized)]

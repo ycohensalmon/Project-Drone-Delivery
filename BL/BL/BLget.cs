@@ -115,7 +115,11 @@ namespace BL
                         ParcelsShippedAndNotDelivered = customer.ParcelsFromCustomer.Count(x => x.Status != ParcelStatuses.Delivered),
                         ParcelsHeRecieved = customer.ParcelsToCustomer.Count(x => x.Status == ParcelStatuses.Delivered),
                         ParcelsOnTheWay = customer.ParcelsToCustomer.Count(x => x.Status != ParcelStatuses.Delivered),
-                        IsDeleted = item.IsDeleted
+                        IsDeleted = item.IsDeleted,
+                        
+                        Photo = customer.Photo,
+                        IsAdmin = customer.IsAdmin,
+                        SafePassword = customer.SafePassword
                     });
                 }
 
@@ -147,6 +151,7 @@ namespace BL
                                Id = item.TargetId,
                                Name = dalObj.GetCustomerById(item.TargetId).Name
                            }
+                           
                        };
             }
         }
@@ -201,7 +206,11 @@ namespace BL
                     Phone = customer.Phone,
                     Location = temp,
                     ParcelsFromCustomer = GetParcelFromCustomer(customerId).ToList(),
-                    ParcelsToCustomer = GetParcelToCustomer(customerId).ToList()
+                    ParcelsToCustomer = GetParcelToCustomer(customerId).ToList(),
+                    
+                    Photo = customer.Photo,
+                    IsAdmin = customer.IsAdmin,
+                    SafePassword = customer.SafePassword
                 };
             }
         }
@@ -427,27 +436,6 @@ namespace BL
             return locations;
         }
         #endregion
-
-
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public User GetUserById(int userId)
-        {
-            lock (dalObj)
-            {
-                DO.User user = dalObj.GetUserById(userId);
-
-                return new User
-                {
-                    SafePassword = user.SafePassword,
-                    Photo = user.Photo,
-                    IsAdmin = user.IsAdmin,
-                    IsDeleted = user.IsDeleted,
-                    Customer = GetCustomerById(userId)
-                };
-            }
-        }
-
 
 
         [MethodImpl(MethodImplOptions.Synchronized)]

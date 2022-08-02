@@ -293,15 +293,6 @@ namespace Dal
             return parcel;
         }
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public User GetUserById(int id)
-        {
-            User user = DataSource.Users.FirstOrDefault(x => x.Id == id);
-            if (user.Id != id /*|| user.IsDeleted == true*/)
-                throw new IdNotFoundException(id, "user");
-            return user;
-        }
-
         #endregion
 
         #region delete object
@@ -349,17 +340,7 @@ namespace Dal
             
             DataSource.Parcels.Add(parcel);
         }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void DeleteUser(int userId)
-        {
-            User user = GetUserById(userId);
-            DataSource.Users.Remove(user);
-            
-            user.IsDeleted = true;
-            
-            DataSource.Users.Add(user);
-        }
+        
         #endregion
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -374,10 +355,10 @@ namespace Dal
             return battery;
         }
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
         /// <summary>
         /// this func need to clear the list only on the xml file, not on the dalObject
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ClearDroneCharge() { }
     }
 }

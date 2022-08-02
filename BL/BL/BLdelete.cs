@@ -76,21 +76,5 @@ namespace BL
                 throw new DalException(ex);
             }
         }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void DeleteUser(int userId)
-        {
-            try
-            {
-                lock (dalObj)
-                {
-                    dalObj.DeleteUser(userId);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new DalException(ex);
-            }
-        }
     }
 }

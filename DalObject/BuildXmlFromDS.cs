@@ -25,14 +25,12 @@ namespace Dal
             string stationsPath = localPath + @"\StationXml.xml";
             string customerPath = localPath + @"\CustomerXml.xml";
             string parcelPath = localPath + @"\ParcelXml.xml";
-            string userPath = localPath + @"\UserXml.xml";
             string configPath = localPath + @"\configXml.xml";
 
 
             SaveListToXMLSerializer(DataSource.Stations, stationsPath);
             SaveListToXMLSerializer(DataSource.Customers, customerPath);
             SaveListToXMLSerializer(DataSource.Parcels, parcelPath);
-            SaveListToXMLSerializer(DataSource.Users, userPath);
             SaveListToXMLSerializer(DataSource.DroneCharges, droneChargePath);
             creatXmls(DataSource.Drones, dronePath, "Drones");
             SaveListToXMLSerializer(DalObject.Instance.PowerConsumptionByDrone().ToList(), configPath);

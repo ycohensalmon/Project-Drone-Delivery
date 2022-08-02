@@ -191,22 +191,6 @@ namespace DalApi
 
         #endregion
 
-        #region User
-
-        /// <summary>
-        /// get customer with this id and if no, error is thrown
-        /// </summary>
-        /// <param name="id">the id of the user</param>
-        /// <returns>the information of this user</returns>
-        public User GetUserById(int id);
-
-        /// <summary>
-        /// delete the id
-        /// </summary>
-        /// <param name="userId">id of the persone</param>
-        public void DeleteUser(int userId);
-        #endregion
-
         #region Others
 
         /// <summary>
