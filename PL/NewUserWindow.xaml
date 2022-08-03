@@ -59,7 +59,7 @@
                     <materialDesign:PackIcon Kind="User" Style="{StaticResource SizeIcon}"/>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBox x:Name="Name" Width="200" materialDesign:HintAssist.Hint="Name" materialDesign:HintAssist.IsFloating="True"/>
+                    <TextBox x:Name="UserName" Width="200" materialDesign:HintAssist.Hint="Name" materialDesign:HintAssist.IsFloating="True" Cursor="IBeam"/>
                     <materialDesign:PackIcon Kind="RenameBox" Style="{StaticResource SizeIcon}"/>
                 </StackPanel>
                 <StackPanel Grid.Row="12" Orientation="Horizontal" HorizontalAlignment="Center">

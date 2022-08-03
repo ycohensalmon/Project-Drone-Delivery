@@ -59,12 +59,12 @@
                         </Grid.RowDefinitions>
 
                         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBox Name="UserNameTextBox" Width="200" FontSize="18" materialDesign:HintAssist.Hint="Username" materialDesign:HintAssist.IsFloating="True" TextChanged="UserNameTextBox_OnTextChanged"/>
+                            <TextBox x:Name="UserName" Width="200" FontSize="18" materialDesign:HintAssist.Hint="Username" materialDesign:HintAssist.IsFloating="True" TextChanged="UserNameTextBox_OnTextChanged" Cursor="IBeam"/>
                             <materialDesign:PackIcon VerticalAlignment="Bottom" Kind="User" Height="35" Width="70" Opacity="0.8" Foreground="DarkBlue"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <PasswordBox Name="PasswordBox" Width="200" FontSize="18" materialDesign:HintAssist.Hint="Password" materialDesign:HintAssist.IsFloating="True" PasswordChanged="PasswordBox_OnPasswordChanged"/>
+                            <PasswordBox x:Name="Password" Width="200" FontSize="18" materialDesign:HintAssist.Hint="Password" materialDesign:HintAssist.IsFloating="True" PasswordChanged="PasswordBox_OnPasswordChanged"/>
                             <materialDesign:PackIcon VerticalAlignment="Bottom" Kind="FormTextboxPassword" Height="30" Width="70" Opacity="0.8" Foreground="DarkBlue"/>
                         </StackPanel>
 

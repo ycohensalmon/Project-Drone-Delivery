@@ -95,7 +95,7 @@ namespace PL
 
 
                 int ID = (Id.Text == "") ? throw new BO.EmptyInputException("id") : int.Parse(Id.Text);
-                string name = (Name.Text == "") ? throw new BO.EmptyInputException("name") : Name.Text;
+                string name = (UserName.Text == "") ? throw new BO.EmptyInputException("name") : UserName.Text;
                 int phone = (Phone.Text == "") ? throw new BO.EmptyInputException("Phone") : int.Parse(Phone.Text);
                 double lat = SliderLatitude.Value;      // there are no exception bacause the slider can't be empty
                 double longt = SliderLongitude.Value;

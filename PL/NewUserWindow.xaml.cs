@@ -78,9 +78,9 @@ namespace PL
                 if (Id.Foreground == Brushes.Red) throw new IncorectInputException("id");
                 int userId = (Id.Text == "") ? throw new EmptyInputException("id") : int.Parse(Id.Text);
                 int phone = (Phone.Text == "") ? throw new EmptyInputException("phone") : int.Parse(Phone.Text);
-                string password = (Password.Text == "") ? throw new EmptyInputException("password") : Password.Text;
-                string rpassword = (RechakPassword.Text == "") ? throw new EmptyInputException("recheak password") : RechakPassword.Text;
-                string name = (Name.Text == "") ? throw new EmptyInputException("model") : Name.Text;
+                string password = (Password.Text == "") ? throw new EmptyInputException("password") : Utils.GetHashPassword(Password.Text);
+                string rpassword = (RechakPassword.Text == "") ? throw new EmptyInputException("recheak password") : Utils.GetHashPassword(RechakPassword.Text);
+                string name = (UserName.Text == "") ? throw new EmptyInputException("model") : UserName.Text;
                 double lat = SliderLatitude.Value;      // there are no exception bacause the slider can't be empty
                 double longt = SliderLongitude.Value;
                 bool admin = (IsAdmin.IsChecked == true) ? true : false;
@@ -89,10 +89,9 @@ namespace PL
 
                 cheakPassword(password, rpassword);
                 Location location = new() { Latitude = lat, Longitude = longt };
-                Customer customer = new() { Id = userId, Name = name, Phone = phone, Location = location};
-               // User user = new() {Photo = op.FileName, IsDeleted = false, SafePassword = password, Customer = customer, IsAdmin = admin};
+                Customer customer = new() { Id = userId, Name = name, Phone = phone, Location = location, IsAdmin = admin, Photo = op.FileName, SafePassword = password};
 
-               // myBl.NewUser(user);
+                myBl.NewCostumer(customer);
                 Close();
                 MessageBox.Show("The user was added successfully", "success", MessageBoxButton.OK, MessageBoxImage.Information);
             }

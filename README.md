@@ -39,3 +39,13 @@ delivery
 
 	place 3
 	1. drone (in travel)
+
+7. simulator
+	the battery loss in the maitenance
+	fix the travel between the customer to the base charge in the delivery/aveileble and not in maintenance !
+
+8. change the iphone
+	droneWindow
+	stationWindow
+	parcelWindow
+	CustomerWindow

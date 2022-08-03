@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,9 +36,19 @@ namespace PL
 
         private void UIElement_OnMouseLeave(object sender, MouseEventArgs e)
         {
-            if (UserNameTextBox.Text == "admin" && PasswordBox.Password == "123")
+            string name = (UserName.Text == "") ? throw new EmptyInputException("Name") : UserName.Text;
+            string password = (Password.Password == "") ? throw new EmptyInputException("password") : Utils.GetHashPassword(Password.Password);
+
+            var customers = myBl.GetCustomers();
+
+            if (customers.Any(x => x.Name == name && x.SafePassword == password && x.IsAdmin == true))
             {
                 new StationsListWindow().Show();
+                Close();
+            }
+            else if (customers.Any(x => x.Name == name && x.SafePassword == password && x.IsAdmin == false))
+            {
+                //new MainUserWindow().Show();
                 Close();
             }
             else
