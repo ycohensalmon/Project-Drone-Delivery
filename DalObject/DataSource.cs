@@ -29,11 +29,11 @@ namespace Dal
 
         internal static void Initialize()
         {
-            //BuildXmlFromDS.BuildXmlFromDataSource();
             InitializeDrone();
             InitializeStation();
             InitializeCustomer();
             InitializeParcel();
+            //BuildXmlFromDS.BuildXmlFromDataSource();
         }
 
         /// <summary>

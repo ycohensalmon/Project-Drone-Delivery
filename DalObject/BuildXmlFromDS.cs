@@ -17,6 +17,8 @@ namespace Dal
             string localPath;
             string str = Assembly.GetExecutingAssembly().Location;
             localPath = Path.GetDirectoryName(str);
+            localPath = Path.GetDirectoryName(localPath);
+            localPath = Path.GetDirectoryName(localPath);
 
             localPath += @"\Data";
 
@@ -33,7 +35,7 @@ namespace Dal
             SaveListToXMLSerializer(DataSource.Parcels, parcelPath);
             SaveListToXMLSerializer(DataSource.DroneCharges, droneChargePath);
             creatXmls(DataSource.Drones, dronePath, "Drones");
-            SaveListToXMLSerializer(DalObject.Instance.PowerConsumptionByDrone().ToList(), configPath);
+            //SaveListToXMLSerializer(DalObject.Instance.PowerConsumptionByDrone().ToList(), configPath);
         }
 
         public static XElement CreateElement<T>(T obj)

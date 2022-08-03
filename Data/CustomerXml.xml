@@ -1,83 +1,124 @@
 <?xml version="1.0"?>
 <ArrayOfCustomer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Customer>
-    <Id>314274279</Id>
+    <Id>326914295</Id>
     <Name>Yossef_Cohen</Name>
-    <Phone>520144991</Phone>
-    <Latitude>31.805453</Latitude>
-    <Longitude>35.191116</Longitude>
+    <Phone>535322323</Phone>
+    <Latitude>31.801459</Latitude>
+    <Longitude>35.238662</Longitude>
     <IsDeleted>false</IsDeleted>
+    <SafePassword>PJkJr+wlNU1VHa4hWQuybjjVPyFzuNPcPu5MBH56scHri4UQPjvnumE7MbtcnDYhTcnxSkL9ei/bhIVrylxEwg==</SafePassword>
+    <Photo />
+    <IsAdmin>false</IsAdmin>
   </Customer>
   <Customer>
-    <Id>331733644</Id>
+    <Id>312591405</Id>
     <Name>Moshe_Levi</Name>
-    <Phone>522818053</Phone>
-    <Latitude>31.776331</Latitude>
-    <Longitude>35.207017</Longitude>
+    <Phone>529578696</Phone>
+    <Latitude>31.796938</Latitude>
+    <Longitude>35.212852</Longitude>
     <IsDeleted>false</IsDeleted>
+    <SafePassword>PJkJr+wlNU1VHa4hWQuybjjVPyFzuNPcPu5MBH56scHri4UQPjvnumE7MbtcnDYhTcnxSkL9ei/bhIVrylxEwg==</SafePassword>
+    <Photo />
+    <IsAdmin>false</IsAdmin>
   </Customer>
   <Customer>
-    <Id>248024146</Id>
+    <Id>337176908</Id>
     <Name>Naor_BenLulu</Name>
-    <Phone>529078236</Phone>
-    <Latitude>31.776982</Latitude>
-    <Longitude>35.218691</Longitude>
+    <Phone>589528036</Phone>
+    <Latitude>31.764981</Latitude>
+    <Longitude>35.2274</Longitude>
     <IsDeleted>false</IsDeleted>
+    <SafePassword>PJkJr+wlNU1VHa4hWQuybjjVPyFzuNPcPu5MBH56scHri4UQPjvnumE7MbtcnDYhTcnxSkL9ei/bhIVrylxEwg==</SafePassword>
+    <Photo />
+    <IsAdmin>false</IsAdmin>
   </Customer>
   <Customer>
-    <Id>285118359</Id>
+    <Id>298009840</Id>
     <Name>Sarah_Weill</Name>
-    <Phone>534679923</Phone>
-    <Latitude>31.761835</Latitude>
-    <Longitude>35.176824</Longitude>
+    <Phone>560664231</Phone>
+    <Latitude>31.774874</Latitude>
+    <Longitude>35.19288</Longitude>
     <IsDeleted>false</IsDeleted>
+    <SafePassword>PJkJr+wlNU1VHa4hWQuybjjVPyFzuNPcPu5MBH56scHri4UQPjvnumE7MbtcnDYhTcnxSkL9ei/bhIVrylxEwg==</SafePassword>
+    <Photo />
+    <IsAdmin>false</IsAdmin>
   </Customer>
   <Customer>
-    <Id>306929080</Id>
+    <Id>217247171</Id>
     <Name>Noa_Botbol</Name>
-    <Phone>527422357</Phone>
-    <Latitude>31.803364</Latitude>
-    <Longitude>35.202999</Longitude>
+    <Phone>530935399</Phone>
+    <Latitude>31.739063</Latitude>
+    <Longitude>35.226091</Longitude>
     <IsDeleted>false</IsDeleted>
+    <SafePassword>PJkJr+wlNU1VHa4hWQuybjjVPyFzuNPcPu5MBH56scHri4UQPjvnumE7MbtcnDYhTcnxSkL9ei/bhIVrylxEwg==</SafePassword>
+    <Photo />
+    <IsAdmin>false</IsAdmin>
   </Customer>
   <Customer>
-    <Id>319945203</Id>
+    <Id>297599229</Id>
     <Name>Regev_Shmoulevits</Name>
-    <Phone>510155371</Phone>
-    <Latitude>31.761701</Latitude>
-    <Longitude>35.196134</Longitude>
+    <Phone>574840841</Phone>
+    <Latitude>31.760788</Latitude>
+    <Longitude>35.230776</Longitude>
     <IsDeleted>false</IsDeleted>
+    <SafePassword>PJkJr+wlNU1VHa4hWQuybjjVPyFzuNPcPu5MBH56scHri4UQPjvnumE7MbtcnDYhTcnxSkL9ei/bhIVrylxEwg==</SafePassword>
+    <Photo />
+    <IsAdmin>false</IsAdmin>
   </Customer>
   <Customer>
-    <Id>284878619</Id>
+    <Id>236535255</Id>
     <Name>Yinon_Barsheshet</Name>
-    <Phone>547676159</Phone>
-    <Latitude>31.761293</Latitude>
-    <Longitude>35.193164</Longitude>
+    <Phone>567986425</Phone>
+    <Latitude>31.763584</Latitude>
+    <Longitude>35.196168</Longitude>
     <IsDeleted>false</IsDeleted>
+    <SafePassword>PJkJr+wlNU1VHa4hWQuybjjVPyFzuNPcPu5MBH56scHri4UQPjvnumE7MbtcnDYhTcnxSkL9ei/bhIVrylxEwg==</SafePassword>
+    <Photo />
+    <IsAdmin>false</IsAdmin>
   </Customer>
   <Customer>
-    <Id>224088683</Id>
+    <Id>267257776</Id>
     <Name>Rahamim_Yifrah</Name>
-    <Phone>521753009</Phone>
-    <Latitude>31.802963</Latitude>
-    <Longitude>35.235587</Longitude>
+    <Phone>522426590</Phone>
+    <Latitude>31.756938</Latitude>
+    <Longitude>35.195797</Longitude>
     <IsDeleted>false</IsDeleted>
+    <SafePassword>PJkJr+wlNU1VHa4hWQuybjjVPyFzuNPcPu5MBH56scHri4UQPjvnumE7MbtcnDYhTcnxSkL9ei/bhIVrylxEwg==</SafePassword>
+    <Photo />
+    <IsAdmin>false</IsAdmin>
   </Customer>
   <Customer>
-    <Id>285621693</Id>
+    <Id>254575795</Id>
     <Name>Dvora_Benguigui</Name>
-    <Phone>572946082</Phone>
-    <Latitude>31.776979</Latitude>
-    <Longitude>35.196008</Longitude>
+    <Phone>543166319</Phone>
+    <Latitude>31.773887</Latitude>
+    <Longitude>35.205269</Longitude>
     <IsDeleted>false</IsDeleted>
+    <SafePassword>PJkJr+wlNU1VHa4hWQuybjjVPyFzuNPcPu5MBH56scHri4UQPjvnumE7MbtcnDYhTcnxSkL9ei/bhIVrylxEwg==</SafePassword>
+    <Photo />
+    <IsAdmin>false</IsAdmin>
   </Customer>
   <Customer>
-    <Id>256282170</Id>
+    <Id>234642220</Id>
     <Name>Hananel_Batito</Name>
-    <Phone>548065953</Phone>
-    <Latitude>31.80052</Latitude>
-    <Longitude>35.230122</Longitude>
+    <Phone>502305422</Phone>
+    <Latitude>31.780959</Latitude>
+    <Longitude>35.20363</Longitude>
     <IsDeleted>false</IsDeleted>
+    <SafePassword>PJkJr+wlNU1VHa4hWQuybjjVPyFzuNPcPu5MBH56scHri4UQPjvnumE7MbtcnDYhTcnxSkL9ei/bhIVrylxEwg==</SafePassword>
+    <Photo />
+    <IsAdmin>false</IsAdmin>
+  </Customer>
+  <Customer>
+    <Id>123456</Id>
+    <Name>admin</Name>
+    <Phone>258855555</Phone>
+    <Latitude>31.782958</Latitude>
+    <Longitude>35.215122</Longitude>
+    <IsDeleted>false</IsDeleted>
+    <SafePassword>PJkJr+wlNU1VHa4hWQuybjjVPyFzuNPcPu5MBH56scHri4UQPjvnumE7MbtcnDYhTcnxSkL9ei/bhIVrylxEwg==</SafePassword>
+    <Photo>images\drones\drone3.png</Photo>
+    <IsAdmin>true</IsAdmin>
   </Customer>
 </ArrayOfCustomer>

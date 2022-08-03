@@ -1,39 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Drones>
   <Drone>
-    <Id>5912</Id>
-    <Model>yossef</Model>
-    <MaxWeight>Heavy</MaxWeight>
-    <IsDeleted>false</IsDeleted>
-  </Drone>
-  <Drone>
-    <Id>8561</Id>
-    <Model>Cobra</Model>
-    <MaxWeight>Light</MaxWeight>
-    <IsDeleted>false</IsDeleted>
-  </Drone>
-  <Drone>
-    <Id>7367</Id>
-    <Model>Magic</Model>
-    <MaxWeight>Heavy</MaxWeight>
-    <IsDeleted>false</IsDeleted>
-  </Drone>
-  <Drone>
-    <Id>2089</Id>
+    <Id>8682</Id>
     <Model>Cobra</Model>
     <MaxWeight>Heavy</MaxWeight>
+    <Image>images\drones\drone0.png</Image>
     <IsDeleted>false</IsDeleted>
   </Drone>
   <Drone>
-    <Id>4832</Id>
-    <Model>Magic</Model>
-    <MaxWeight>Light</MaxWeight>
+    <Id>4713</Id>
+    <Model>DJI</Model>
+    <MaxWeight>Heavy</MaxWeight>
+    <Image>images\drones\drone1.png</Image>
     <IsDeleted>false</IsDeleted>
   </Drone>
   <Drone>
-    <Id>7590</Id>
-    <Model>mavic_mini2</Model>
-    <MaxWeight>Light</MaxWeight>
+    <Id>1803</Id>
+    <Model>DJI</Model>
+    <MaxWeight>Medium</MaxWeight>
+    <Image>images\drones\drone2.png</Image>
     <IsDeleted>false</IsDeleted>
+  </Drone>
+  <Drone>
+    <Id>9981</Id>
+    <Model>Mavic_Air</Model>
+    <MaxWeight>Medium</MaxWeight>
+    <Image>images\drones\drone3.png</Image>
+    <IsDeleted>false</IsDeleted>
+  </Drone>
+  <Drone>
+    <Id>2774</Id>
+    <Model>Cobra</Model>
+    <MaxWeight>Light</MaxWeight>
+    <Image>images\drones\drone4.png</Image>
+    <IsDeleted>false</IsDeleted>
+  </Drone>
+  <Drone>
+    <Id>1233</Id>
+    <Model>7878</Model>
+    <MaxWeight>Medium</MaxWeight>
+    <IsDeleted>true</IsDeleted>
+    <Image>images\drones\drone5.png</Image>
+  </Drone>
+  <Drone>
+    <Id>44444</Id>
+    <Model>77</Model>
+    <MaxWeight>Light</MaxWeight>
+    <IsDeleted>true</IsDeleted>
+    <Image>images\drones\drone4.png</Image>
   </Drone>
 </Drones>

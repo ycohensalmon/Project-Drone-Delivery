@@ -47,13 +47,13 @@ namespace Dal
         readonly string stationsPath;
         readonly string customerPath;
         readonly string parcelPath;
-        readonly string userPath;
         readonly string configPath;
         readonly string batteryPath;
         public static string localPath;
 
         DalXml()
         {
+            
             string str = Assembly.GetExecutingAssembly().Location;
             localPath = Path.GetDirectoryName(str);
             localPath = Path.GetDirectoryName(localPath);
@@ -66,7 +66,6 @@ namespace Dal
             stationsPath = localPath + @"\StationXml.xml";
             customerPath = localPath + @"\CustomerXml.xml";
             parcelPath = localPath + @"\ParcelXml.xml";
-            userPath = localPath + @"\UserXml.xml";
             configPath = localPath + @"\configXml.xml";
             batteryPath = localPath + @"\BattryXml.xml";
 
@@ -164,17 +163,19 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteDrone(int droneId)
         {
-            var droneList = XmlTools.LoadListFromXMLSerializer<DO.Drone>(dronePath);
-            Drone drone = GetDroneById(droneId);
+            var droneList = XmlTools.LoadListFromXMLElement(dronePath);
 
-            if (drone.Id != droneId)
+            XElement drone = (from x in droneList.Elements()
+                               where int.Parse(x.Element("Id").Value) == droneId
+                               select x).FirstOrDefault();
+
+
+            if (int.Parse(drone.Element("Id").Value) != droneId)
                 throw new IdNotFoundException(droneId, "Drone");
-            droneList.Remove(drone);
 
-            drone.IsDeleted = false;
+            drone.Element("IsDeleted").SetValue(true);
 
-            droneList.Add(drone);
-            XmlTools.SaveListToXMLSerializer(droneList, dronePath);
+            XmlTools.SaveListToXMLElement(droneList, dronePath);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -280,9 +281,10 @@ namespace Dal
         public IEnumerable<DroneCharge> GetDroneCharges(Func<DroneCharge, bool> predicate = null)
         {
             var droneChargeList = XmlTools.LoadListFromXMLSerializer<DroneCharge>(droneChargePath);
-            return from droneCh in droneChargeList
+            /*return from droneCh in droneChargeList
                    where predicate == null ? true : predicate(droneCh)
-                   select droneCh;
+                   select droneCh;*/
+            return droneChargeList.FindAll(x => predicate == null ? true : predicate(x));
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -316,9 +318,10 @@ namespace Dal
         {
             var stationList = XmlTools.LoadListFromXMLSerializer<DO.Station>(stationsPath);
 
-            return from station in stationList
+            /*return from station in stationList
                    where predicate == null ? true : predicate(station)
-                   select station;
+                   select station;*/
+            return stationList.FindAll(x => predicate == null ? true : predicate(x));
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -388,9 +391,10 @@ namespace Dal
         public IEnumerable<Customer> GetCustomers(Func<Customer, bool> predicate = null)
         {
             var customerList = XmlTools.LoadListFromXMLSerializer<DO.Customer>(customerPath);
-            return from customer in customerList
+            /*return from customer in customerList
                    where predicate == null ? true : predicate(customer)
-                   select customer;
+                   select customer;*/
+            return customerList.FindAll(x => predicate == null ? true : predicate(x));
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
