@@ -129,7 +129,7 @@ namespace Dal
 
                 IsAdmin = true,
                 SafePassword = Utils.GetHashPassword("123"),
-                Photo = @"images\user.png"
+                Photo = @"images\customers\man3.png"
             });
 
             for (int i = 0; i < 9; i++)
@@ -145,7 +145,7 @@ namespace Dal
 
                     IsAdmin = false,
                     SafePassword = Utils.GetHashPassword("123"),
-                    Photo = @"images\user.png"
+                    Photo = @"images\customers\man" + (i%4) + ".jpg"
                 });
             }
         }

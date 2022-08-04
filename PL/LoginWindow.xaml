@@ -45,7 +45,7 @@
 
                     <StackPanel Orientation="Vertical" >
                         <TextBlock HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" FontSize="25" Text="Welcome to Prime Air"/>
-                        <Border CornerRadius="10" Margin="10,0">
+                        <Border CornerRadius="20" Margin="10,0">
                             <Image Source="images\dronesfly.jpg"/>
                         </Border>
                     </StackPanel>

@@ -14,6 +14,12 @@
     <None Remove="images\appleIcon.png" />
     <None Remove="images\appleIcon1.png" />
     <None Remove="images\appleIcon2.jpg" />
+    <None Remove="images\customers\man0.jpg" />
+    <None Remove="images\customers\man1.jpg" />
+    <None Remove="images\customers\man2.jpg" />
+    <None Remove="images\customers\man2.png" />
+    <None Remove="images\customers\man3.jpg" />
+    <None Remove="images\customers\man3.png" />
     <None Remove="images\drone1.png" />
     <None Remove="images\drone2.png" />
     <None Remove="images\drone3.png" />
@@ -25,6 +31,7 @@
     <None Remove="images\dronelogo.png" />
     <None Remove="images\dronelogofill.jpg" />
     <None Remove="images\drones.jfif" />
+    <None Remove="images\dronesfly.jpg" />
     <None Remove="images\drones\droneDef.png" />
     <None Remove="images\flag.png" />
     <None Remove="images\homescreen.png" />
@@ -53,6 +60,34 @@
     <None Remove="images\stations\station6.jpg" />
     <None Remove="images\stations\station7.jpg" />
     <None Remove="images\user.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\customers\man3.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\customers\man3.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\customers\man2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\customers\man2.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\customers\man1.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\customers\man0.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\dronesfly.jpg" />
   </ItemGroup>
 
   <ItemGroup>

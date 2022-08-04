@@ -100,14 +100,20 @@
                     </Grid>
                 </StackPanel>
             </Grid>
-            <Grid x:Name="UpdateCustomer" Visibility="Visible">
+            <Grid x:Name="UpdateCustomer" Visibility="Visible" DataContext="{Binding}">
                 <StackPanel>
                     
                     <StackPanel Orientation="Vertical" Margin="10,100,10,5">
                         <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="HomeUser" Style="{StaticResource SizeIcon}"/>
                         <TextBlock x:Name="UpdateTextBlock" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" Foreground="#172d42" FontSize="22" Text="Customer information"/>
                     </StackPanel>
-                    <Grid x:Name="CustomerView" HorizontalAlignment="Left" Margin="30,58,0,0" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" >
+                        <Border CornerRadius="5" Width="75" Height="75" Margin="30,10,10,10" HorizontalAlignment="Left">
+                            <Image Source="{Binding Photo}" />
+                        </Border>
+                        <Label Content="{Binding Name}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" FontWeight="Bold" FontSize="20"/>
+                    </StackPanel>
+                    <Grid x:Name="CustomerView" HorizontalAlignment="Left" Margin="30,20,0,0" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
@@ -124,8 +130,8 @@
                         <Label Content="Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
                         <Label x:Name="idLabel" Content="{Binding Id}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" FontWeight="Normal"/>
 
-                        <Label Content="Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-                        <Label x:Name="NameLabel" Content="{Binding Name}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center" FontWeight="Normal"/>
+                        <Label Content="Is Admin:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+                        <Label Content="{Binding IsAdmin}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center" FontWeight="Normal"/>
 
                         <Label Content="Phone:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
                         <Label x:Name="PhoneLabel" Content="{Binding Phone}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center" FontWeight="Normal"/>
