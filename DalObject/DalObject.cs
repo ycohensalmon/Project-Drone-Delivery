@@ -278,7 +278,7 @@ namespace Dal
         public Drone GetDroneById(int id)
         {
             Drone drone = DataSource.Drones.Find(x => x.Id == id);
-            if (drone.Id != id || drone.IsDeleted == true)
+            if (drone.Id != id /*|| drone.IsDeleted == true*/)
                 throw new IdNotFoundException(id, "Drone");
             return drone;
         }
@@ -287,7 +287,7 @@ namespace Dal
         public Customer GetCustomerById(int id)
         {
             Customer customer = DataSource.Customers.Find(x => x.Id == id);
-            if (customer.Id != id || customer.IsDeleted == true)
+            if (customer.Id != id /*|| customer.IsDeleted == true*/)
                 throw new IdNotFoundException(id, "Customer");
             return customer;
         }
@@ -301,15 +301,54 @@ namespace Dal
             return parcel;
         }
 
+        #endregion
+
+        #region delete object
+
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public User GetUserById(int id)
+        public void DeleteStation(int stationId)
         {
-            User user = DataSource.Users.FirstOrDefault(x => x.Id == id);
-            if (user.Id != id || user.IsDeleted == true)
-                throw new IdNotFoundException(id, "user");
-            return user;
+            Station station = GetStationById(stationId);
+            DataSource.Stations.Remove(station);
+
+            station.IsDeleted = true;
+
+            DataSource.Stations.Add(station);
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteDrone(int droneId)
+        {
+            Drone drone = GetDroneById(droneId);
+            DataSource.Drones.Remove(drone);
+
+            drone.IsDeleted = true;
+
+            DataSource.Drones.Add(drone);
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteCustomer(int customerId)
+        {
+            Customer customer = GetCustomerById(customerId);
+            DataSource.Customers.Remove(customer);
+            
+            customer.IsDeleted = true;
+
+            DataSource.Customers.Add(customer);
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void DeleteParcel(int parcelId)
+        {
+            Parcel parcel = GetParcelById(parcelId);
+            DataSource.Parcels.Remove(parcel);
+            
+            parcel.IsDeleted = true;
+            
+            DataSource.Parcels.Add(parcel);
+        }
+        
         #endregion
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -324,10 +363,10 @@ namespace Dal
             return battery;
         }
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
         /// <summary>
         /// this func need to clear the list only on the xml file, not on the dalObject
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ClearDroneCharge() { }
     }
 }

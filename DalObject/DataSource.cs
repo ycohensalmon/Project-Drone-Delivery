@@ -14,7 +14,6 @@ namespace Dal
         internal static List<Customer> Customers = new();
         internal static List<Parcel> Parcels = new();
         internal static List<DroneCharge> DroneCharges = new();
-        internal static List<User> Users = new();
 
         internal class Config
         {
@@ -30,38 +29,11 @@ namespace Dal
 
         internal static void Initialize()
         {
-            //BuildXmlFromDS.BuildXmlFromDataSource();
             InitializeDrone();
             InitializeStation();
             InitializeCustomer();
-            InitializeParsel();
-            InitializeUser();
-        }
-
-        /// <summary>
-        /// initialize 2 user
-        /// </summary>
-        private static void InitializeUser()
-        {
-            Users.Add(new User
-            {
-                Id = 12345678,
-                UserName = "Elhanan",
-                IsAdmin = true,
-                IsDeleted = false,
-                SafePassword = "1234",
-                Photo = ""
-            });
-
-            Users.Add(new User
-            {
-                Id = 23456789,
-                UserName = "Yossef",
-                IsAdmin = false,
-                IsDeleted = false,
-                SafePassword = "4321",
-                Photo = ""
-            });
+            InitializeParcel();
+            //BuildXmlFromDS.BuildXmlFromDataSource();
         }
 
         /// <summary>
@@ -76,7 +48,8 @@ namespace Dal
                     Id = Config.rand.Next(1000, 10000),
                     Model = Convert.ToString((ModelDrones)Config.rand.Next(5)),
                     MaxWeight = (WeightCategory)Config.rand.Next(3),
-                    IsDeleted = false
+                    IsDeleted = false,
+                    Image = @"images\drones\drone" + i + ".png"
                 });
             }
         }
@@ -145,7 +118,21 @@ namespace Dal
         /// </summary>
         private static void InitializeCustomer()
         {
-            for (int i = 0; i < 10; i++)
+            Customers.Add(new Customer
+            {
+                Id = Config.rand.Next(210000000, 340000000),
+                Phone = Config.rand.Next(0500000000, 0590000000),
+                Name = "admin",
+                Latitude = (double)Config.rand.Next(31737458, 31807238) / (double)1000000,
+                Longitude = (double)Config.rand.Next(35174572, 35241141) / (double)1000000,
+                IsDeleted = false,
+
+                IsAdmin = true,
+                SafePassword = Utils.GetHashPassword("123"),
+                Photo = @"images\user.png"
+            });
+
+            for (int i = 0; i < 9; i++)
             {
                 Customers.Add(new Customer
                 {
@@ -154,7 +141,11 @@ namespace Dal
                     Name = Convert.ToString((Names)i),
                     Latitude = (double)Config.rand.Next(31737458, 31807238) / (double)1000000,
                     Longitude = (double)Config.rand.Next(35174572, 35241141) / (double)1000000,
-                    IsDeleted = false
+                    IsDeleted = false,
+
+                    IsAdmin = false,
+                    SafePassword = Utils.GetHashPassword("123"),
+                    Photo = @"images\user.png"
                 });
             }
         }
@@ -162,7 +153,7 @@ namespace Dal
         /// <summary>
         /// adds 10 parcels to the list of the parcels
         /// </summary>
-        private static void InitializeParsel()
+        private static void InitializeParcel()
         {
             DateTime newDate = DateTime.Now;
             int i = 0;
@@ -180,7 +171,8 @@ namespace Dal
                     PickedUp = null,
                     Delivered = null,
                     Weight = (WeightCategory)Config.rand.Next(3),
-                    Priorities = (Priority)Config.rand.Next(3)
+                    Priorities = (Priority)Config.rand.Next(3),
+                    IsDeleted = false
                 });
             }
 
@@ -198,7 +190,8 @@ namespace Dal
                     PickedUp = DateTime.Now.AddMinutes(-(Config.rand.Next(430, 441))),
                     Delivered = DateTime.Now.AddMinutes(-(Config.rand.Next(415, 429))),
                     Weight = (WeightCategory)Config.rand.Next(3),
-                    Priorities = (Priority)Config.rand.Next(3)
+                    Priorities = (Priority)Config.rand.Next(3),
+                    IsDeleted = false
                 });
             }
         }

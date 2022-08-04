@@ -13,6 +13,7 @@ namespace BO
         public int ChargeSoltsAvailable { get; set; }
         public int ChargeSoltsBusy { get; set; }
         public string Image { get; set; }
+        public bool IsDeleted { get; set; }
 
         public override string ToString()
         {

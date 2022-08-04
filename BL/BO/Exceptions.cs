@@ -92,4 +92,9 @@ namespace BO
         public IncorectInputException(string message) : base($"ERROR: the {message} is incorrect") { }
         public IncorectInputException() : base($"ERROR: the input is incorrect") { }
     }
+
+    public class IncorectInputPasswordException : Exception
+    {
+        public IncorectInputPasswordException(string pswd1, string pswd2) : base($"ERROR: the passwords are not same ! the first is {pswd1}, the second is {pswd2}") { }
+    }
 }

@@ -27,26 +27,28 @@
             <Setter Property="Foreground" Value="#172d42"/>
         </Style>
     </Window.Resources>
-    <Border CornerRadius="42" MouseDown="UIElement_OnMouseDown">
-        <Border.Background>
-            <ImageBrush Stretch="Fill" ImageSource="images\homescreen.png"/>
-        </Border.Background>
+    <Border CornerRadius="55" Background="{StaticResource imageIphone}" MouseDown="UIElement_OnMouseDown">
+        
         <Grid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="35,50,35,610">
+
+                <Label Content="Prime air" FontFamily="Arial Black" Foreground="White" FontSize="28"/>
+                <materialDesign:PackIcon Kind="Drone" Foreground="White" Margin="10 0" Width="40" Height="40"/>
+            </StackPanel>
+
+            <Button Cursor="Hand" Height="40" Width="40" Margin="25,50,300,610" Background="Transparent" BorderBrush="Transparent"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" >
+                <materialDesign:PackIcon Kind="ChevronLeft" Width="35" Height="35" Foreground="White"/>
+            </Button>
+
+            <Border Margin="17,100,17.5,17" CornerRadius="0,0,35,35" Background="White">
+            </Border>
+            
             <Grid x:Name="AddCustomer" Visibility="Hidden">
-                <StackPanel HorizontalAlignment="Center" Height="610">
-                    <Grid Height="50" Margin="0,10,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button x:Name="Close" Margin="15,0,0,0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                                Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="Black">
-                            <materialDesign:PackIcon Kind="ArrowBack" Width="30" Height="30"/>
-                        </Button>
-                        <Image Source="images\logo1.png" HorizontalAlignment="Right" Grid.Column="1" Margin="0,0,15,0"/>
-                    </Grid>
-                    <StackPanel Orientation="Vertical">
-                        <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="UserAdd" Opacity="1" Foreground="Black"/>
+                <StackPanel HorizontalAlignment="Center" Height="610" Margin="0,80,0,10">
+
+                    <StackPanel Orientation="Vertical" Margin="0,20,0,0">
+                        <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="UserAdd" Opacity="1" Foreground="#172d42"/>
                         <TextBlock x:Name="StationTextBlock" HorizontalAlignment="Center" FontSize="22" Text="Add Customer"/>
                     </StackPanel>
                     <Grid Margin="30">
@@ -69,7 +71,7 @@
                             <materialDesign:PackIcon Kind="User" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBox x:Name="Name" Width="200" materialDesign:HintAssist.Hint="Name" materialDesign:HintAssist.IsFloating="True"/>
+                            <TextBox x:Name="UserName" Width="200" materialDesign:HintAssist.Hint="Name" materialDesign:HintAssist.IsFloating="True" Cursor="IBeam"/>
                             <materialDesign:PackIcon Kind="RenameBox" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -90,14 +92,9 @@
                             <materialDesign:PackIcon Kind="Phone" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
                         <StackPanel Grid.Row="10">
-                            <Border Grid.Column="0" CornerRadius="30" Height="60" Margin="10" Opacity="0.8" BorderThickness="3" MouseDown="AddStation_Click">
-                                <Border.Background>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="Black"/>
-                                        <GradientStop Color="#FFFF9900" Offset="0.634"/>
-                                    </LinearGradientBrush>
-                                </Border.Background>
-                                <Label Content="Add" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="#111111"/>
+                            <Border Grid.Column="0" CornerRadius="30" Height="60" Margin="10"  BorderThickness="3" MouseDown="AddStation_Click" Background="{StaticResource colorBlue}">
+
+                                <Label Content="Add" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="White"/>
                             </Border>
                         </StackPanel>
                     </Grid>
@@ -105,18 +102,10 @@
             </Grid>
             <Grid x:Name="UpdateCustomer" Visibility="Visible">
                 <StackPanel>
-                    <Grid Height="50" Margin="0,40,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button x:Name="Closee" Grid.Column="0" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="#172d42">
-                            <materialDesign:PackIcon Kind="ArrowBack" Width="31" Height="30" VerticalAlignment="Center"/>
-                        </Button>
-                    </Grid>
-                    <StackPanel Orientation="Vertical">
+                    
+                    <StackPanel Orientation="Vertical" Margin="10,100,10,5">
                         <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="HomeUser" Style="{StaticResource SizeIcon}"/>
-                        <TextBlock x:Name="UpdateTextBlock" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" Foreground="#172d42" FontSize="22" Text="Update Customer"/>
+                        <TextBlock x:Name="UpdateTextBlock" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" Foreground="#172d42" FontSize="22" Text="Customer information"/>
                     </StackPanel>
                     <Grid x:Name="CustomerView" HorizontalAlignment="Left" Margin="30,58,0,0" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>

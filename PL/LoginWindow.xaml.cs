@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,6 @@ namespace PL
     /// </summary>
     public partial class LoginWindow : Window
     {
-        MainWindow wnd = (MainWindow)Application.Current.MainWindow;
         BlApi.IBL myBl;
         public LoginWindow()
         {
@@ -35,13 +35,27 @@ namespace PL
 
         private void UIElement_OnMouseLeave(object sender, MouseEventArgs e)
         {
-            if (UserNameTextBox.Text == "admin" && PasswordBox.Password == "123")
+            string name = (UserName.Text == "") ? throw new EmptyInputException("Name") : UserName.Text;
+            string password = (Password.Password == "") ? throw new EmptyInputException("password") : Utils.GetHashPassword(Password.Password);
+
+            var customer = myBl.GetCustomers().FirstOrDefault(x => x.Name == name && x.SafePassword == password);
+
+            if (customer == null)
+            {
+                WrongPassword.Text = "username or password are incorrect";
+                return;
+            }
+
+            if (customer.IsAdmin == true)
             {
                 new StationsListWindow().Show();
                 Close();
             }
             else
-                WrongPassword.Text = "username or password are incorrect";
+            {
+                new MainUserWindow(customer).Show();
+                Close();
+            }
         }
 
         private void UserNameTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -57,6 +71,11 @@ namespace PL
         private void bottonExit_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void NewUser_Click(object sender, MouseButtonEventArgs e)
+        {
+            new NewUserWindow().ShowDialog();
         }
     }
 }

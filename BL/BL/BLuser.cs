@@ -14,7 +14,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public bool checkUser(int userId, int password)
         {
-            BO.User check = GetUserById(userId);
+            BO.Customer check = GetCustomerById(userId);
             if (int.Parse(check.SafePassword) != password)
                 throw new IncorectInputException("password");
             return check.IsAdmin;

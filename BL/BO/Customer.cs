@@ -14,6 +14,10 @@ namespace BO
         public Location Location { get; set; }
         public List<ParcelAtCustomer> ParcelsFromCustomer { get; set; } = new();
         public List<ParcelAtCustomer> ParcelsToCustomer { get; set; } = new();
+
+        public string SafePassword { get; set; }
+        public string Photo { get; set; }
+        public bool IsAdmin { get; set; }
         public override string ToString()
         {
             string from = "\n", to = "\n";

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        Icon="https://previews.123rf.com/images/rainart123/rainart1231610/rainart123161000140/67579157-drone-logo-vector.jpg"
        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -54,15 +55,16 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="20"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
 
                         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBox Name="UserNameTextBox" Width="200" FontSize="18" materialDesign:HintAssist.Hint="Username" materialDesign:HintAssist.IsFloating="True" TextChanged="UserNameTextBox_OnTextChanged"/>
+                            <TextBox x:Name="UserName" Width="200" FontSize="18" materialDesign:HintAssist.Hint="Username" materialDesign:HintAssist.IsFloating="True" TextChanged="UserNameTextBox_OnTextChanged" Cursor="IBeam"/>
                             <materialDesign:PackIcon VerticalAlignment="Bottom" Kind="User" Height="35" Width="70" Opacity="0.8" Foreground="DarkBlue"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <PasswordBox Name="PasswordBox" Width="200" FontSize="18" materialDesign:HintAssist.Hint="Password" materialDesign:HintAssist.IsFloating="True" PasswordChanged="PasswordBox_OnPasswordChanged"/>
+                            <PasswordBox x:Name="Password" Width="200" FontSize="18" materialDesign:HintAssist.Hint="Password" materialDesign:HintAssist.IsFloating="True" PasswordChanged="PasswordBox_OnPasswordChanged"/>
                             <materialDesign:PackIcon VerticalAlignment="Bottom" Kind="FormTextboxPassword" Height="30" Width="70" Opacity="0.8" Foreground="DarkBlue"/>
                         </StackPanel>
 
@@ -70,6 +72,19 @@
 
                             <Border Grid.Column="0" CornerRadius="30" Height="60" Margin="10" BorderBrush="DarkBlue" Opacity="0.8" BorderThickness="3" Background="White" MouseDown="UIElement_OnMouseLeave">
                                 <Label Content="Login" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="DarkBlue"/>
+                            </Border>
+
+                        </Grid>
+
+                        <Grid Grid.Row="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2.4*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Content="Don't have account yet ?" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="DarkBlue"/>
+                            <Border Grid.Column="1" CornerRadius="20" Height="40" Width="80" BorderBrush="DarkBlue" Opacity="0.8" BorderThickness="3" Background="White" MouseDown="NewUser_Click">
+                                <Label Content="Registre" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Foreground="DarkBlue"/>
                             </Border>
 
                         </Grid>

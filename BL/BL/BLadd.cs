@@ -62,7 +62,8 @@ namespace BL
                         Id = drone.Id,
                         Model = drone.Model,
                         MaxWeight = (DO.WeightCategory)drone.MaxWeight,
-                        IsDeleted = false
+                        IsDeleted = false,
+                        Image = drone.Image
                     });
 
                     dalObj.SendDroneToBaseCharge(drone.Id, stationId);
@@ -89,7 +90,10 @@ namespace BL
                         Phone = customer.Phone,
                         Latitude = customer.Location.Latitude,
                         Longitude = customer.Location.Longitude,
-                        IsDeleted = false
+                        IsDeleted = false,
+                        Photo = customer.Photo,
+                        IsAdmin = customer.IsAdmin,
+                        SafePassword = customer.SafePassword
                     });
                 }
             }
@@ -119,7 +123,8 @@ namespace BL
                         PickedUp = null,
                         Delivered = null,
                         Weight = (DO.WeightCategory)parcel.Weight,
-                        Priorities = (DO.Priority)parcel.Priorities
+                        Priorities = (DO.Priority)parcel.Priorities,
+                        IsDeleted = false
                     });
                 }
             }

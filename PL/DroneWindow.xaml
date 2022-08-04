@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -31,30 +32,51 @@
         <local:EnableTextModelConverter x:Key="EnableTextModelConverter"/>
         <local:BrushTextModelConverter x:Key="BrushTextModelConverter"/>
         <local:VisibilityParcelInTravelConverter x:Key="VisibilityParcelInTravel"/>
+        <local:LocationDroneConverter x:Key="LocationDroneConverter"/>
     </Window.Resources>
+    <Border CornerRadius="55" Background="{StaticResource imageIphone}" MouseDown="UIElement_OnMouseDown">
+        <Grid x:Name="MainGrid">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="35,50,35,610">
 
-    <Grid x:Name="MainGrid">
-        <Grid x:Name="AddDrone" Visibility="Visible">
-            <Border CornerRadius="42" MouseDown="UIElement_OnMouseDown">
-                <Border.Background>
-                    <ImageBrush Stretch="Fill" ImageSource="images\homescreen.png"/>
-                </Border.Background>
+                <Label Content="Prime air" FontFamily="Arial Black" Foreground="White" FontSize="28"/>
+                <materialDesign:PackIcon Kind="Drone" Foreground="White" Margin="10 0" Width="40" Height="40"/>
+            </StackPanel>
+
+            <Button Cursor="Hand" Height="40" Width="40" Margin="25,50,300,610" Background="Transparent" BorderBrush="Transparent"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" >
+                <materialDesign:PackIcon Kind="ChevronLeft" Width="35" Height="35" Foreground="White"/>
+            </Button>
+
+            <Border Margin="17,100,17.5,17" CornerRadius="0,0,35,35" Background="White">
+            </Border>
+            <Grid x:Name="AddDrone" Visibility="Visible">
+                <Border CornerRadius="42" MouseDown="UIElement_OnMouseDown">
+                
 
                 <StackPanel HorizontalAlignment="Center" Height="610">
                     <Grid Height="50" Margin="0,10,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button x:Name="Close" Margin="15,0,0,0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="Black" BorderBrush="Black">
-                            <materialDesign:PackIcon Kind="ArrowBack" Width="30" Height="30"/>
-                        </Button>
-                    </Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
                     <StackPanel Orientation="Vertical">
                         <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="Drone" Opacity="1" Foreground="#172d42"/>
                         <TextBlock x:Name="DroneTextBlock"  HorizontalAlignment="Center"  Text="Add a drone" Foreground="#172d42"/>
                     </StackPanel>
-                    <Grid Margin="30">
+                    <Grid Margin="30,1" Height="130">
+                        <StackPanel Orientation="Horizontal">
+
+                            <Label Content="Upload image" Opacity="0.6" VerticalAlignment="Bottom"/>
+                            <Border Width="140" Height="120" CornerRadius="5" Opacity="0.8" BorderBrush="#172d42" BorderThickness="2">
+                                <Image Name="imageDrone" Source="images\drones\droneDef.png" />
+                            </Border>
+                            <Button x:Name="image" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="UploadImage_Click" Background="Black" BorderBrush="Black">
+                                <materialDesign:PackIcon Kind="Upload" Width="30" Height="30"/>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Margin="30,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="20"/>
@@ -67,7 +89,6 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Border CornerRadius="40"/>
                             <TextBox x:Name="Id" Width="200" MaxLength="6" materialDesign:HintAssist.Hint="Id" materialDesign:HintAssist.IsFloating="True" TextChanged="Id_TextChanged"/>
                             <materialDesign:PackIcon Kind="User" Style="{StaticResource SizeIcon}"/>
                         </StackPanel>
@@ -92,33 +113,29 @@
                     </Grid>
                 </StackPanel>
             </Border>
-        </Grid>
+            </Grid>
 
-        <Grid x:Name="UpdateDrone"  Visibility="Hidden">
-            <Border CornerRadius="42" MouseDown="UIElement_OnMouseDown">
-                <Border.Background>
-                    <ImageBrush Stretch="Fill" ImageSource="images\homescreen.png"/>
-                </Border.Background>
+            <Grid x:Name="UpdateDrone"  Visibility="Hidden">
+                <Border CornerRadius="42" MouseDown="UIElement_OnMouseDown">
+                
                 <StackPanel >
                     <Grid Height="50" Margin="0,40,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="Closee" Grid.Column="0" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" Click="Close_OnClick" Background="#FF111111">
-                            <materialDesign:PackIcon Kind="ArrowBack" Width="31" Height="30" VerticalAlignment="Center"/>
-                        </Button>
-                        <StackPanel Grid.Column="1" Margin="20,8,40,0">
+                        
+                        <StackPanel Grid.Column="1" Margin="30,68,30,-60">
 
                             <TextBlock x:Name="TextToggleButton" Text="Simulator" HorizontalAlignment="Center"/>
-                            <ToggleButton x:Name="btnPlayStop"  Height="20" Width="40" Checked="btnPlayStop_Checked" Unchecked="btnPlayStop_Unchecked" Background="Green"/>
+                            <ToggleButton x:Name="btnPlayStop"  Height="20" Width="40" Checked="btnPlayStop_Checked" Unchecked="btnPlayStop_Unchecked" Style="{StaticResource ToggleApple}"/>
                         </StackPanel>
                     </Grid>
                     <StackPanel Orientation="Vertical">
-                        <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="Drone" Foreground="Black"/>
-                        <TextBlock x:Name="UpdateTextBlock" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" FontSize="22" Text="Update this drone"/>
+                        <materialDesign:PackIcon HorizontalAlignment="Center" Height="50" Width="50" Kind="Drone" Foreground="Black" Margin="0,10,90,0"/>
+                            <TextBlock x:Name="UpdateTextBlock" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" Margin="0,0,90,0" FontSize="20" Text="Update this drone"/>
                     </StackPanel>
-                    <Grid x:Name="DroneView" HorizontalAlignment="Left" Margin="30,58,0,0" VerticalAlignment="Top" DataContext="{Binding drone}">
+                    <Grid x:Name="DroneView" HorizontalAlignment="Left" Margin="30,20,0,0" VerticalAlignment="Top" DataContext="{Binding drone}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
@@ -188,9 +205,22 @@
                         <Button x:Name="conectToParcel" Content="Send drone to parcel" Click="conectToParcel_Click" Margin="10,10,10,0" Style="{StaticResource ColorButton}" Width="320" Visibility="Collapsed"/>
                     </StackPanel>
 
+                    <m:Map x:Name="myMap" Margin="30,0" DataContext="{Binding}"
+                        ZoomLevel="10" Center="{Binding Path=Location, Converter={StaticResource LocationDroneConverter}}"
+                    Mode="Road" Height="130"
+                    CredentialsProvider="AqTTbx5Fyl3jocqOWa8mxbnsv-7MqNqBPc5kVABd_psvOsnH-cxtzJ1wUdpdeCxE">
+                        <m:Pushpin x:Name="PinDrone" DataContext="{Binding  drone.ParcelInTravel.source}"  Background="Transparent">
+                            <Image Source="images\dronelogo.png"/>
+                        </m:Pushpin>
+                        <m:Pushpin x:Name="PinArrival" DataContext="{Binding drone.ParcelInTravel.destination}" Background="Transparent">
+                            <Image Source="images\flag.png"/>
+                        </m:Pushpin>
+                        <m:Pushpin x:Name="PinDeparture" DataContext="{Binding}" Background="Blue"/>
+                    </m:Map>
                 </StackPanel>
             </Border>
-            <TextBox Text=" " x:Name="UpdateList" IsEnabled="False" Margin="365,700,0,0"/>
+                <TextBox Text=" " x:Name="UpdateList" IsEnabled="False" Margin="365,700,0,0"/>
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </Window>

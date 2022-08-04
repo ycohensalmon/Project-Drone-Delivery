@@ -75,6 +75,13 @@ namespace DalApi
         /// <returns>drone cwith this id</returns>
         public Drone GetDroneById(int id);
 
+        /// <summary>
+        /// delete the drone from the list
+        /// </summary>
+        /// <param name="droneId">id of the drone</param>
+        public void DeleteDrone(int droneId);
+
+
         #endregion
 
         #region Station
@@ -108,6 +115,12 @@ namespace DalApi
         /// <returns>station with this id</returns>
         public Station GetStationById(int id);
 
+        /// <summary>
+        /// delete the station
+        /// </summary>
+        /// <param name="stationId">id of the station</param>
+        void DeleteStation(int stationId);
+
         #endregion
 
         #region Costomer
@@ -140,6 +153,12 @@ namespace DalApi
         /// <returns>customer with this id</returns>
         public Customer GetCustomerById(int id);
 
+        /// <summary>
+        /// delete the customer
+        /// </summary>
+        /// <param name="customerId">id of the customer</param>
+        public void DeleteCustomer(int customerId);
+
         #endregion
 
         #region Parcel
@@ -163,17 +182,16 @@ namespace DalApi
         /// <param name="id">the id of the Parcels</param>
         /// <returns>parcel with this id</returns>
         public Parcel GetParcelById(int id);
+        
+        /// <summary>
+        /// delete the the parcel
+        /// </summary>
+        /// <param name="parcelId">id of the parcel</param>
+        public void DeleteParcel(int parcelId);
 
         #endregion
 
         #region Others
-
-        /// <summary>
-        /// get customer with this id and if no, error is thrown
-        /// </summary>
-        /// <param name="id">the id of the user</param>
-        /// <returns>the information of this user</returns>
-        public User GetUserById(int id);
 
         /// <summary>
         /// Transfers in the array from the data layer to the logic layer

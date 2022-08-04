@@ -11,6 +11,21 @@ using System.Windows.Media;
 
 namespace PL
 {
+    class LocationDroneConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            BO.Location locBO = value as BO.Location;
+            Microsoft.Maps.MapControl.WPF.Location locWPF = new Microsoft.Maps.MapControl.WPF.Location(locBO.Latitude, locBO.Longitude);
+            return locWPF;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    
     class ButtonUpdateDroneConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

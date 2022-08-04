@@ -19,6 +19,7 @@ namespace DO
         public DateTime? Delivered { get; set; }
         public WeightCategory Weight { get; set; }
         public Priority Priorities { get; set; }
+        public bool IsDeleted { get; set; }
         public override string ToString()
         {
             return $"Id: {Id}, SenderId: {SenderId}, TargetId: {TargetId}, DroneId: {DroneId}\nRequested: {Requested}, " +

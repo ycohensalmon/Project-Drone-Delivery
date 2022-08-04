@@ -16,6 +16,7 @@ namespace BO
         public DroneStatuses Status { get; set; }
         public Location Location { get; set; }
         public int NumParcel { get; set; }
+        public bool IsDeleted { get; set; }
         public override string ToString()
         {
             return $"Id:{Id}\nModel:{Model}\nMaxWeight:{MaxWeight}\nStatus:{Status}\nBattery:{Battery}\nLocation:\n{Location}\nnumParcel:{NumParcel}\n";

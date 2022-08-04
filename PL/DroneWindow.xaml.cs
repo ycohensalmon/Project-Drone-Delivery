@@ -17,6 +17,8 @@ using BL;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
+using Microsoft.Win32;
+using Microsoft.Maps.MapControl.WPF;
 
 namespace PL
 {
@@ -29,6 +31,7 @@ namespace PL
         public Drone drone;
         internal BackgroundWorker worker;
         ParcelInDeliveryWindow parcel;
+        OpenFileDialog op = new OpenFileDialog(); //for getting image input from user
 
         #region add drone
         public DroneWindow()
@@ -70,10 +73,10 @@ namespace PL
                 WeightCategory weight = (MaxWeight.SelectedItem == null) ? throw new EmptyInputException("weight") : (WeightCategory)MaxWeight.SelectedItem;
                 string nameStation = (Station.SelectedItem == null) ? throw new EmptyInputException("station") : (string)Station.SelectedItem;
                 StationList tempStation = myBl.GetStations().FirstOrDefault(x => x.Name == nameStation);
-
+                Random rand = new Random();
+                op.FileName = (op.FileName == "") ? @"images\drones\drone" + rand.Next(8) + ".png" : op.FileName;
                 int StationId = tempStation.Id;
-                DroneInList drone = new() { Id = droneID, Model = model, MaxWeight = weight };
-
+                DroneInList drone = new() { Id = droneID, Model = model, MaxWeight = weight, Image = op.FileName};
 
                 myBl.NewDroneInList(drone, StationId);
                 Close();
@@ -87,6 +90,36 @@ namespace PL
         #endregion
 
         #region update drone refresh
+        private void UpdatePinLocation()
+        {
+            PinDrone.Location = UpdatePinDroneLocation();
+            if (drone.ParcelInTravel.source != null)
+                PinDeparture.Location = UpdatePinDepartureLocation();
+            if (drone.ParcelInTravel.Destination != null)
+                PinArrival.Location = UpdatePinArrivalLocation();
+
+        }
+        private Microsoft.Maps.MapControl.WPF.Location UpdatePinArrivalLocation()
+        {
+            BO.Location locBO = drone.ParcelInTravel.Destination as BO.Location;
+            Microsoft.Maps.MapControl.WPF.Location locWPF = new Microsoft.Maps.MapControl.WPF.Location(locBO.Latitude, locBO.Longitude);
+            return locWPF;
+        }
+
+        private Microsoft.Maps.MapControl.WPF.Location UpdatePinDroneLocation()
+        {
+            BO.Location locBO = drone.Location as BO.Location;
+            Microsoft.Maps.MapControl.WPF.Location locWPF = new Microsoft.Maps.MapControl.WPF.Location(locBO.Latitude, locBO.Longitude);
+            return locWPF;
+        }
+
+        private Microsoft.Maps.MapControl.WPF.Location UpdatePinDepartureLocation()
+        {
+            BO.Location locBO = drone.ParcelInTravel.source as BO.Location;
+            Microsoft.Maps.MapControl.WPF.Location locWPF = new Microsoft.Maps.MapControl.WPF.Location(locBO.Latitude, locBO.Longitude);
+            return locWPF;
+        }
+
         private void RefreshButtonUpdate(IBL myBl)
         {
             DroneStatuses status = drone.Status;
@@ -129,6 +162,7 @@ namespace PL
         {
             drone = myBl.GetDroneById(drone.Id);
             this.DroneView.DataContext = drone;
+            UpdatePinLocation();
         }
         #endregion
 
@@ -141,8 +175,13 @@ namespace PL
             AddDrone.Visibility = Visibility.Hidden;
             UpdateDrone.Visibility = Visibility.Visible;
             DroneView.DataContext = drone;
-
+            //myMap.Center = drone.Location;
+            myMap.DataContext = drone;
             RefreshButtonUpdate(myBl);
+            //Pushpin pushpin = new Pushpin();
+            //pushpin.Location = new Microsoft.Maps.MapControl.WPF.Location(drone.Location.Latitude, drone.Location.Longitude);
+            ////PinDrone.Location = new Microsoft.Maps.MapControl.WPF.Location(drone.Location.Latitude, drone.Location.Longitude);
+            //myMap.Children.Add(pushpin);
         }
         private void bottonUpdate_Click(object sender, RoutedEventArgs e)
         {
@@ -186,7 +225,7 @@ namespace PL
                 drone = myBl.GetDroneById(drone.Id);
 
                 MessageBox.Show("The drone was update successfully", "success", MessageBoxButton.OK, MessageBoxImage.Information);
-                conectToParcel.Visibility = Visibility.Hidden;
+                conectToParcel.Visibility = Visibility.Collapsed;
                 ShowParcel.Visibility = Visibility.Visible;
                 RefreshButtonUpdate(myBl);
             }
@@ -242,13 +281,13 @@ namespace PL
         }
         #endregion
 
-
+        #region simulator
         private void btnPlayStop_Checked(object sender, RoutedEventArgs e)
         {
             //hiding the action buttons
-            conectToParcel.Visibility = Visibility.Hidden;
-            bottonUpdate.Visibility = Visibility.Hidden;
-            ShowParcel.Visibility = Visibility.Hidden;
+            conectToParcel.Visibility = Visibility.Collapsed;
+            bottonUpdate.Visibility = Visibility.Collapsed;
+            ShowParcel.Visibility = Visibility.Collapsed;
             TextToggleButton.Text = "Manual Mode";
 
             worker = new BackgroundWorker();
@@ -277,11 +316,13 @@ namespace PL
             worker.ReportProgress(0);
         }
 
+
         private void autoMode_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             UpdateList.Text = "   ";
             drone = myBl.GetDroneById(drone.Id); //getting the updated drone from the bl
             DroneView.DataContext = drone;
+            UpdatePinLocation();
             UpdateList.Text = " ";
 
 
@@ -327,5 +368,25 @@ namespace PL
         {
             return worker.CancellationPending;
         }
+        #endregion
+
+        private void UploadImage_Click(object sender, RoutedEventArgs e)
+        {
+            op.Title = "Select a picture";
+            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+              "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+              "Portable Network Graphic (*.png)|*.png";
+            if (op.ShowDialog() == true)
+            {
+                string s = op.FileName;
+                if (s.Contains("UserIcons"))
+                {
+                    s = s.Remove(0, s.IndexOf("UserIcons"));
+                }
+                imageDrone.Source = new BitmapImage(new Uri(op.FileName));
+            }
+        }
+
+        
     }
 }

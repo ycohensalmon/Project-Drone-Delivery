@@ -14,6 +14,10 @@ namespace DO
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public bool IsDeleted { get; set; }
+
+        public string SafePassword { get; set; }
+        public string Photo { get; set; }
+        public bool IsAdmin { get; set; }
         public override string ToString()
         {
             return $"Id: {Id}, Name:{Name}, Phone:{Phone},Latittude:{Utils.Sexagesimal(Latitude, 'N')}," +
