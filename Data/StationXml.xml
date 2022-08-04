@@ -1,20 +1,11 @@
 <?xml version="1.0"?>
 <ArrayOfStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Station>
-    <Id>1010</Id>
-    <Name>Malcha Mall</Name>
-    <Latitude>31.751716</Latitude>
-    <Longitude>35.187202</Longitude>
-    <ChargeSolts>7</ChargeSolts>
-    <Image>images\stations\MalhaMall.jpg</Image>
-    <IsDeleted>false</IsDeleted>
-  </Station>
-  <Station>
     <Id>1020</Id>
     <Name>Hadar Mall</Name>
     <Latitude>31.753791</Latitude>
     <Longitude>35.213429</Longitude>
-    <ChargeSolts>10</ChargeSolts>
+    <ChargeSolts>5</ChargeSolts>
     <Image>images\stations\haddarMall.jpg</Image>
     <IsDeleted>false</IsDeleted>
   </Station>
@@ -23,7 +14,7 @@
     <Name>Ramot Mall</Name>
     <Latitude>31.817627</Latitude>
     <Longitude>35.194476</Longitude>
-    <ChargeSolts>4</ChargeSolts>
+    <ChargeSolts>5</ChargeSolts>
     <Image>images\stations\RamotMall.jpg</Image>
     <IsDeleted>false</IsDeleted>
   </Station>
@@ -32,8 +23,17 @@
     <Name>Jerusalem Central Station</Name>
     <Latitude>31.789061</Latitude>
     <Longitude>35.2031</Longitude>
-    <ChargeSolts>9</ChargeSolts>
+    <ChargeSolts>2</ChargeSolts>
     <Image>images\stations\CentralStation.png</Image>
+    <IsDeleted>false</IsDeleted>
+  </Station>
+  <Station>
+    <Id>1010</Id>
+    <Name>Malcha Mall</Name>
+    <Latitude>31.751716</Latitude>
+    <Longitude>35.187202</Longitude>
+    <ChargeSolts>5</ChargeSolts>
+    <Image>images\stations\MalhaMall.jpg</Image>
     <IsDeleted>false</IsDeleted>
   </Station>
   <Station>
@@ -41,7 +41,7 @@
     <Name>Mamila Mall</Name>
     <Latitude>31.77787</Latitude>
     <Longitude>35.224982</Longitude>
-    <ChargeSolts>3</ChargeSolts>
+    <ChargeSolts>5</ChargeSolts>
     <Image>images\stations\MamilaMall.jpg</Image>
     <IsDeleted>false</IsDeleted>
   </Station>

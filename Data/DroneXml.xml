@@ -1,37 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Drones>
   <Drone>
-    <Id>6425</Id>
-    <Model>Mickcara</Model>
-    <MaxWeight>Light</MaxWeight>
+    <Id>2989</Id>
+    <Model>DJI</Model>
+    <MaxWeight>Heavy</MaxWeight>
     <Image>images\drones\drone0.png</Image>
     <IsDeleted>false</IsDeleted>
   </Drone>
   <Drone>
-    <Id>7979</Id>
-    <Model>Mickcara</Model>
-    <MaxWeight>Medium</MaxWeight>
+    <Id>5460</Id>
+    <Model>DJI</Model>
+    <MaxWeight>Heavy</MaxWeight>
     <Image>images\drones\drone1.png</Image>
     <IsDeleted>false</IsDeleted>
   </Drone>
   <Drone>
-    <Id>6431</Id>
-    <Model>Mickcara</Model>
-    <MaxWeight>Medium</MaxWeight>
+    <Id>4308</Id>
+    <Model>DJI</Model>
+    <MaxWeight>Light</MaxWeight>
     <Image>images\drones\drone2.png</Image>
     <IsDeleted>false</IsDeleted>
   </Drone>
   <Drone>
-    <Id>7512</Id>
-    <Model>Magic</Model>
-    <MaxWeight>Light</MaxWeight>
+    <Id>4404</Id>
+    <Model>Cobra</Model>
+    <MaxWeight>Medium</MaxWeight>
     <Image>images\drones\drone3.png</Image>
     <IsDeleted>false</IsDeleted>
   </Drone>
   <Drone>
-    <Id>2353</Id>
-    <Model>Magic</Model>
-    <MaxWeight>Light</MaxWeight>
+    <Id>6578</Id>
+    <Model>Cobra</Model>
+    <MaxWeight>Medium</MaxWeight>
     <Image>images\drones\drone4.png</Image>
     <IsDeleted>false</IsDeleted>
   </Drone>
