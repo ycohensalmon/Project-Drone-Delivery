@@ -66,5 +66,10 @@ namespace PL
         {
             Close();
         }
+
+        private void SendNewParcel_Click(object sender, RoutedEventArgs e)
+        {
+            new ParcelWindow(customer.Name).Show();
+        }
     }
 }

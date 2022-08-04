@@ -36,7 +36,7 @@ namespace Dal
                 return instance;
             }
         }
-        
+
         /// <summary>
         /// The constructor initialize randomly some donres parcels stations and custumers
         /// </summary>

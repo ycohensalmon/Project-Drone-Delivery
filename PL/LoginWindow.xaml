@@ -41,11 +41,13 @@
 
             <Border Margin="17,100,17.5,17" CornerRadius="0,0,35,35" Background="White">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0">
-                    
 
-                    <StackPanel Orientation="Vertical">
-                        <materialDesign:PackIcon HorizontalAlignment="Center" Height="100" Width="100" Kind="Drone" Opacity="0.9" Foreground="DarkBlue"/>
+
+                    <StackPanel Orientation="Vertical" >
                         <TextBlock HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" FontSize="25" Text="Welcome to Prime Air"/>
+                        <Border CornerRadius="10" Margin="10,0">
+                            <Image Source="images\dronesfly.jpg"/>
+                        </Border>
                     </StackPanel>
 
                     <Grid Name="LoginGrid" Margin="30">

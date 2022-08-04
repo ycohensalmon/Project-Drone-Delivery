@@ -7,7 +7,6 @@
         mc:Ignorable="d"
         Icon="https://previews.123rf.com/images/rainart123/rainart1231610/rainart123161000140/67579157-drone-logo-vector.jpg"
        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:Syncfusion="clr-namespace:Syncfusion.XForms.ProgressBar;assembly=Syncfusion.SfProgressBar.XForms"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -48,9 +47,12 @@
                         <StackPanel Orientation="Vertical" >
                             <!--<materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="HomeUser" Style="{StaticResource SizeIcon}"/>-->
                             <TextBlock x:Name="UpdateTextBlock" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" Foreground="#172d42" FontSize="22" Text="Customer information"/>
-                            <Border CornerRadius="5" Width="75" Height="75" Margin="10,10,10,10" HorizontalAlignment="Right">
-                                <Image Source="{Binding Photo}" />
-                            </Border>
+                            <StackPanel Orientation="Horizontal" >
+                                <Border CornerRadius="5" Width="75" Height="75" Margin="10,10,10,10" HorizontalAlignment="Left">
+                                    <Image Source="{Binding Photo}" />
+                                </Border>
+                                <Label Content="{Binding Name}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" FontWeight="Normal" FontSize="20"/>
+                            </StackPanel>
                         </StackPanel>
                         <Grid x:Name="CustomerView" HorizontalAlignment="Left" Margin="30,58,0,0" VerticalAlignment="Top">
                             <Grid.ColumnDefinitions>
@@ -69,8 +71,8 @@
                             <Label Content="Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
                             <Label x:Name="idLabel" Content="{Binding Id}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" FontWeight="Normal"/>
 
-                            <Label Content="Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-                            <Label x:Name="NameLabel" Content="{Binding Name}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center" FontWeight="Normal"/>
+                            <Label Content="Is Admin:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+                            <Label x:Name="NameLabel" Content="{Binding IsAdmin}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center" FontWeight="Normal"/>
 
                             <Label Content="Phone:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
                             <Label x:Name="PhoneLabel" Content="{Binding Phone}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center" FontWeight="Normal"/>
@@ -87,7 +89,8 @@
                         </Grid>
                         <Button x:Name="ParcelsToCustomer" Content="Show list parcels to customer" Style="{StaticResource ColorButton}" Margin="10,10,10,10" Width="320" Height="30" Click="ShowParcelsToCustomer_Click"/>
                         <Button x:Name="ParcelsFromCustomer" Content="Show list parcels from customer" Style="{StaticResource ColorButton}" Margin="10,0,10,10" Width="320" Height="30" Click="ShowParcelsFromCustomer_Click"/>
-                   
+                        <Button x:Name="NewParcel" Content="Send new parcel" Style="{StaticResource ColorButton}" Margin="10,0,10,10" Width="320" Height="30" Click="SendNewParcel_Click"/>
+
                     </StackPanel>
                 </Grid>
             </Border>
