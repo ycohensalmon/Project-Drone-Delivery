@@ -48,18 +48,23 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void NewStation(Station station)
         {
+            if (GetStations().Any(item => item.Id == station.Id))
+                throw new IdAlreadyExistException(station.Id, "Station");
+
             foreach (var item in GetStations())
             {
                 if (item.Id == station.Id)
                     throw new IdAlreadyExistException(station.Id, "Station");
             }
             DataSource.Stations.Add(station);
-
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void NewDrone(Drone drone)
         {
+            if (GetDrones().Any(item => item.Id == drone.Id))
+                throw new IdAlreadyExistException(drone.Id, "Drone");
+
             foreach (var item in GetDrones())
             {
                 if (item.Id == drone.Id)
@@ -71,6 +76,9 @@ namespace Dal
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void NewCostumer(Customer customer)
         {
+            if (GetCustomers().Any(item => item.Id == customer.Id))
+                throw new IdAlreadyExistException(customer.Id, "Customer");
+
             foreach (var item in GetCustomers())
             {
                 if (item.Id == customer.Id)
