@@ -100,9 +100,24 @@ namespace BL
         {
             lock (dalObj)
             {
-                List<CustumerInList> customers = new();
+                IEnumerable<CustumerInList> customers = from item in dalObj.GetCustomers()
+                                                        let customer = GetCustomerById(item.Id)
+                                                        select new CustumerInList
+                                                        {
+                                                            Id = customer.Id,
+                                                            Name = customer.Name,
+                                                            Phone = customer.Phone,
+                                                            ParcelsShippedAndDelivered = customer.ParcelsFromCustomer.Count(x => x.Status == ParcelStatuses.Delivered),
+                                                            ParcelsShippedAndNotDelivered = customer.ParcelsFromCustomer.Count(x => x.Status != ParcelStatuses.Delivered),
+                                                            ParcelsHeRecieved = customer.ParcelsToCustomer.Count(x => x.Status == ParcelStatuses.Delivered),
+                                                            ParcelsOnTheWay = customer.ParcelsToCustomer.Count(x => x.Status != ParcelStatuses.Delivered),
+                                                            IsDeleted = item.IsDeleted,
+                                                            Photo = customer.Photo,
+                                                            IsAdmin = customer.IsAdmin,
+                                                            SafePassword = customer.SafePassword
+                                                        };
 
-                foreach (var item in dalObj.GetCustomers())
+                /*foreach (var item in dalObj.GetCustomers())
                 {
                     Customer customer = GetCustomerById(item.Id);
 
@@ -116,15 +131,15 @@ namespace BL
                         ParcelsHeRecieved = customer.ParcelsToCustomer.Count(x => x.Status == ParcelStatuses.Delivered),
                         ParcelsOnTheWay = customer.ParcelsToCustomer.Count(x => x.Status != ParcelStatuses.Delivered),
                         IsDeleted = item.IsDeleted,
-                        
+
                         Photo = customer.Photo,
                         IsAdmin = customer.IsAdmin,
                         SafePassword = customer.SafePassword
                     });
-                }
+                }*/
 
                 if (predicate != null)
-                    customers = customers.FindAll(x => predicate(x));
+                    customers = customers.ToList().FindAll(x => predicate(x));
 
                 if (!customers.Any())
                     throw new EmptyListException("customers");
@@ -151,7 +166,7 @@ namespace BL
                                Id = item.TargetId,
                                Name = dalObj.GetCustomerById(item.TargetId).Name
                            }
-                           
+
                        };
             }
         }
@@ -207,7 +222,7 @@ namespace BL
                     Location = temp,
                     ParcelsFromCustomer = GetParcelFromCustomer(customerId).ToList(),
                     ParcelsToCustomer = GetParcelToCustomer(customerId).ToList(),
-                    
+
                     Photo = customer.Photo,
                     IsAdmin = customer.IsAdmin,
                     SafePassword = customer.SafePassword
@@ -232,7 +247,19 @@ namespace BL
         {
             lock (dalObj)
             {
-                List<ParcelInList> parcels = new();
+                IEnumerable<ParcelInList> parcels = from item in dalObj.GetParcels()
+                                                    let parcel = GetParcelById(item.Id)
+                                                    select new ParcelInList
+                                                    {
+                                                        Id = parcel.Id,
+                                                        SenderName = parcel.Sender.Name,
+                                                        TargetName = parcel.Target.Name,
+                                                        Status = GetParcelStatus(parcel),
+                                                        Weight = parcel.Weight,
+                                                        Priorities = parcel.Priorities,
+                                                        IsDeleted = item.IsDeleted
+                                                    };
+                /*List<ParcelInList> parcels = new();
 
                 foreach (var item in dalObj.GetParcels())
                 {
@@ -248,10 +275,10 @@ namespace BL
                         Priorities = parcel.Priorities,
                         IsDeleted = item.IsDeleted
                     });
-                }
+                }*/
 
                 if (predicate != null)
-                    parcels = parcels.FindAll(x => predicate(x));
+                    parcels = parcels.ToList().FindAll(x => predicate(x));
 
                 if (!parcels.Any())
                     throw new EmptyListException("parcels");
@@ -265,7 +292,19 @@ namespace BL
         {
             lock (dalObj)
             {
-                List<ParcelInList> parcels = new();
+                IEnumerable<ParcelInList> parcels = from item in dalObj.GetParcels(x => x.DroneId == 0)
+                                                    let parcel = GetParcelById(item.Id)
+                                                    select new ParcelInList
+                                                    {
+                                                        Id = parcel.Id,
+                                                        SenderName = parcel.Sender.Name,
+                                                        TargetName = parcel.Target.Name,
+                                                        Status = GetParcelStatus(parcel),
+                                                        Weight = parcel.Weight,
+                                                        Priorities = parcel.Priorities,
+                                                        IsDeleted = item.IsDeleted
+                                                    };
+                /*List<ParcelInList> parcels = new();
 
                 foreach (var item in dalObj.GetParcels(x => x.DroneId == 0))
                 {
@@ -281,7 +320,7 @@ namespace BL
                         Priorities = parcel.Priorities,
                         IsDeleted = item.IsDeleted
                     });
-                }
+                }*/
 
                 if (!parcels.Any())
                     throw new EmptyListException("parcels without drone");
@@ -401,7 +440,20 @@ namespace BL
         {
             lock (dalObj)
             {
-                List<StationList> stations = new();
+                IEnumerable<StationList> stations = from item in dalObj.GetStations()
+                                                    let station = GetStationById(item.Id)
+                                                    where station.ChargeSolts > 0
+                                                    select new StationList
+                                                    {
+                                                        Image = item.Image,
+                                                        Id = station.Id,
+                                                        Name = station.Name,
+                                                        ChargeSoltsAvailable = station.ChargeSolts,
+                                                        ChargeSoltsBusy = station.DroneCharges.Count(),
+                                                        IsDeleted = item.IsDeleted
+                                                    };
+
+                /*List<StationList> stations = new();
 
                 foreach (var item in dalObj.GetStations(x => x.ChargeSolts != 0))
                 {
@@ -415,7 +467,7 @@ namespace BL
                         ChargeSoltsBusy = station.DroneCharges.Count(),
                         IsDeleted = item.IsDeleted
                     });
-                }
+                }*/
 
                 if (!stations.Any())
                     throw new EmptyListException("station with charge solts available");
