@@ -118,7 +118,21 @@ namespace Dal
         /// </summary>
         private static void InitializeCustomer()
         {
-            for (int i = 0; i < 10; i++)
+            Customers.Add(new Customer
+            {
+                Id = Config.rand.Next(210000000, 340000000),
+                Phone = Config.rand.Next(0500000000, 0590000000),
+                Name = "admin",
+                Latitude = (double)Config.rand.Next(31737458, 31807238) / (double)1000000,
+                Longitude = (double)Config.rand.Next(35174572, 35241141) / (double)1000000,
+                IsDeleted = false,
+
+                IsAdmin = true,
+                SafePassword = Utils.GetHashPassword("123"),
+                Photo = @"images\user.png"
+            });
+
+            for (int i = 0; i < 9; i++)
             {
                 Customers.Add(new Customer
                 {
@@ -131,7 +145,7 @@ namespace Dal
 
                     IsAdmin = false,
                     SafePassword = Utils.GetHashPassword("123"),
-                    Photo = ""
+                    Photo = @"images\user.png"
                 });
             }
         }

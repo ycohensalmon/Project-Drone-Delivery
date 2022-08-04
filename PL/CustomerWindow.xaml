@@ -44,7 +44,7 @@
             <Border Margin="17,100,17.5,17" CornerRadius="0,0,35,35" Background="White">
             </Border>
             
-            <Grid x:Name="AddCustomer" Visibility="Visible">
+            <Grid x:Name="AddCustomer" Visibility="Hidden">
                 <StackPanel HorizontalAlignment="Center" Height="610" Margin="0,80,0,10">
 
                     <StackPanel Orientation="Vertical" Margin="0,20,0,0">
@@ -100,12 +100,12 @@
                     </Grid>
                 </StackPanel>
             </Grid>
-            <Grid x:Name="UpdateCustomer" Visibility="Hidden">
+            <Grid x:Name="UpdateCustomer" Visibility="Visible">
                 <StackPanel>
                     
                     <StackPanel Orientation="Vertical" Margin="10,100,10,5">
                         <materialDesign:PackIcon HorizontalAlignment="Center" Height="60" Width="70" Kind="HomeUser" Style="{StaticResource SizeIcon}"/>
-                        <TextBlock x:Name="UpdateTextBlock" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" Foreground="#172d42" FontSize="22" Text="Update Customer"/>
+                        <TextBlock x:Name="UpdateTextBlock" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignButtonTextBlock}" Foreground="#172d42" FontSize="22" Text="Customer information"/>
                     </StackPanel>
                     <Grid x:Name="CustomerView" HorizontalAlignment="Left" Margin="30,58,0,0" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>

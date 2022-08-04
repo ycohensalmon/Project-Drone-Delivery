@@ -20,7 +20,6 @@ namespace PL
     /// </summary>
     public partial class LoginWindow : Window
     {
-        MainWindow wnd = (MainWindow)Application.Current.MainWindow;
         BlApi.IBL myBl;
         public LoginWindow()
         {
@@ -39,20 +38,24 @@ namespace PL
             string name = (UserName.Text == "") ? throw new EmptyInputException("Name") : UserName.Text;
             string password = (Password.Password == "") ? throw new EmptyInputException("password") : Utils.GetHashPassword(Password.Password);
 
-            var customers = myBl.GetCustomers();
+            var customer = myBl.GetCustomers().FirstOrDefault(x => x.Name == name && x.SafePassword == password);
 
-            if (customers.Any(x => x.Name == name && x.SafePassword == password && x.IsAdmin == true))
+            if (customer == null)
+            {
+                WrongPassword.Text = "username or password are incorrect";
+                return;
+            }
+
+            if (customer.IsAdmin == true)
             {
                 new StationsListWindow().Show();
                 Close();
             }
-            else if (customers.Any(x => x.Name == name && x.SafePassword == password && x.IsAdmin == false))
+            else
             {
-                //new MainUserWindow().Show();
+                new MainUserWindow(customer).Show();
                 Close();
             }
-            else
-                WrongPassword.Text = "username or password are incorrect";
         }
 
         private void UserNameTextBox_OnTextChanged(object sender, TextChangedEventArgs e)

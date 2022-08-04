@@ -85,7 +85,7 @@ namespace PL
                 double longt = SliderLongitude.Value;
                 bool admin = (IsAdmin.IsChecked == true) ? true : false;
                 Random rand = new Random();
-                op.FileName = (op.FileName == "") ? @"images\drones\drone" + rand.Next(8) + ".png" : op.FileName;
+                op.FileName = (op.FileName == "") ? @"images\user.png" : op.FileName;
 
                 cheakPassword(password, rpassword);
                 Location location = new() { Latitude = lat, Longitude = longt };

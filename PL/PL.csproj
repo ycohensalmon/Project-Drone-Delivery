@@ -52,6 +52,11 @@
     <None Remove="images\stations\station5.jpg" />
     <None Remove="images\stations\station6.jpg" />
     <None Remove="images\stations\station7.jpg" />
+    <None Remove="images\user.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\user.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -78,6 +83,8 @@
     <PackageReference Include="Mapsui.Wpf" Version="3.0.2" />
     <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
     <PackageReference Include="Microsoft.Maps.MapControl.WPF" Version="1.0.0.3" />
+    <PackageReference Include="Syncfusion.SfGrid.WPF" Version="20.2.0.40" />
+    <PackageReference Include="Syncfusion.Xamarin.SfProgressBar" Version="20.2.0.40" />
   </ItemGroup>
 
   <ItemGroup>
