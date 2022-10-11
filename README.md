@@ -21,28 +21,28 @@ In addition, by double-clicking on an object, we will get a new window with more
 
 The app of the drone delivery designed in a Iphone.
 in the menu of the iphone -> enter to the app "prime air"
-![menu Iphone](https://user-images.githubusercontent.com/91663507/195092072-92f253cd-7289-4ea2-afd2-69fdaa90ee52.png)
+<img src="https://user-images.githubusercontent.com/91663507/195092072-92f253cd-7289-4ea2-afd2-69fdaa90ee52.png" width="300">
 
 
 To log in as a manager the username is: "admin" and the password is: "123"
 
 To log in as a user the username is:"Yossef_Cohen" and the password is: "123"
 
-![login](https://user-images.githubusercontent.com/91663507/195093208-820b2eeb-7c42-42ce-8d07-df7b752af407.png)
+<img src="https://user-images.githubusercontent.com/91663507/195093208-820b2eeb-7c42-42ce-8d07-df7b752af407.png" width="300">
 
 
 In the app we can choose between drones, parcels, customers and stations.
 In this example we see all the drones in the database and their details.
 
-![drones](https://user-images.githubusercontent.com/91663507/195093671-bb2dc0c1-dc79-41b3-a5e3-2092f3f3df89.png)
+<img src="https://user-images.githubusercontent.com/91663507/195093671-bb2dc0c1-dc79-41b3-a5e3-2092f3f3df89.png" width="300">
 
 
 From the drone window (and each window as his functionality), depending on the status of the drone, you can send for loading/associating a package/delivery of a package, etc.
 You can also see the details of the package being transferred by the drone (if any).
 
-![edit drone](https://user-images.githubusercontent.com/91663507/195094027-347a2b5a-9757-439f-bf61-94f16d2b2089.png)
+<img src="https://user-images.githubusercontent.com/91663507/195094027-347a2b5a-9757-439f-bf61-94f16d2b2089.png" width="300">
 
 
 Its possible also to add drone to the database
 
-![add drone](https://user-images.githubusercontent.com/91663507/195093879-72d6262c-2fd1-4616-969c-19adde838914.png)
+<img src="https://user-images.githubusercontent.com/91663507/195093879-72d6262c-2fd1-4616-969c-19adde838914.png" width="300">
