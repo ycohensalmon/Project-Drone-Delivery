@@ -23,7 +23,7 @@ namespace PL
         BO.Parcel parcel;
 
         #region add parcel
-        public ParcelWindow()
+        public ParcelWindow(string name = "")
         {
             this.myBl = BlApi.BlFactory.GetBl();
             InitializeComponent();
@@ -35,6 +35,12 @@ namespace PL
             var NamesCustomer = myBl.GetNamesOfCustomer();
             SenderName.ItemsSource = NamesCustomer;
             ReceiverName.ItemsSource = NamesCustomer;
+
+            if(name != "")
+            {
+                SenderName.SelectedItem = name;
+                SenderName.IsEnabled = false;
+            }
         }
 
         private void AddParcel_Click(object sender, MouseButtonEventArgs e)

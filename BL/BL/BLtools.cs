@@ -86,12 +86,15 @@ namespace BL
 
             if (statuses == DroneStatuses.Available)
             {
-                List<Location> locations = new();
-                foreach (var item in parcel) if (item.Delivered != null)
-                        locations.Add(GetCustomerById(item.TargetId).Location);
-                    
-                if (locations.Count != 0)
-                    return locations[rand.Next(locations.Count())];
+                IEnumerable<Location> locations = from item in parcel
+                                                 where item.Scheduled != null
+                                                 select GetCustomerById(item.TargetId).Location;
+
+                //List < Location > locations = new();
+                //foreach (var item in parcel) if (item.Delivered != null)
+                //        locations.Add(GetCustomerById(item.TargetId).Location);
+                if (locations.ToList().Count() != 0)
+                    return locations.ToList()[rand.Next(locations.Count())];
             }
             Location location = new();
             return location;

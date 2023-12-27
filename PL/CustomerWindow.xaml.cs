@@ -41,7 +41,7 @@ namespace PL
 
             AddCustomer.Visibility = Visibility.Hidden;
             UpdateCustomer.Visibility = Visibility.Visible;
-            CustomerView.DataContext = customer;
+            this.UpdateCustomer.DataContext = customer;
         }
 
         private void ShowParcelsFromCustomer_Click(object sender, RoutedEventArgs e)

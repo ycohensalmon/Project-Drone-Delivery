@@ -291,8 +291,11 @@ namespace Dal
         public void ClearDroneCharge()
         {
             List<DroneCharge> droneCharge = XmlTools.LoadListFromXMLSerializer<DroneCharge>(droneChargePath);
-            foreach (var item in droneCharge) ReleaseDroneFromCharging(item.DroneId);
+            //foreach (var item in droneCharge) ReleaseDroneFromCharging(item.DroneId);
 
+            var e = from item in droneCharge
+                    select ReleaseDroneFromCharging(item.DroneId);
+            
             droneCharge.Clear();
             XmlTools.SaveListToXMLSerializer(droneCharge, droneChargePath);
         }
