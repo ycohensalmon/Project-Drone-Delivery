@@ -51,11 +51,6 @@ namespace Dal
             if (GetStations().Any(item => item.Id == station.Id))
                 throw new IdAlreadyExistException(station.Id, "Station");
 
-            foreach (var item in GetStations())
-            {
-                if (item.Id == station.Id)
-                    throw new IdAlreadyExistException(station.Id, "Station");
-            }
             DataSource.Stations.Add(station);
         }
 
@@ -65,11 +60,6 @@ namespace Dal
             if (GetDrones().Any(item => item.Id == drone.Id))
                 throw new IdAlreadyExistException(drone.Id, "Drone");
 
-            foreach (var item in GetDrones())
-            {
-                if (item.Id == drone.Id)
-                    throw new IdAlreadyExistException(drone.Id, "Drone");
-            }
             DataSource.Drones.Add(drone);
         }
 
@@ -79,11 +69,6 @@ namespace Dal
             if (GetCustomers().Any(item => item.Id == customer.Id))
                 throw new IdAlreadyExistException(customer.Id, "Customer");
 
-            foreach (var item in GetCustomers())
-            {
-                if (item.Id == customer.Id)
-                    throw new IdAlreadyExistException(customer.Id, "Customer");
-            }
             DataSource.Customers.Add(customer);
         }
 
@@ -245,7 +230,6 @@ namespace Dal
             return (predicate == null)
                 ? (IEnumerable<Station>)DataSource.Stations.Select(item => item/*.IsDeleted == false*/)
                 : (IEnumerable<Station>)DataSource.Stations.Where(predicate).Select(item => item/*.IsDeleted == false*/);
-
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

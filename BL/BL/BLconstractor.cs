@@ -63,7 +63,7 @@ namespace BL
             IEnumerable<DO.Station> station = dalObj.GetStations();
             IEnumerable<DO.Customer> customer = dalObj.GetCustomers();
             IEnumerable<DO.Parcel> parcel = dalObj.GetParcels();
-            
+
             foreach (var tempDrone in drone)
             {
                 DroneStatuses statuses = GetStatus(tempDrone.Id, parcel);

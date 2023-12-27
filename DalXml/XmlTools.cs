@@ -28,6 +28,7 @@ namespace Dal
         public static XElement CreateElement<T>(T obj)
         {
             var res = new XElement(typeof(T).Name);
+                  
             foreach (PropertyInfo prop in obj.GetType().GetProperties())
             {
                 res.Add(new XElement(prop.Name, prop.GetValue(obj)));
